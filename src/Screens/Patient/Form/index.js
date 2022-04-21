@@ -10,6 +10,7 @@ import { LoginReducerAim } from "Screens/Login/actions";
 import LeftMenu from "Screens/Components/Menus/PatientLeftMenu/index";
 import LeftMenuMobile from "Screens/Components/Menus/PatientLeftMenu/mobile";
 import FatiqueQuestion from "../../Components/TimelineComponent/CovidSymptomsField/FatiqueQuestions";
+import { getLanguage } from "translations/index"
 
 class Index extends Component {
   constructor(props) {
@@ -27,6 +28,10 @@ class Index extends Component {
   };
 
   render() {
+    let translate = getLanguage(this.props.stateLanguageType)
+    let {
+      Sick_Leave_Certificate
+    } = translate;
     return (
       <Grid
         className={
@@ -50,7 +55,7 @@ class Index extends Component {
                   <Grid className="docsOpinion">
                     <Grid container direction="row" className="docsOpinLbl">
                       <Grid item xs={12} md={6}>
-                        <label>Sick Leave Certificate</label>
+                        <label>{Sick_Leave_Certificate}</label>
                       </Grid>
                     </Grid>
                   </Grid>
