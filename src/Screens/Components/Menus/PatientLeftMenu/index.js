@@ -1,17 +1,17 @@
-import React, { Component } from "react";
-import Grid from "@material-ui/core/Grid";
-import { connect } from "react-redux";
-import { LoginReducerAim } from "Screens/Login/actions";
-import { Settings } from "Screens/Login/setting";
-import { withRouter } from "react-router-dom";
-import { LanguageFetchReducer } from "Screens/actions";
-import LogOut from "Screens/Components/LogOut/index";
-import Timer from "Screens/Components/TimeLogOut/index";
-import Mode from "Screens/Components/ThemeMode/index.js";
-import SetLanguage from "Screens/Components/SetLanguage/index.js";
-import Loader from "Screens/Components/Loader/index";
-import { getLanguage } from "translations/index"
-import { getSetting } from "../api";
+import React, { Component } from 'react';
+import Grid from '@material-ui/core/Grid';
+import { connect } from 'react-redux';
+import { LoginReducerAim } from 'Screens/Login/actions';
+import { Settings } from 'Screens/Login/setting';
+import { withRouter } from 'react-router-dom';
+import { LanguageFetchReducer } from 'Screens/actions';
+import LogOut from 'Screens/Components/LogOut/index';
+import Timer from 'Screens/Components/TimeLogOut/index';
+import Mode from 'Screens/Components/ThemeMode/index.js';
+import SetLanguage from 'Screens/Components/SetLanguage/index.js';
+import Loader from 'Screens/Components/Loader/index';
+import { getLanguage } from 'translations/index';
+import { getSetting } from '../api';
 class Index extends Component {
   constructor(props) {
     super(props);
@@ -25,7 +25,7 @@ class Index extends Component {
       loaderImage: false,
       openFancyLanguage: false,
       PassDone: false,
-      mode: "normal",
+      mode: 'normal',
     };
     new Timer(this.logOutClick.bind(this));
   }
@@ -33,11 +33,11 @@ class Index extends Component {
   //For loggedout if logged in user is deleted
   componentDidMount() {
     new LogOut(
-      this.props.stateLoginValueAim.token,
-      this.props.stateLoginValueAim.user._id,
+      this.props.stateLoginValueAim?.token,
+      this.props.stateLoginValueAim?.user?._id,
       this.logOutClick.bind(this)
     );
-   getSetting(this)
+    getSetting(this);
   }
   //For close the model
   openLanguageModel = () => {
@@ -51,38 +51,31 @@ class Index extends Component {
 
   //For logout the User
   logOutClick = () => {
-      let email = "";
-      let password = "";
-      this.props.LoginReducerAim(email, password);
-      let languageType = "en";
-      this.props.LanguageFetchReducer(languageType);
-      this.props.history.push("/");
+    let email = '';
+    let password = '';
+    this.props.LoginReducerAim(email, password);
+    let languageType = 'en';
+    this.props.LanguageFetchReducer(languageType);
+    this.props.history.push('/');
   };
 
   //For My Profile link
   ProfileLink = () => {
-    this.props.history.push("/patient");
+    this.props.history.push('/patient');
   };
 
   PictureEval = () => {
-    this.props.history.push("/patient/sick-request");
+    this.props.history.push('/patient/sick-request');
   };
 
   //For Second opinion link
   feedBack = () => {
-    this.props.history.push("/patient/evaluation-list");
+    this.props.history.push('/patient/evaluation-list');
   };
-  
 
   render() {
-    let translate = getLanguage(this.props.stateLanguageType)
-    let {
-      my_profile,
-      profile_setting,
-      Language,
-      DarkMode,
-      logout,
-    } = translate;
+    let translate = getLanguage(this.props.stateLanguageType);
+    let { my_profile, profile_setting, Language, DarkMode, logout } = translate;
     return (
       <Grid
         item
@@ -92,13 +85,13 @@ class Index extends Component {
           this.props.settings &&
           this.props.settings.setting &&
           this.props.settings.setting.mode &&
-          this.props.settings.setting.mode === "dark"
-            ? this.props.comes === "emergency"
-              ? "emergency_accessmenu MenuLeftUpr MenuLeftDrkUpr"
-              : "MenuLeftUpr MenuLeftDrkUpr"
-            : this.props.comes === "emergency"
-            ? "emergency_accessmenu MenuLeftUpr"
-            : "MenuLeftUpr"
+          this.props.settings.setting.mode === 'dark'
+            ? this.props.comes === 'emergency'
+              ? 'emergency_accessmenu MenuLeftUpr MenuLeftDrkUpr'
+              : 'MenuLeftUpr MenuLeftDrkUpr'
+            : this.props.comes === 'emergency'
+            ? 'emergency_accessmenu MenuLeftUpr'
+            : 'MenuLeftUpr'
         }
       >
         {this.state.loaderImage && <Loader />}
@@ -106,68 +99,66 @@ class Index extends Component {
         {/* <DocSuggetion /> */}
         <Grid className="webLogo">
           <a>
-            <img
-              src={require("assets/images/LogoPNG.png")}
-              alt=""
-              title=""
-            />
+            <img src={require('assets/images/LogoPNG.png')} alt="" title="" />
           </a>
         </Grid>
         <Grid className="menuItems">
           <ul>
             <li
-              className={this.props.currentPage === "picture" ? "menuActv" : ""}
+              className={this.props.currentPage === 'picture' ? 'menuActv' : ''}
             >
               <a onClick={this.PictureEval}>
                 {this.props.settings &&
                 this.props.settings.setting &&
                 this.props.settings.setting.mode &&
-                this.props.settings.setting.mode === "dark" ? (
+                this.props.settings.setting.mode === 'dark' ? (
                   <img
-                    src={require("assets/images/nav-journal-white.svg")}
+                    src={require('assets/images/nav-journal-white.svg')}
                     alt=""
                     title=""
                   />
                 ) : (
                   <img
-                    src={require("assets/images/nav-journal.svg")}
+                    src={require('assets/images/nav-journal.svg')}
                     alt=""
                     title=""
                   />
                 )}
-                <span>{"Sick Request"}</span>
+                <span>{'Sick Request'}</span>
               </a>
             </li>
             <li
-              className={this.props.currentPage === "feedback" ? "menuActv" : ""}
+              className={
+                this.props.currentPage === 'feedback' ? 'menuActv' : ''
+              }
             >
               <a onClick={this.feedBack}>
                 {this.props.settings &&
                 this.props.settings.setting &&
                 this.props.settings.setting.mode &&
-                this.props.settings.setting.mode === "dark" ? (
+                this.props.settings.setting.mode === 'dark' ? (
                   <img
-                    src={require("assets/images/nav-journal-white.svg")}
+                    src={require('assets/images/nav-journal-white.svg')}
                     alt=""
                     title=""
                   />
                 ) : (
                   <img
-                    src={require("assets/images/nav-journal.svg")}
+                    src={require('assets/images/nav-journal.svg')}
                     alt=""
                     title=""
                   />
                 )}
-                <span>{"Request List"}</span>
+                <span>{'Request List'}</span>
               </a>
             </li>
-        
+
             <li
-              className={this.props.currentPage === "profile" ? "menuActv" : ""}
+              className={this.props.currentPage === 'profile' ? 'menuActv' : ''}
             >
               <a className="profilMenu">
                 <img
-                  src={require("assets/images/nav-my-profile.svg")}
+                  src={require('assets/images/nav-my-profile.svg')}
                   alt=""
                   title=""
                 />
@@ -180,15 +171,15 @@ class Index extends Component {
                         {this.props.settings &&
                         this.props.settings.setting &&
                         this.props.settings.setting.mode &&
-                        this.props.settings.setting.mode === "dark" ? (
+                        this.props.settings.setting.mode === 'dark' ? (
                           <img
-                            src={require("assets/images/menudocs-white.jpg")}
+                            src={require('assets/images/menudocs-white.jpg')}
                             alt=""
                             title=""
                           />
                         ) : (
                           <img
-                            src={require("assets/images/menudocs.jpg")}
+                            src={require('assets/images/menudocs.jpg')}
                             alt=""
                             title=""
                           />
@@ -205,15 +196,15 @@ class Index extends Component {
                         {this.props.settings &&
                         this.props.settings.setting &&
                         this.props.settings.setting.mode &&
-                        this.props.settings.setting.mode === "dark" ? (
+                        this.props.settings.setting.mode === 'dark' ? (
                           <img
-                            src={require("assets/images/menudocs-white.jpg")}
+                            src={require('assets/images/menudocs-white.jpg')}
                             alt=""
                             title=""
                           />
                         ) : (
                           <img
-                            src={require("assets/images/menudocs.jpg")}
+                            src={require('assets/images/menudocs.jpg')}
                             alt=""
                             title=""
                           />
@@ -226,24 +217,28 @@ class Index extends Component {
                         {this.props.settings &&
                         this.props.settings.setting &&
                         this.props.settings.setting.mode &&
-                        this.props.settings.setting.mode === "dark" ? (
+                        this.props.settings.setting.mode === 'dark' ? (
                           <img
-                            src={require("assets/images/menudocs-white.jpg")}
+                            src={require('assets/images/menudocs-white.jpg')}
                             alt=""
                             title=""
                           />
                         ) : (
                           <img
-                            src={require("assets/images/menudocs.jpg")}
+                            src={require('assets/images/menudocs.jpg')}
                             alt=""
                             title=""
                           />
                         )}
-                        {DarkMode}{" "}
+                        {DarkMode}{' '}
                         <Mode
-                          mode={this.props.settings?.setting?.mode ? this.props.settings?.setting?.mode : 'normal'}
+                          mode={
+                            this.props.settings?.setting?.mode
+                              ? this.props.settings?.setting?.mode
+                              : 'normal'
+                          }
                           name="mode"
-                          getSetting={()=>getSetting(this)}
+                          getSetting={() => getSetting(this)}
                         />
                       </a>
                     </li>
@@ -252,15 +247,15 @@ class Index extends Component {
                         {this.props.settings &&
                         this.props.settings.setting &&
                         this.props.settings.setting.mode &&
-                        this.props.settings.setting.mode === "dark" ? (
+                        this.props.settings.setting.mode === 'dark' ? (
                           <img
-                            src={require("assets/images/menudocs-white.jpg")}
+                            src={require('assets/images/menudocs-white.jpg')}
                             alt=""
                             title=""
                           />
                         ) : (
                           <img
-                            src={require("assets/images/menudocs.jpg")}
+                            src={require('assets/images/menudocs.jpg')}
                             alt=""
                             title=""
                           />
@@ -277,7 +272,7 @@ class Index extends Component {
         {/* for Language update */}
 
         <SetLanguage
-          getSetting={()=>getSetting(this)}
+          getSetting={() => getSetting(this)}
           openFancyLanguage={this.state.openFancyLanguage}
           languageValue={this.state.languageValue}
           handleCloseFancyLanguage={this.handleCloseFancyLanguage}
@@ -288,10 +283,8 @@ class Index extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  const {
-    stateLoginValueAim,
-    loadingaIndicatoranswerdetail,
-  } = state.LoginReducerAim;
+  const { stateLoginValueAim, loadingaIndicatoranswerdetail } =
+    state.LoginReducerAim;
   const { stateLanguageType } = state.LanguageReducer;
   const { settings } = state.Settings;
   return {
