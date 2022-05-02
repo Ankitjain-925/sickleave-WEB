@@ -1170,7 +1170,7 @@ a.conPainTime img {
   letter-spacing: 0;
   line-height: 18px;
   display: block;
-  margin-top: 14px;
+  margin-top: 6px;
   margin-bottom: 5px;
 }
 .painIntencty img,
@@ -1178,10 +1178,6 @@ a.conPainTime img {
   width: 24px;
   margin-right: 15px;
 }
-.painIntencty {
-  margin-bottom: 5px;
-}
-
 /* range pain Slide */
 
 .painIntencty input[type='range'] {
@@ -2041,7 +2037,7 @@ a.profilMenu {
     height: 362px !important;
   }
   .docsOpinion {
-    margin-left: 0px !important;
+    margin-left: 12px !important;
   }
   .presOpinionIner td {
     font-size: 13px !important;
@@ -6929,7 +6925,6 @@ a.archvDel:hover ul {
   margin-bottom: 10px;
 }
 .cnfrmDiaUpr,
-.fillDia,
 .travelDia,
 .srchdoseMg,
 .attchForms,
@@ -7046,7 +7041,7 @@ a.diaCDActv {
   border-radius: 8px;
   background-color: #00abaf;
   border: 2px solid #00abaf;
-  width: 100%;
+  width: 240px;
   color: #ffffff;
   font-family: Muli;
   font-size: 14px;
@@ -7055,7 +7050,7 @@ a.diaCDActv {
   line-height: 16px;
   text-align: center;
   padding: 12px 8px;
-  margin-top: 15px;
+  margin-top: 20px;
   margin-bottom: 2px;
   outline: none;
 }
@@ -17574,7 +17569,7 @@ select:-webkit-autofill:focus {
   height: 34px;
   padding: 0px 4px;
   min-width: 42px;
-  border: 1px solid #f2f2f2;
+  /* border: 1px solid #d7d7d7; */
   border-radius: 8px;
   background-color: #ffffff;
   display: inline-flex;
@@ -17582,25 +17577,22 @@ select:-webkit-autofill:focus {
   justify-content: center;
   margin-right: 14px;
 }
-.fatiqueQues a:hover {
+/* .fatiqueQues a:hover {
   color: #ffffff !important;
   background-color: #00abaf !important;
   cursor: pointer;
   box-shadow: 0 8px 24px 0 rgb(0 171 175 / 32%);
-}
+} */
 .fatiqueQues a:last-child {
   margin-right: 0px;
 }
 .fatiqueQues label {
   color: #000808;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0;
   line-height: 18px;
   margin-bottom: 0px;
-}
-.fatiqueQues .MuiGrid-container {
-  margin-bottom: 12px;
 }
 .memoryCapicity textarea {
   min-height: 116px;
@@ -17808,7 +17800,6 @@ ul.duringCovid li:last-child {
 .maxWidthSet {
   width: 100%;
 }
-
 .homeBgDrk .sympMrktUpr {
   background-color: #404646;
 }
@@ -18124,11 +18115,7 @@ ul.duringCovid li:last-child {
   border-right: none;
   border-radius: 4px 0px 0px 4px;
 }
-.fillDiaAll {
-  margin-top: 7px;
-}
 .fillDiaAll label {
-  margin-bottom: 8px;
   display: block !important;
 }
 .cnfrmDiaMain .fillDia .rrSysto div {
@@ -18150,6 +18137,9 @@ ul.duringCovid li:last-child {
 }
 .darkTheme .stndQues1 h2 {
   color: #00abaf !important;
+}
+.darkTheme .cnfrmDiaMain2 {
+  background-color: #404646;
 }
 .addStnd {
   display: flex;
@@ -18182,4 +18172,36 @@ ul.duringCovid li:last-child {
 }
 .stndQues label {
   margin-bottom: 7px;
+}
+span.PIC_Condition {
+  padding: 0px;
+  padding-right: 5px;
+}
+span.PIC_Condition:hover {
+  background-color: transparent;
+}
+.bgncmnSpc,
+.haveCmnSpc {
+  margin-bottom: 18px;
+}
+.bgncmnSpc span.MuiFormControlLabel-label {
+  font-size: 14px;
+}
+.rrSystoLbl label {
+  display: inline;
+}
+.bgncmnSpc .ant-picker {
+  margin-bottom: 0px;
+}
+.bgncmnSpcRmv .haveCmnSpc {
+  margin-bottom: 0px;
+}
+.bgncmnLbl,
+.fillDiaAll label,
+.rrSysto label {
+  margin-bottom: 8px;
+}
+a#VNew_id1 {
+  display: inline-block;
+  margin-bottom: 132px;
 }

@@ -159,8 +159,6 @@ function Index(props) {
           response?.data?.data[0]?.sickleave
         ) {
           var data = response?.data?.data[0]?.sickleave[0];
-          console.log('data', data);
-          console.log('response', response);
           setAppointmentData(data);
           // setTimeout(() => onChange(new Date()), 200);
         }
@@ -205,22 +203,18 @@ function Index(props) {
         days = 'sunday';
         break;
     }
-    console.log('appointmentData', appointmentData);
     // let appointmentData = appointmentData;
     let appointDate1;
     if (appointmentData) {
-      console.log();
       Object.entries(appointmentData).map(([key, value]) => {
         if (key == days) {
           appointDate1 = value;
         }
       });
     }
-    console.log('appointDate', appointDate1, date1, days);
     setAppointDate(appointDate1);
     setSelectedDate(date1);
     setApointDay(days);
-    console.log('appointDate1234', appointDate);
   };
 
   // Submit form details with validations
@@ -1157,7 +1151,6 @@ function Index(props) {
         return true;
       }
     } else if (item === 'headache_have_diabetes' && check === 'yes') {
-      console.log('item,value,check', item, value, check);
       if (!value.headache_have_diabetes) {
         setError_section(46);
         setErrorChrMsg('Please select Diabetes with YES / NO');
@@ -1412,7 +1405,6 @@ function Index(props) {
           : 'homeBg'
       }
     >
-      {console.log('return ke niche', appointDate)}
       {loaderImage && <Loader />}
       <Grid className="homeBgIner">
         <Grid container direction="row" justify="center">
@@ -3340,10 +3332,6 @@ function Index(props) {
                             </Grid> */}
 
                             <Grid className="selTimeAM">
-                              {console.log(
-                                'appointDateefregefgfdgg',
-                                appointDate
-                              )}
                               {appointDate && appointDate.length > 0 ? (
                                 Availabledays(
                                   this.state.selectedDate,
@@ -3435,7 +3423,7 @@ function Index(props) {
                                 </Grid>
                               ) : (
                                 <Grid>
-                                  <span>NotAvailable !</span>
+                                  <span>No tAvailable !</span>
                                 </Grid>
                               )}
                             </Grid>
