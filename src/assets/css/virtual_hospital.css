@@ -14360,13 +14360,11 @@ input:-webkit-autofill:active{
 }
 
 .textFieldArea1 input {
-  margin-bottom: 5px;
   height: 35px;
   outline: none;
   width: 100%;
   border-radius: 5px;
   border: 1px solid #bfc1c1;
-  margin-top: 10px;
   padding: 5px 10px;
 }
 
@@ -14409,27 +14407,22 @@ label.newrole {
   outline: none;
   margin-right: 30px;
 }
-
 .newrole label {
   font-size: 18px;
 }
-
 .headsize {
   font-size: 20px;
 }
 .heading p {
   font-size: 15px;
 }
-
 .selectEntry {
   margin: 10px;
   width: 100%;
 }
-
 .line {
   flex-flow: column nowrap;
 }
-
 .inputBorField input {
   border: 1px solid #bfc1c1;
   border-radius: 4px;
@@ -14444,15 +14437,12 @@ label.newrole {
   box-sizing: border-box !important;
   min-height: 44px;
 }
-
 .cnfrmDiaMain .fillDia .errChrMsg {
   color: #ff0000 !important;
 }
-
 .fillDiaSection {
   margin-top: 15px;
 }
-
 .cnfrmDiaMain1 {
   background-color: #ffffff;
   border-radius: 8px;
@@ -14460,21 +14450,13 @@ label.newrole {
 .fillDiaAll label {
   display: contents;
 }
-
 .stripePromiseClss {
   margin-left: 70px;
 }
-
 .bloodpreLb label {
   font-size: 15px;
   font-weight: 700;
 }
-
-/* Added by Ankit */
-.FeedbackCss label {
-  margin-bottom: 8px;
-}
-
 .symptomSec1 {
   margin-left: 25px;
 }
@@ -14497,29 +14479,29 @@ label.newrole {
   border-radius: 5px;
   color: #000 !important;
 }
-
 .presOpinionIner1 Thead Th {
   padding: 16px 6px !important;
 }
-
 .cnfrmDiaMain2 {
   background-color: #fff;
   margin-top: 42px;
+  margin-bottom: 42px;
   margin-left: 48px;
   padding: 22px 24px 35px;
   border-radius: 8px;
   box-shadow: 0 1px 8px 0 rgb(0 8 8 / 4%);
 }
-
 @media (max-width: 959px) {
   .cnfrmDiaMain2 {
     margin-left: 8px;
     margin-right: 8px;
   }
 }
-
 .borderLineAfer {
-  border-bottom: 1px solid #d3d3d3;
-  margin-bottom: 10px;
-  margin-top: 7px;
+  margin-top: 26px;
+  padding-top: 26px;
+  border-top: 1.5px solid #00abaf;
+  padding-bottom: 26px;
+  margin-bottom: 26px;
+  border-bottom: 1.5px solid #00abaf;
 }
