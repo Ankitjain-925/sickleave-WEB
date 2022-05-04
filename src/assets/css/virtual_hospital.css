@@ -14505,3 +14505,18 @@ label.newrole {
   margin-bottom: 26px;
   border-bottom: 1.5px solid #00abaf;
 }
+
+.sickQuesSec{
+  margin-top: 10px;
+}
+.sickCheckSec .MuiCheckbox-root{
+  color:#00abaf!important;
+}
+
+/* .aaa{
+  margin-top: 10px!important;
+} */
+
+/* .FatiqueQuestion{
+  margin-top: 10px;
+} */
