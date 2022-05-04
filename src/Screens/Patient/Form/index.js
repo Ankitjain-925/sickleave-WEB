@@ -156,7 +156,7 @@ function Index(props) {
         if (
           response?.data &&
           response?.data?.data &&
-          response?.data?.data?.sickleave
+          response?.data?.data[0]?.sickleave
         ) {
           var data = response?.data?.data[0]?.sickleave[0];
           setAppointmentData(data);
@@ -206,15 +206,19 @@ function Index(props) {
     // let appointmentData = appointmentData;
     let appointDate1;
     if (appointmentData) {
+      console.log('1');
       Object.entries(appointmentData).map(([key, value]) => {
         if (key == days) {
           appointDate1 = value;
         }
       });
     }
+    console.log('appointDate1', appointDate1);
     setAppointDate(appointDate1);
     setSelectedDate(date1);
     setApointDay(days);
+    console.log('appointDate', appointDate);
+    getCalendarData();
   };
 
   // Submit form details with validations
@@ -3316,7 +3320,7 @@ function Index(props) {
                             </Grid> */}
 
                             <Grid className="selTimeAM">
-                              {appointDate && appointDate.length > 0 ? (
+                              {appointDate && appointDate?.length > 0 ? (
                                 Availabledays(
                                   this.state.selectedDate,
                                   this.state.appointmentData.appointment_days
@@ -3412,23 +3416,13 @@ function Index(props) {
                               )}
                             </Grid>
                           </Grid>
-                          <Grid className="delQues">
-                            <Grid>
-                              <label>Details / Questions</label>
-                            </Grid>
-                            <Grid>
-                              <textarea
-                                name="annotations"
-                                // onChange={(e) => {
-                                //   this.questionDetails(e);
-                                // }}
-                              ></textarea>
-                            </Grid>
-                            <Grid className="delQuesBook">
-                              {/* <a onClick={this.bookAppointment}>book</a>
-                              <a onClick={this.handleCloseFancyVdo}>cancel</a> */}
-                            </Grid>
-                          </Grid>
+                        </Grid>
+                        <Grid className="infoShwSave3">
+                          <input
+                            type="submit"
+                            value="Submit"
+                            onClick={handleEvalSubmit}
+                          ></input>
                         </Grid>
                       </Grid>
                     )}
