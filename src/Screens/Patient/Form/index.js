@@ -160,7 +160,7 @@ function Index(props) {
         ) {
           var data = response?.data?.data[0]?.sickleave[0];
           setAppointmentData(data);
-          // setTimeout(() => onChange(new Date()), 200);
+          setTimeout(() => onChange(new Date()), 200);
         }
       });
   };
@@ -206,19 +206,16 @@ function Index(props) {
     // let appointmentData = appointmentData;
     let appointDate1;
     if (appointmentData) {
-      console.log('1');
       Object.entries(appointmentData).map(([key, value]) => {
         if (key == days) {
           appointDate1 = value;
         }
       });
+
+      setAppointDate(appointDate1);
+      setSelectedDate(date1);
+      setApointDay(days);
     }
-    console.log('appointDate1', appointDate1);
-    setAppointDate(appointDate1);
-    setSelectedDate(date1);
-    setApointDay(days);
-    console.log('appointDate', appointDate);
-    getCalendarData();
   };
 
   // Submit form details with validations
@@ -1437,7 +1434,7 @@ function Index(props) {
                                     justify="center"
                                   >
                                     <Grid item xs={6} sm={6} md={2}>
-                                      <Grid>
+                                      <Grid className="sickCheckSec">
                                         <FormControlLabel
                                           control={
                                             <Checkbox
@@ -1465,7 +1462,7 @@ function Index(props) {
                                       </Grid>
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={2}>
-                                      <Grid>
+                                      <Grid className="sickCheckSec">
                                         <FormControlLabel
                                           control={
                                             <Checkbox
@@ -1493,7 +1490,7 @@ function Index(props) {
                                       </Grid>
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={2}>
-                                      <Grid>
+                                      <Grid className="sickCheckSec">
                                         <FormControlLabel
                                           control={
                                             <Checkbox
@@ -1521,7 +1518,7 @@ function Index(props) {
                                       </Grid>
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={2}>
-                                      <Grid>
+                                      <Grid className="sickCheckSec">
                                         <FormControlLabel
                                           control={
                                             <Checkbox
@@ -1549,7 +1546,7 @@ function Index(props) {
                                       </Grid>
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={2}>
-                                      <Grid>
+                                      <Grid className="sickCheckSec">
                                         <FormControlLabel
                                           control={
                                             <Checkbox
@@ -1598,7 +1595,7 @@ function Index(props) {
                                     justify="center"
                                   >
                                     <Grid item xs={6} sm={6} md={2}>
-                                      <Grid>
+                                      <Grid className="sickCheckSec">
                                         <FormControlLabel
                                           control={
                                             <Checkbox
@@ -1626,7 +1623,7 @@ function Index(props) {
                                       </Grid>
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={2}>
-                                      <Grid>
+                                      <Grid className="sickCheckSec">
                                         <FormControlLabel
                                           control={
                                             <Checkbox
@@ -1654,7 +1651,7 @@ function Index(props) {
                                       </Grid>
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={2}>
-                                      <Grid>
+                                      <Grid className="sickCheckSec">
                                         <FormControlLabel
                                           control={
                                             <Checkbox
@@ -1682,7 +1679,7 @@ function Index(props) {
                                       </Grid>
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={2}>
-                                      <Grid>
+                                      <Grid className="sickCheckSec">
                                         <FormControlLabel
                                           control={
                                             <Checkbox
@@ -1710,7 +1707,7 @@ function Index(props) {
                                       </Grid>
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={2}>
-                                      <Grid>
+                                      <Grid className="sickCheckSec">
                                         <FormControlLabel
                                           control={
                                             <Checkbox
@@ -2001,16 +1998,18 @@ function Index(props) {
                           </Grid>
                         )}
 
-                        <FatiqueQuestion
-                          updateAllEntrySec={(e) =>
-                            updateAllEntrySec(e, 'stomach_problems', 2)
-                          }
-                          label="You have Stomach Problems?"
-                          value={updateQues?.stomach_problems}
-                        />
-                        {error_section == 49 && (
-                          <div className="err_message2">{errorChrMsg}</div>
-                        )}
+                        <Grid className="sickQuesSec">
+                          <FatiqueQuestion
+                            updateAllEntrySec={(e) =>
+                              updateAllEntrySec(e, 'stomach_problems', 2)
+                            }
+                            label="You have Stomach Problems?"
+                            value={updateQues?.stomach_problems}
+                          />
+                          {error_section == 49 && (
+                            <div className="err_message2">{errorChrMsg}</div>
+                          )}
+                        </Grid>
 
                         {updateQues && updateQues?.stomach_problems === 'yes' && (
                           <Grid className="borderLineAfer">
@@ -2089,20 +2088,24 @@ function Index(props) {
                               label="Do you have pain behind the sternum?"
                               value={updateQues?.stomach_behind_the_sternum}
                             />
-                            <FatiqueQuestion
-                              updateAllEntrySec={(e) =>
-                                updateAllEntrySec(e, 'stomach_heart_attack')
-                              }
-                              label="Have you ever had a heart attack?"
-                              value={updateQues?.stomach_heart_attack}
-                            />
-                            <FatiqueQuestion
-                              updateAllEntrySec={(e) =>
-                                updateAllEntrySec(e, 'stomach_heart_failure')
-                              }
-                              label="Do you suffer from diagnosed Heart failure?"
-                              value={updateQues?.stomach_heart_failure}
-                            />
+                            <Grid className="sickQuesSec">
+                              <FatiqueQuestion
+                                updateAllEntrySec={(e) =>
+                                  updateAllEntrySec(e, 'stomach_heart_attack')
+                                }
+                                label="Have you ever had a heart attack?"
+                                value={updateQues?.stomach_heart_attack}
+                              />
+                            </Grid>
+                            <Grid className="sickQuesSec">
+                              <FatiqueQuestion
+                                updateAllEntrySec={(e) =>
+                                  updateAllEntrySec(e, 'stomach_heart_failure')
+                                }
+                                label="Do you suffer from diagnosed Heart failure?"
+                                value={updateQues?.stomach_heart_failure}
+                              />
+                            </Grid>
                             {error_section == 8 && (
                               <div className="err_message2">{errorChrMsg}</div>
                             )}
@@ -2211,18 +2214,20 @@ function Index(props) {
                                   </Grid>
                                 </>
                               )}
-                            <FatiqueQuestion
-                              updateAllEntrySec={(e) =>
-                                updateAllEntrySec(
-                                  e,
-                                  'stomach_continuously_or_periodically'
-                                )
-                              }
-                              label="Do the symptoms occur continuously or periodically?"
-                              value={
-                                updateQues?.stomach_continuously_or_periodically
-                              }
-                            />
+                            <Grid className="sickQuesSec">
+                              <FatiqueQuestion
+                                updateAllEntrySec={(e) =>
+                                  updateAllEntrySec(
+                                    e,
+                                    'stomach_continuously_or_periodically'
+                                  )
+                                }
+                                label="Do the symptoms occur continuously or periodically?"
+                                value={
+                                  updateQues?.stomach_continuously_or_periodically
+                                }
+                              />
+                            </Grid>
                             {error_section == 16 && (
                               <div className="err_message2">{errorChrMsg}</div>
                             )}
@@ -2306,16 +2311,20 @@ function Index(props) {
                             )}
                           </Grid>
                         )}
-                        <FatiqueQuestion
-                          updateAllEntrySec={(e) =>
-                            updateAllEntrySec(e, 'diarrhea')
-                          }
-                          label="You have Diarrhea?"
-                          value={updateQues?.diarrhea}
-                        />
-                        {error_section == 50 && (
-                          <div className="err_message2">{errorChrMsg}</div>
-                        )}
+
+                        <Grid className="sickQuesSec">
+                          <FatiqueQuestion
+                            updateAllEntrySec={(e) =>
+                              updateAllEntrySec(e, 'diarrhea')
+                            }
+                            label="You have Diarrhea?"
+                            value={updateQues?.diarrhea}
+                          />
+                          {error_section == 50 && (
+                            <div className="err_message2">{errorChrMsg}</div>
+                          )}
+                        </Grid>
+
                         {updateQues && updateQues?.diarrhea === 'yes' && (
                           <Grid className="borderLineAfer">
                             <Grid className="bgncmnSpc">
@@ -2410,7 +2419,7 @@ function Index(props) {
                             {error_section == 24 && (
                               <div className="err_message2">{errorChrMsg}</div>
                             )}
-                            <Grid className="bgncmnSpcRmv">
+                            <Grid className="bgncmnSpcRmv sickQuesSec">
                               <FatiqueQuestion
                                 updateAllEntrySec={(e) =>
                                   updateAllEntrySec(
@@ -2430,16 +2439,19 @@ function Index(props) {
                           </Grid>
                         )}
 
-                        <FatiqueQuestion
-                          updateAllEntrySec={(e) =>
-                            updateAllEntrySec(e, 'have_fever')
-                          }
-                          label="You have Fever?"
-                          value={updateQues?.have_fever}
-                        />
-                        {error_section == 51 && (
-                          <div className="err_message2">{errorChrMsg}</div>
-                        )}
+                        <Grid className="sickQuesSec">
+                          <FatiqueQuestion
+                            updateAllEntrySec={(e) =>
+                              updateAllEntrySec(e, 'have_fever')
+                            }
+                            label="You have Fever?"
+                            value={updateQues?.have_fever}
+                          />
+                          {error_section == 51 && (
+                            <div className="err_message2">{errorChrMsg}</div>
+                          )}
+                        </Grid>
+
                         {updateQues && updateQues?.have_fever === 'yes' && (
                           <Grid className="borderLineAfer">
                             <Grid className="bgncmnSpc">
@@ -2583,33 +2595,35 @@ function Index(props) {
                                           justify="center"
                                         >
                                           <Grid item xs={4} md={4}>
-                                            <FormControlLabel
-                                              control={
-                                                <Checkbox
-                                                  name="fever_cold"
-                                                  value={
-                                                    updateQues &&
-                                                    updateQues?.fever_cold &&
-                                                    updateQues?.fever_cold ==
-                                                      true
-                                                      ? false
-                                                      : true
-                                                  }
-                                                  color="#00ABAF"
-                                                  checked={
-                                                    updateQues?.fever_cold
-                                                  }
-                                                  onChange={(e) => {
-                                                    updateAllEntrySec2(e);
-                                                  }}
-                                                  className="PIC_Condition"
-                                                />
-                                              }
-                                              label="Cold ?"
-                                            />
+                                            <Grid className="sickCheckSec">
+                                              <FormControlLabel
+                                                control={
+                                                  <Checkbox
+                                                    name="fever_cold"
+                                                    value={
+                                                      updateQues &&
+                                                      updateQues?.fever_cold &&
+                                                      updateQues?.fever_cold ==
+                                                        true
+                                                        ? false
+                                                        : true
+                                                    }
+                                                    color="#00ABAF"
+                                                    checked={
+                                                      updateQues?.fever_cold
+                                                    }
+                                                    onChange={(e) => {
+                                                      updateAllEntrySec2(e);
+                                                    }}
+                                                    className="PIC_Condition"
+                                                  />
+                                                }
+                                                label="Cold ?"
+                                              />
+                                            </Grid>
                                           </Grid>
                                           <Grid item xs={4} md={4}>
-                                            <Grid>
+                                            <Grid className="sickCheckSec">
                                               <FormControlLabel
                                                 control={
                                                   <Checkbox
@@ -2663,16 +2677,19 @@ function Index(props) {
                           </Grid>
                         )}
 
-                        <FatiqueQuestion
-                          updateAllEntrySec={(e) =>
-                            updateAllEntrySec(e, 'back_pain')
-                          }
-                          label="You have Back pain?"
-                          value={updateQues?.back_pain}
-                        />
-                        {error_section == 52 && (
-                          <div className="err_message2">{errorChrMsg}</div>
-                        )}
+                        <Grid className="sickQuesSec">
+                          <FatiqueQuestion
+                            updateAllEntrySec={(e) =>
+                              updateAllEntrySec(e, 'back_pain')
+                            }
+                            label="You have Back pain?"
+                            value={updateQues?.back_pain}
+                          />
+                          {error_section == 52 && (
+                            <div className="err_message2">{errorChrMsg}</div>
+                          )}
+                        </Grid>
+
                         {updateQues && updateQues?.back_pain === 'yes' && (
                           <Grid className="borderLineAfer">
                             <Grid className="bgncmnSpc">
@@ -2717,33 +2734,44 @@ function Index(props) {
                               label="Have you been injured ?"
                               value={updateQues?.back_pain_been_injured}
                             />
-                            <FatiqueQuestion
-                              updateAllEntrySec={(e) =>
-                                updateAllEntrySec(
-                                  e,
-                                  'back_pain_physically_strained'
-                                )
-                              }
-                              label="Have you been physically strained?"
-                              value={updateQues?.back_pain_physically_strained}
-                            />
-                            <FatiqueQuestion
-                              updateAllEntrySec={(e) =>
-                                updateAllEntrySec(
-                                  e,
-                                  'back_pain_stress_depression'
-                                )
-                              }
-                              label="Do you suffer from stress and/or depression?"
-                              value={updateQues?.back_pain_stress_depression}
-                            />
-                            <FatiqueQuestion
-                              updateAllEntrySec={(e) =>
-                                updateAllEntrySec(e, 'back_pain_have_diabetes')
-                              }
-                              label="Do you have diabetes? If so, what is your blood sugar?"
-                              value={updateQues?.back_pain_have_diabetes}
-                            />
+                            <Grid className="sickQuesSec">
+                              <FatiqueQuestion
+                                updateAllEntrySec={(e) =>
+                                  updateAllEntrySec(
+                                    e,
+                                    'back_pain_physically_strained'
+                                  )
+                                }
+                                label="Have you been physically strained?"
+                                value={
+                                  updateQues?.back_pain_physically_strained
+                                }
+                              />
+                            </Grid>
+                            <Grid className="sickQuesSec">
+                              <FatiqueQuestion
+                                updateAllEntrySec={(e) =>
+                                  updateAllEntrySec(
+                                    e,
+                                    'back_pain_stress_depression'
+                                  )
+                                }
+                                label="Do you suffer from stress and/or depression?"
+                                value={updateQues?.back_pain_stress_depression}
+                              />
+                            </Grid>
+                            <Grid className="sickQuesSec">
+                              <FatiqueQuestion
+                                updateAllEntrySec={(e) =>
+                                  updateAllEntrySec(
+                                    e,
+                                    'back_pain_have_diabetes'
+                                  )
+                                }
+                                label="Do you have diabetes? If so, what is your blood sugar?"
+                                value={updateQues?.back_pain_have_diabetes}
+                              />
+                            </Grid>
                             {updateQues &&
                               updateQues?.back_pain_have_diabetes === 'yes' && (
                                 <>
@@ -2793,20 +2821,27 @@ function Index(props) {
                                   </Grid>
                                 </>
                               )}
-                            <FatiqueQuestion
-                              updateAllEntrySec={(e) =>
-                                updateAllEntrySec(e, 'back_pain_heart_attack')
-                              }
-                              label="Have you ever had a heart attack?"
-                              value={updateQues?.back_pain_heart_attack}
-                            />
-                            <FatiqueQuestion
-                              updateAllEntrySec={(e) =>
-                                updateAllEntrySec(e, 'back_pain_heart_failure')
-                              }
-                              label="Do you suffer from diagnosed Heart failure?"
-                              value={updateQues?.back_pain_heart_failure}
-                            />
+                            <Grid className="sickQuesSec">
+                              <FatiqueQuestion
+                                updateAllEntrySec={(e) =>
+                                  updateAllEntrySec(e, 'back_pain_heart_attack')
+                                }
+                                label="Have you ever had a heart attack?"
+                                value={updateQues?.back_pain_heart_attack}
+                              />
+                            </Grid>
+                            <Grid className="sickQuesSec">
+                              <FatiqueQuestion
+                                updateAllEntrySec={(e) =>
+                                  updateAllEntrySec(
+                                    e,
+                                    'back_pain_heart_failure'
+                                  )
+                                }
+                                label="Do you suffer from diagnosed Heart failure?"
+                                value={updateQues?.back_pain_heart_failure}
+                              />
+                            </Grid>
                             {error_section == 32 && (
                               <div className="err_message2">{errorChrMsg}</div>
                             )}
@@ -2855,16 +2890,19 @@ function Index(props) {
                           </Grid>
                         )}
 
-                        <FatiqueQuestion
-                          updateAllEntrySec={(e) =>
-                            updateAllEntrySec(e, 'cough_and_snees')
-                          }
-                          label="You have Cough and Snees?"
-                          value={updateQues?.cough_and_snees}
-                        />
-                        {error_section == 53 && (
-                          <div className="err_message2">{errorChrMsg}</div>
-                        )}
+                        <Grid className="sickQuesSec">
+                          <FatiqueQuestion
+                            updateAllEntrySec={(e) =>
+                              updateAllEntrySec(e, 'cough_and_snees')
+                            }
+                            label="You have Cough and Snees?"
+                            value={updateQues?.cough_and_snees}
+                          />
+                          {error_section == 53 && (
+                            <div className="err_message2">{errorChrMsg}</div>
+                          )}
+                        </Grid>
+
                         {updateQues && updateQues?.cough_and_snees === 'yes' && (
                           <Grid className="borderLineAfer">
                             <Grid className="bgncmnSpc">
@@ -2974,16 +3012,19 @@ function Index(props) {
                           </Grid>
                         )}
 
-                        <FatiqueQuestion
-                          updateAllEntrySec={(e) =>
-                            updateAllEntrySec(e, 'feel_depressed')
-                          }
-                          label="You feel Depressed?"
-                          value={updateQues?.feel_depressed}
-                        />
-                        {error_section == 54 && (
-                          <div className="err_message2">{errorChrMsg}</div>
-                        )}
+                        <Grid className="sickQuesSec">
+                          <FatiqueQuestion
+                            updateAllEntrySec={(e) =>
+                              updateAllEntrySec(e, 'feel_depressed')
+                            }
+                            label="You feel Depressed?"
+                            value={updateQues?.feel_depressed}
+                          />
+                          {error_section == 54 && (
+                            <div className="err_message2">{errorChrMsg}</div>
+                          )}
+                        </Grid>
+
                         {updateQues && updateQues?.feel_depressed === 'yes' && (
                           <Grid className="borderLineAfer">
                             <Grid className="bgncmnSpc">
@@ -3052,17 +3093,19 @@ function Index(props) {
                               label="Do you sleep?"
                               value={updateQues?.depressed_do_you_sleep}
                             />
-                            <FatiqueQuestion
-                              updateAllEntrySec={(e) =>
-                                updateAllEntrySec(
-                                  e,
-                                  'depressed_suicidal_thoughts'
-                                )
-                              }
-                              label="You have suicidal thoughts or ?"
-                              value={updateQues?.depressed_suicidal_thoughts}
-                            />
-                            <Grid className="bgncmnSpcRmv">
+                            <Grid className="sickQuesSec">
+                              <FatiqueQuestion
+                                updateAllEntrySec={(e) =>
+                                  updateAllEntrySec(
+                                    e,
+                                    'depressed_suicidal_thoughts'
+                                  )
+                                }
+                                label="You have suicidal thoughts or ?"
+                                value={updateQues?.depressed_suicidal_thoughts}
+                              />
+                            </Grid>
+                            <Grid className="bgncmnSpcRmv sickQuesSec">
                               <FatiqueQuestion
                                 updateAllEntrySec={(e) =>
                                   updateAllEntrySec(
@@ -3082,13 +3125,16 @@ function Index(props) {
                           </Grid>
                         )}
 
-                        <FatiqueQuestion
-                          updateAllEntrySec={(e) =>
-                            updateAllEntrySec(e, 'cardiac_problems')
-                          }
-                          label="you have Cardiac Problems?"
-                          value={updateQues?.cardiac_problems}
-                        />
+                        <Grid className="sickQuesSec">
+                          <FatiqueQuestion
+                            updateAllEntrySec={(e) =>
+                              updateAllEntrySec(e, 'cardiac_problems')
+                            }
+                            label="you have Cardiac Problems?"
+                            value={updateQues?.cardiac_problems}
+                          />
+                        </Grid>
+
                         {error_section == 55 && (
                           <div className="err_message2">{errorChrMsg}</div>
                         )}
@@ -3141,56 +3187,64 @@ function Index(props) {
                               label="Have you ever had a heart attack?"
                               value={updateQues?.cardiac_heart_attack}
                             />
-                            <FatiqueQuestion
-                              updateAllEntrySec={(e) =>
-                                updateAllEntrySec(e, 'cardiac_heart_failure')
-                              }
-                              label="Do you suffer from diagnosed Heart failure?"
-                              value={updateQues?.cardiac_heart_failure}
-                            />
-                            <FatiqueQuestion
-                              updateAllEntrySec={(e) =>
-                                updateAllEntrySec(e, 'cardiac_have_dizziness')
-                              }
-                              label="Do you have dizziness?"
-                              value={updateQues?.cardiac_have_dizziness}
-                            />
-                            <FatiqueQuestion
-                              updateAllEntrySec={(e) =>
-                                updateAllEntrySec(
-                                  e,
-                                  'cardiac_have_shoulder_pain'
-                                )
-                              }
-                              label="Do you have shoulder pain?"
-                              value={updateQues?.cardiac_have_shoulder_pain}
-                            />
+                            <Grid className="sickQuesSec">
+                              <FatiqueQuestion
+                                updateAllEntrySec={(e) =>
+                                  updateAllEntrySec(e, 'cardiac_heart_failure')
+                                }
+                                label="Do you suffer from diagnosed Heart failure?"
+                                value={updateQues?.cardiac_heart_failure}
+                              />
+                            </Grid>
+                            <Grid className="sickQuesSec">
+                              <FatiqueQuestion
+                                updateAllEntrySec={(e) =>
+                                  updateAllEntrySec(e, 'cardiac_have_dizziness')
+                                }
+                                label="Do you have dizziness?"
+                                value={updateQues?.cardiac_have_dizziness}
+                              />
+                            </Grid>
+                            <Grid className="sickQuesSec">
+                              <FatiqueQuestion
+                                updateAllEntrySec={(e) =>
+                                  updateAllEntrySec(
+                                    e,
+                                    'cardiac_have_shoulder_pain'
+                                  )
+                                }
+                                label="Do you have shoulder pain?"
+                                value={updateQues?.cardiac_have_shoulder_pain}
+                              />
+                            </Grid>
                             {error_section == 44 && (
                               <div className="err_message2">{errorChrMsg}</div>
                             )}
                           </Grid>
                         )}
                         <Grid>
-                          <FormControlLabel
-                            control={
-                              <Checkbox
-                                name="DataprotectionRules"
-                                value={
-                                  DataprotectionRules &&
-                                  DataprotectionRules == true
-                                    ? false
-                                    : true
-                                }
-                                color="#00ABAF"
-                                checked={DataprotectionRules}
-                                onChange={(e) => {
-                                  updateAllEntrySec2(e);
-                                }}
-                                className="PIC_Condition"
-                              />
-                            }
-                            label="I have react and understood the Data protection rules and Regulations of Aimedis."
-                          />
+                          <Grid className="sickCheckSec">
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  name="DataprotectionRules"
+                                  value={
+                                    DataprotectionRules &&
+                                    DataprotectionRules == true
+                                      ? false
+                                      : true
+                                  }
+                                  color="#00ABAF"
+                                  checked={DataprotectionRules}
+                                  onChange={(e) => {
+                                    updateAllEntrySec2(e);
+                                  }}
+                                  className="PIC_Condition"
+                                />
+                              }
+                              label="I have react and understood the Data protection rules and Regulations of Aimedis."
+                            />
+                          </Grid>
                           {error_section == 45 && (
                             <div className="err_message2">{errorChrMsg}</div>
                           )}
@@ -3318,7 +3372,6 @@ function Index(props) {
                                 </Grid>
                               )}
                             </Grid> */}
-
                             <Grid className="selTimeAM">
                               {appointDate && appointDate?.length > 0 ? (
                                 Availabledays(
