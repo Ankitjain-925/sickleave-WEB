@@ -1,32 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import Grid from '@material-ui/core/Grid';
-import Loader from 'Screens/Components/Loader/index';
-import LeftMenu from 'Screens/Components/Menus/PatientLeftMenu/index';
-import LeftMenuMobile from 'Screens/Components/Menus/PatientLeftMenu/mobile';
-import FatiqueQuestion from '../../Components/TimelineComponent/CovidSymptomsField/FatiqueQuestions';
-import Checkbox from '@material-ui/core/Checkbox';
-import MMHG from 'Screens/Components/mmHgField/index';
-import NotesEditor from '../../Components/Editor/index';
-import PainIntensity from 'Screens/Components/PainIntansity/index';
-import SymptomQuestions from '../../Components/TimelineComponent/CovidSymptomsField/SymptomQuestions';
-import PainPoint from '../../Components/PointPain/index';
-import SelectByTwo from 'Screens/Components/SelectbyTwo/index';
-import DateFormat from 'Screens/Components/DateFormat/index';
-import { OptionList } from 'Screens/Login/metadataaction';
-import { GetLanguageDropdown } from 'Screens/Components/GetMetaData/index.js';
-import MetaData from 'Screens/Hooks/MetaData';
-import Setting from 'Screens/Hooks/Setting';
-import Language from 'Screens/Hooks/Language';
-import LoginReducerAim from 'Screens/Hooks/LoginReducerAim';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import axios from 'axios';
-import sitedata from 'sitedata';
+import React, { useEffect, useState } from "react";
+import Grid from "@material-ui/core/Grid";
+import Loader from "Screens/Components/Loader/index";
+import LeftMenu from "Screens/Components/Menus/PatientLeftMenu/index";
+import LeftMenuMobile from "Screens/Components/Menus/PatientLeftMenu/mobile";
+import FatiqueQuestion from "../../Components/TimelineComponent/CovidSymptomsField/FatiqueQuestions";
+import Checkbox from "@material-ui/core/Checkbox";
+import MMHG from "Screens/Components/mmHgField/index";
+import NotesEditor from "../../Components/Editor/index";
+import PainIntensity from "Screens/Components/PainIntansity/index";
+import SymptomQuestions from "../../Components/TimelineComponent/CovidSymptomsField/SymptomQuestions";
+import PainPoint from "../../Components/PointPain/index";
+import SelectByTwo from "Screens/Components/SelectbyTwo/index";
+import DateFormat from "Screens/Components/DateFormat/index";
+import { OptionList } from "Screens/Login/metadataaction";
+import { GetLanguageDropdown } from "Screens/Components/GetMetaData/index.js";
+import MetaData from "Screens/Hooks/MetaData";
+import Setting from "Screens/Hooks/Setting";
+import Language from "Screens/Hooks/Language";
+import LoginReducerAim from "Screens/Hooks/LoginReducerAim";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import axios from "axios";
+import sitedata from "sitedata";
 import {
   commonHeader,
   commonCometHeader,
   GetHouseID,
-} from 'component/CommonHeader/index';
-import Calendar2 from 'react-calendar';
+} from "component/CommonHeader/index";
+import Calendar2 from "react-calendar";
 // import { handleEvalSubmit } from './api';
 
 function Index(props) {
@@ -34,7 +34,7 @@ function Index(props) {
   const [loaderImage, setloaderImage] = useState(false);
   const [Allsituation, setAllsituation] = useState({});
   const [error_section, setError_section] = useState(0);
-  const [errorChrMsg, setErrorChrMsg] = useState('');
+  const [errorChrMsg, setErrorChrMsg] = useState("");
   const [DataprotectionRules, setDataprotectionRules] = useState(false);
   const [openCalendar, setOpenCalendar] = useState(false);
   const [appointmentData, setAppointmentData] = useState({});
@@ -76,11 +76,11 @@ function Index(props) {
   };
   // Set the checkbox state
   const updateAllEntrySec2 = (e) => {
-    if (e.target.name === 'DataprotectionRules') {
-      setDataprotectionRules(e.target.value == 'true' ? true : false);
+    if (e.target.name === "DataprotectionRules") {
+      setDataprotectionRules(e.target.value == "true" ? true : false);
     } else {
       const state = updateQues;
-      state[e.target.name] = e.target.value == 'true' ? true : false;
+      state[e.target.name] = e.target.value == "true" ? true : false;
       setUpdateQues({ ...updateQues });
     }
   };
@@ -89,7 +89,7 @@ function Index(props) {
   const MoveTop = (top) => {
     window.scroll({
       top: top,
-      behavior: 'smooth',
+      behavior: "smooth",
     });
   };
 
@@ -101,8 +101,8 @@ function Index(props) {
       end_date = end_date.setDate(end_date.getDate() + 1);
       end_date = new Date(end_date).setHours(0, 0, 0, 0);
       return (
-        new Date(Date.parse(date.replace(/-/gm, '/'))) >= start_date &&
-        new Date(Date.parse(date.replace(/-/gm, '/'))) < end_date
+        new Date(Date.parse(date.replace(/-/gm, "/"))) >= start_date &&
+        new Date(Date.parse(date.replace(/-/gm, "/"))) < end_date
       );
     } else {
       return false;
@@ -137,8 +137,8 @@ function Index(props) {
       current_date = new Date(current_date).setHours(0, 0, 0, 0);
       Newdate = Newdate.setDate(Newdate.getDate() + parseInt(days_upto));
       return (
-        new Date(Date.parse(date.replace(/-/gm, '/'))) < current_date ||
-        new Date(Date.parse(date.replace(/-/gm, '/'))) >= Newdate
+        new Date(Date.parse(date.replace(/-/gm, "/"))) < current_date ||
+        new Date(Date.parse(date.replace(/-/gm, "/"))) >= Newdate
       );
     } else {
       return false;
@@ -149,7 +149,7 @@ function Index(props) {
     var user_token = all_LoginReducerAim.token;
     axios
       .get(
-        sitedata.data.path + '/vactive/SelectDocforSickleave',
+        sitedata.data.path + "/vactive/SelectDocforSickleave",
         commonHeader(user_token)
       )
       .then((response) => {
@@ -159,6 +159,8 @@ function Index(props) {
           response?.data?.data?.sickleave
         ) {
           var data = response?.data?.data[0]?.sickleave[0];
+          console.log("data", data);
+          console.log("response", response);
           setAppointmentData(data);
           // setTimeout(() => onChange(new Date()), 200);
         }
@@ -172,60 +174,64 @@ function Index(props) {
     if (date !== undefined && date) {
       day_num = date.getDay();
       Month = date.getMonth() + 1;
-      date1 = Month + '-' + date.getDate() + '-' + date.getFullYear();
+      date1 = Month + "-" + date.getDate() + "-" + date.getFullYear();
     } else {
       date = new Date();
       day_num = date.getDay();
       Month = date.getMonth() + 1;
-      date1 = Month + '-' + date.getDate() + '-' + date.getFullYear();
+      date1 = Month + "-" + date.getDate() + "-" + date.getFullYear();
     }
     let days;
     switch (day_num) {
       case 1:
-        days = 'monday';
+        days = "monday";
         break;
       case 2:
-        days = 'tuesday';
+        days = "tuesday";
         break;
       case 3:
-        days = 'wednesday';
+        days = "wednesday";
         break;
       case 4:
-        days = 'thursday';
+        days = "thursday";
         break;
       case 5:
-        days = 'friday';
+        days = "friday";
         break;
       case 6:
-        days = 'saturday';
+        days = "saturday";
         break;
       case 0:
-        days = 'sunday';
+        days = "sunday";
         break;
     }
+    console.log("appointmentData", appointmentData);
     // let appointmentData = appointmentData;
     let appointDate1;
     if (appointmentData) {
+      console.log();
       Object.entries(appointmentData).map(([key, value]) => {
         if (key == days) {
           appointDate1 = value;
         }
       });
     }
+    console.log("appointDate", appointDate1, date1, days);
     setAppointDate(appointDate1);
     setSelectedDate(date1);
     setApointDay(days);
+    console.log("appointDate1234", appointDate);
   };
 
   // Submit form details with validations
   const handleEvalSubmit = () => {
-    setErrorChrMsg('');
+    setErrorChrMsg("");
     let data = {};
     data = updateQues;
     var due_on = data?.due_on || {};
-    due_on['date'] = new Date();
+    due_on["date"] = new Date();
     data.due_on = due_on;
-    due_on['time'] = new Date();
+    due_on["time"] = new Date();
     data.due_on = due_on;
     var patient = {
       first_name: all_LoginReducerAim.user?.first_name,
@@ -237,22 +243,22 @@ function Index(props) {
     };
     data.patient = patient;
     data.patient_id = all_LoginReducerAim.user?._id;
-    data.task_name = 'Sick leave certificate from patient';
-    data.task_type = 'sick_leave';
-    data.done_on = '';
+    data.task_name = "Sick leave certificate from patient";
+    data.task_type = "sick_leave";
+    data.done_on = "";
     data.priority = 0;
     data.archived = false;
-    data.status = 'open';
+    data.status = "open";
     data.created_at = new Date();
-    data.house_id = '60fabfe5b3394533f7f9a6dc-1639551688707';
+    data.house_id = "60fabfe5b3394533f7f9a6dc-1639551688707";
     if (!data?.due_on?.date) {
       let due_on = data?.due_on || {};
-      due_on['date'] = new Date();
+      due_on["date"] = new Date();
       data.due_on = due_on;
     }
     if (!data?.due_on?.time) {
       let due_on = data?.due_on || {};
-      due_on['time'] = new Date();
+      due_on["time"] = new Date();
       data.due_on = due_on;
     }
     // if (validatePainHeart1(data.headache, '', 'headache')) {
@@ -741,7 +747,7 @@ function Index(props) {
       //     );
     } else {
       setErrorChrMsg(
-        'Please select Data protection rules and Regulations of Aimedis.'
+        "Please select Data protection rules and Regulations of Aimedis."
       );
       setError_section(45);
     }
@@ -817,7 +823,7 @@ function Index(props) {
   const validatePainHeart = (check, value, item) => {
     var bpPattern = /^[0-9]+$/;
     var Valid = bpPattern.test(value);
-    if (item === 'painbegin' && check === 'yes') {
+    if (item === "painbegin" && check === "yes") {
       if (
         !value.headache_painbegin_back === true &&
         !value.headache_painbegin_front === true &&
@@ -826,13 +832,13 @@ function Index(props) {
         !value.headache_painbegin_top === true
       ) {
         setError_section(1);
-        setErrorChrMsg('Please select pain begin');
+        setErrorChrMsg("Please select pain begin");
         MoveTop(0);
         return false;
       } else {
         return true;
       }
-    } else if (item === 'hurtnow' && check === 'yes') {
+    } else if (item === "hurtnow" && check === "yes") {
       if (
         !value.headache_hurtnow_back === true &&
         !value.headache_hurtnow_front === true &&
@@ -841,265 +847,265 @@ function Index(props) {
         !value.headache_hurtnow_top === true
       ) {
         setError_section(2);
-        setErrorChrMsg('Please select hurt now');
+        setErrorChrMsg("Please select hurt now");
         MoveTop(0);
         return false;
       } else {
         return true;
       }
-    } else if (item === 'headache_quality_of_pain' && check === 'yes') {
+    } else if (item === "headache_quality_of_pain" && check === "yes") {
       if (!value && !(value > -1)) {
         setError_section(6);
-        setErrorChrMsg('Please enter Quality of pain value');
+        setErrorChrMsg("Please enter Quality of pain value");
         MoveTop(250);
         return false;
       } else {
         return true;
       }
-    } else if (item === 'headache_undergoing_treatment' && check === 'yes') {
+    } else if (item === "headache_undergoing_treatment" && check === "yes") {
       if (!value) {
         setError_section(11);
-        setErrorChrMsg('Please select Undergoing treatment with YES / NO');
+        setErrorChrMsg("Please select Undergoing treatment with YES / NO");
         MoveTop(550);
         return false;
       } else {
         return true;
       }
     } else if (
-      (item === 'stomach_painbegin_painPoint' ||
-        item === 'stomach_hurtnow_painPoint') &&
-      check === 'yes'
+      (item === "stomach_painbegin_painPoint" ||
+        item === "stomach_hurtnow_painPoint") &&
+      check === "yes"
     ) {
-      var section = item === 'stomach_painbegin_painPoint' ? 12 : 13;
+      var section = item === "stomach_painbegin_painPoint" ? 12 : 13;
       if (!value) {
         setError_section(section);
-        setErrorChrMsg('Please select Pain point');
+        setErrorChrMsg("Please select Pain point");
         MoveTop(0);
         return false;
       } else {
         return true;
       }
     } else if (
-      item === 'stomach_continuously_or_periodically' &&
-      check === 'yes'
+      item === "stomach_continuously_or_periodically" &&
+      check === "yes"
     ) {
       if (!value) {
         setError_section(16);
         setErrorChrMsg(
-          'Please select Continuously or Periodically with Yes / No'
+          "Please select Continuously or Periodically with Yes / No"
         );
         MoveTop(450);
         return false;
       } else {
         return true;
       }
-    } else if (item === 'stomach_take_painkillers' && check === 'yes') {
+    } else if (item === "stomach_take_painkillers" && check === "yes") {
       if (!value) {
         setError_section(18);
-        setErrorChrMsg('Please select Take painkillers with Yes / No');
+        setErrorChrMsg("Please select Take painkillers with Yes / No");
         MoveTop(250);
         return false;
       } else {
         return true;
       }
-    } else if (item === 'stomach_undergoing_treatment' && check === 'yes') {
+    } else if (item === "stomach_undergoing_treatment" && check === "yes") {
       if (!value) {
         setError_section(20);
-        setErrorChrMsg('Please select Undergoing treatment with YES / NO');
+        setErrorChrMsg("Please select Undergoing treatment with YES / NO");
         MoveTop(550);
         return false;
       } else {
         return true;
       }
-    } else if (item === 'diarrhea_suffer_from_vomiting' && check === 'yes') {
+    } else if (item === "diarrhea_suffer_from_vomiting" && check === "yes") {
       if (!value) {
         setError_section(22);
-        setErrorChrMsg('Please select Suffer from Vomiting with YES / NO');
+        setErrorChrMsg("Please select Suffer from Vomiting with YES / NO");
         MoveTop(550);
         return false;
       } else {
         return true;
       }
     } else if (
-      (item === 'diarrhea_envi_suffer_symtoms' ||
-        item === 'cough_envi_suffer_symtoms') &&
-      check === 'yes'
+      (item === "diarrhea_envi_suffer_symtoms" ||
+        item === "cough_envi_suffer_symtoms") &&
+      check === "yes"
     ) {
-      var section = item === 'diarrhea_envi_suffer_symtoms' ? 24 : 37;
+      var section = item === "diarrhea_envi_suffer_symtoms" ? 24 : 37;
       if (!value) {
         setError_section(section);
-        setErrorChrMsg('Please select Envinment Suffer symtoms with YES / NO');
+        setErrorChrMsg("Please select Envinment Suffer symtoms with YES / NO");
         MoveTop(550);
         return false;
       } else {
         return true;
       }
-    } else if (item === 'diarrhea_liquids_with_you' && check === 'yes') {
+    } else if (item === "diarrhea_liquids_with_you" && check === "yes") {
       if (!value) {
         setError_section(25);
-        setErrorChrMsg('Please select keep liquid with you with YES / NO');
+        setErrorChrMsg("Please select keep liquid with you with YES / NO");
         MoveTop(550);
         return false;
       } else {
         return true;
       }
     } else if (
-      (item === 'fever_low_body_temp' || item === 'fever_top_body_temp') &&
-      check === 'yes'
+      (item === "fever_low_body_temp" || item === "fever_top_body_temp") &&
+      check === "yes"
     ) {
-      var section = item === 'fever_low_body_temp' ? 28 : 27;
+      var section = item === "fever_low_body_temp" ? 28 : 27;
       var currentItem =
-        item === 'fever_low_body_temp' ? 'low value' : 'top value';
+        item === "fever_low_body_temp" ? "low value" : "top value";
       if (!value) {
         setError_section(section);
         setErrorChrMsg(
-          'Please Enter' + ' ' + currentItem + ' ' + 'of body temprature'
+          "Please Enter" + " " + currentItem + " " + "of body temprature"
         );
         MoveTop(550);
         return false;
       } else if (value < 36 || value > 41) {
         setError_section(section);
-        setErrorChrMsg('Please Enter valid body temprature');
+        setErrorChrMsg("Please Enter valid body temprature");
         MoveTop(550);
         return false;
       } else {
         return true;
       }
     } else if (
-      (item === 'fever_sputum' || item === 'cough_suffer_from_allergies') &&
-      check === 'yes'
+      (item === "fever_sputum" || item === "cough_suffer_from_allergies") &&
+      check === "yes"
     ) {
-      var section = item === 'fever_sputum' ? 30 : 38;
+      var section = item === "fever_sputum" ? 30 : 38;
       var currentItem =
-        item === 'fever_sputum' ? 'Sputum' : 'suffer from Allergies';
-      if (!value || value === '<p><br></p>' || value === '<p></p>') {
+        item === "fever_sputum" ? "Sputum" : "suffer from Allergies";
+      if (!value || value === "<p><br></p>" || value === "<p></p>") {
         setError_section(section);
-        setErrorChrMsg('Please enter sputum intensity');
+        setErrorChrMsg("Please enter sputum intensity");
         MoveTop(450);
         return false;
       } else {
         return true;
       }
     } else if (
-      (item === 'fever_symptoms_begin' ||
-        item === 'back_pain_symptoms_begin' ||
-        item === 'diarrhea_symptoms_begin' ||
-        item === 'cough_symptoms_begin' ||
-        item === 'depressed_symptoms_begin') &&
-      check === 'yes'
+      (item === "fever_symptoms_begin" ||
+        item === "back_pain_symptoms_begin" ||
+        item === "diarrhea_symptoms_begin" ||
+        item === "cough_symptoms_begin" ||
+        item === "depressed_symptoms_begin") &&
+      check === "yes"
     ) {
       var section =
-        item === 'fever_symptoms_begin'
+        item === "fever_symptoms_begin"
           ? 26
-          : item === 'back_pain_symptoms_begin'
+          : item === "back_pain_symptoms_begin"
           ? 31
-          : item === 'diarrhea_symptoms_begin'
+          : item === "diarrhea_symptoms_begin"
           ? 21
-          : item === 'cough_symptoms_begin'
+          : item === "cough_symptoms_begin"
           ? 35
           : 39;
       if (!value) {
         setError_section(section);
-        setErrorChrMsg('Please enter Symptoms begin');
+        setErrorChrMsg("Please enter Symptoms begin");
         MoveTop(550);
         return false;
       } else {
         return true;
       }
     } else if (
-      (item === 'headache_rr_systolic' ||
-        item === 'stomach_rr_systolic' ||
-        item === 'back_pain_rr_systolic' ||
-        item === 'cardiac_rr_systolic') &&
-      check === 'yes'
+      (item === "headache_rr_systolic" ||
+        item === "stomach_rr_systolic" ||
+        item === "back_pain_rr_systolic" ||
+        item === "cardiac_rr_systolic") &&
+      check === "yes"
     ) {
       var section =
-        item === 'headache_rr_systolic'
+        item === "headache_rr_systolic"
           ? 3
-          : item === 'stomach_rr_systolic'
+          : item === "stomach_rr_systolic"
           ? 14
-          : item === 'back_pain_rr_systolic'
+          : item === "back_pain_rr_systolic"
           ? 33
           : 42;
       if (!value) {
         setError_section(section);
-        setErrorChrMsg('Please enter Systolic value');
+        setErrorChrMsg("Please enter Systolic value");
         MoveTop(250);
         return false;
       } else if (!Valid) {
         setError_section(section);
-        setErrorChrMsg('Systolic bp should be in number');
+        setErrorChrMsg("Systolic bp should be in number");
         MoveTop(250);
         return false;
       } else if (value < 120) {
         setError_section(section);
-        setErrorChrMsg('Please select systolic bp value between 120-140');
+        setErrorChrMsg("Please select systolic bp value between 120-140");
         MoveTop(250);
         return false;
       } else if (value > 140) {
         setError_section(section);
-        setErrorChrMsg('Please select systolic bp value between 120-140');
+        setErrorChrMsg("Please select systolic bp value between 120-140");
         MoveTop(250);
         return false;
       } else {
         return true;
       }
     } else if (
-      (item === 'headache_rr_diastolic' ||
-        item === 'stomach_rr_diastolic' ||
-        item === 'back_pain_rr_diastolic' ||
-        item === 'cardiac_rr_diastolic') &&
-      check === 'yes'
+      (item === "headache_rr_diastolic" ||
+        item === "stomach_rr_diastolic" ||
+        item === "back_pain_rr_diastolic" ||
+        item === "cardiac_rr_diastolic") &&
+      check === "yes"
     ) {
       var section =
-        item === 'headache_rr_diastolic'
+        item === "headache_rr_diastolic"
           ? 4
-          : item === 'stomach_rr_diastolic'
+          : item === "stomach_rr_diastolic"
           ? 15
-          : item === 'back_pain_rr_diastolic'
+          : item === "back_pain_rr_diastolic"
           ? 34
           : 43;
       if (!value) {
         setError_section(section);
-        setErrorChrMsg('Please enter Diastolic value');
+        setErrorChrMsg("Please enter Diastolic value");
         MoveTop(250);
         return false;
       } else if (!Valid) {
         setError_section(section);
-        setErrorChrMsg('Diastolic bp should be in number');
+        setErrorChrMsg("Diastolic bp should be in number");
         MoveTop(250);
         return false;
       } else if (value < 80) {
         setError_section(section);
-        setErrorChrMsg('Please select Diastolic bp value between 80-90');
+        setErrorChrMsg("Please select Diastolic bp value between 80-90");
         MoveTop(250);
         return false;
       } else if (value > 90) {
         setError_section(section);
-        setErrorChrMsg('Please select Diastolic bp value between 80-90');
+        setErrorChrMsg("Please select Diastolic bp value between 80-90");
         MoveTop(250);
         return false;
       } else {
         return true;
       }
     } else if (
-      (item === 'headache_pain_intensity' ||
-        item === 'stomach_pain_intensity' ||
-        item === 'fever_pain_intensity' ||
-        item === 'depressed_pain_intensity') &&
-      check === 'yes'
+      (item === "headache_pain_intensity" ||
+        item === "stomach_pain_intensity" ||
+        item === "fever_pain_intensity" ||
+        item === "depressed_pain_intensity") &&
+      check === "yes"
     ) {
       var section =
-        item === 'headache_pain_intensity'
+        item === "headache_pain_intensity"
           ? 10
-          : item === 'stomach_pain_intensity'
+          : item === "stomach_pain_intensity"
           ? 19
-          : item === 'fever_pain_intensity'
+          : item === "fever_pain_intensity"
           ? 29
           : 40;
       if (!value && !(value > 0)) {
         setError_section(section);
-        setErrorChrMsg('Please select Pain intensity');
+        setErrorChrMsg("Please select Pain intensity");
         MoveTop(450);
         return false;
       } else {
@@ -1107,81 +1113,82 @@ function Index(props) {
       }
     }
     if (
-      (item === 'headache_body_temp' ||
-        item === 'stomach_body_temp' ||
-        item === 'diarrhea_body_temp' ||
-        item === 'cough_body_temp') &&
-      check === 'yes'
+      (item === "headache_body_temp" ||
+        item === "stomach_body_temp" ||
+        item === "diarrhea_body_temp" ||
+        item === "cough_body_temp") &&
+      check === "yes"
     ) {
       var section =
-        item === 'headache_body_temp'
+        item === "headache_body_temp"
           ? 5
-          : item === 'stomach_body_temp'
+          : item === "stomach_body_temp"
           ? 17
-          : item === 'diarrhea_body_temp'
+          : item === "diarrhea_body_temp"
           ? 23
           : 36;
       if (!value) {
         setError_section(section);
-        setErrorChrMsg('Please Enter body temprature');
+        setErrorChrMsg("Please Enter body temprature");
         MoveTop(550);
         return false;
       } else if (value < 36 || value > 41) {
         setError_section(section);
-        setErrorChrMsg('Please Enter valid body temprature');
+        setErrorChrMsg("Please Enter valid body temprature");
         MoveTop(550);
         return false;
       } else {
         return true;
       }
-    } else if (item === 'headache_have_diabetes' && check === 'yes') {
+    } else if (item === "headache_have_diabetes" && check === "yes") {
+      console.log("item,value,check", item, value, check);
       if (!value.headache_have_diabetes) {
         setError_section(46);
-        setErrorChrMsg('Please select Diabetes with YES / NO');
+        setErrorChrMsg("Please select Diabetes with YES / NO");
         MoveTop(200);
         return false;
-      } else if (value && value.headache_have_diabetes === 'yes') {
+      } else if (value && value.headache_have_diabetes === "yes") {
         var bpPattern = /^[0-9]+$/;
         var valid = bpPattern.test(value.headache_blood_sugar);
         let calHba1c = value.headache_Hba1c && value.headache_Hba1c / 10;
         if (!value.headache_blood_sugar) {
           setError_section(47);
-          setErrorChrMsg('Please enter Blood sugar');
+          setErrorChrMsg("Please enter Blood sugar");
           MoveTop(200);
           return false;
         } else if (!valid) {
           setError_section(47);
-          setErrorChrMsg('Blood sugar should be in number');
+          setErrorChrMsg("Blood sugar should be in number");
           MoveTop(200);
           MoveTop(0);
           return false;
         } else if (value?.headache_blood_sugar < 160) {
           setError_section(47);
-          setErrorChrMsg('Blood sugar should be between 160-240');
+          setErrorChrMsg("Blood sugar should be between 160-240");
           MoveTop(200);
           MoveTop(0);
           return false;
         } else if (value?.headache_blood_sugar > 240) {
           setError_section(47);
-          setErrorChrMsg('Blood sugar should be between 160-240');
+          setErrorChrMsg("Blood sugar should be between 160-240");
           MoveTop(200);
           MoveTop(0);
           return false;
         } else if (!value.headache_Hba1c) {
           setError_section(56);
-          setErrorChrMsg('Please enter Hba1c');
+          setErrorChrMsg("Please enter Hba1c");
           MoveTop(200);
           MoveTop(0);
           return false;
         } else if (calHba1c < 57 / 10) {
           setError_section(56);
-          setErrorChrMsg('Hba1c should be between 57-64');
+          setErrorChrMsg("Hba1c should be between 57-64");
           MoveTop(200);
           MoveTop(0);
           return false;
         } else if (calHba1c > 64 / 10) {
           setError_section(56);
-          setErrorChrMsg('Hba1c should be between 57-64');
+          setErrorChrMsg("Hba1c should be between 57-64");
           MoveTop(200);
           MoveTop(0);
           return false;
@@ -1199,21 +1206,21 @@ function Index(props) {
   const validatePainHeart1 = (check, value, item) => {
     // console.log('check, value, item', check, value, item);
     if (
-      (item === 'headache_need_to_vomit' ||
-        item === 'headache_onset_of_pain' ||
-        item === 'headache_take_painkillers') &&
-      check === 'yes'
+      (item === "headache_need_to_vomit" ||
+        item === "headache_onset_of_pain" ||
+        item === "headache_take_painkillers") &&
+      check === "yes"
     ) {
       var currentItem =
-        item === 'headache_need_to_vomit'
-          ? 'Need to vomit'
-          : item === 'headache_onset_of_pain'
-          ? 'Onset of pain'
-          : 'Take painkillers';
+        item === "headache_need_to_vomit"
+          ? "Need to vomit"
+          : item === "headache_onset_of_pain"
+          ? "Onset of pain"
+          : "Take painkillers";
 
       if (!value) {
         setErrorChrMsg(
-          'Please select' + ' ' + currentItem + ' ' + 'with Yes / No'
+          "Please select" + " " + currentItem + " " + "with Yes / No"
         );
         setError_section(7);
         MoveTop(200);
@@ -1222,21 +1229,21 @@ function Index(props) {
         return true;
       }
     } else if (
-      (item === 'stomach_behind_the_sternum' ||
-        item === 'stomach_heart_attack' ||
-        item === 'stomach_heart_failure') &&
-      check === 'yes'
+      (item === "stomach_behind_the_sternum" ||
+        item === "stomach_heart_attack" ||
+        item === "stomach_heart_failure") &&
+      check === "yes"
     ) {
       var currentItem =
-        item === 'stomach_behind_the_sternum'
-          ? 'Behind the sternum'
-          : item === 'stomach_heart_attack'
-          ? 'Heart attack'
-          : 'Heart failure';
+        item === "stomach_behind_the_sternum"
+          ? "Behind the sternum"
+          : item === "stomach_heart_attack"
+          ? "Heart attack"
+          : "Heart failure";
 
       if (!value) {
         setErrorChrMsg(
-          'Please select' + ' ' + currentItem + ' ' + 'with Yes / No'
+          "Please select" + " " + currentItem + " " + "with Yes / No"
         );
         setError_section(8);
         MoveTop(200);
@@ -1245,27 +1252,27 @@ function Index(props) {
         return true;
       }
     } else if (
-      (item === 'back_pain_been_injured' ||
-        item === 'back_pain_physically_strained' ||
-        item === 'back_pain_stress_depression' ||
-        item === 'back_pain_heart_attack' ||
-        item === 'back_pain_heart_failure') &&
-      check === 'yes'
+      (item === "back_pain_been_injured" ||
+        item === "back_pain_physically_strained" ||
+        item === "back_pain_stress_depression" ||
+        item === "back_pain_heart_attack" ||
+        item === "back_pain_heart_failure") &&
+      check === "yes"
     ) {
       var currentItem =
-        item === 'back_pain_been_injured'
-          ? 'been Injured'
-          : item === 'back_pain_physically_strained'
-          ? 'Physically strained'
-          : item === 'back_pain_stress_depression'
-          ? 'Pain stress depression'
-          : item === 'back_pain_heart_attack'
-          ? 'Heart attack'
-          : 'Heart failure';
+        item === "back_pain_been_injured"
+          ? "been Injured"
+          : item === "back_pain_physically_strained"
+          ? "Physically strained"
+          : item === "back_pain_stress_depression"
+          ? "Pain stress depression"
+          : item === "back_pain_heart_attack"
+          ? "Heart attack"
+          : "Heart failure";
 
       if (!value) {
         setErrorChrMsg(
-          'Please select' + ' ' + currentItem + ' ' + 'with Yes / No'
+          "Please select" + " " + currentItem + " " + "with Yes / No"
         );
         setError_section(32);
         MoveTop(200);
@@ -1274,20 +1281,20 @@ function Index(props) {
         return true;
       }
     } else if (
-      (item === 'depressed_do_you_sleep' ||
-        item === 'depressed_suicidal_thoughts' ||
-        item === 'depressed_hurt_yourself') &&
-      check === 'yes'
+      (item === "depressed_do_you_sleep" ||
+        item === "depressed_suicidal_thoughts" ||
+        item === "depressed_hurt_yourself") &&
+      check === "yes"
     ) {
       var currentItem =
-        item === 'depressed_do_you_sleep'
-          ? 'do you Sleep'
-          : item === 'depressed_suicidal_thoughts'
-          ? 'Suicidal thoughts'
-          : 'Hurt yourself';
+        item === "depressed_do_you_sleep"
+          ? "do you Sleep"
+          : item === "depressed_suicidal_thoughts"
+          ? "Suicidal thoughts"
+          : "Hurt yourself";
       if (!value) {
         setErrorChrMsg(
-          'Please select' + ' ' + currentItem + ' ' + 'with Yes / No'
+          "Please select" + " " + currentItem + " " + "with Yes / No"
         );
         setError_section(41);
         MoveTop(200);
@@ -1296,24 +1303,24 @@ function Index(props) {
         return true;
       }
     } else if (
-      (item === 'cardiac_heart_attack' ||
-        item === 'cardiac_heart_failure' ||
-        item === 'cardiac_have_dizziness' ||
-        item === 'cardiac_have_shoulder_pain') &&
-      check === 'yes'
+      (item === "cardiac_heart_attack" ||
+        item === "cardiac_heart_failure" ||
+        item === "cardiac_have_dizziness" ||
+        item === "cardiac_have_shoulder_pain") &&
+      check === "yes"
     ) {
       var currentItem =
-        item === 'cardiac_heart_attack'
-          ? 'Heart attack'
-          : item === 'cardiac_heart_failure'
-          ? 'Heart failure'
-          : item === 'cardiac_have_dizziness'
-          ? 'have Dizziness'
-          : 'have Shoulder pain';
+        item === "cardiac_heart_attack"
+          ? "Heart attack"
+          : item === "cardiac_heart_failure"
+          ? "Heart failure"
+          : item === "cardiac_have_dizziness"
+          ? "have Dizziness"
+          : "have Shoulder pain";
 
       if (!value) {
         setErrorChrMsg(
-          'Please select' + ' ' + currentItem + ' ' + 'with Yes / No'
+          "Please select" + " " + currentItem + " " + "with Yes / No"
         );
         setError_section(44);
         MoveTop(200);
@@ -1322,50 +1329,50 @@ function Index(props) {
         return true;
       }
     } else if (
-      item === 'headache' ||
-      item === 'stomach_problems' ||
-      item === 'diarrhea' ||
-      item === 'have_fever' ||
-      item === 'back_pain' ||
-      item === 'cough_and_snees' ||
-      item === 'feel_depressed' ||
-      item === 'cardiac_problems'
+      item === "headache" ||
+      item === "stomach_problems" ||
+      item === "diarrhea" ||
+      item === "have_fever" ||
+      item === "back_pain" ||
+      item === "cough_and_snees" ||
+      item === "feel_depressed" ||
+      item === "cardiac_problems"
     ) {
       var currentItem =
-        item === 'headache'
-          ? 'Headache'
-          : item === 'stomach_problems'
-          ? 'Stomach problems'
-          : item === 'diarrhea'
-          ? 'Diarrhea'
-          : item === 'have_fever'
-          ? 'have Fever'
-          : item === 'back_pain'
-          ? 'Back pain'
-          : item === 'feel_depressed'
-          ? 'feel Depressed'
-          : item === 'cough_and_snees'
-          ? 'Cough and Snees'
-          : 'Cardiac problems';
+        item === "headache"
+          ? "Headache"
+          : item === "stomach_problems"
+          ? "Stomach problems"
+          : item === "diarrhea"
+          ? "Diarrhea"
+          : item === "have_fever"
+          ? "have Fever"
+          : item === "back_pain"
+          ? "Back pain"
+          : item === "feel_depressed"
+          ? "feel Depressed"
+          : item === "cough_and_snees"
+          ? "Cough and Snees"
+          : "Cardiac problems";
       var section =
-        item === 'headache'
+        item === "headache"
           ? 48
-          : item === 'stomach_problems'
+          : item === "stomach_problems"
           ? 49
-          : item === 'diarrhea'
+          : item === "diarrhea"
           ? 50
-          : item === 'have_fever'
+          : item === "have_fever"
           ? 51
-          : item === 'back_pain'
+          : item === "back_pain"
           ? 52
-          : item === 'cough_and_snees'
+          : item === "cough_and_snees"
           ? 53
-          : item === 'feel_depressed'
+          : item === "feel_depressed"
           ? 54
           : 55;
       if (!check) {
         setErrorChrMsg(
-          'Please select' + ' ' + currentItem + ' ' + 'with Yes / No'
+          "Please select" + " " + currentItem + " " + "with Yes / No"
         );
         setError_section(section);
         MoveTop(200);
@@ -1384,11 +1391,12 @@ function Index(props) {
         settings &&
         settings.setting &&
         settings.setting.mode &&
-        settings.setting.mode === 'dark'
-          ? 'homeBg darkTheme homeBgDrk'
-          : 'homeBg'
+        settings.setting.mode === "dark"
+          ? "homeBg darkTheme homeBgDrk"
+          : "homeBg"
       }
     >
+      {console.log("return ke niche", appointDate)}
       {loaderImage && <Loader />}
       <Grid className="homeBgIner">
         <Grid container direction="row" justify="center">
@@ -1411,7 +1419,7 @@ function Index(props) {
                       <Grid className="fatiqueQues fatiqueQuess1">
                         <FatiqueQuestion
                           updateAllEntrySec={(e) =>
-                            updateAllEntrySec(e, 'headache')
+                            updateAllEntrySec(e, "headache")
                           }
                           label="You have a headache?"
                           value={updateQues.headache}
@@ -1419,7 +1427,7 @@ function Index(props) {
                         {error_section == 48 && (
                           <div className="err_message2">{errorChrMsg}</div>
                         )}
-                        {updateQues && updateQues?.headache === 'yes' && (
+                        {updateQues && updateQues?.headache === "yes" && (
                           <Grid className="borderLineAfer">
                             <Grid className="bgncmnSpc">
                               <Grid className="bgncmnLbl">
@@ -1433,7 +1441,7 @@ function Index(props) {
                                     justify="center"
                                   >
                                     <Grid item xs={6} sm={6} md={2}>
-                                      <Grid>
+                                      <Grid className="sickCheckSec">
                                         <FormControlLabel
                                           control={
                                             <Checkbox
@@ -1461,7 +1469,7 @@ function Index(props) {
                                       </Grid>
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={2}>
-                                      <Grid>
+                                      <Grid className="sickCheckSec">
                                         <FormControlLabel
                                           control={
                                             <Checkbox
@@ -1489,7 +1497,7 @@ function Index(props) {
                                       </Grid>
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={2}>
-                                      <Grid>
+                                      <Grid className="sickCheckSec">
                                         <FormControlLabel
                                           control={
                                             <Checkbox
@@ -1517,7 +1525,7 @@ function Index(props) {
                                       </Grid>
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={2}>
-                                      <Grid>
+                                      <Grid className="sickCheckSec">
                                         <FormControlLabel
                                           control={
                                             <Checkbox
@@ -1545,7 +1553,7 @@ function Index(props) {
                                       </Grid>
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={2}>
-                                      <Grid>
+                                      <Grid className="sickCheckSec">
                                         <FormControlLabel
                                           control={
                                             <Checkbox
@@ -1594,7 +1602,7 @@ function Index(props) {
                                     justify="center"
                                   >
                                     <Grid item xs={6} sm={6} md={2}>
-                                      <Grid>
+                                      <Grid className="sickCheckSec">
                                         <FormControlLabel
                                           control={
                                             <Checkbox
@@ -1622,7 +1630,7 @@ function Index(props) {
                                       </Grid>
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={2}>
-                                      <Grid>
+                                      <Grid className="sickCheckSec">
                                         <FormControlLabel
                                           control={
                                             <Checkbox
@@ -1650,7 +1658,7 @@ function Index(props) {
                                       </Grid>
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={2}>
-                                      <Grid>
+                                      <Grid className="sickCheckSec">
                                         <FormControlLabel
                                           control={
                                             <Checkbox
@@ -1678,7 +1686,7 @@ function Index(props) {
                                       </Grid>
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={2}>
-                                      <Grid>
+                                      <Grid className="sickCheckSec">
                                         <FormControlLabel
                                           control={
                                             <Checkbox
@@ -1706,7 +1714,7 @@ function Index(props) {
                                       </Grid>
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={2}>
-                                      <Grid>
+                                      <Grid className="sickCheckSec">
                                         <FormControlLabel
                                           control={
                                             <Checkbox
@@ -1756,9 +1764,9 @@ function Index(props) {
                                       label="RR_systolic"
                                       onChange={(e) => updateAllEntrySec1(e)}
                                       value={
-                                        updateQues?.headache == 'yes'
+                                        updateQues?.headache == "yes"
                                           ? updateQues?.headache_rr_systolic
-                                          : ''
+                                          : ""
                                       }
                                     />
                                   </Grid>
@@ -1800,7 +1808,7 @@ function Index(props) {
                                   placeholder="36.6"
                                   name="headache_body_temp"
                                   onChange={(e) =>
-                                    updateAllEntrySec1(e, 'headache_body_temp')
+                                    updateAllEntrySec1(e, "headache_body_temp")
                                   }
                                   // className={forError ? 'setRedColor' : ''}
                                   value={updateQues?.headache_body_temp}
@@ -1816,7 +1824,7 @@ function Index(props) {
                             <Grid className="bgncmnSpc">
                               <FatiqueQuestion
                                 updateAllEntrySec={(e) =>
-                                  updateAllEntrySec(e, 'headache_have_diabetes')
+                                  updateAllEntrySec(e, "headache_have_diabetes")
                                 }
                                 label="Do you have diabetes? If so, what is your blood sugar?"
                                 value={updateQues?.headache_have_diabetes}
@@ -1828,7 +1836,7 @@ function Index(props) {
                               )}
                               {updateQues &&
                                 updateQues?.headache_have_diabetes ===
-                                  'yes' && (
+                                  "yes" && (
                                   <>
                                     <Grid container direction="row" spacing="1">
                                       <Grid item md={6} sm={6}>
@@ -1878,7 +1886,7 @@ function Index(props) {
                                         onChange={(e) =>
                                           updateAllEntrySec(
                                             e,
-                                            'headache_situation'
+                                            "headache_situation"
                                           )
                                         }
                                         value={updateQues?.headache_situation}
@@ -1905,7 +1913,7 @@ function Index(props) {
                                   updateEntryState1={(e) =>
                                     updateAllEntrySec(
                                       e,
-                                      'headache_quality_of_pain'
+                                      "headache_quality_of_pain"
                                     )
                                   }
                                   comesFrom="Feedback"
@@ -1923,7 +1931,7 @@ function Index(props) {
                             <Grid className="bgncmnSpc">
                               <FatiqueQuestion
                                 updateAllEntrySec={(e) =>
-                                  updateAllEntrySec(e, 'headache_need_to_vomit')
+                                  updateAllEntrySec(e, "headache_need_to_vomit")
                                 }
                                 label="Do you need to vomit ?"
                                 value={updateQues?.headache_need_to_vomit}
@@ -1932,7 +1940,7 @@ function Index(props) {
                             <Grid className="bgncmnSpc">
                               <FatiqueQuestion
                                 updateAllEntrySec={(e) =>
-                                  updateAllEntrySec(e, 'headache_onset_of_pain')
+                                  updateAllEntrySec(e, "headache_onset_of_pain")
                                 }
                                 label="Did you have an aura before the onset of pain? (dynamic, mostly visual or other sensory perceptual disorders)"
                                 value={updateQues?.headache_onset_of_pain}
@@ -1943,7 +1951,7 @@ function Index(props) {
                                 updateAllEntrySec={(e) =>
                                   updateAllEntrySec(
                                     e,
-                                    'headache_take_painkillers'
+                                    "headache_take_painkillers"
                                   )
                                 }
                                 label="Do you take painkillers?"
@@ -1980,7 +1988,7 @@ function Index(props) {
                                 updateAllEntrySec={(e) =>
                                   updateAllEntrySec(
                                     e,
-                                    'headache_undergoing_treatment'
+                                    "headache_undergoing_treatment"
                                   )
                                 }
                                 label="Are you already undergoing treatment for your Headace?"
@@ -1997,18 +2005,20 @@ function Index(props) {
                           </Grid>
                         )}
 
-                        <FatiqueQuestion
-                          updateAllEntrySec={(e) =>
-                            updateAllEntrySec(e, 'stomach_problems', 2)
-                          }
-                          label="You have Stomach Problems?"
-                          value={updateQues?.stomach_problems}
-                        />
-                        {error_section == 49 && (
-                          <div className="err_message2">{errorChrMsg}</div>
-                        )}
+                        <Grid className="sickQuesSec">
+                          <FatiqueQuestion
+                            updateAllEntrySec={(e) =>
+                              updateAllEntrySec(e, "stomach_problems", 2)
+                            }
+                            label="You have Stomach Problems?"
+                            value={updateQues?.stomach_problems}
+                          />
+                          {error_section == 49 && (
+                            <div className="err_message2">{errorChrMsg}</div>
+                          )}
+                        </Grid>
 
-                        {updateQues && updateQues?.stomach_problems === 'yes' && (
+                        {updateQues && updateQues?.stomach_problems === "yes" && (
                           <Grid className="borderLineAfer">
                             <Grid className="fillDia">
                               <Grid className="bgncmnSpc">
@@ -2031,7 +2041,7 @@ function Index(props) {
                                   onChange={(e) =>
                                     updateAllEntrySec(
                                       e,
-                                      'stomach_painbegin_painPoint'
+                                      "stomach_painbegin_painPoint"
                                     )
                                   }
                                 />
@@ -2063,7 +2073,7 @@ function Index(props) {
                                   onChange={(e) =>
                                     updateAllEntrySec(
                                       e,
-                                      'stomach_hurtnow_painPoint'
+                                      "stomach_hurtnow_painPoint"
                                     )
                                   }
                                 />
@@ -2078,27 +2088,31 @@ function Index(props) {
                               updateAllEntrySec={(e) =>
                                 updateAllEntrySec(
                                   e,
-                                  'stomach_behind_the_sternum',
+                                  "stomach_behind_the_sternum",
                                   2
                                 )
                               }
                               label="Do you have pain behind the sternum?"
                               value={updateQues?.stomach_behind_the_sternum}
                             />
-                            <FatiqueQuestion
-                              updateAllEntrySec={(e) =>
-                                updateAllEntrySec(e, 'stomach_heart_attack')
-                              }
-                              label="Have you ever had a heart attack?"
-                              value={updateQues?.stomach_heart_attack}
-                            />
-                            <FatiqueQuestion
-                              updateAllEntrySec={(e) =>
-                                updateAllEntrySec(e, 'stomach_heart_failure')
-                              }
-                              label="Do you suffer from diagnosed Heart failure?"
-                              value={updateQues?.stomach_heart_failure}
-                            />
+                            <Grid className="sickQuesSec">
+                              <FatiqueQuestion
+                                updateAllEntrySec={(e) =>
+                                  updateAllEntrySec(e, "stomach_heart_attack")
+                                }
+                                label="Have you ever had a heart attack?"
+                                value={updateQues?.stomach_heart_attack}
+                              />
+                            </Grid>
+                            <Grid className="sickQuesSec">
+                              <FatiqueQuestion
+                                updateAllEntrySec={(e) =>
+                                  updateAllEntrySec(e, "stomach_heart_failure")
+                                }
+                                label="Do you suffer from diagnosed Heart failure?"
+                                value={updateQues?.stomach_heart_failure}
+                              />
+                            </Grid>
                             {error_section == 8 && (
                               <div className="err_message2">{errorChrMsg}</div>
                             )}
@@ -2147,14 +2161,14 @@ function Index(props) {
 
                             <FatiqueQuestion
                               updateAllEntrySec={(e) =>
-                                updateAllEntrySec(e, 'stomach_have_diabetes')
+                                updateAllEntrySec(e, "stomach_have_diabetes")
                               }
                               label="Do you have diabetes? If so, what is your blood sugar?"
                               value={updateQues?.stomach_have_diabetes}
                             />
 
                             {updateQues &&
-                              updateQues?.stomach_have_diabetes === 'yes' && (
+                              updateQues?.stomach_have_diabetes === "yes" && (
                                 <>
                                   <Grid container direction="row" spacing="1">
                                     <Grid item md={6} sm={6}>
@@ -2199,7 +2213,7 @@ function Index(props) {
                                       onChange={(e) =>
                                         updateAllEntrySec(
                                           e,
-                                          'stomach_situation'
+                                          "stomach_situation"
                                         )
                                       }
                                       value={updateQues?.stomach_situation}
@@ -2207,18 +2221,20 @@ function Index(props) {
                                   </Grid>
                                 </>
                               )}
-                            <FatiqueQuestion
-                              updateAllEntrySec={(e) =>
-                                updateAllEntrySec(
-                                  e,
-                                  'stomach_continuously_or_periodically'
-                                )
-                              }
-                              label="Do the symptoms occur continuously or periodically?"
-                              value={
-                                updateQues?.stomach_continuously_or_periodically
-                              }
-                            />
+                            <Grid className="sickQuesSec">
+                              <FatiqueQuestion
+                                updateAllEntrySec={(e) =>
+                                  updateAllEntrySec(
+                                    e,
+                                    "stomach_continuously_or_periodically"
+                                  )
+                                }
+                                label="Do the symptoms occur continuously or periodically?"
+                                value={
+                                  updateQues?.stomach_continuously_or_periodically
+                                }
+                              />
+                            </Grid>
                             {error_section == 16 && (
                               <div className="err_message2">{errorChrMsg}</div>
                             )}
@@ -2252,7 +2268,7 @@ function Index(props) {
                                 updateAllEntrySec={(e) =>
                                   updateAllEntrySec(
                                     e,
-                                    'stomach_take_painkillers'
+                                    "stomach_take_painkillers"
                                   )
                                 }
                                 label="Do you take painkillers ?"
@@ -2291,7 +2307,7 @@ function Index(props) {
                               updateAllEntrySec={(e) =>
                                 updateAllEntrySec(
                                   e,
-                                  'stomach_undergoing_treatment'
+                                  "stomach_undergoing_treatment"
                                 )
                               }
                               label="Are you already undergoing treatment for this Problem ?"
@@ -2302,17 +2318,21 @@ function Index(props) {
                             )}
                           </Grid>
                         )}
-                        <FatiqueQuestion
-                          updateAllEntrySec={(e) =>
-                            updateAllEntrySec(e, 'diarrhea')
-                          }
-                          label="You have Diarrhea?"
-                          value={updateQues?.diarrhea}
-                        />
-                        {error_section == 50 && (
-                          <div className="err_message2">{errorChrMsg}</div>
-                        )}
-                        {updateQues && updateQues?.diarrhea === 'yes' && (
+
+                        <Grid className="sickQuesSec">
+                          <FatiqueQuestion
+                            updateAllEntrySec={(e) =>
+                              updateAllEntrySec(e, "diarrhea")
+                            }
+                            label="You have Diarrhea?"
+                            value={updateQues?.diarrhea}
+                          />
+                          {error_section == 50 && (
+                            <div className="err_message2">{errorChrMsg}</div>
+                          )}
+                        </Grid>
+
+                        {updateQues && updateQues?.diarrhea === "yes" && (
                           <Grid className="borderLineAfer">
                             <Grid className="bgncmnSpc">
                               <Grid className="bgncmnLbl">
@@ -2332,7 +2352,7 @@ function Index(props) {
                                   onChange={(e) =>
                                     updateAllEntrySec(
                                       e,
-                                      'diarrhea_symptoms_begin'
+                                      "diarrhea_symptoms_begin"
                                     )
                                   }
                                   // date_format={
@@ -2353,7 +2373,7 @@ function Index(props) {
                               updateAllEntrySec={(e) =>
                                 updateAllEntrySec(
                                   e,
-                                  'diarrhea_suffer_from_vomiting'
+                                  "diarrhea_suffer_from_vomiting"
                                 )
                               }
                               label="Do you suffer from vomiting?"
@@ -2378,7 +2398,7 @@ function Index(props) {
                                     onChange={(e) =>
                                       updateAllEntrySec1(
                                         e,
-                                        'diarrhea_body_temp'
+                                        "diarrhea_body_temp"
                                       )
                                     }
                                     // className={forError ? 'setRedColor' : ''}
@@ -2397,7 +2417,7 @@ function Index(props) {
                               updateAllEntrySec={(e) =>
                                 updateAllEntrySec(
                                   e,
-                                  'diarrhea_envi_suffer_symtoms'
+                                  "diarrhea_envi_suffer_symtoms"
                                 )
                               }
                               label="Does someone in your environment suffer from the same symtoms?"
@@ -2406,12 +2426,12 @@ function Index(props) {
                             {error_section == 24 && (
                               <div className="err_message2">{errorChrMsg}</div>
                             )}
-                            <Grid className="bgncmnSpcRmv">
+                            <Grid className="bgncmnSpcRmv sickQuesSec">
                               <FatiqueQuestion
                                 updateAllEntrySec={(e) =>
                                   updateAllEntrySec(
                                     e,
-                                    'diarrhea_liquids_with_you'
+                                    "diarrhea_liquids_with_you"
                                   )
                                 }
                                 label="Can you keep liquids with you?"
@@ -2426,17 +2446,20 @@ function Index(props) {
                           </Grid>
                         )}
 
-                        <FatiqueQuestion
-                          updateAllEntrySec={(e) =>
-                            updateAllEntrySec(e, 'have_fever')
-                          }
-                          label="You have Fever?"
-                          value={updateQues?.have_fever}
-                        />
-                        {error_section == 51 && (
-                          <div className="err_message2">{errorChrMsg}</div>
-                        )}
-                        {updateQues && updateQues?.have_fever === 'yes' && (
+                        <Grid className="sickQuesSec">
+                          <FatiqueQuestion
+                            updateAllEntrySec={(e) =>
+                              updateAllEntrySec(e, "have_fever")
+                            }
+                            label="You have Fever?"
+                            value={updateQues?.have_fever}
+                          />
+                          {error_section == 51 && (
+                            <div className="err_message2">{errorChrMsg}</div>
+                          )}
+                        </Grid>
+
+                        {updateQues && updateQues?.have_fever === "yes" && (
                           <Grid className="borderLineAfer">
                             <Grid className="bgncmnSpc">
                               <Grid className="bgncmnLbl">
@@ -2454,7 +2477,7 @@ function Index(props) {
                                   }
                                   max={new Date()}
                                   onChange={(e) =>
-                                    updateAllEntrySec(e, 'fever_symptoms_begin')
+                                    updateAllEntrySec(e, "fever_symptoms_begin")
                                   }
                                   // date_format={
                                   //   this.props.settings &&
@@ -2490,7 +2513,7 @@ function Index(props) {
                                       onChange={(e) =>
                                         updateAllEntrySec1(
                                           e,
-                                          'fever_top_body_temp'
+                                          "fever_top_body_temp"
                                         )
                                       }
                                       // className={forError ? 'setRedColor' : ''}
@@ -2517,7 +2540,7 @@ function Index(props) {
                                       onChange={(e) =>
                                         updateAllEntrySec1(
                                           e,
-                                          'fever_low_body_temp'
+                                          "fever_low_body_temp"
                                         )
                                       }
                                       // className={forError ? 'setRedColor' : ''}
@@ -2558,13 +2581,13 @@ function Index(props) {
 
                             <FatiqueQuestion
                               updateAllEntrySec={(e) =>
-                                updateAllEntrySec(e, 'fever_have_a_cough')
+                                updateAllEntrySec(e, "fever_have_a_cough")
                               }
                               label="Do you have a cough?"
                               value={updateQues?.fever_have_a_cough}
                             />
                             {updateQues &&
-                              updateQues?.fever_have_a_cough === 'yes' && (
+                              updateQues?.fever_have_a_cough === "yes" && (
                                 <Grid className="fatiqueQues">
                                   <Grid className="bgncmnSpc">
                                     <Grid
@@ -2579,33 +2602,35 @@ function Index(props) {
                                           justify="center"
                                         >
                                           <Grid item xs={4} md={4}>
-                                            <FormControlLabel
-                                              control={
-                                                <Checkbox
-                                                  name="fever_cold"
-                                                  value={
-                                                    updateQues &&
-                                                    updateQues?.fever_cold &&
-                                                    updateQues?.fever_cold ==
-                                                      true
-                                                      ? false
-                                                      : true
-                                                  }
-                                                  color="#00ABAF"
-                                                  checked={
-                                                    updateQues?.fever_cold
-                                                  }
-                                                  onChange={(e) => {
-                                                    updateAllEntrySec2(e);
-                                                  }}
-                                                  className="PIC_Condition"
-                                                />
-                                              }
-                                              label="Cold ?"
-                                            />
+                                            <Grid className="sickCheckSec">
+                                              <FormControlLabel
+                                                control={
+                                                  <Checkbox
+                                                    name="fever_cold"
+                                                    value={
+                                                      updateQues &&
+                                                      updateQues?.fever_cold &&
+                                                      updateQues?.fever_cold ==
+                                                        true
+                                                        ? false
+                                                        : true
+                                                    }
+                                                    color="#00ABAF"
+                                                    checked={
+                                                      updateQues?.fever_cold
+                                                    }
+                                                    onChange={(e) => {
+                                                      updateAllEntrySec2(e);
+                                                    }}
+                                                    className="PIC_Condition"
+                                                  />
+                                                }
+                                                label="Cold ?"
+                                              />
+                                            </Grid>
                                           </Grid>
                                           <Grid item xs={4} md={4}>
-                                            <Grid>
+                                            <Grid className="sickCheckSec">
                                               <FormControlLabel
                                                 control={
                                                   <Checkbox
@@ -2646,7 +2671,7 @@ function Index(props) {
                               <NotesEditor
                                 name="fever_sputum"
                                 onChange={(e) =>
-                                  updateAllEntrySec(e, 'fever_sputum')
+                                  updateAllEntrySec(e, "fever_sputum")
                                 }
                                 value={updateQues?.fever_sputum}
                               />
@@ -2659,17 +2684,20 @@ function Index(props) {
                           </Grid>
                         )}
 
-                        <FatiqueQuestion
-                          updateAllEntrySec={(e) =>
-                            updateAllEntrySec(e, 'back_pain')
-                          }
-                          label="You have Back pain?"
-                          value={updateQues?.back_pain}
-                        />
-                        {error_section == 52 && (
-                          <div className="err_message2">{errorChrMsg}</div>
-                        )}
-                        {updateQues && updateQues?.back_pain === 'yes' && (
+                        <Grid className="sickQuesSec">
+                          <FatiqueQuestion
+                            updateAllEntrySec={(e) =>
+                              updateAllEntrySec(e, "back_pain")
+                            }
+                            label="You have Back pain?"
+                            value={updateQues?.back_pain}
+                          />
+                          {error_section == 52 && (
+                            <div className="err_message2">{errorChrMsg}</div>
+                          )}
+                        </Grid>
+
+                        {updateQues && updateQues?.back_pain === "yes" && (
                           <Grid className="borderLineAfer">
                             <Grid className="bgncmnSpc">
                               <Grid className="bgncmnLbl">
@@ -2689,7 +2717,7 @@ function Index(props) {
                                   onChange={(e) =>
                                     updateAllEntrySec(
                                       e,
-                                      'back_pain_symptoms_begin'
+                                      "back_pain_symptoms_begin"
                                     )
                                   }
                                   // date_format={
@@ -2708,40 +2736,51 @@ function Index(props) {
                             </Grid>
                             <FatiqueQuestion
                               updateAllEntrySec={(e) =>
-                                updateAllEntrySec(e, 'back_pain_been_injured')
+                                updateAllEntrySec(e, "back_pain_been_injured")
                               }
                               label="Have you been injured ?"
                               value={updateQues?.back_pain_been_injured}
                             />
-                            <FatiqueQuestion
-                              updateAllEntrySec={(e) =>
-                                updateAllEntrySec(
-                                  e,
-                                  'back_pain_physically_strained'
-                                )
-                              }
-                              label="Have you been physically strained?"
-                              value={updateQues?.back_pain_physically_strained}
-                            />
-                            <FatiqueQuestion
-                              updateAllEntrySec={(e) =>
-                                updateAllEntrySec(
-                                  e,
-                                  'back_pain_stress_depression'
-                                )
-                              }
-                              label="Do you suffer from stress and/or depression?"
-                              value={updateQues?.back_pain_stress_depression}
-                            />
-                            <FatiqueQuestion
-                              updateAllEntrySec={(e) =>
-                                updateAllEntrySec(e, 'back_pain_have_diabetes')
-                              }
-                              label="Do you have diabetes? If so, what is your blood sugar?"
-                              value={updateQues?.back_pain_have_diabetes}
-                            />
+                            <Grid className="sickQuesSec">
+                              <FatiqueQuestion
+                                updateAllEntrySec={(e) =>
+                                  updateAllEntrySec(
+                                    e,
+                                    "back_pain_physically_strained"
+                                  )
+                                }
+                                label="Have you been physically strained?"
+                                value={
+                                  updateQues?.back_pain_physically_strained
+                                }
+                              />
+                            </Grid>
+                            <Grid className="sickQuesSec">
+                              <FatiqueQuestion
+                                updateAllEntrySec={(e) =>
+                                  updateAllEntrySec(
+                                    e,
+                                    "back_pain_stress_depression"
+                                  )
+                                }
+                                label="Do you suffer from stress and/or depression?"
+                                value={updateQues?.back_pain_stress_depression}
+                              />
+                            </Grid>
+                            <Grid className="sickQuesSec">
+                              <FatiqueQuestion
+                                updateAllEntrySec={(e) =>
+                                  updateAllEntrySec(
+                                    e,
+                                    "back_pain_have_diabetes"
+                                  )
+                                }
+                                label="Do you have diabetes? If so, what is your blood sugar?"
+                                value={updateQues?.back_pain_have_diabetes}
+                              />
+                            </Grid>
                             {updateQues &&
-                              updateQues?.back_pain_have_diabetes === 'yes' && (
+                              updateQues?.back_pain_have_diabetes === "yes" && (
                                 <>
                                   <Grid container direction="row" spacing="1">
                                     <Grid item md={6} sm={6}>
@@ -2781,7 +2820,7 @@ function Index(props) {
                                       onChange={(e) =>
                                         updateAllEntrySec(
                                           e,
-                                          'back_pain_situation'
+                                          "back_pain_situation"
                                         )
                                       }
                                       value={updateQues?.back_pain_situation}
@@ -2789,20 +2828,27 @@ function Index(props) {
                                   </Grid>
                                 </>
                               )}
-                            <FatiqueQuestion
-                              updateAllEntrySec={(e) =>
-                                updateAllEntrySec(e, 'back_pain_heart_attack')
-                              }
-                              label="Have you ever had a heart attack?"
-                              value={updateQues?.back_pain_heart_attack}
-                            />
-                            <FatiqueQuestion
-                              updateAllEntrySec={(e) =>
-                                updateAllEntrySec(e, 'back_pain_heart_failure')
-                              }
-                              label="Do you suffer from diagnosed Heart failure?"
-                              value={updateQues?.back_pain_heart_failure}
-                            />
+                            <Grid className="sickQuesSec">
+                              <FatiqueQuestion
+                                updateAllEntrySec={(e) =>
+                                  updateAllEntrySec(e, "back_pain_heart_attack")
+                                }
+                                label="Have you ever had a heart attack?"
+                                value={updateQues?.back_pain_heart_attack}
+                              />
+                            </Grid>
+                            <Grid className="sickQuesSec">
+                              <FatiqueQuestion
+                                updateAllEntrySec={(e) =>
+                                  updateAllEntrySec(
+                                    e,
+                                    "back_pain_heart_failure"
+                                  )
+                                }
+                                label="Do you suffer from diagnosed Heart failure?"
+                                value={updateQues?.back_pain_heart_failure}
+                              />
+                            </Grid>
                             {error_section == 32 && (
                               <div className="err_message2">{errorChrMsg}</div>
                             )}
@@ -2851,17 +2897,20 @@ function Index(props) {
                           </Grid>
                         )}
 
-                        <FatiqueQuestion
-                          updateAllEntrySec={(e) =>
-                            updateAllEntrySec(e, 'cough_and_snees')
-                          }
-                          label="You have Cough and Snees?"
-                          value={updateQues?.cough_and_snees}
-                        />
-                        {error_section == 53 && (
-                          <div className="err_message2">{errorChrMsg}</div>
-                        )}
-                        {updateQues && updateQues?.cough_and_snees === 'yes' && (
+                        <Grid className="sickQuesSec">
+                          <FatiqueQuestion
+                            updateAllEntrySec={(e) =>
+                              updateAllEntrySec(e, "cough_and_snees")
+                            }
+                            label="You have Cough and Snees?"
+                            value={updateQues?.cough_and_snees}
+                          />
+                          {error_section == 53 && (
+                            <div className="err_message2">{errorChrMsg}</div>
+                          )}
+                        </Grid>
+
+                        {updateQues && updateQues?.cough_and_snees === "yes" && (
                           <Grid className="borderLineAfer">
                             <Grid className="bgncmnSpc">
                               <Grid className="bgncmnLbl">
@@ -2879,7 +2928,7 @@ function Index(props) {
                                   }
                                   max={new Date()}
                                   onChange={(e) =>
-                                    updateAllEntrySec(e, 'cough_symptoms_begin')
+                                    updateAllEntrySec(e, "cough_symptoms_begin")
                                   }
                                   // date_format={
                                   //   this.props.settings &&
@@ -2909,7 +2958,7 @@ function Index(props) {
                                   placeholder="36.6"
                                   name="cough_body_temp"
                                   onChange={(e) =>
-                                    updateAllEntrySec1(e, 'cough_body_temp')
+                                    updateAllEntrySec1(e, "cough_body_temp")
                                   }
                                   // className={forError ? 'setRedColor' : ''}
                                   value={updateQues?.cough_body_temp}
@@ -2927,7 +2976,7 @@ function Index(props) {
                                 updateAllEntrySec={(e) =>
                                   updateAllEntrySec(
                                     e,
-                                    'cough_envi_suffer_symtoms'
+                                    "cough_envi_suffer_symtoms"
                                   )
                                 }
                                 label="Does someone in your environment suffer from the same symtoms?"
@@ -2953,7 +3002,7 @@ function Index(props) {
                                   onChange={(e) =>
                                     updateAllEntrySec(
                                       e,
-                                      'cough_suffer_from_allergies'
+                                      "cough_suffer_from_allergies"
                                     )
                                   }
                                   value={
@@ -2970,17 +3019,20 @@ function Index(props) {
                           </Grid>
                         )}
 
-                        <FatiqueQuestion
-                          updateAllEntrySec={(e) =>
-                            updateAllEntrySec(e, 'feel_depressed')
-                          }
-                          label="You feel Depressed?"
-                          value={updateQues?.feel_depressed}
-                        />
-                        {error_section == 54 && (
-                          <div className="err_message2">{errorChrMsg}</div>
-                        )}
-                        {updateQues && updateQues?.feel_depressed === 'yes' && (
+                        <Grid className="sickQuesSec">
+                          <FatiqueQuestion
+                            updateAllEntrySec={(e) =>
+                              updateAllEntrySec(e, "feel_depressed")
+                            }
+                            label="You feel Depressed?"
+                            value={updateQues?.feel_depressed}
+                          />
+                          {error_section == 54 && (
+                            <div className="err_message2">{errorChrMsg}</div>
+                          )}
+                        </Grid>
+
+                        {updateQues && updateQues?.feel_depressed === "yes" && (
                           <Grid className="borderLineAfer">
                             <Grid className="bgncmnSpc">
                               <Grid className="bgncmnLbl">
@@ -3000,7 +3052,7 @@ function Index(props) {
                                   onChange={(e) =>
                                     updateAllEntrySec(
                                       e,
-                                      'depressed_symptoms_begin'
+                                      "depressed_symptoms_begin"
                                     )
                                   }
                                   // date_format={
@@ -3043,27 +3095,29 @@ function Index(props) {
 
                             <FatiqueQuestion
                               updateAllEntrySec={(e) =>
-                                updateAllEntrySec(e, 'depressed_do_you_sleep')
+                                updateAllEntrySec(e, "depressed_do_you_sleep")
                               }
                               label="Do you sleep?"
                               value={updateQues?.depressed_do_you_sleep}
                             />
-                            <FatiqueQuestion
-                              updateAllEntrySec={(e) =>
-                                updateAllEntrySec(
-                                  e,
-                                  'depressed_suicidal_thoughts'
-                                )
-                              }
-                              label="You have suicidal thoughts or ?"
-                              value={updateQues?.depressed_suicidal_thoughts}
-                            />
-                            <Grid className="bgncmnSpcRmv">
+                            <Grid className="sickQuesSec">
                               <FatiqueQuestion
                                 updateAllEntrySec={(e) =>
                                   updateAllEntrySec(
                                     e,
-                                    'depressed_hurt_yourself'
+                                    "depressed_suicidal_thoughts"
+                                  )
+                                }
+                                label="You have suicidal thoughts or ?"
+                                value={updateQues?.depressed_suicidal_thoughts}
+                              />
+                            </Grid>
+                            <Grid className="bgncmnSpcRmv sickQuesSec">
+                              <FatiqueQuestion
+                                updateAllEntrySec={(e) =>
+                                  updateAllEntrySec(
+                                    e,
+                                    "depressed_hurt_yourself"
                                   )
                                 }
                                 label="Do you already hurt yourself once?"
@@ -3078,17 +3132,20 @@ function Index(props) {
                           </Grid>
                         )}
 
-                        <FatiqueQuestion
-                          updateAllEntrySec={(e) =>
-                            updateAllEntrySec(e, 'cardiac_problems')
-                          }
-                          label="you have Cardiac Problems?"
-                          value={updateQues?.cardiac_problems}
-                        />
+                        <Grid className="sickQuesSec">
+                          <FatiqueQuestion
+                            updateAllEntrySec={(e) =>
+                              updateAllEntrySec(e, "cardiac_problems")
+                            }
+                            label="you have Cardiac Problems?"
+                            value={updateQues?.cardiac_problems}
+                          />
+                        </Grid>
+
                         {error_section == 55 && (
                           <div className="err_message2">{errorChrMsg}</div>
                         )}
-                        {updateQues && updateQues?.cardiac_problems === 'yes' && (
+                        {updateQues && updateQues?.cardiac_problems === "yes" && (
                           <Grid className="borderLineAfer">
                             <Grid className="bgncmnSpc">
                               <Grid className="bgncmnLbl">
@@ -3132,61 +3189,69 @@ function Index(props) {
 
                             <FatiqueQuestion
                               updateAllEntrySec={(e) =>
-                                updateAllEntrySec(e, 'cardiac_heart_attack')
+                                updateAllEntrySec(e, "cardiac_heart_attack")
                               }
                               label="Have you ever had a heart attack?"
                               value={updateQues?.cardiac_heart_attack}
                             />
-                            <FatiqueQuestion
-                              updateAllEntrySec={(e) =>
-                                updateAllEntrySec(e, 'cardiac_heart_failure')
-                              }
-                              label="Do you suffer from diagnosed Heart failure?"
-                              value={updateQues?.cardiac_heart_failure}
-                            />
-                            <FatiqueQuestion
-                              updateAllEntrySec={(e) =>
-                                updateAllEntrySec(e, 'cardiac_have_dizziness')
-                              }
-                              label="Do you have dizziness?"
-                              value={updateQues?.cardiac_have_dizziness}
-                            />
-                            <FatiqueQuestion
-                              updateAllEntrySec={(e) =>
-                                updateAllEntrySec(
-                                  e,
-                                  'cardiac_have_shoulder_pain'
-                                )
-                              }
-                              label="Do you have shoulder pain?"
-                              value={updateQues?.cardiac_have_shoulder_pain}
-                            />
+                            <Grid className="sickQuesSec">
+                              <FatiqueQuestion
+                                updateAllEntrySec={(e) =>
+                                  updateAllEntrySec(e, "cardiac_heart_failure")
+                                }
+                                label="Do you suffer from diagnosed Heart failure?"
+                                value={updateQues?.cardiac_heart_failure}
+                              />
+                            </Grid>
+                            <Grid className="sickQuesSec">
+                              <FatiqueQuestion
+                                updateAllEntrySec={(e) =>
+                                  updateAllEntrySec(e, "cardiac_have_dizziness")
+                                }
+                                label="Do you have dizziness?"
+                                value={updateQues?.cardiac_have_dizziness}
+                              />
+                            </Grid>
+                            <Grid className="sickQuesSec">
+                              <FatiqueQuestion
+                                updateAllEntrySec={(e) =>
+                                  updateAllEntrySec(
+                                    e,
+                                    "cardiac_have_shoulder_pain"
+                                  )
+                                }
+                                label="Do you have shoulder pain?"
+                                value={updateQues?.cardiac_have_shoulder_pain}
+                              />
+                            </Grid>
                             {error_section == 44 && (
                               <div className="err_message2">{errorChrMsg}</div>
                             )}
                           </Grid>
                         )}
                         <Grid>
-                          <FormControlLabel
-                            control={
-                              <Checkbox
-                                name="DataprotectionRules"
-                                value={
-                                  DataprotectionRules &&
-                                  DataprotectionRules == true
-                                    ? false
-                                    : true
-                                }
-                                color="#00ABAF"
-                                checked={DataprotectionRules}
-                                onChange={(e) => {
-                                  updateAllEntrySec2(e);
-                                }}
-                                className="PIC_Condition"
-                              />
-                            }
-                            label="I have react and understood the Data protection rules and Regulations of Aimedis."
-                          />
+                          <Grid className="sickCheckSec">
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  name="DataprotectionRules"
+                                  value={
+                                    DataprotectionRules &&
+                                    DataprotectionRules == true
+                                      ? false
+                                      : true
+                                  }
+                                  color="#00ABAF"
+                                  checked={DataprotectionRules}
+                                  onChange={(e) => {
+                                    updateAllEntrySec2(e);
+                                  }}
+                                  className="PIC_Condition"
+                                />
+                              }
+                              label="I have react and understood the Data protection rules and Regulations of Aimedis."
+                            />
+                          </Grid>
                           {error_section == 45 && (
                             <div className="err_message2">{errorChrMsg}</div>
                           )}
@@ -3316,6 +3381,10 @@ function Index(props) {
                             </Grid> */}
 
                             <Grid className="selTimeAM">
+                              {console.log(
+                                "appointDateefregefgfdgg",
+                                appointDate
+                              )}
                               {appointDate && appointDate.length > 0 ? (
                                 Availabledays(
                                   this.state.selectedDate,
@@ -3348,7 +3417,7 @@ function Index(props) {
                                     return (
                                       <Grid>
                                         {appointDate[iA + 1] &&
-                                        appointDate[iA + 1] !== 'undefined' &&
+                                        appointDate[iA + 1] !== "undefined" &&
                                         iA === 0 ? (
                                           <a
                                           // className={
@@ -3366,13 +3435,13 @@ function Index(props) {
                                           // }}
                                           >
                                             {appointDate[iA] +
-                                              ' - ' +
+                                              " - " +
                                               appointDate[iA + 1]}
                                           </a>
                                         ) : (
                                           appointDate[iA + 1] &&
                                           appointDate[iA + 1] !==
-                                            'undefined' && (
+                                            "undefined" && (
                                             <a
                                             // className={
                                             //   this.state.currentSelected &&
@@ -3392,7 +3461,7 @@ function Index(props) {
                                             // }}
                                             >
                                               {appointDate[iA] +
-                                                ' - ' +
+                                                " - " +
                                                 appointDate[iA + 1]}
                                             </a>
                                           )
