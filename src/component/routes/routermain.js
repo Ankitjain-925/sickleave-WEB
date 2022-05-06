@@ -1,18 +1,19 @@
-import React, { Component } from "react";
-import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
-import Grid from "@material-ui/core/Grid";
-import Register from "Screens/Register";
-import Login from "Screens/Login";
-import ForgotPass from "Screens/ChangePassword";
-import ChangePass from "Screens/ChangePassword/changepassword";
-import NotFound from "Screens/Components/NotFound";
-import RegSuccuss from "Screens/Components/RegSuccess/index";
-import Form from "Screens/Patient/Form/index";
+import React, { Component } from 'react';
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import Grid from '@material-ui/core/Grid';
+import Register from 'Screens/Register';
+import Login from 'Screens/Login';
+import ForgotPass from 'Screens/ChangePassword';
+import ChangePass from 'Screens/ChangePassword/changepassword';
+import NotFound from 'Screens/Components/NotFound';
+import RegSuccuss from 'Screens/Components/RegSuccess/index';
+import Form from 'Screens/Patient/Form/index';
+import PatientProfile from 'Screens/Patient/Profile/index';
 
 class Routermain extends Component {
   render() {
     return (
-      <Router basename={"/sys-n-sick"}>
+      <Router basename={'/sys-n-sick'}>
         <Grid>
           <Switch>
             <Route exact path="/" render={(props) => <Login {...props} />} />
@@ -20,6 +21,12 @@ class Routermain extends Component {
               exact
               path="/register"
               render={(props) => <Register {...props} />}
+            />
+
+            <Route
+              exact
+              path="/patient"
+              render={(props) => <PatientProfile {...props} />}
             />
             <Route
               exact

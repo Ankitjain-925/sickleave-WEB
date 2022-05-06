@@ -1710,6 +1710,12 @@
     "sun_before": "Sun before",
     "sexual_active": "Sexual Activities",
     "payment_done": "Payment done",
-    "Reply": "Reply"
+    "Reply": "Reply",
+    "followed": "followed",
+    "unfollowed": "unfollowed",
+    "aimedis_newsletter": "Aimedis newsletter",
+    "follow": "Follow",
+    "unfollow": "Unfollow",
+    "since": "since"
   }
 }

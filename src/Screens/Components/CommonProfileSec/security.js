@@ -1,13 +1,19 @@
-import React, { Component } from "react";
-import Grid from "@material-ui/core/Grid";
-import { connect } from "react-redux";
-import { LoginReducerAim } from "Screens/Login/actions";
-import { LanguageFetchReducer } from "Screens/actions";
-import { Settings } from "Screens/Login/setting";
-import { withRouter } from "react-router-dom";
-import { ChangePass, ChangePassword, Change2fa } from "./securityapi";
-import Loader from "Screens/Components/Loader/index";
-import { getLanguage } from "translations/index"
+import React, { Component } from 'react';
+import Grid from '@material-ui/core/Grid';
+import { connect } from 'react-redux';
+import { LoginReducerAim } from 'Screens/Login/actions';
+import { LanguageFetchReducer } from 'Screens/actions';
+import { Settings } from 'Screens/Login/setting';
+import { withRouter } from 'react-router-dom';
+import {
+  ChangePass,
+  ChangePassword,
+  Change2fa,
+  ChangenewsLetter,
+} from './securityapi';
+import Loader from 'Screens/Components/Loader/index';
+import { getLanguage } from 'translations/index';
+import { getDate } from 'Screens/Components/BasicMethod';
 
 var letter = /([a-zA-Z])+([ -~])*/,
   number = /\d+/,
@@ -20,6 +26,10 @@ class Index extends Component {
       Current_state: this.props.LoggedInUser,
       Password: {},
       is2fa: this.props.LoggedInUser.is2fa,
+      Aimedis_health_newletter:
+        this.props.LoggedInUser.Aimedis_health_newletter,
+      newsletter_last_update_date:
+        this.props.LoggedInUser.newsletter_last_update_date,
       is2faDone: false,
       PassDone: false,
       notmatch: false,
@@ -27,11 +37,17 @@ class Index extends Component {
       fillall: false,
     };
   }
-  
+
   render() {
-    let translate = getLanguage(this.props.stateLanguageType)
+    let translate = getLanguage(this.props.stateLanguageType);
     let {
       Change,
+      since,
+      follow,
+      unfollow,
+      followed,
+      unfollowed,
+      aimedis_newsletter,
       password,
       is,
       we_use_authy,
@@ -80,8 +96,14 @@ class Index extends Component {
             {two_fac_auth} {this.state.is2fa ? enabled : disabled}
           </div>
         )}
+        {this.state.health_newletterDone && (
+          <div className="success_message">
+            {aimedis_newsletter}{' '}
+            {this.state.Aimedis_health_newletter ? followed : unfollowed}
+          </div>
+        )}
         <Grid container direction="row" alignItems="center" spacing={2}>
-          <Grid item xs={12} md={5}>
+          <Grid item xs={12} md={6}>
             <Grid className="chngPasswrd">
               <h2>{change_password}</h2>
               {/* <p>{supportive_text}</p> */}
@@ -95,7 +117,7 @@ class Index extends Component {
                   <input
                     type="password"
                     name="current_pass"
-                    onChange={(e)=> ChangePass(e, this)}
+                    onChange={(e) => ChangePass(e, this)}
                   />
                 </Grid>
               </Grid>
@@ -105,7 +127,7 @@ class Index extends Component {
                   <input
                     type="password"
                     name="new_pass"
-                    onChange={(e)=> ChangePass(e, this)}
+                    onChange={(e) => ChangePass(e, this)}
                   />
                 </Grid>
 
@@ -114,7 +136,7 @@ class Index extends Component {
                     <div className="passInstIner ">
                       <p>{Register_Passwordshould}</p>
                       <img
-                        src={require("assets/images/passArrow.png")}
+                        src={require('assets/images/passArrow.png')}
                         alt=""
                         title=""
                         className="passArow"
@@ -126,7 +148,7 @@ class Index extends Component {
                             this.state.Password.new_pass.length > 8 && (
                               <a>
                                 <img
-                                  src={require("assets/images/CheckCircle.svg")}
+                                  src={require('assets/images/CheckCircle.svg')}
                                   alt=""
                                   title=""
                                 />
@@ -138,7 +160,7 @@ class Index extends Component {
                             this.state.Password.new_pass.length <= 8 && (
                               <a>
                                 <img
-                                  src={require("assets/images/CloseCircle.svg")}
+                                  src={require('assets/images/CloseCircle.svg')}
                                   alt=""
                                   title=""
                                 />
@@ -152,7 +174,7 @@ class Index extends Component {
                             !this.state.Password.new_pass.match(letter) && (
                               <a>
                                 <img
-                                  src={require("assets/images/CloseCircle.svg")}
+                                  src={require('assets/images/CloseCircle.svg')}
                                   alt=""
                                   title=""
                                 />
@@ -164,7 +186,7 @@ class Index extends Component {
                             this.state.Password.new_pass.match(letter) && (
                               <a>
                                 <img
-                                  src={require("assets/images/CheckCircle.svg")}
+                                  src={require('assets/images/CheckCircle.svg')}
                                   alt=""
                                   title=""
                                 />
@@ -178,7 +200,7 @@ class Index extends Component {
                             !this.state.Password.new_pass.match(number) && (
                               <a>
                                 <img
-                                  src={require("assets/images/CloseCircle.svg")}
+                                  src={require('assets/images/CloseCircle.svg')}
                                   alt=""
                                   title=""
                                 />
@@ -190,7 +212,7 @@ class Index extends Component {
                             this.state.Password.new_pass.match(number) && (
                               <a>
                                 <img
-                                  src={require("assets/images/CheckCircle.svg")}
+                                  src={require('assets/images/CheckCircle.svg')}
                                   alt=""
                                   title=""
                                 />
@@ -206,7 +228,7 @@ class Index extends Component {
                             ) && (
                               <a>
                                 <img
-                                  src={require("assets/images/CloseCircle.svg")}
+                                  src={require('assets/images/CloseCircle.svg')}
                                   alt=""
                                   title=""
                                 />
@@ -218,7 +240,7 @@ class Index extends Component {
                             this.state.Password.new_pass.match(specialchar) && (
                               <a>
                                 <img
-                                  src={require("assets/images/CheckCircle.svg")}
+                                  src={require('assets/images/CheckCircle.svg')}
                                   alt=""
                                   title=""
                                 />
@@ -234,7 +256,7 @@ class Index extends Component {
                     <div className="passInstIner">
                       <p>{Register_Passwordshould}</p>
                       <img
-                        src={require("assets/images/passArrow.png")}
+                        src={require('assets/images/passArrow.png')}
                         alt=""
                         title=""
                         className="passArow"
@@ -243,7 +265,7 @@ class Index extends Component {
                         <li>
                           <a>
                             <img
-                              src={require("assets/images/CloseCircle.svg")}
+                              src={require('assets/images/CloseCircle.svg')}
                               alt=""
                               title=""
                             />
@@ -253,7 +275,7 @@ class Index extends Component {
                         <li>
                           <a>
                             <img
-                              src={require("assets/images/CloseCircle.svg")}
+                              src={require('assets/images/CloseCircle.svg')}
                               alt=""
                               title=""
                             />
@@ -263,7 +285,7 @@ class Index extends Component {
                         <li>
                           <a>
                             <img
-                              src={require("assets/images/CloseCircle.svg")}
+                              src={require('assets/images/CloseCircle.svg')}
                               alt=""
                               title=""
                             />
@@ -273,7 +295,7 @@ class Index extends Component {
                         <li>
                           <a>
                             <img
-                              src={require("assets/images/CloseCircle.svg")}
+                              src={require('assets/images/CloseCircle.svg')}
                               alt=""
                               title=""
                             />
@@ -291,7 +313,7 @@ class Index extends Component {
                   <input
                     type="password"
                     name="new_pass_comfirm"
-                    onChange={(e)=> ChangePass(e, this)}
+                    onChange={(e) => ChangePass(e, this)}
                   />
                 </Grid>
               </Grid>
@@ -300,12 +322,12 @@ class Index extends Component {
                   <input
                     type="submit"
                     value={change_password}
-                    onClick={()=>ChangePassword(this)}
+                    onClick={() => ChangePassword(this)}
                   />
                 </Grid>
               </Grid>
             </Grid>
-            <Grid className="twofactorAuth">
+            <Grid>
               <Grid className="factorAuth">
                 <h3>{two_fac_auth}</h3>
                 <p>{we_use_authy}</p>
@@ -314,21 +336,58 @@ class Index extends Component {
                 <h4>
                   {this.state.is2fa && (
                     <img
-                      src={require("assets/images/watched.svg")}
+                      src={require('assets/images/watched.svg')}
                       alt=""
                       title=""
                     />
-                  )}{" "}
+                  )}{' '}
                   {two_fac_auth} {is} {this.state.is2fa ? enabled : disabled}
                 </h4>
                 <Grid className="genPass">
                   <input
                     type="submit"
-                    onClick={()=>Change2fa(this)}
+                    onClick={() => Change2fa(this)}
                     value={
                       this.state.is2fa
                         ? `${Disable} ${two_fac_auth}`
                         : `${Enable} ${two_fac_auth}`
+                    }
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid>
+              <Grid className="factorAuth">
+                <h3>Aimedis newsletter</h3>
+                {/* <p>{we_use_authy}</p> */}
+              </Grid>
+              <Grid className="factorAuthEnbl">
+                <h4>
+                  {this.state.Aimedis_health_newletter && (
+                    <img
+                      src={require('assets/images/watched.svg')}
+                      alt=""
+                      title=""
+                    />
+                  )}{' '}
+                  {aimedis_newsletter} {is}{' '}
+                  {this.state.Aimedis_health_newletter ? followed : unfollowed}{' '}
+                  {since} -
+                  {getDate(
+                    this.state.newsletter_last_update_date,
+                    this.props.settings.setting &&
+                      this.props.settings.setting.date_format
+                  )}
+                </h4>
+
+                <Grid className="genPass">
+                  <input
+                    type="submit"
+                    onClick={() => ChangenewsLetter(this)}
+                    value={
+                      this.state.Aimedis_health_newletter
+                        ? `${unfollow} ${aimedis_newsletter}`
+                        : `${follow} ${aimedis_newsletter}`
                     }
                   />
                 </Grid>
@@ -342,10 +401,8 @@ class Index extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  const {
-    stateLoginValueAim,
-    loadingaIndicatoranswerdetail,
-  } = state.LoginReducerAim;
+  const { stateLoginValueAim, loadingaIndicatoranswerdetail } =
+    state.LoginReducerAim;
   const { stateLanguageType } = state.LanguageReducer;
   const { settings } = state.Settings;
   return {
