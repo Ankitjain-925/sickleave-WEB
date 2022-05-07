@@ -17569,7 +17569,7 @@ select:-webkit-autofill:focus {
   height: 34px;
   padding: 0px 4px;
   min-width: 42px;
-  /* border: 1px solid #d7d7d7; */
+  border: 1px solid #d7d7d7;
   border-radius: 8px;
   background-color: #ffffff;
   display: inline-flex;
