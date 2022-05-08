@@ -22,7 +22,7 @@ import SneezSection from "./SneezSection";
 import CPSection from "./CPSection";
 import DepressedSection from "./DepressedSection";
 import Calendar2 from "react-calendar";
-import { GetLanguageMetadata,onChange, updateAllEntrySec, handleEvalSubmit, updateAllEntrySec1, updateAllEntrySec2 } from "./api"
+import { GetLanguageMetadata,onChange, Isintime, ExitinHoliday, Availabledays, getCalendarData, updateAllEntrySec, handleEvalSubmit, updateAllEntrySec1, updateAllEntrySec2 } from "./api"
 class Index extends Component {
   constructor(props) {
     super(props);
@@ -36,6 +36,7 @@ class Index extends Component {
       loaderImage : false,
       openCalendar: false,
       date: new Date(),
+      appointmentData: []
     };
   }
 
@@ -47,6 +48,7 @@ class Index extends Component {
 
   componentDidMount = () => {
     this.getMetadata();
+    getCalendarData(this)
   }
 
   getMetadata = () => {
@@ -339,14 +341,14 @@ class Index extends Component {
                             <Grid className="selTimeAM">
                               {this.state.appointDate &&
                               this.state.appointDate.length > 0 ? (
-                                this.Availabledays(
+                                Availabledays(
                                   this.state.selectedDate,
                                   this.state.appointmentData.appointment_days
                                 ) ? (
                                   <Grid>
                                     <span>NotAvailable !</span>
                                   </Grid>
-                                ) : this.ExitinHoliday(
+                                ) : ExitinHoliday(
                                     this.state.selectedDate,
                                     this.state.appointmentData.holidays_start,
                                     this.state.appointmentData.holidays_end
@@ -357,7 +359,7 @@ class Index extends Component {
                                 ) : (
                                   this.state.appointDate.map((data, iA) => {
                                     if (
-                                      this.Isintime(
+                                      Isintime(
                                         this.state.appointDate[iA],
                                         this.state.appointmentData
                                           .breakslot_start,

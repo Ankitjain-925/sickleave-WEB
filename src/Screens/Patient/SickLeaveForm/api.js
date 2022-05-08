@@ -1191,58 +1191,76 @@ export const onChange = (date, current) => {
     }
     current.setState({ apointDay: days, selectedDate: date1 });
   };
-// const onChange = (date) => {
-//     setDate(date);
-//     var day_num;
-//     var Month, date1;
-//     if (date !== undefined && date) {
-//       day_num = date.getDay();
-//       Month = date.getMonth() + 1;
-//       date1 = Month + "-" + date.getDate() + "-" + date.getFullYear();
-//     } else {
-//       date = new Date();
-//       day_num = date.getDay();
-//       Month = date.getMonth() + 1;
-//       date1 = Month + "-" + date.getDate() + "-" + date.getFullYear();
-//     }
-//     let days;
-//     switch (day_num) {
-//       case 1:
-//         days = "monday";
-//         break;
-//       case 2:
-//         days = "tuesday";
-//         break;
-//       case 3:
-//         days = "wednesday";
-//         break;
-//       case 4:
-//         days = "thursday";
-//         break;
-//       case 5:
-//         days = "friday";
-//         break;
-//       case 6:
-//         days = "saturday";
-//         break;
-//       case 0:
-//         days = "sunday";
-//         break;
-//     }
-//     console.log("appointmentData", appointmentData);
-//     // let appointmentData = appointmentData;
-//     let appointDate1;
-//     if (appointmentData) {
-//       console.log();
-//       Object.entries(appointmentData).map(([key, value]) => {
-//         if (key == days) {
-//           appointDate1 = value;
-//         }
-//       });
-//     }
-//     console.log("appointDate", appointDate1, date1, days);
-//     setAppointDate(appointDate1);
-//     setSelectedDate(date1);
-//     setApointDay(days);
-//     console.log("appointDate1234", appointDate);
-//   };
+
+  export const ExitinHoliday = (date, h_start, h_end) => {
+    if (h_start && h_end && date) {
+      let start_date = new Date(h_start);
+      let end_date = new Date(h_end);
+      start_date = start_date.setHours(0, 0, 0, 0);
+      end_date = end_date.setDate(end_date.getDate() + 1);
+      end_date = new Date(end_date).setHours(0, 0, 0, 0);
+      return (
+        new Date(Date.parse(date.replace(/-/gm, "/"))) >= start_date &&
+        new Date(Date.parse(date.replace(/-/gm, "/"))) < end_date
+      );
+    } else {
+      return false;
+    }
+  };
+
+  export const Isintime = (currentTime, b_start, b_end) => {
+    if (!currentTime || !b_end || !b_start) return false;
+    let b_start_time, b_end_time, current_time, smint;
+    b_start_time =
+      parseInt(this._getHourMinut(b_start)[0]) * 60 +
+      parseInt(this._getHourMinut(b_start)[1]);
+    b_end_time =
+      parseInt(this._getHourMinut(b_end)[0]) * 60 +
+      parseInt(this._getHourMinut(b_end)[1]);
+    current_time =
+      parseInt(this._getHourMinut(currentTime)[0]) * 60 +
+      parseInt(this._getHourMinut(currentTime)[1]);
+    smint = parseInt(this._getHourMinut(currentTime)[1]);
+
+    if (current_time >= b_start_time && current_time < b_end_time) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  export const Availabledays = (date, days_upto) => {
+    let current_date = new Date();
+    let Newdate = new Date();
+    if (date && days_upto) {
+      current_date = new Date(current_date).setHours(0, 0, 0, 0);
+      Newdate = Newdate.setDate(Newdate.getDate() + parseInt(days_upto));
+      return (
+        new Date(Date.parse(date.replace(/-/gm, "/"))) < current_date ||
+        new Date(Date.parse(date.replace(/-/gm, "/"))) >= Newdate
+      );
+    } else {
+      return false;
+    }
+  };
+
+  export const getCalendarData = (current) => {
+    var user_token = current.props.stateLoginValueAim?.token;
+    axios
+      .get(
+        sitedata.data.path + "/vactive/SelectDocforSickleave",
+        commonHeader(user_token)
+      )
+      .then((response) => {
+        if (
+          response?.data &&
+          response?.data?.data
+        ) {
+          var data = response?.data?.data[0]?.sickleave[0];
+          console.log("data", data);
+          console.log("response", response);
+          current.setState({appointmentData: data});
+          // setTimeout(() => onChange(new Date()), 200);
+        }
+      });
+  };
