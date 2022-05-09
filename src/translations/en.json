@@ -1717,6 +1717,13 @@
     "back_pain":"Back pain",
     "cough_and_snees":"Cough and Snees",
     "feel_depressed":"Depressed",
-    "cardiac_problems":"Cardiac problems"
+    "cardiac_problems":"Cardiac problems",
+    "followed": "followed",
+    "unfollowed": "unfollowed",
+    "aimedis_newsletter": "Aimedis newsletter",
+    "follow": "Follow",
+    "unfollow": "Unfollow",
+    "since": "since",
+    "not_followed_by_yet": "not followed by yet"
   }
 }

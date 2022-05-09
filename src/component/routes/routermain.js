@@ -9,11 +9,12 @@ import NotFound from "Screens/Components/NotFound";
 import RegSuccuss from "Screens/Components/RegSuccess/index";
 import Form from "Screens/Patient/SickLeaveForm/index";
 import RequestList from "Screens/Patient/RequestList/index";
+import PatientProfile from 'Screens/Patient/Profile/index';
 
 class Routermain extends Component {
   render() {
     return (
-      <Router basename={"/sys-n-sick"}>
+      <Router basename={'/sys-n-sick'}>
         <Grid>
           <Switch>
             <Route exact path="/" render={(props) => <Login {...props} />} />
@@ -21,6 +22,12 @@ class Routermain extends Component {
               exact
               path="/register"
               render={(props) => <Register {...props} />}
+            />
+
+            <Route
+              exact
+              path="/patient"
+              render={(props) => <PatientProfile {...props} />}
             />
             <Route
               exact
