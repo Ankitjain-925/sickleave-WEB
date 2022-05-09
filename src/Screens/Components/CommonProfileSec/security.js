@@ -35,6 +35,7 @@ class Index extends Component {
       notmatch: false,
       loaderImage: false,
       fillall: false,
+      date: new Date(),
     };
   }
 
@@ -71,6 +72,7 @@ class Index extends Component {
       Register_letter,
       Register_number,
       Register_special,
+      not_followed_by_yet,
     } = translate;
 
     return (
@@ -362,23 +364,32 @@ class Index extends Component {
                 {/* <p>{we_use_authy}</p> */}
               </Grid>
               <Grid className="factorAuthEnbl">
-                <h4>
-                  {this.state.Aimedis_health_newletter && (
-                    <img
-                      src={require('assets/images/watched.svg')}
-                      alt=""
-                      title=""
-                    />
-                  )}{' '}
-                  {aimedis_newsletter} {is}{' '}
-                  {this.state.Aimedis_health_newletter ? followed : unfollowed}{' '}
-                  {since} -
-                  {getDate(
-                    this.state.newsletter_last_update_date,
-                    this.props.settings.setting &&
-                      this.props.settings.setting.date_format
-                  )}
-                </h4>
+                {this.state.newsletter_last_update_date &&
+                this.state.newsletter_last_update_date !== '' ? (
+                  <h4>
+                    {this.state.Aimedis_health_newletter && (
+                      <img
+                        src={require('assets/images/watched.svg')}
+                        alt=""
+                        title=""
+                      />
+                    )}{' '}
+                    {aimedis_newsletter} {is}{' '}
+                    {this.state.Aimedis_health_newletter
+                      ? followed
+                      : unfollowed}{' '}
+                    {since} -
+                    {getDate(
+                      this.state.newsletter_last_update_date,
+                      this.props.settings.setting &&
+                        this.props.settings.setting.date_format
+                    )}
+                  </h4>
+                ) : (
+                  <h4>
+                    {aimedis_newsletter} {is} {not_followed_by_yet}
+                  </h4>
+                )}
 
                 <Grid className="genPass">
                   <input

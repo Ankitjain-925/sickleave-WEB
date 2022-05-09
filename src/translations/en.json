@@ -1716,6 +1716,7 @@
     "aimedis_newsletter": "Aimedis newsletter",
     "follow": "Follow",
     "unfollow": "Unfollow",
-    "since": "since"
+    "since": "since",
+    "not_followed_by_yet": "not followed by yet"
   }
 }

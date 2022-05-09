@@ -113,7 +113,10 @@ export const Change2fa = (current) => {
 // for follow/unfollow newsletter
 export const ChangenewsLetter = (current) => {
   current.setState(
-    { Aimedis_health_newletter: !current.state.Aimedis_health_newletter },
+    {
+      Aimedis_health_newletter: !current.state.Aimedis_health_newletter,
+      newsletter_last_update_date: new Date(),
+    },
     () => {
       current.setState({ loaderImage: true });
       axios

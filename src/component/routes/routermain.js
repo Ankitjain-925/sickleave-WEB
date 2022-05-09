@@ -7,7 +7,7 @@ import ForgotPass from 'Screens/ChangePassword';
 import ChangePass from 'Screens/ChangePassword/changepassword';
 import NotFound from 'Screens/Components/NotFound';
 import RegSuccuss from 'Screens/Components/RegSuccess/index';
-import Form from 'Screens/Patient/Form/index';
+import Form from 'Screens/Patient/SickLeaveForm/index';
 import PatientProfile from 'Screens/Patient/Profile/index';
 
 class Routermain extends Component {
