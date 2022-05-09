@@ -14506,6 +14506,9 @@ label.newrole {
   border-bottom: 1.5px solid #00abaf;
 }
 
+.painAreasimg{
+  height: 150px !important;
+}
 .sickQuesSec{
   margin-top: 10px;
 }
@@ -14513,10 +14516,24 @@ label.newrole {
   color:#00abaf!important;
 }
 
-/* .aaa{
-  margin-top: 10px!important;
-} */
 
-/* .FatiqueQuestion{
-  margin-top: 10px;
-} */
+
+.fatiqueQues p {
+  color: #7F8383 !important;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 0;
+  line-height: 18px;
+  text-align: center;
+  font-family: Muli;
+  /* height: 34px; */
+  padding: 0px 4px;
+  min-width: 42px;
+  /* border: 1px solid #F2F2F2; */
+  border-radius: 8px;
+  /* background-color: #FFFFFF; */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 14px;
+}
