@@ -156,11 +156,15 @@ function Index(props) {
         if (
           response?.data &&
           response?.data?.data &&
+<<<<<<< HEAD
 <<<<<<< HEAD:src/Screens/Patient/Form/index.js
           response?.data?.data[0]?.sickleave
 =======
           response?.data?.data?.sickleave
 >>>>>>> 32284a6e52fdf6ee8e88f5f76f4e327cf4f31a86:src/Screens/Patient/SickLeaveForm/index-bkp.js
+=======
+          response?.data?.data?.sickleave
+>>>>>>> 6f7d9cbd0bd7ffd5644683d4359fd02bd4861e91
         ) {
           var data = response?.data?.data[0]?.sickleave[0];
           setAppointmentData(data);
