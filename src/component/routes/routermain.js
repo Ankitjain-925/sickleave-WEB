@@ -8,6 +8,7 @@ import ChangePass from "Screens/ChangePassword/changepassword";
 import NotFound from "Screens/Components/NotFound";
 import RegSuccuss from "Screens/Components/RegSuccess/index";
 import Form from "Screens/Patient/SickLeaveForm/index";
+import RequestList from "Screens/Patient/RequestList/index";
 
 class Routermain extends Component {
   render() {
@@ -41,6 +42,11 @@ class Routermain extends Component {
               exact
               path="/patient/sick-request"
               render={(props) => <Form {...props} />}
+            />
+            <Route
+              exact
+              path="/patient/request-list"
+              render={(props) => <RequestList {...props} />}
             />
             <Route
               path="*"

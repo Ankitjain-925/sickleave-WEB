@@ -57,60 +57,19 @@ class Index extends Component {
     this.props.history.push('/');
   };
 
-  //For My Profile link
-  ProfileLink = () => {
-    this.props.history.push('/patient');
-  };
-  //For Emergency Access link
-  EmergencyLink = () => {
-    this.props.history.push('/patient/emergency');
-  };
-  //For Second opinion link
-  SecondLink = () => {
-    this.props.history.push('/patient/second-opinion');
-  };
-  //For Extra service link
-  ExtraLink = () => {
-    this.props.history.push('/patient/extra-services');
-  };
-  // For ournal Archive Link
-  JournalArchiveLink = () => {
-    this.props.history.push('/patient/archiveJournal');
-  };
-  //For Document link
-  DocumentLink = () => {
-    this.props.history.push('/patient/documents');
-  };
-  //For online Course
-  OnlineCourse = () => {
-    this.props.history.push('/patient/online-course');
-  };
-  //For Tracker / Withings
-  Tracker = () => {
-    this.props.history.push('/patient/tracker');
-  };
-  // For Appointment Link
-  AppointmentLink = () => {
-    this.props.history.push('/patient/appointment');
-  };
-  //For Timeline / Journal
-  Journal = () => {
-    this.props.history.push('/patient/journal');
-  };
-  //For chat
-  Chats = () => {
-    this.props.history.push('/patient/chats');
-  };
-  //For block chain Access
-  BlockChain = () => {
-    this.props.history.push('/patient/blockchain');
-  };
+ //For My Profile link
+ ProfileLink = () => {
+  this.props.history.push('/patient');
+};
 
-  //Forpatient jorney
-  pJournry = () => {
-    this.props.history.push('/patient/patient-journey');
-  };
+PictureEval = () => {
+  this.props.history.push('/patient/sick-request');
+};
 
+//For Second opinion link
+feedBack = () => {
+  this.props.history.push('/patient/request-list');
+};
   render() {
     let translate = getLanguage(this.props.stateLanguageType);
     let { my_profile, profile_setting, Language, DarkMode, logout } = translate;

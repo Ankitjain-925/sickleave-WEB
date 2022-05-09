@@ -1710,6 +1710,13 @@
     "sun_before": "Sun before",
     "sexual_active": "Sexual Activities",
     "payment_done": "Payment done",
-    "Reply": "Reply"
+    "Reply": "Reply",
+    "Stomach_Problems":"Stomach Problems",
+    "diarrhea":"Diarrhea",
+    "fever":"Fever",
+    "back_pain":"Back pain",
+    "cough_and_snees":"Cough and Snees",
+    "feel_depressed":"Depressed",
+    "cardiac_problems":"Cardiac problems"
   }
 }

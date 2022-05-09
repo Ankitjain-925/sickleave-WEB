@@ -70,7 +70,7 @@ class Index extends Component {
 
   //For Second opinion link
   feedBack = () => {
-    this.props.history.push('/patient/evaluation-list');
+    this.props.history.push('/patient/request-list');
   };
 
   render() {
