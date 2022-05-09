@@ -1,14 +1,13 @@
-import React, { Component } from 'react';
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
-import Grid from '@material-ui/core/Grid';
-import Register from 'Screens/Register';
-import Login from 'Screens/Login';
-import ForgotPass from 'Screens/ChangePassword';
-import ChangePass from 'Screens/ChangePassword/changepassword';
-import NotFound from 'Screens/Components/NotFound';
-import RegSuccuss from 'Screens/Components/RegSuccess/index';
-import Form from 'Screens/Patient/Form/index';
-import PatientProfile from 'Screens/Patient/Profile/index';
+import React, { Component } from "react";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import Grid from "@material-ui/core/Grid";
+import Register from "Screens/Register";
+import Login from "Screens/Login";
+import ForgotPass from "Screens/ChangePassword";
+import ChangePass from "Screens/ChangePassword/changepassword";
+import NotFound from "Screens/Components/NotFound";
+import RegSuccuss from "Screens/Components/RegSuccess/index";
+import Form from "Screens/Patient/SickLeaveForm/index";
 
 class Routermain extends Component {
   render() {

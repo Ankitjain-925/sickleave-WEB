@@ -70,7 +70,7 @@ class PointPain extends Component {
           <label>{this.state.label}</label>
         </Grid>
         <Grid className="painAreas">
-          <p
+          <a
             id={'V' + this.state.id}
             className="painAreasimg"
             style={{ position: 'relative' }}
@@ -117,13 +117,13 @@ class PointPain extends Component {
                 ))}
             </div>
             {/* <img src={require('assets/images/persionPainEqual.svg')} alt="" title="" /> */}
-          </p>
+          </a>
           {/* <a className="painAreasimg"><img src={require('assets/images/patient-back.svg')} alt="" title="" /></a> */}
           {!this.state.isView && (
-            <p className="painAreasTxt" onClick={this.removedata}>
+            <a className="painAreasTxt" onClick={this.removedata}>
               <img src={require('assets/images/eraser.svg')} alt="" title="" />
               {clear_point}
-            </p>
+            </a>
           )}
         </Grid>
       </Grid>

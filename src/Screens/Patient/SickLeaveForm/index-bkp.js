@@ -156,7 +156,7 @@ function Index(props) {
         if (
           response?.data &&
           response?.data?.data &&
-          response?.data?.data[0]?.sickleave
+          response?.data?.data?.sickleave
         ) {
           var data = response?.data?.data[0]?.sickleave[0];
           setAppointmentData(data);
