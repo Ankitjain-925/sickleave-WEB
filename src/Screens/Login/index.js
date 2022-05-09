@@ -1,57 +1,56 @@
-import React, { Component } from "react";
-import { LanguageFetchReducer } from "Screens/actions";
-import { Redirect, Route } from "react-router-dom";
-import axios from "axios";
-import { connect } from "react-redux";
-import { LoginReducerAim } from "./actions";
-import { Settings } from "./setting";
-import { Doctorarrays } from "./doctorarray";
-import Grid from "@material-ui/core/Grid";
-import { authy } from "./authy.js";
+import React, { Component } from 'react';
+import { LanguageFetchReducer } from 'Screens/actions';
+import { Redirect, Route } from 'react-router-dom';
+import axios from 'axios';
+import { connect } from 'react-redux';
+import { LoginReducerAim } from './actions';
+import { Settings } from './setting';
+import { Doctorarrays } from './doctorarray';
+import Grid from '@material-ui/core/Grid';
+import { authy } from './authy.js';
 import { CometChat } from '@cometchat-pro/chat';
-import { OptionList } from "./metadataaction.js";
-import { Invoices } from "./invoices";
-
+import { OptionList } from './metadataaction.js';
+import { Invoices } from './invoices';
 import {
   NavLink,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-} from "reactstrap";
-import sitedata from "sitedata";
-import { getLanguage } from "translations/index"
-import { commonNoTokentHeader } from "component/CommonHeader/index";
-import * as actions from "Screens/Components/CometChat/store/action";
-import Toggle from "react-toggle";
-import queryString from "query-string";
-import Loader from "Screens/Components/Loader/index";
-const path = sitedata.data.path + "/UserProfile";
+} from 'reactstrap';
+import sitedata from 'sitedata';
+import { getLanguage } from 'translations/index';
+import { commonNoTokentHeader } from 'component/CommonHeader/index';
+import * as actions from 'Screens/Components/CometChat/store/action';
+import Toggle from 'react-toggle';
+import queryString from 'query-string';
+import Loader from 'Screens/Components/Loader/index';
+const path = sitedata.data.path + '/UserProfile';
 
 class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
       hidden: true,
-      password: "",
-      dropDownValue: "Select",
-      inputEmail: "",
-      inputPass: "",
+      password: '',
+      dropDownValue: 'Select',
+      inputEmail: '',
+      inputPass: '',
       show: false,
       myLogin: false,
       weoffer: [],
       loginError: false,
-      logintoken: "",
+      logintoken: '',
       anotherlogin: false,
       loggedIn: false,
       loginError2: false,
       loginError9: false,
       mode:
         this.props.settings &&
-          this.props.settings.setting &&
-          this.props.settings.setting.mode
+        this.props.settings.setting &&
+        this.props.settings.setting.mode
           ? this.props.settings.setting.mode
-          : "normal",
+          : 'normal',
     };
     this.toggleShow = this.toggleShow.bind(this);
   }
@@ -64,12 +63,12 @@ class Index extends Component {
   componentDidMount = () => {
     actions.logout();
     this.logoutUser();
-    this.props.Doctorarrays("logout");
-    this.props.Invoices("logout");
+    this.props.Doctorarrays('logout');
+    this.props.Invoices('logout');
     // this.movedashboard();
     this.unsetCategory();
-    localStorage.removeItem("token");
-    localStorage.removeItem("SUBSCRIPTION_CHECKED_ON");
+    localStorage.removeItem('token');
+    localStorage.removeItem('SUBSCRIPTION_CHECKED_ON');
     let url = this.props.location.search;
     let params = queryString.parse(url);
     this.setState({ logintoken: params.token });
@@ -79,16 +78,14 @@ class Index extends Component {
   };
 
   logoutUser = () => {
-    CometChat.logout().then(
-      console.log('loggedout from cometchat11')
-    )
+    CometChat.logout().then(console.log('loggedout from cometchat11'));
     this.props.OptionList(false);
     this.props.authy(false);
     this.props.Invoices(false);
     let languageType =
-      this.props.stateLanguageType && this.props.stateLanguageType !== ""
+      this.props.stateLanguageType && this.props.stateLanguageType !== ''
         ? this.props.stateLanguageType
-        : "en";
+        : 'en';
     this.props.LanguageFetchReducer(languageType);
     this.anotherPatient();
   };
@@ -98,18 +95,18 @@ class Index extends Component {
     var pin = null;
   };
   unsetCategory() {
-    let category = "all";
+    let category = 'all';
     // this.props.filterate(category);
   }
 
   //Link for the register
   register = () => {
-    this.props.history.push("/register");
+    this.props.history.push('/register');
   };
 
   //Link for the forgot Password
   forgotPassword = () => {
-    this.props.history.push("/forgot-password");
+    this.props.history.push('/forgot-password');
   };
 
   handleChange = (input, value) => {
@@ -130,20 +127,20 @@ class Index extends Component {
       loginError2: false,
       loginError9: false,
     });
-    if (this.state.inputPass && this.state.inputPass !== "") {
+    if (this.state.inputPass && this.state.inputPass !== '') {
       if (this.validateEmail(this.state.inputEmail)) {
         let email = this.state.inputEmail;
         let password = this.state.inputPass;
         this.setState({ loaderImage: true });
-        var logintoken= false;
-        if(this.state.logintoken != '' && this.state.logintoken != undefined){
-          logintoken = this.state.logintoken
+        var logintoken = false;
+        if (this.state.logintoken != '' && this.state.logintoken != undefined) {
+          logintoken = this.state.logintoken;
         }
-        this.setState({otherUser: false})
-        this.props.LoginReducerAim(email, password,logintoken, () => {
+        this.setState({ otherUser: false });
+        this.props.LoginReducerAim(email, password, logintoken, () => {
           this.setState({ myLogin: true });
           this.setState({ loaderImage: false });
-        if (
+          if (
             this.props.stateLoginValueAim &&
             this.props.stateLoginValueAim?.user &&
             !this.props.stateLoginValueAim?.user?.is2fa
@@ -151,7 +148,10 @@ class Index extends Component {
             this.props.OptionList(true, () => {
               this.props.authy(true);
             });
-          } else if (this.props.stateLoginValueAim.token === 450 || this.props.stateLoginValueAim.token === 401) {
+          } else if (
+            this.props.stateLoginValueAim.token === 450 ||
+            this.props.stateLoginValueAim.token === 401
+          ) {
             this.setState({ thisverify: false });
           } else {
             this.setState({ thisverify: true });
@@ -163,14 +163,14 @@ class Index extends Component {
     } else {
       this.setState({ loginError9: true });
     }
-  }
+  };
 
   //For verify the code of Authy
   Verifycode = () => {
     this.setState({ loaderImage: true });
     axios
       .post(
-        path + "/verifyLogin",
+        path + '/verifyLogin',
         {
           mob_token: this.state.mob_token,
           authyId: this.props.stateLoginValueAim.user.authyId,
@@ -201,27 +201,27 @@ class Index extends Component {
   }
 
   onKeyDownlogin = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       this.BtnSubmit();
     }
   };
   onKeyDownverify = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       this.Verifycode();
     }
   };
   //For set the language
   SetMode = () => {
-    var mode = this.state.mode === "normal" ? "dark" : "normal";
+    var mode = this.state.mode === 'normal' ? 'dark' : 'normal';
     this.setState({ mode: mode }, () => {
-      this.props.Settings("loggedOut", mode);
+      this.props.Settings('loggedOut', mode);
     });
   };
   render() {
     const { stateLoginValueAim } = this.props;
     const { myLogin } = this.state;
 
-    let translate = getLanguage(this.props.stateLanguageType)
+    let translate = getLanguage(this.props.stateLanguageType);
     let {
       Log_into,
       Register_email,
@@ -239,26 +239,26 @@ class Index extends Component {
       wrong_password,
       user_is_blocked,
       verifyAccount,
-      needUnblock
+      needUnblock,
     } = translate;
 
     if (
       stateLoginValueAim.token !== 401 &&
       stateLoginValueAim.token !== 450 &&
-      stateLoginValueAim?.user?.type === "patient" &&
+      stateLoginValueAim?.user?.type === 'patient' &&
       this.props.verifyCode.code
     ) {
-      return <Redirect to={"/patient/sick-request"} />;
+      return <Redirect to={'/patient/sick-request'} />;
     } else {
       return (
         <Grid
           className={
             this.props.settings &&
-              this.props.settings.setting &&
-              this.props.settings.setting.mode &&
-              this.props.settings.setting.mode === "dark"
-              ? "loginSiteUpr homeBgDrk"
-              : "loginSiteUpr"
+            this.props.settings.setting &&
+            this.props.settings.setting.mode &&
+            this.props.settings.setting.mode === 'dark'
+              ? 'loginSiteUpr homeBgDrk'
+              : 'loginSiteUpr'
           }
         >
           <Grid className="loginSite">
@@ -275,7 +275,7 @@ class Index extends Component {
                     <Grid item xs={6} sm={6} className="LogoForms">
                       <a href={sitedata.data.live_site}>
                         <img
-                          src={require("assets/images/LogoPNG.png")}
+                          src={require('assets/images/LogoPNG.png')}
                           alt=""
                           title=""
                         />
@@ -283,13 +283,19 @@ class Index extends Component {
                     </Grid>
                     <Grid item xs={6} sm={6}>
                       <Grid className="regSelectTop">
-                        <Grid className={this.props.stateLanguageType !== "pt" ? "changeLang" : "changeLang1"}>
+                        <Grid
+                          className={
+                            this.props.stateLanguageType !== 'pt'
+                              ? 'changeLang'
+                              : 'changeLang1'
+                          }
+                        >
                           <li>
                             <span className="ThemeModeSet1"> {DarkMode} </span>
                             <span className="ThemeModeSet">
                               <Toggle
                                 icons={false}
-                                checked={this.state.mode === "dark"}
+                                checked={this.state.mode === 'dark'}
                                 name="mode"
                                 onClick={(e) => this.SetMode(e)}
                               />
@@ -307,70 +313,70 @@ class Index extends Component {
                             <DropdownMenu className="langInerFooter">
                               <DropdownItem
                                 onClick={() => {
-                                  this.changeValue("en", "English");
+                                  this.changeValue('en', 'English');
                                 }}
                               >
                                 <NavLink>English</NavLink>
                               </DropdownItem>
                               <DropdownItem
                                 onClick={() => {
-                                  this.changeValue("de", "German");
+                                  this.changeValue('de', 'German');
                                 }}
                               >
                                 <NavLink>German</NavLink>
                               </DropdownItem>
                               <DropdownItem
                                 onClick={() => {
-                                  this.changeValue("ch", "Chinese");
+                                  this.changeValue('ch', 'Chinese');
                                 }}
                               >
                                 <NavLink>Chinese</NavLink>
                               </DropdownItem>
                               <DropdownItem
                                 onClick={() => {
-                                  this.changeValue("pt", "Portuguese");
+                                  this.changeValue('pt', 'Portuguese');
                                 }}
                               >
                                 <NavLink>Portuguese</NavLink>
                               </DropdownItem>
                               <DropdownItem
                                 onClick={() => {
-                                  this.changeValue("sp", "Spanish");
+                                  this.changeValue('sp', 'Spanish');
                                 }}
                               >
                                 <NavLink>Spanish</NavLink>
                               </DropdownItem>
                               <DropdownItem
                                 onClick={() => {
-                                  this.changeValue("rs", "Russian");
+                                  this.changeValue('rs', 'Russian');
                                 }}
                               >
                                 <NavLink>Russian</NavLink>
                               </DropdownItem>
                               <DropdownItem
                                 onClick={() => {
-                                  this.changeValue("sw", "Swahili");
+                                  this.changeValue('sw', 'Swahili');
                                 }}
                               >
                                 <NavLink>Swahili</NavLink>
                               </DropdownItem>
                               <DropdownItem
                                 onClick={() => {
-                                  this.changeValue("fr", "French");
+                                  this.changeValue('fr', 'French');
                                 }}
                               >
                                 <NavLink>French</NavLink>
                               </DropdownItem>
                               <DropdownItem
                                 onClick={() => {
-                                  this.changeValue("ar", "Arabic");
+                                  this.changeValue('ar', 'Arabic');
                                 }}
                               >
                                 <NavLink>Arabic</NavLink>
                               </DropdownItem>
                               <DropdownItem
                                 onClick={() => {
-                                  this.changeValue("tr", "Turkish");
+                                  this.changeValue('tr', 'Turkish');
                                 }}
                               >
                                 <NavLink>Turkish</NavLink>
@@ -403,26 +409,26 @@ class Index extends Component {
                         : this.state.loginError2
                         ? email_not_valid
                         : this.state.loginError9
-                        ? password_cant_empty 
-                        : stateLoginValueAim.isVerified == false 
+                        ? password_cant_empty
+                        : stateLoginValueAim.isVerified == false
                         ? verifyAccount
-                        : stateLoginValueAim.permission == false 
+                        : stateLoginValueAim.permission == false
                         ? 'User is not able to login from here, Only patient have right to login'
-                        : stateLoginValueAim.isBlocked == true 
-                        ? stateLoginValueAim.type === 'patient' ? user_is_blocked : needUnblock
+                        : stateLoginValueAim.isBlocked == true
+                        ? stateLoginValueAim.type === 'patient'
+                          ? user_is_blocked
+                          : needUnblock
                         : this.state.loginError === false &&
                           stateLoginValueAim.token === 450 &&
                           myLogin &&
                           stateLoginValueAim.message
-                        ? stateLoginValueAim.message === "User does not exist"
+                        ? stateLoginValueAim.message === 'User does not exist'
                           ? user_not_exist
-                          : stateLoginValueAim.message === "Wrong password"
-                          ? wrong_password 
+                          : stateLoginValueAim.message === 'Wrong password'
+                          ? wrong_password
                           : false
                         : false}
-                      {
-
-                      }
+                      {}
                     </div>
                     <Grid className="logRow">
                       <Grid>
@@ -434,7 +440,7 @@ class Index extends Component {
                           value={this.state.inputEmail}
                           onKeyDown={this.onKeyDownlogin}
                           onChange={(e) =>
-                            this.handleChange("inputEmail", e.target.value)
+                            this.handleChange('inputEmail', e.target.value)
                           }
                         />
                       </Grid>
@@ -461,17 +467,17 @@ class Index extends Component {
 
                       <Grid className="logPass">
                         <input
-                          type={this.state.hidden ? "password" : "text"}
+                          type={this.state.hidden ? 'password' : 'text'}
                           value={this.state.inputPass}
                           onKeyDown={this.onKeyDownlogin}
                           onChange={(e) =>
-                            this.handleChange("inputPass", e.target.value)
+                            this.handleChange('inputPass', e.target.value)
                           }
                         />
                         {this.state.hidden && (
                           <a onClick={this.toggleShow}>
                             <img
-                              src={require("assets/images/showeye.svg")}
+                              src={require('assets/images/showeye.svg')}
                               alt=""
                               title=""
                             />
@@ -480,7 +486,7 @@ class Index extends Component {
                         {!this.state.hidden && (
                           <a onClick={this.toggleShow}>
                             <img
-                              src={require("assets/images/hide.svg")}
+                              src={require('assets/images/hide.svg')}
                               alt=""
                               title=""
                             />
@@ -526,7 +532,7 @@ class Index extends Component {
                       )}
                     </Grid>
                     <p className="regOnlog">
-                      {login_an_account}{" "}
+                      {login_an_account}{' '}
                       <a onClick={this.register}>{login_Registerhere}</a>
                     </p>
                   </Grid>
@@ -540,10 +546,8 @@ class Index extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  const {
-    stateLoginValueAim,
-    loadingaIndicatoranswerdetail,
-  } = state.LoginReducerAim;
+  const { stateLoginValueAim, loadingaIndicatoranswerdetail } =
+    state.LoginReducerAim;
   const { stateLanguageType } = state.LanguageReducer;
   const { verifyCode } = state.authy;
   const { metadata } = state.OptionList;

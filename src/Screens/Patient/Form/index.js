@@ -233,7 +233,7 @@ function Index(props) {
       last_name: all_LoginReducerAim.user?.last_name,
       alies_id: all_LoginReducerAim.user?.alies_id,
       profile_id: all_LoginReducerAim.user?.profile_id,
-      user_id: all_LoginReducerAim.user.user?._id,
+      user_id: all_LoginReducerAim.user?._id,
       image: all_LoginReducerAim.user.user?.image,
     };
     data.patient = patient;
@@ -256,562 +256,574 @@ function Index(props) {
       due_on['time'] = new Date();
       data.due_on = due_on;
     }
-    // if (validatePainHeart1(data.headache, '', 'headache')) {
-    //   if (validatePainHeart(data.headache, data, 'painbegin')) {
-    //     if (validatePainHeart(data.headache, data, 'hurtnow')) {
-    //       if (
-    //         validatePainHeart(
-    //           data.headache,
-    //           data.headache_rr_systolic,
-    //           'headache_rr_systolic'
-    //         )
-    //       ) {
-    //         if (
-    //           validatePainHeart(
-    //             data.headache,
-    //             data.headache_rr_diastolic,
-    //             'headache_rr_diastolic'
-    //           )
-    //         ) {
-    //           if (
-    //             validatePainHeart(
-    //               data.headache,
-    //               data.headache_body_temp,
-    //               'headache_body_temp'
-    //             )
-    //           ) {
-    //             if (
-    //               validatePainHeart(
-    //                 data.headache,
-    //                 data,
-    //                 'headache_have_diabetes'
-    //               )
-    //             ) {
-    //               if (
-    //                 validatePainHeart(
-    //                   data.headache,
-    //                   data.headache_quality_of_pain,
-    //                   'headache_quality_of_pain'
-    //                 )
-    //               ) {
-    //                 if (
-    //                   validatePainHeart1(
-    //                     data.headache,
-    //                     data.headache_need_to_vomit,
-    //                     'headache_need_to_vomit'
-    //                   )
-    //                 ) {
-    //                   if (
-    //                     validatePainHeart1(
-    //                       data.headache,
-    //                       data.headache_onset_of_pain,
-    //                       'headache_onset_of_pain'
-    //                     )
-    //                   ) {
-    //                     if (
-    //                       validatePainHeart1(
-    //                         data.headache,
-    //                         data.headache_take_painkillers,
-    //                         'headache_take_painkillers'
-    //                       )
-    //                     ) {
-    //                       if (
-    //                         validatePainHeart(
-    //                           data.headache,
-    //                           data.headache_pain_intensity,
-    //                           'headache_pain_intensity'
-    //                         )
-    //                       ) {
-    //                         if (
-    //                           validatePainHeart(
-    //                             data.headache,
-    //                             data.headache_undergoing_treatment,
-    //                             'headache_undergoing_treatment'
-    //                           )
-    //                         ) {
-    //                           if (
-    //                             validatePainHeart1(
-    //                               data.stomach_problems,
-    //                               data,
-    //                               'stomach_problems'
-    //                             )
-    //                           ) {
-    //                             if (
-    //                               validatePainHeart(
-    //                                 data.stomach_problems,
-    //                                 data.stomach_painbegin_painPoint,
-    //                                 'stomach_painbegin_painPoint'
-    //                               )
-    //                             ) {
-    //                               if (
-    //                                 validatePainHeart(
-    //                                   data.stomach_problems,
-    //                                   data.stomach_hurtnow_painPoint,
-    //                                   'stomach_hurtnow_painPoint'
-    //                                 )
-    //                               ) {
-    //                                 if (
-    //                                   validatePainHeart1(
-    //                                     data.stomach_problems,
-    //                                     data.stomach_behind_the_sternum,
-    //                                     'stomach_behind_the_sternum'
-    //                                   )
-    //                                 ) {
-    //                                   if (
-    //                                     validatePainHeart1(
-    //                                       data.stomach_problems,
-    //                                       data.stomach_heart_attack,
-    //                                       'stomach_heart_attack'
-    //                                     )
-    //                                   ) {
-    //                                     if (
-    //                                       validatePainHeart1(
-    //                                         data.stomach_problems,
-    //                                         data.stomach_heart_failure,
-    //                                         'stomach_heart_failure'
-    //                                       )
-    //                                     ) {
-    //                                       if (
-    //                                         validatePainHeart(
-    //                                           data.stomach_problems,
-    //                                           data.stomach_rr_systolic,
-    //                                           'stomach_rr_systolic'
-    //                                         )
-    //                                       ) {
-    //                                         if (
-    //                                           validatePainHeart(
-    //                                             data.stomach_problems,
-    //                                             data.stomach_rr_diastolic,
-    //                                             'stomach_rr_diastolic'
-    //                                           )
-    //                                         ) {
-    //                                           if (
-    //                                             validatePainHeart(
-    //                                               data.stomach_problems,
-    //                                               data.stomach_continuously_or_periodically,
-    //                                               'stomach_continuously_or_periodically'
-    //                                             )
-    //                                           ) {
-    //                                             if (
-    //                                               validatePainHeart(
-    //                                                 data.stomach_problems,
-    //                                                 data.stomach_body_temp,
-    //                                                 'stomach_body_temp'
-    //                                               )
-    //                                             ) {
-    //                                               if (
-    //                                                 validatePainHeart(
-    //                                                   data.stomach_problems,
-    //                                                   data.stomach_take_painkillers,
-    //                                                   'stomach_take_painkillers'
-    //                                                 )
-    //                                               ) {
-    //                                                 if (
-    //                                                   validatePainHeart(
-    //                                                     data.stomach_problems,
-    //                                                     data.stomach_pain_intensity,
-    //                                                     'stomach_pain_intensity'
-    //                                                   )
-    //                                                 ) {
-    //                                                   if (
-    //                                                     validatePainHeart(
-    //                                                       data.stomach_problems,
-    //                                                       data.stomach_undergoing_treatment,
-    //                                                       'stomach_undergoing_treatment'
-    //                                                     )
-    //                                                   ) {
-    //                                                     if (
-    //                                                       validatePainHeart1(
-    //                                                         data.diarrhea,
-    //                                                         data,
-    //                                                         'diarrhea'
-    //                                                       )
-    //                                                     ) {
-    //                                                       if (
-    //                                                         validatePainHeart(
-    //                                                           data.diarrhea,
-    //                                                           data.diarrhea_symptoms_begin,
-    //                                                           'diarrhea_symptoms_begin'
-    //                                                         )
-    //                                                       ) {
-    //                                                         if (
-    //                                                           validatePainHeart(
-    //                                                             data.diarrhea,
-    //                                                             data.diarrhea_suffer_from_vomiting,
-    //                                                             'diarrhea_suffer_from_vomiting'
-    //                                                           )
-    //                                                         ) {
-    //                                                           if (
-    //                                                             validatePainHeart(
-    //                                                               data.diarrhea,
-    //                                                               data.diarrhea_body_temp,
-    //                                                               'diarrhea_body_temp'
-    //                                                             )
-    //                                                           ) {
-    //                                                             if (
-    //                                                               validatePainHeart(
-    //                                                                 data.diarrhea,
-    //                                                                 data.diarrhea_envi_suffer_symtoms,
-    //                                                                 'diarrhea_envi_suffer_symtoms'
-    //                                                               )
-    //                                                             ) {
-    //                                                               if (
-    //                                                                 validatePainHeart(
-    //                                                                   data.diarrhea,
-    //                                                                   data.diarrhea_liquids_with_you,
-    //                                                                   'diarrhea_liquids_with_you'
-    //                                                                 )
-    //                                                               ) {
-    //                                                                 if (
-    //                                                                   validatePainHeart1(
-    //                                                                     data.have_fever,
-    //                                                                     data,
-    //                                                                     'have_fever'
-    //                                                                   )
-    //                                                                 ) {
-    //                                                                   if (
-    //                                                                     validatePainHeart(
-    //                                                                       data.have_fever,
-    //                                                                       data.fever_symptoms_begin,
-    //                                                                       'fever_symptoms_begin'
-    //                                                                     )
-    //                                                                   ) {
-    //                                                                     if (
-    //                                                                       validatePainHeart(
-    //                                                                         data.have_fever,
-    //                                                                         data.fever_top_body_temp,
-    //                                                                         'fever_top_body_temp'
-    //                                                                       )
-    //                                                                     ) {
-    //                                                                       if (
-    //                                                                         validatePainHeart(
-    //                                                                           data.have_fever,
-    //                                                                           data.fever_low_body_temp,
-    //                                                                           'fever_low_body_temp'
-    //                                                                         )
-    //                                                                       ) {
-    //                                                                         if (
-    //                                                                           validatePainHeart(
-    //                                                                             data.have_fever,
-    //                                                                             data.fever_pain_intensity,
-    //                                                                             'fever_pain_intensity'
-    //                                                                           )
-    //                                                                         ) {
-    //                                                                           if (
-    //                                                                             validatePainHeart(
-    //                                                                               data.have_fever,
-    //                                                                               data.fever_sputum,
-    //                                                                               'fever_sputum'
-    //                                                                             )
-    //                                                                           ) {
-    //                                                                             if (
-    //                                                                               validatePainHeart1(
-    //                                                                                 data.back_pain,
-    //                                                                                 data,
-    //                                                                                 'back_pain'
-    //                                                                               )
-    //                                                                             ) {
-    //                                                                               if (
-    //                                                                                 validatePainHeart(
-    //                                                                                   data.back_pain,
-    //                                                                                   data.back_pain_symptoms_begin,
-    //                                                                                   'back_pain_symptoms_begin'
-    //                                                                                 )
-    //                                                                               ) {
-    //                                                                                 if (
-    //                                                                                   validatePainHeart(
-    //                                                                                     data.back_pain,
-    //                                                                                     data.back_pain_symptoms_begin,
-    //                                                                                     'back_pain_symptoms_begin'
-    //                                                                                   )
-    //                                                                                 ) {
-    //                                                                                   if (
-    //                                                                                     validatePainHeart1(
-    //                                                                                       data.back_pain,
-    //                                                                                       data.back_pain_been_injured,
-    //                                                                                       'back_pain_been_injured'
-    //                                                                                     )
-    //                                                                                   ) {
-    //                                                                                     if (
-    //                                                                                       validatePainHeart1(
-    //                                                                                         data.back_pain,
-    //                                                                                         data.back_pain_physically_strained,
-    //                                                                                         'back_pain_physically_strained'
-    //                                                                                       )
-    //                                                                                     ) {
-    //                                                                                       if (
-    //                                                                                         validatePainHeart1(
-    //                                                                                           data.back_pain,
-    //                                                                                           data.back_pain_stress_depression,
-    //                                                                                           'back_pain_stress_depression'
-    //                                                                                         )
-    //                                                                                       ) {
-    //                                                                                         if (
-    //                                                                                           validatePainHeart1(
-    //                                                                                             data.back_pain,
-    //                                                                                             data.back_pain_heart_attack,
-    //                                                                                             'back_pain_heart_attack'
-    //                                                                                           )
-    //                                                                                         ) {
-    //                                                                                           if (
-    //                                                                                             validatePainHeart1(
-    //                                                                                               data.back_pain,
-    //                                                                                               data.back_pain_heart_failure,
-    //                                                                                               'back_pain_heart_failure'
-    //                                                                                             )
-    //                                                                                           ) {
-    //                                                                                             if (
-    //                                                                                               validatePainHeart(
-    //                                                                                                 data.back_pain,
-    //                                                                                                 data.back_pain_rr_systolic,
-    //                                                                                                 'back_pain_rr_systolic'
-    //                                                                                               )
-    //                                                                                             ) {
-    //                                                                                               if (
-    //                                                                                                 validatePainHeart(
-    //                                                                                                   data.back_pain,
-    //                                                                                                   data.back_pain_rr_diastolic,
-    //                                                                                                   'back_pain_rr_diastolic'
-    //                                                                                                 )
-    //                                                                                               ) {
-    //                                                                                                 if (
-    //                                                                                                   validatePainHeart1(
-    //                                                                                                     data.cough_and_snees,
-    //                                                                                                     data,
-    //                                                                                                     'cough_and_snees'
-    //                                                                                                   )
-    //                                                                                                 ) {
-    //                                                                                                   if (
-    //                                                                                                     validatePainHeart(
-    //                                                                                                       data.cough_and_snees,
-    //                                                                                                       data.cough_symptoms_begin,
-    //                                                                                                       'cough_symptoms_begin'
-    //                                                                                                     )
-    //                                                                                                   ) {
-    //                                                                                                     if (
-    //                                                                                                       validatePainHeart(
-    //                                                                                                         data.cough_and_snees,
-    //                                                                                                         data.cough_body_temp,
-    //                                                                                                         'cough_body_temp'
-    //                                                                                                       )
-    //                                                                                                     ) {
-    //                                                                                                       if (
-    //                                                                                                         validatePainHeart(
-    //                                                                                                           data.cough_and_snees,
-    //                                                                                                           data.cough_envi_suffer_symtoms,
-    //                                                                                                           'cough_envi_suffer_symtoms'
-    //                                                                                                         )
-    //                                                                                                       ) {
-    //                                                                                                         if (
-    //                                                                                                           validatePainHeart(
-    //                                                                                                             data.cough_and_snees,
-    //                                                                                                             data.cough_suffer_from_allergies,
-    //                                                                                                             'cough_suffer_from_allergies'
-    //                                                                                                           )
-    //                                                                                                         ) {
-    //                                                                                                           if (
-    //                                                                                                             validatePainHeart1(
-    //                                                                                                               data.feel_depressed,
-    //                                                                                                               data,
-    //                                                                                                               'feel_depressed'
-    //                                                                                                             )
-    //                                                                                                           ) {
-    //                                                                                                             if (
-    //                                                                                                               validatePainHeart1(
-    //                                                                                                                 data.feel_depressed,
-    //                                                                                                                 data.depressed_symptoms_begin,
-    //                                                                                                                 'depressed_symptoms_begin'
-    //                                                                                                               )
-    //                                                                                                             ) {
-    //                                                                                                               if (
-    //                                                                                                                 validatePainHeart(
-    //                                                                                                                   data.feel_depressed,
-    //                                                                                                                   data.depressed_pain_intensity,
-    //                                                                                                                   'depressed_pain_intensity'
-    //                                                                                                                 )
-    //                                                                                                               ) {
-    //                                                                                                                 if (
-    //                                                                                                                   validatePainHeart1(
-    //                                                                                                                     data.feel_depressed,
-    //                                                                                                                     data.depressed_do_you_sleep,
-    //                                                                                                                     'depressed_do_you_sleep'
-    //                                                                                                                   )
-    //                                                                                                                 ) {
-    //                                                                                                                   if (
-    //                                                                                                                     validatePainHeart1(
-    //                                                                                                                       data.feel_depressed,
-    //                                                                                                                       data.depressed_suicidal_thoughts,
-    //                                                                                                                       'depressed_suicidal_thoughts'
-    //                                                                                                                     )
-    //                                                                                                                   ) {
-    //                                                                                                                     if (
-    //                                                                                                                       validatePainHeart1(
-    //                                                                                                                         data.feel_depressed,
-    //                                                                                                                         data.depressed_hurt_yourself,
-    //                                                                                                                         'depressed_hurt_yourself'
-    //                                                                                                                       )
-    //                                                                                                                     ) {
-    //                                                                                                                       if (
-    //                                                                                                                         validatePainHeart1(
-    //                                                                                                                           data.cardiac_problems,
-    //                                                                                                                           data,
-    //                                                                                                                           'cardiac_problems'
-    //                                                                                                                         )
-    //                                                                                                                       ) {
-    //                                                                                                                         if (
-    //                                                                                                                           validatePainHeart(
-    //                                                                                                                             data.cardiac_problems,
-    //                                                                                                                             data.cardiac_rr_systolic,
-    //                                                                                                                             'cardiac_rr_systolic'
-    //                                                                                                                           )
-    //                                                                                                                         ) {
-    //                                                                                                                           if (
-    //                                                                                                                             validatePainHeart(
-    //                                                                                                                               data.cardiac_problems,
-    //                                                                                                                               data.cardiac_rr_diastolic,
-    //                                                                                                                               'cardiac_rr_diastolic'
-    //                                                                                                                             )
-    //                                                                                                                           ) {
-    //                                                                                                                             if (
-    //                                                                                                                               validatePainHeart1(
-    //                                                                                                                                 data.cardiac_problems,
-    //                                                                                                                                 data.cardiac_heart_attack,
-    //                                                                                                                                 'cardiac_heart_attack'
-    //                                                                                                                               )
-    //                                                                                                                             ) {
-    //                                                                                                                               if (
-    //                                                                                                                                 validatePainHeart1(
-    //                                                                                                                                   data.cardiac_problems,
-    //                                                                                                                                   data.cardiac_heart_failure,
-    //                                                                                                                                   'cardiac_heart_failure'
-    //                                                                                                                                 )
-    //                                                                                                                               ) {
-    //                                                                                                                                 if (
-    //                                                                                                                                   validatePainHeart1(
-    //                                                                                                                                     data.cardiac_problems,
-    //                                                                                                                                     data.cardiac_have_dizziness,
-    //                                                                                                                                     'cardiac_have_dizziness'
-    //                                                                                                                                   )
-    //                                                                                                                                 ) {
-    //                                                                                                                                   if (
-    //                                                                                                                                     validatePainHeart1(
-    //                                                                                                                                       data.cardiac_problems,
-    //                                                                                                                                       data.cardiac_have_shoulder_pain,
-    //                                                                                                                                       'cardiac_have_shoulder_pain'
-    //                                                                                                                                     )
-    //                                                                                                                                   ) {
-    if (DataprotectionRules && DataprotectionRules === true) {
-      setloaderImage(true);
-      // axios
-      //   .post(
-      //     sitedata
-      //       .data
-      //       .path +
-      //       '/vh/AddTask',
+    if (validatePainHeart1(data.headache, '', 'headache')) {
+      if (validatePainHeart(data.headache, data, 'painbegin')) {
+        if (validatePainHeart(data.headache, data, 'hurtnow')) {
+          if (
+            validatePainHeart(
+              data.headache,
+              data.headache_rr_systolic,
+              'headache_rr_systolic'
+            )
+          ) {
+            if (
+              validatePainHeart(
+                data.headache,
+                data.headache_rr_diastolic,
+                'headache_rr_diastolic'
+              )
+            ) {
+              if (
+                validatePainHeart(
+                  data.headache,
+                  data.headache_body_temp,
+                  'headache_body_temp'
+                )
+              ) {
+                if (
+                  validatePainHeart(
+                    data.headache,
+                    data,
+                    'headache_have_diabetes'
+                  )
+                ) {
+                  if (
+                    validatePainHeart(
+                      data.headache,
+                      data.headache_quality_of_pain,
+                      'headache_quality_of_pain'
+                    )
+                  ) {
+                    if (
+                      validatePainHeart1(
+                        data.headache,
+                        data.headache_need_to_vomit,
+                        'headache_need_to_vomit'
+                      )
+                    ) {
+                      if (
+                        validatePainHeart1(
+                          data.headache,
+                          data.headache_onset_of_pain,
+                          'headache_onset_of_pain'
+                        )
+                      ) {
+                        if (
+                          validatePainHeart1(
+                            data.headache,
+                            data.headache_take_painkillers,
+                            'headache_take_painkillers'
+                          )
+                        ) {
+                          if (
+                            validatePainHeart(
+                              data.headache,
+                              data.headache_pain_intensity,
+                              'headache_pain_intensity'
+                            )
+                          ) {
+                            if (
+                              validatePainHeart(
+                                data.headache,
+                                data.headache_undergoing_treatment,
+                                'headache_undergoing_treatment'
+                              )
+                            ) {
+                              if (
+                                validatePainHeart1(
+                                  data.stomach_problems,
+                                  data,
+                                  'stomach_problems'
+                                )
+                              ) {
+                                if (
+                                  validatePainHeart(
+                                    data.stomach_problems,
+                                    data.stomach_painbegin_painPoint,
+                                    'stomach_painbegin_painPoint'
+                                  )
+                                ) {
+                                  if (
+                                    validatePainHeart(
+                                      data.stomach_problems,
+                                      data.stomach_hurtnow_painPoint,
+                                      'stomach_hurtnow_painPoint'
+                                    )
+                                  ) {
+                                    if (
+                                      validatePainHeart1(
+                                        data.stomach_problems,
+                                        data.stomach_behind_the_sternum,
+                                        'stomach_behind_the_sternum'
+                                      )
+                                    ) {
+                                      if (
+                                        validatePainHeart1(
+                                          data.stomach_problems,
+                                          data.stomach_heart_attack,
+                                          'stomach_heart_attack'
+                                        )
+                                      ) {
+                                        if (
+                                          validatePainHeart1(
+                                            data.stomach_problems,
+                                            data.stomach_heart_failure,
+                                            'stomach_heart_failure'
+                                          )
+                                        ) {
+                                          if (
+                                            validatePainHeart(
+                                              data.stomach_problems,
+                                              data.stomach_rr_systolic,
+                                              'stomach_rr_systolic'
+                                            )
+                                          ) {
+                                            if (
+                                              validatePainHeart(
+                                                data.stomach_problems,
+                                                data.stomach_rr_diastolic,
+                                                'stomach_rr_diastolic'
+                                              )
+                                            ) {
+                                              if (
+                                                validatePainHeart(
+                                                  data.stomach_problems,
+                                                  data.stomach_continuously_or_periodically,
+                                                  'stomach_continuously_or_periodically'
+                                                )
+                                              ) {
+                                                if (
+                                                  validatePainHeart(
+                                                    data.stomach_problems,
+                                                    data.stomach_body_temp,
+                                                    'stomach_body_temp'
+                                                  )
+                                                ) {
+                                                  if (
+                                                    validatePainHeart(
+                                                      data.stomach_problems,
+                                                      data.stomach_take_painkillers,
+                                                      'stomach_take_painkillers'
+                                                    )
+                                                  ) {
+                                                    if (
+                                                      validatePainHeart(
+                                                        data.stomach_problems,
+                                                        data.stomach_pain_intensity,
+                                                        'stomach_pain_intensity'
+                                                      )
+                                                    ) {
+                                                      if (
+                                                        validatePainHeart(
+                                                          data.stomach_problems,
+                                                          data.stomach_undergoing_treatment,
+                                                          'stomach_undergoing_treatment'
+                                                        )
+                                                      ) {
+                                                        if (
+                                                          validatePainHeart1(
+                                                            data.diarrhea,
+                                                            data,
+                                                            'diarrhea'
+                                                          )
+                                                        ) {
+                                                          if (
+                                                            validatePainHeart(
+                                                              data.diarrhea,
+                                                              data.diarrhea_symptoms_begin,
+                                                              'diarrhea_symptoms_begin'
+                                                            )
+                                                          ) {
+                                                            if (
+                                                              validatePainHeart(
+                                                                data.diarrhea,
+                                                                data.diarrhea_suffer_from_vomiting,
+                                                                'diarrhea_suffer_from_vomiting'
+                                                              )
+                                                            ) {
+                                                              if (
+                                                                validatePainHeart(
+                                                                  data.diarrhea,
+                                                                  data.diarrhea_body_temp,
+                                                                  'diarrhea_body_temp'
+                                                                )
+                                                              ) {
+                                                                if (
+                                                                  validatePainHeart(
+                                                                    data.diarrhea,
+                                                                    data.diarrhea_envi_suffer_symtoms,
+                                                                    'diarrhea_envi_suffer_symtoms'
+                                                                  )
+                                                                ) {
+                                                                  if (
+                                                                    validatePainHeart(
+                                                                      data.diarrhea,
+                                                                      data.diarrhea_liquids_with_you,
+                                                                      'diarrhea_liquids_with_you'
+                                                                    )
+                                                                  ) {
+                                                                    if (
+                                                                      validatePainHeart1(
+                                                                        data.have_fever,
+                                                                        data,
+                                                                        'have_fever'
+                                                                      )
+                                                                    ) {
+                                                                      if (
+                                                                        validatePainHeart(
+                                                                          data.have_fever,
+                                                                          data.fever_symptoms_begin,
+                                                                          'fever_symptoms_begin'
+                                                                        )
+                                                                      ) {
+                                                                        if (
+                                                                          validatePainHeart(
+                                                                            data.have_fever,
+                                                                            data.fever_top_body_temp,
+                                                                            'fever_top_body_temp'
+                                                                          )
+                                                                        ) {
+                                                                          if (
+                                                                            validatePainHeart(
+                                                                              data.have_fever,
+                                                                              data.fever_low_body_temp,
+                                                                              'fever_low_body_temp'
+                                                                            )
+                                                                          ) {
+                                                                            if (
+                                                                              validatePainHeart(
+                                                                                data.have_fever,
+                                                                                data.fever_pain_intensity,
+                                                                                'fever_pain_intensity'
+                                                                              )
+                                                                            ) {
+                                                                              if (
+                                                                                validatePainHeart(
+                                                                                  data.have_fever,
+                                                                                  data.fever_sputum,
+                                                                                  'fever_sputum'
+                                                                                )
+                                                                              ) {
+                                                                                if (
+                                                                                  validatePainHeart1(
+                                                                                    data.back_pain,
+                                                                                    data,
+                                                                                    'back_pain'
+                                                                                  )
+                                                                                ) {
+                                                                                  if (
+                                                                                    validatePainHeart(
+                                                                                      data.back_pain,
+                                                                                      data.back_pain_symptoms_begin,
+                                                                                      'back_pain_symptoms_begin'
+                                                                                    )
+                                                                                  ) {
+                                                                                    if (
+                                                                                      validatePainHeart(
+                                                                                        data.back_pain,
+                                                                                        data.back_pain_symptoms_begin,
+                                                                                        'back_pain_symptoms_begin'
+                                                                                      )
+                                                                                    ) {
+                                                                                      if (
+                                                                                        validatePainHeart1(
+                                                                                          data.back_pain,
+                                                                                          data.back_pain_been_injured,
+                                                                                          'back_pain_been_injured'
+                                                                                        )
+                                                                                      ) {
+                                                                                        if (
+                                                                                          validatePainHeart1(
+                                                                                            data.back_pain,
+                                                                                            data.back_pain_physically_strained,
+                                                                                            'back_pain_physically_strained'
+                                                                                          )
+                                                                                        ) {
+                                                                                          if (
+                                                                                            validatePainHeart1(
+                                                                                              data.back_pain,
+                                                                                              data.back_pain_stress_depression,
+                                                                                              'back_pain_stress_depression'
+                                                                                            )
+                                                                                          ) {
+                                                                                            if (
+                                                                                              validatePainHeart1(
+                                                                                                data.back_pain,
+                                                                                                data.back_pain_heart_attack,
+                                                                                                'back_pain_heart_attack'
+                                                                                              )
+                                                                                            ) {
+                                                                                              if (
+                                                                                                validatePainHeart1(
+                                                                                                  data.back_pain,
+                                                                                                  data.back_pain_heart_failure,
+                                                                                                  'back_pain_heart_failure'
+                                                                                                )
+                                                                                              ) {
+                                                                                                if (
+                                                                                                  validatePainHeart(
+                                                                                                    data.back_pain,
+                                                                                                    data.back_pain_rr_systolic,
+                                                                                                    'back_pain_rr_systolic'
+                                                                                                  )
+                                                                                                ) {
+                                                                                                  if (
+                                                                                                    validatePainHeart(
+                                                                                                      data.back_pain,
+                                                                                                      data.back_pain_rr_diastolic,
+                                                                                                      'back_pain_rr_diastolic'
+                                                                                                    )
+                                                                                                  ) {
+                                                                                                    if (
+                                                                                                      validatePainHeart1(
+                                                                                                        data.cough_and_snees,
+                                                                                                        data,
+                                                                                                        'cough_and_snees'
+                                                                                                      )
+                                                                                                    ) {
+                                                                                                      if (
+                                                                                                        validatePainHeart(
+                                                                                                          data.cough_and_snees,
+                                                                                                          data.cough_symptoms_begin,
+                                                                                                          'cough_symptoms_begin'
+                                                                                                        )
+                                                                                                      ) {
+                                                                                                        if (
+                                                                                                          validatePainHeart(
+                                                                                                            data.cough_and_snees,
+                                                                                                            data.cough_body_temp,
+                                                                                                            'cough_body_temp'
+                                                                                                          )
+                                                                                                        ) {
+                                                                                                          if (
+                                                                                                            validatePainHeart(
+                                                                                                              data.cough_and_snees,
+                                                                                                              data.cough_envi_suffer_symtoms,
+                                                                                                              'cough_envi_suffer_symtoms'
+                                                                                                            )
+                                                                                                          ) {
+                                                                                                            if (
+                                                                                                              validatePainHeart(
+                                                                                                                data.cough_and_snees,
+                                                                                                                data.cough_suffer_from_allergies,
+                                                                                                                'cough_suffer_from_allergies'
+                                                                                                              )
+                                                                                                            ) {
+                                                                                                              if (
+                                                                                                                validatePainHeart1(
+                                                                                                                  data.feel_depressed,
+                                                                                                                  data,
+                                                                                                                  'feel_depressed'
+                                                                                                                )
+                                                                                                              ) {
+                                                                                                                if (
+                                                                                                                  validatePainHeart1(
+                                                                                                                    data.feel_depressed,
+                                                                                                                    data.depressed_symptoms_begin,
+                                                                                                                    'depressed_symptoms_begin'
+                                                                                                                  )
+                                                                                                                ) {
+                                                                                                                  if (
+                                                                                                                    validatePainHeart(
+                                                                                                                      data.feel_depressed,
+                                                                                                                      data.depressed_pain_intensity,
+                                                                                                                      'depressed_pain_intensity'
+                                                                                                                    )
+                                                                                                                  ) {
+                                                                                                                    if (
+                                                                                                                      validatePainHeart1(
+                                                                                                                        data.feel_depressed,
+                                                                                                                        data.depressed_do_you_sleep,
+                                                                                                                        'depressed_do_you_sleep'
+                                                                                                                      )
+                                                                                                                    ) {
+                                                                                                                      if (
+                                                                                                                        validatePainHeart1(
+                                                                                                                          data.feel_depressed,
+                                                                                                                          data.depressed_suicidal_thoughts,
+                                                                                                                          'depressed_suicidal_thoughts'
+                                                                                                                        )
+                                                                                                                      ) {
+                                                                                                                        if (
+                                                                                                                          validatePainHeart1(
+                                                                                                                            data.feel_depressed,
+                                                                                                                            data.depressed_hurt_yourself,
+                                                                                                                            'depressed_hurt_yourself'
+                                                                                                                          )
+                                                                                                                        ) {
+                                                                                                                          if (
+                                                                                                                            validatePainHeart1(
+                                                                                                                              data.cardiac_problems,
+                                                                                                                              data,
+                                                                                                                              'cardiac_problems'
+                                                                                                                            )
+                                                                                                                          ) {
+                                                                                                                            if (
+                                                                                                                              validatePainHeart(
+                                                                                                                                data.cardiac_problems,
+                                                                                                                                data.cardiac_rr_systolic,
+                                                                                                                                'cardiac_rr_systolic'
+                                                                                                                              )
+                                                                                                                            ) {
+                                                                                                                              if (
+                                                                                                                                validatePainHeart(
+                                                                                                                                  data.cardiac_problems,
+                                                                                                                                  data.cardiac_rr_diastolic,
+                                                                                                                                  'cardiac_rr_diastolic'
+                                                                                                                                )
+                                                                                                                              ) {
+                                                                                                                                if (
+                                                                                                                                  validatePainHeart1(
+                                                                                                                                    data.cardiac_problems,
+                                                                                                                                    data.cardiac_heart_attack,
+                                                                                                                                    'cardiac_heart_attack'
+                                                                                                                                  )
+                                                                                                                                ) {
+                                                                                                                                  if (
+                                                                                                                                    validatePainHeart1(
+                                                                                                                                      data.cardiac_problems,
+                                                                                                                                      data.cardiac_heart_failure,
+                                                                                                                                      'cardiac_heart_failure'
+                                                                                                                                    )
+                                                                                                                                  ) {
+                                                                                                                                    if (
+                                                                                                                                      validatePainHeart1(
+                                                                                                                                        data.cardiac_problems,
+                                                                                                                                        data.cardiac_have_dizziness,
+                                                                                                                                        'cardiac_have_dizziness'
+                                                                                                                                      )
+                                                                                                                                    ) {
+                                                                                                                                      if (
+                                                                                                                                        validatePainHeart1(
+                                                                                                                                          data.cardiac_problems,
+                                                                                                                                          data.cardiac_have_shoulder_pain,
+                                                                                                                                          'cardiac_have_shoulder_pain'
+                                                                                                                                        )
+                                                                                                                                      ) {
+                                                                                                                                        if (
+                                                                                                                                          DataprotectionRules &&
+                                                                                                                                          DataprotectionRules ===
+                                                                                                                                            true
+                                                                                                                                        ) {
+                                                                                                                                          setloaderImage(
+                                                                                                                                            true
+                                                                                                                                          );
+                                                                                                                                          // axios
+                                                                                                                                          //   .post(
+                                                                                                                                          //     sitedata
+                                                                                                                                          //       .data
+                                                                                                                                          //       .path +
+                                                                                                                                          //       '/vh/AddTask',
 
-      //     data,
-      //     commonHeader(
-      //       all_LoginReducerAim.token
-      //     )
-      //   )
-      // .then(
-      //   (
-      //     responce
-      //   ) => {
-      //     setUpdateQues(
-      //       {}
-      //     );
-      setloaderImage(false);
-      //     setDataprotectionRules(
-      //       false
-      //     );
-      setOpenCalendar(true);
-      //   }
-      // )
-      // .catch(
-      //   function (
-      //     error
-      //   ) {
-      //     console.log(
-      //       'error'
-      //     );
-      //         setloaderImage(
-      //           false
-      //         );
-      //       }
-      //     );
-    } else {
-      setErrorChrMsg(
-        'Please select Data protection rules and Regulations of Aimedis.'
-      );
-      setError_section(45);
+                                                                                                                                          //     data,
+                                                                                                                                          //     commonHeader(
+                                                                                                                                          //       all_LoginReducerAim.token
+                                                                                                                                          //     )
+                                                                                                                                          //   )
+                                                                                                                                          // .then(
+                                                                                                                                          //   (
+                                                                                                                                          //     responce
+                                                                                                                                          //   ) => {
+                                                                                                                                          //     setUpdateQues(
+                                                                                                                                          //       {}
+                                                                                                                                          //     );
+                                                                                                                                          setloaderImage(
+                                                                                                                                            false
+                                                                                                                                          );
+                                                                                                                                          setDataprotectionRules(
+                                                                                                                                            false
+                                                                                                                                          );
+                                                                                                                                          setOpenCalendar(
+                                                                                                                                            true
+                                                                                                                                          );
+                                                                                                                                          //   }
+                                                                                                                                          // )
+                                                                                                                                          // .catch(
+                                                                                                                                          //   function (
+                                                                                                                                          //     error
+                                                                                                                                          //   ) {
+                                                                                                                                          //     console.log(
+                                                                                                                                          //       'error'
+                                                                                                                                          //     );
+                                                                                                                                          //         setloaderImage(
+                                                                                                                                          //           false
+                                                                                                                                          //         );
+                                                                                                                                          //       }
+                                                                                                                                          //     );
+                                                                                                                                        } else {
+                                                                                                                                          setErrorChrMsg(
+                                                                                                                                            'Please select Data protection rules and Regulations of Aimedis.'
+                                                                                                                                          );
+                                                                                                                                          setError_section(
+                                                                                                                                            45
+                                                                                                                                          );
+                                                                                                                                        }
+                                                                                                                                      }
+                                                                                                                                    }
+                                                                                                                                  }
+                                                                                                                                }
+                                                                                                                              }
+                                                                                                                            }
+                                                                                                                          }
+                                                                                                                        }
+                                                                                                                      }
+                                                                                                                    }
+                                                                                                                  }
+                                                                                                                }
+                                                                                                              }
+                                                                                                            }
+                                                                                                          }
+                                                                                                        }
+                                                                                                      }
+                                                                                                    }
+                                                                                                  }
+                                                                                                }
+                                                                                              }
+                                                                                            }
+                                                                                          }
+                                                                                        }
+                                                                                      }
+                                                                                    }
+                                                                                  }
+                                                                                }
+                                                                              }
+                                                                            }
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
-    //                                                                                                                                   }
-    //                                                                                                                                 }
-    //                                                                                                                               }
-    //                                                                                                                             }
-    //                                                                                                                           }
-    //                                                                                                                         }
-    //                                                                                                                       }
-    //                                                                                                                     }
-    //                                                                                                                   }
-    //                                                                                                                 }
-    //                                                                                                               }
-    //                                                                                                             }
-    //                                                                                                           }
-    //                                                                                                         }
-    //                                                                                                       }
-    //                                                                                                     }
-    //                                                                                                   }
-    //                                                                                                 }
-    //                                                                                               }
-    //                                                                                             }
-    //                                                                                           }
-    //                                                                                         }
-    //                                                                                       }
-    //                                                                                     }
-    //                                                                                   }
-    //                                                                                 }
-    //                                                                               }
-    //                                                                             }
-    //                                                                           }
-    //                                                                         }
-    //                                                                       }
-    //                                                                     }
-    //                                                                   }
-    //                                                                 }
-    //                                                               }
-    //                                                             }
-    //                                                           }
-    //                                                         }
-    //                                                       }
-    //                                                     }
-    //                                                   }
-    //                                                 }
-    //                                               }
-    //                                             }
-    //                                           }
-    //                                         }
-    //                                       }
-    //                                     }
-    //                                   }
-    //                                 }
-    //                               }
-    //                             }
-    //                           }
-    //                         }
-    //                       }
-    //                     }
-    //                   }
-    //                 }
-    //               }
-    //             }
-    //           }
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
   };
 
   // Validate all fields
@@ -1125,12 +1137,12 @@ function Index(props) {
       if (!value) {
         setError_section(section);
         setErrorChrMsg('Please Enter body temprature');
-        MoveTop(550);
+        MoveTop(300);
         return false;
       } else if (value < 36 || value > 41) {
         setError_section(section);
         setErrorChrMsg('Please Enter valid body temprature');
-        MoveTop(550);
+        MoveTop(300);
         return false;
       } else {
         return true;
@@ -1139,7 +1151,7 @@ function Index(props) {
       if (!value.headache_have_diabetes) {
         setError_section(46);
         setErrorChrMsg('Please select Diabetes with YES / NO');
-        MoveTop(200);
+        MoveTop(350);
         return false;
       } else if (value && value.headache_have_diabetes === 'yes') {
         var bpPattern = /^[0-9]+$/;
@@ -1148,43 +1160,37 @@ function Index(props) {
         if (!value.headache_blood_sugar) {
           setError_section(47);
           setErrorChrMsg('Please enter Blood sugar');
-          MoveTop(200);
+          MoveTop(400);
           return false;
         } else if (!valid) {
           setError_section(47);
           setErrorChrMsg('Blood sugar should be in number');
-          MoveTop(200);
-          MoveTop(0);
+          MoveTop(400);
           return false;
         } else if (value?.headache_blood_sugar < 160) {
           setError_section(47);
           setErrorChrMsg('Blood sugar should be between 160-240');
-          MoveTop(200);
-          MoveTop(0);
+          MoveTop(400);
           return false;
         } else if (value?.headache_blood_sugar > 240) {
           setError_section(47);
           setErrorChrMsg('Blood sugar should be between 160-240');
-          MoveTop(200);
-          MoveTop(0);
+          MoveTop(400);
           return false;
         } else if (!value.headache_Hba1c) {
           setError_section(56);
           setErrorChrMsg('Please enter Hba1c');
-          MoveTop(200);
-          MoveTop(0);
+          MoveTop(400);
           return false;
         } else if (calHba1c < 57 / 10) {
           setError_section(56);
           setErrorChrMsg('Hba1c should be between 57-64');
-          MoveTop(200);
-          MoveTop(0);
+          MoveTop(400);
           return false;
         } else if (calHba1c > 64 / 10) {
           setError_section(56);
           setErrorChrMsg('Hba1c should be between 57-64');
-          MoveTop(200);
-          MoveTop(0);
+          MoveTop(400);
           return false;
         } else {
           return true;
