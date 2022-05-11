@@ -22,7 +22,7 @@ import { GetShowLabel1 } from "Screens/Components/GetMetaData/index.js";
 import FileViews from "Screens/Components/TimelineComponent/FileViews/index";
 import PainPoint from "Screens/Components/PointPain/index";
 import {GetLanguageDropdown} from 'Screens/Components/GetMetaData/index.js';
-import { OptionList } from "../Login/metadataaction";
+import { OptionList } from "Screens/Login/metadataaction";
 
 class Index extends Component {
   constructor(props) {
