@@ -14539,3 +14539,31 @@ label.newrole {
   justify-content: center;
   margin-right: 14px;
 }
+
+.allHeadSickSec label{
+  font-size: 16px!important;
+}
+label.errMsgStyleSec{
+  color:red;
+  display: flex;
+  align-items: center;
+  justify-content: center!important;
+}
+label.errMsgStyleSecPart{
+  color:red;
+  display: flex;
+}
+.bloodSugarPart{
+  margin-bottom:20px;
+}
+.infoShwSave3 input{
+  width:240px;
+}
+
+.allSickHeadSec{
+  font-size: 17px;
+}
+.sickAllMngSec{
+  margin-top: 10px;
+}
+
