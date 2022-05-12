@@ -7,24 +7,28 @@ import ForgotPass from "Screens/ChangePassword";
 import ChangePass from "Screens/ChangePassword/changepassword";
 import NotFound from "Screens/Components/NotFound";
 import RegSuccuss from "Screens/Components/RegSuccess/index";
-import Form from "Screens/Patient/Form/index";
-
-
+import Form from "Screens/Patient/SickLeaveForm/index";
+import RequestList from "Screens/Patient/RequestList/index";
+import PatientProfile from 'Screens/Patient/Profile/index';
 
 class Routermain extends Component {
   render() {
     return (
-      <Router basename={"/sys-n-sick"}>
+      <Router basename={'/sys-n-sick'}>
         <Grid>
           <Switch>
-         
             <Route exact path="/" render={(props) => <Login {...props} />} />
             <Route
               exact
               path="/register"
               render={(props) => <Register {...props} />}
             />
-            
+
+            <Route
+              exact
+              path="/patient"
+              render={(props) => <PatientProfile {...props} />}
+            />
             <Route
               exact
               path="/forgot-password"
@@ -35,25 +39,26 @@ class Routermain extends Component {
               path="/change-password"
               render={(props) => <ChangePass {...props} />}
             />
-          
             <Route
               exact
               path="/register-successfull"
               render={(props) => <RegSuccuss {...props} />}
             />
-             <Route
+            <Route
               exact
               path="/patient/sick-request"
               render={(props) => <Form {...props} />}
             />
-          <Route
+            <Route
+              exact
+              path="/patient/request-list"
+              render={(props) => <RequestList {...props} />}
+            />
+            <Route
               path="*"
               exact={true}
               render={(props) => <NotFound {...props} />}
             />
-
-          
-             
           </Switch>
         </Grid>
       </Router>

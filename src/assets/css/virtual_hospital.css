@@ -5884,7 +5884,7 @@ button.downloadPDF:hover {
   margin-right: 8px;
 }
 .billDots {
-  text-align: right;
+  text-align: left;
 }
 .billDots button {
   height: 24px;
@@ -5892,7 +5892,7 @@ button.downloadPDF:hover {
   border: 1px solid #f2f2f2;
   border-radius: 6px;
   background-color: #ffffff;
-  padding: 12px;
+  padding: 20px;
   min-width: initial;
 }
 .billInfoData tbody tr {
@@ -10007,14 +10007,14 @@ button.crdoLghtBlu2 {
 }
 /* Added by Ankita */
 .err_message2 {
-  color: red !important;;
+  color: red !important;
   font-weight: 600;
   padding: 0px !important;
 }
-.setFirstCapGender{
-  text-transform:capitalize;
+.setFirstCapGender {
+  text-transform: capitalize;
 }
-.createLSet{
+.createLSet {
   width: 30%;
   float: right;
 }
@@ -10055,15 +10055,16 @@ button.crdoLghtBlu2 {
   padding-bottom: 0px;
   width: 100%;
 }
-.setPaymentBack{
+.setPaymentBack {
   border-radius: 12px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   box-shadow: 0 1px 8px 0 rgb(0 8 8 / 4%);
   margin-left: 48px;
   margin-top: 42px;
 }
 
-.homeBgDrk .payment_sec_extra_ser1, .homeBgDrk .setPaymentBack {
+.homeBgDrk .payment_sec_extra_ser1,
+.homeBgDrk .setPaymentBack {
   background: #e1f7f7 !important;
 }
 @media (max-width: 959px) {
@@ -10438,7 +10439,7 @@ button.dischrgInvoic span {
 .darkTheme .err_message,
 .homeBgDrk .err_message,
 .darkTheme .err_message2,
-.homeBgDrk .err_message2{
+.homeBgDrk .err_message2 {
   color: #ff6262 !important;
 }
 .darkTheme .success_message,
@@ -14042,17 +14043,23 @@ input:-webkit-autofill:active{
 }
 
 .assignHos {
-  font-size: 18px !important;
-  font-weight: 700 !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
   padding-bottom: 10px !important;
+  position:absolute;
+ 
 }
-
+/* .payment{
+  position: absolute ; 
+} */
 .darkTheme .assignHos {
   color: #c3c3c3;
+
 }
 
 .infoIconCol {
-  color: #00abaf;
+  color: red;
+  
 }
 
 .noHosAss {
@@ -14359,13 +14366,11 @@ input:-webkit-autofill:active{
 }
 
 .textFieldArea1 input {
-  margin-bottom: 5px;
   height: 35px;
   outline: none;
   width: 100%;
   border-radius: 5px;
   border: 1px solid #bfc1c1;
-  margin-top: 10px;
   padding: 5px 10px;
 }
 
@@ -14375,6 +14380,9 @@ input:-webkit-autofill:active{
 
 .fatiqueQuess1 {
   margin-top: 10px;
+}
+.fatiqueQuess1 label {
+  color: #404646;
 }
 
 .fillDia .attchImg {
@@ -14405,27 +14413,22 @@ label.newrole {
   outline: none;
   margin-right: 30px;
 }
-
 .newrole label {
   font-size: 18px;
 }
-
 .headsize {
   font-size: 20px;
 }
 .heading p {
   font-size: 15px;
 }
-
 .selectEntry {
   margin: 10px;
   width: 100%;
 }
-
 .line {
   flex-flow: column nowrap;
 }
-
 .inputBorField input {
   border: 1px solid #bfc1c1;
   border-radius: 4px;
@@ -14440,15 +14443,12 @@ label.newrole {
   box-sizing: border-box !important;
   min-height: 44px;
 }
-
 .cnfrmDiaMain .fillDia .errChrMsg {
   color: #ff0000 !important;
 }
-
 .fillDiaSection {
   margin-top: 15px;
 }
-
 .cnfrmDiaMain1 {
   background-color: #ffffff;
   border-radius: 8px;
@@ -14456,21 +14456,13 @@ label.newrole {
 .fillDiaAll label {
   display: contents;
 }
-
 .stripePromiseClss {
   margin-left: 70px;
 }
-
 .bloodpreLb label {
   font-size: 15px;
   font-weight: 700;
 }
-
-/* Added by Ankit */
-.FeedbackCss label {
-  margin-bottom: 8px;
-}
-
 .symptomSec1 {
   margin-left: 25px;
 }
@@ -14479,6 +14471,14 @@ label.newrole {
 }
 .stndQues1 h2 {
   font-weight: 800;
+  margin-top: 10px;
+}
+.stndQues1 h3 {
+  font-weight: 800;
+  margin-top: 10px;
+}
+.stndQues1 h1 {
+  font-weight: 700;
   margin-top: 10px;
 }
 .imageEvalSize img {
@@ -14493,33 +14493,96 @@ label.newrole {
   border-radius: 5px;
   color: #000 !important;
 }
-
 .presOpinionIner1 Thead Th {
   padding: 16px 6px !important;
 }
-.hello{
- margin-top: 20px;
-margin-left: 20px;
-padding:22px 25px 0px 24px 
-}
-.btnPointer{
-  cursor: pointer;
-  margin-left: 10px;
-}
-
-
-.cnfrmDiaMain2{
+.cnfrmDiaMain2 {
   background-color: #fff;
-  margin-top:42px;
+  margin-top: 42px;
+  margin-bottom: 42px;
   margin-left: 48px;
-  padding:22px 24px 35px;
+  padding: 22px 24px 35px;
   border-radius: 8px;
   box-shadow: 0 1px 8px 0 rgb(0 8 8 / 4%);
 }
-
-@media(max-width:959px){
-  .cnfrmDiaMain2{
+@media (max-width: 959px) {
+  .cnfrmDiaMain2 {
     margin-left: 8px;
     margin-right: 8px;
   }
+}
+.borderLineAfer {
+  margin-top: 26px;
+  padding-top: 26px;
+  border: 1.5px solid #00abaf;
+  padding-bottom: 26px;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 26px;
+  /* border-bottom: 1.5px solid #00abaf; */
+}
+
+.painAreasimg{
+  height: 150px !important;
+}
+.sickQuesSec{
+  margin-top: 10px;
+}
+.sickCheckSec .MuiCheckbox-root{
+  color:#00abaf!important;
+}
+
+
+
+.fatiqueQues p {
+  color: #7F8383 !important;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 0;
+  line-height: 18px;
+  text-align: center;
+  font-family: Muli;
+  /* height: 34px; */
+  padding: 0px 4px;
+  min-width: 42px;
+  /* border: 1px solid #F2F2F2; */
+  border-radius: 8px;
+  /* background-color: #FFFFFF; */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 14px;
+}
+
+.allHeadSickSec label{
+  font-size: 16px!important;
+}
+label.errMsgStyleSec{
+  color:red;
+  display: flex;
+  align-items: center;
+  justify-content: center!important;
+}
+label.errMsgStyleSecPart{
+  color:red;
+  display: flex;
+}
+.bloodSugarPart{
+  margin-bottom:20px;
+}
+.infoShwSave3 input{
+  width:240px;
+}
+
+.allSickHeadSec{
+  font-size: 15px;
+}
+.sickAllMngSec{
+  margin-top: 10px;
+}
+.InfoOutLine{
+  color:grey;
+}
+.approvedPayment{
+  color:red
 }
