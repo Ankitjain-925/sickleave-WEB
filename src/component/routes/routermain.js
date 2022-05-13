@@ -9,6 +9,7 @@ import NotFound from 'Screens/Components/NotFound';
 import RegSuccuss from 'Screens/Components/RegSuccess/index';
 import Form from 'Screens/Patient/SickLeaveForm/index';
 import PatientProfile from 'Screens/Patient/Profile/index';
+import VideoCall from 'Screens/VideoCall/index';
 
 class Routermain extends Component {
   render() {
@@ -48,6 +49,14 @@ class Routermain extends Component {
               exact
               path="/patient/sick-request"
               render={(props) => <Form {...props} />}
+            />
+
+            {/* Added by ankit */}
+
+            <Route
+              exact
+              path="/video-call/:id"
+              render={(props) => <VideoCall {...props} />}
             />
             <Route
               path="*"

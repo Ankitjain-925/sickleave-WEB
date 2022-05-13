@@ -1083,7 +1083,6 @@ export const validatePainHeart = (check, value, item, current) => {
       return true;
     }
   } else if (item === 'headache_have_diabetes' && check === 'yes') {
-    console.log('item,value,check', item, value, check);
     if (!value.headache_have_diabetes) {
       current.setState({
         error_section: 46,
@@ -1387,14 +1386,12 @@ export const onChange = (date, current) => {
       days = 'sunday';
       break;
   }
-  console.log('current.state.appointmentData', current.state.appointmentData);
   let appointmentData = current.state.appointmentData;
   var appointDate;
   if (appointmentData && appointmentData.length > 0 && appointmentData[0]) {
     Object.entries(appointmentData[0]).map(([key, value]) => {
       if (key == days) {
         appointDate = value;
-        console.log('appointDate', appointDate);
         current.setState({ appointDate: appointDate });
       }
     });
@@ -1464,11 +1461,8 @@ export const getCalendarData = (current) => {
     .then((response) => {
       if (response?.data && response?.data?.data) {
         var data = response?.data?.data[0]?.sickleave[0];
-        console.log('data', data);
-        console.log('response', response);
         current.setState({ appointmentData: data });
-        // onChange(new Date());
-        // setTimeout(() => onChange(new Date()), 200);
+        setTimeout(() => onChange(new Date(), current), 200);
       }
     });
 };

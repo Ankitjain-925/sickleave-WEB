@@ -14537,3 +14537,12 @@ label.newrole {
   justify-content: center;
   margin-right: 14px;
 }
+
+.setColorOfMsg{
+  font-weight: 600;
+  color:red
+}
+.setColorOfMsg1{
+  font-weight: 600;
+  color:green
+}

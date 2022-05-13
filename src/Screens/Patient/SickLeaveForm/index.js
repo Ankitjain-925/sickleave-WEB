@@ -61,6 +61,7 @@ class Index extends Component {
   componentDidMount = () => {
     this.getMetadata();
     getCalendarData(this);
+    // onChange(new Date(), this);
   };
 
   getMetadata = () => {
@@ -76,6 +77,7 @@ class Index extends Component {
       errorChrMsg,
       DataprotectionRules,
       openCalendar,
+      appointDate,
     } = this.state;
     return (
       <Grid
@@ -88,7 +90,6 @@ class Index extends Component {
             : 'homeBg'
         }
       >
-        {console.log('this.state.appointDate', this.state.appointDate)}
         {this.state.loaderImage && <Loader />}
         <Grid className="homeBgIner">
           <Grid container direction="row" justify="center">
@@ -424,11 +425,9 @@ class Index extends Component {
                               <Grid>
                                 <label>Select time slot</label>
                               </Grid>
-                              {console.log(
-                                'this.state.appointDate',
-                                this.state.appointDate
-                              )}
+                              ;
                               <Grid className="selTimeAM">
+                                ,{' '}
                                 {this.state.appointDate &&
                                 this.state.appointDate.length > 0 ? (
                                   Availabledays(
