@@ -14500,26 +14500,26 @@ label.newrole {
 .borderLineAfer {
   margin-top: 26px;
   padding-top: 26px;
-  border-top: 1.5px solid #00abaf;
+  border: 1.5px solid #00abaf;
   padding-bottom: 26px;
+  border-radius: 10px;
+  padding: 10px;
   margin-bottom: 26px;
-  border-bottom: 1.5px solid #00abaf;
+  /* border-bottom: 1.5px solid #00abaf; */
 }
 
-.painAreasimg{
+.painAreasimg {
   height: 150px !important;
 }
-.sickQuesSec{
+.sickQuesSec {
   margin-top: 10px;
 }
-.sickCheckSec .MuiCheckbox-root{
-  color:#00abaf!important;
+.sickCheckSec .MuiCheckbox-root {
+  color: #00abaf !important;
 }
 
-
-
 .fatiqueQues p {
-  color: #7F8383 !important;
+  color: #7f8383 !important;
   font-size: 14px;
   font-weight: bold;
   letter-spacing: 0;
@@ -14538,11 +14538,37 @@ label.newrole {
   margin-right: 14px;
 }
 
-.setColorOfMsg{
+.setColorOfMsg {
   font-weight: 600;
-  color:red
+  color: red;
 }
-.setColorOfMsg1{
+.setColorOfMsg1 {
   font-weight: 600;
-  color:green
+  color: green;
+}
+.allHeadSickSec label {
+  font-size: 16px !important;
+}
+label.errMsgStyleSec {
+  color: red;
+  display: flex;
+  align-items: center;
+  justify-content: center !important;
+}
+label.errMsgStyleSecPart {
+  color: red;
+  display: flex;
+}
+.bloodSugarPart {
+  margin-bottom: 20px;
+}
+.infoShwSave3 input {
+  width: 240px;
+}
+
+.allSickHeadSec {
+  font-size: 17px;
+}
+.sickAllMngSec {
+  margin-top: 10px;
 }

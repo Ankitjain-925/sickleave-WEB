@@ -49,7 +49,7 @@ function Index(props) {
           <label>Where does it hurt now?</label>
         </Grid>
         <PainPoint
-          id="New_id1"
+          id="New_id2"
           gender={
             props.user?.sex
           }
