@@ -14586,3 +14586,12 @@ label.errMsgStyleSecPart{
 .approvedPayment{
   color:red
 }
+
+.Paymentpending{
+  color:red;
+  
+}
+.InfoOutLine{
+  color:red;
+  font-size: 20px!important;
+}

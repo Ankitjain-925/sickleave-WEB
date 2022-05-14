@@ -24,6 +24,9 @@ import PainPoint from "Screens/Components/PointPain/index";
 import { GetLanguageDropdown } from 'Screens/Components/GetMetaData/index.js';
 import { OptionList } from "Screens/Login/metadataaction";
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import {
+  ApprovedPayment
+} from "../SickLeaveForm/api";
 
 class Index extends Component {
   constructor(props) {
@@ -33,7 +36,7 @@ class Index extends Component {
       // AllData1: [],
 
       openDetail: false,
-      gender: this.props.stateLoginValueAim?.user?.sex,
+      gender: "female",
       newTask: {},
       Allsituation: [],
       // allMetadata: [],
@@ -51,7 +54,13 @@ class Index extends Component {
     }
   };
 
-
+ ApprovedPayment = (data) => {
+   console.log(' ApprovedPayment',data)
+    this.props.history.push({
+      pathname: '/patient/sick-request',
+      state: {updateQues: data },
+    });
+  };
   GetLanguageMetadata = () => {
     if (this.state.allMetadata) {
       var Allsituation = GetLanguageDropdown(
@@ -80,11 +89,7 @@ class Index extends Component {
     });
   }
 
-
-
-
-
-  allgetData = (patient_id) => {
+ allgetData = (patient_id) => {
     let translate = getLanguage(this.props.stateLanguageType);
     let { Something_went_wrong } = translate;
     axios
@@ -316,15 +321,16 @@ class Index extends Component {
                                     <Td>
                                       {item.cardiac_problems === 'yes' ? "Yes" : "No"}
                                     </Td>
+
                                     <Td >
                                       <a className="academy_ul">
-                                        <InfoOutlinedIcon className='InfoOutLine' />
-                                        <ul >
-                                          <li>
-                                            <h6 className="assignHos">Your payment process is pending</h6>
-
-                                          </li>
-                                        </ul>
+                                      {(item?.approved == true) &&(!item.is_payment || item.is_payment == false) && (
+                                        <Grid>
+                                          <InfoOutlinedIcon className='InfoOutLine' />
+                                          <ul>
+                                            <li><h6 className="assignHos Paymentpending">Your payment process is pending</h6></li>
+                                          </ul>
+                                        </Grid>)}
                                       </a>
                                     </Td>
                                     <Td className="presEditDot scndOptionIner">
@@ -351,16 +357,15 @@ class Index extends Component {
                                               {see_details}
                                             </a>
                                           </li>
-                                          {(!item.is_payment ||
-                                            item.is_decline) && (
-                                              <li>
+                                          {(!item?.approved || item?.approved !== true) && 
+                                           <li>
                                                 <a
-                                                // onClick={() => {
-                                                //   updateRequestBeforePayment(
-                                                //     this,
-                                                //     item
-                                                //   );
-                                                // }}
+                                                onClick={() => {
+                                                  ApprovedPayment(
+                                                    this,
+                                                    item
+                                                  );
+                                                }}
                                                 >
                                                   <img
                                                     src={require("assets/virtual_images/pencil-1.svg")}
@@ -370,8 +375,8 @@ class Index extends Component {
                                                   {edit_request}
                                                 </a>
                                               </li>
-                                            )}
-                                          {!item.is_payment && (
+                                            }
+                                          {/* {!item.is_payment && (
                                             <li>
                                               <a
                                                 onClick={() => {
@@ -386,18 +391,18 @@ class Index extends Component {
                                                 {cancel_request}
                                               </a>
                                             </li>
-                                          )}
+                                          )} */}
 
-                                          {item.is_payment && (
+                                          {/* {item.is_payment && (
                                             <li>
                                               <a
-                                              // onClick={() => {
-                                              //   DownloadBill(
-                                              //     this,
-                                              //     item?.payment_data?.id,
-                                              //     item?.created_at
-                                              //   );
-                                              // }}
+                                              onClick={() => {
+                                                DownloadBill(
+                                                  this,
+                                                  item?.payment_data?.id,
+                                                  item?.created_at
+                                                );
+                                              }}
                                               >
                                                 <img
                                                   src={require("assets/images/download.svg")}
@@ -407,17 +412,17 @@ class Index extends Component {
                                                 {Download_Bill}
                                               </a>
                                             </li>
-                                          )}
+                                          )} */}
 
-                                          {(item.status === "done" ||
+                                          {/* {(item.status === "done" ||
                                             item?.comments?.length > 0 ||
                                             item?.attachments?.length > 0) && (
                                               <>
                                                 <li>
                                                   <a
-                                                  // onClick={() =>
-                                                  //   handleOpFeedback(this, item)
-                                                  // }
+                                                  onClick={() =>
+                                                    handleOpFeedback(this, item)
+                                                  }
                                                   >
                                                     <img
                                                       src={require("assets/images/details.svg")}
@@ -428,7 +433,7 @@ class Index extends Component {
                                                   </a>
                                                 </li>
                                               </>
-                                            )}
+                                            )} */}
                                         </ul>
                                       </a>
                                     </Td>
@@ -515,9 +520,9 @@ class Index extends Component {
                         direction="row"
                         className="setDetail-eval"
                       >
-                        {(!this.state.newTask?.approved || this.state.newTask?.approved == true) && (!this.state.newTask.is_payment || this.state.newTask.is_payment == false) && (
-                          <div className="approvedPayment"><p>Your request is accepted by the doctor but your payment is
-                            pending, Please do your payment otherwise the 
+                        {(this.state.newTask?.approved == true) && (!this.state.newTask.is_payment || this.state.newTask.is_payment == false) && (
+                          <div className="Paymentpending"><p>Your request is accepted by the doctor but your payment is
+                            pending, Please do your payment otherwise the
                             request will cancel automatically</p></div>
                         )}
                         <Grid item xs={12} md={12} className="taskDescp">
@@ -785,7 +790,7 @@ class Index extends Component {
                                     this.state.newTask?.headache_pain_intensity}
                                 </p>
                               </Grid>}
-                            {this.state.newTask.stomach_problems === 'yes' &&
+                              {this.state.newTask.stomach_problems === 'yes' &&
                               <Grid>
                                 <Grid className="allSickHeadSec">
                                   <h3>{stomach_problems}</h3>
@@ -793,7 +798,6 @@ class Index extends Component {
                                 <Grid>
                                   <h1>{Pain_begin}</h1>
                                   <PainPoint
-                                   id="View2"
                                     gender={this.state.gender}
                                     painPoint={
                                       this.state.newTask
@@ -805,7 +809,6 @@ class Index extends Component {
                                 <Grid>
                                   <h1>{hurtnow}</h1>
                                   <PainPoint
-                                    id="View1"
                                     gender={this.state.gender}
                                     painPoint={
                                       this.state.newTask
