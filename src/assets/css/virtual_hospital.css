@@ -5884,7 +5884,7 @@ button.downloadPDF:hover {
   margin-right: 8px;
 }
 .billDots {
-  text-align: right;
+  text-align: left;
 }
 .billDots button {
   height: 24px;
@@ -5892,7 +5892,7 @@ button.downloadPDF:hover {
   border: 1px solid #f2f2f2;
   border-radius: 6px;
   background-color: #ffffff;
-  padding: 12px;
+  padding: 20px;
   min-width: initial;
 }
 .billInfoData tbody tr {
@@ -14043,17 +14043,23 @@ input:-webkit-autofill:active{
 }
 
 .assignHos {
-  font-size: 18px !important;
-  font-weight: 700 !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
   padding-bottom: 10px !important;
+  position:absolute;
+ 
 }
-
+/* .payment{
+  position: absolute ; 
+} */
 .darkTheme .assignHos {
   color: #c3c3c3;
+
 }
 
 .infoIconCol {
-  color: #00abaf;
+  color: red;
+  
 }
 
 .noHosAss {
@@ -14467,6 +14473,14 @@ label.newrole {
   font-weight: 800;
   margin-top: 10px;
 }
+.stndQues1 h3 {
+  font-weight: 800;
+  margin-top: 10px;
+}
+.stndQues1 h1 {
+  font-weight: 700;
+  margin-top: 10px;
+}
 .imageEvalSize img {
   width: 50%;
   border-radius: 15px;
@@ -14561,9 +14575,23 @@ label.errMsgStyleSecPart{
 }
 
 .allSickHeadSec{
-  font-size: 17px;
+  font-size: 15px;
 }
 .sickAllMngSec{
   margin-top: 10px;
 }
+.InfoOutLine{
+  color:grey;
+}
+.approvedPayment{
+  color:red
+}
 
+.Paymentpending{
+  color:red;
+  
+}
+.InfoOutLine{
+  color:red;
+  font-size: 20px!important;
+}

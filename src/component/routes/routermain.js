@@ -39,7 +39,6 @@ class Routermain extends Component {
               path="/change-password"
               render={(props) => <ChangePass {...props} />}
             />
-
             <Route
               exact
               path="/register-successfull"
