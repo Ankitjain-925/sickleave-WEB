@@ -50,6 +50,8 @@ class Index extends Component {
       date: new Date(),
       appointmentData: [],
       appointDate: [],
+      assinged_to: [{}],
+      currentSelected: -1,
     };
   }
 
@@ -400,6 +402,11 @@ class Index extends Component {
                                 label="I have react and understood the Data protection rules and Regulations of Aimedis."
                               />
                             </Grid>
+                            {error_section == 73 && (
+                              <div className="err_message2 err_message3">
+                                {errorChrMsg}
+                              </div>
+                            )}
                             {error_section == 45 && (
                               <div className="err_message2">{errorChrMsg}</div>
                             )}
@@ -408,7 +415,7 @@ class Index extends Component {
                             <input
                               type="submit"
                               value="Submit"
-                              onClick={() => handleEvalSubmit(this)}
+                              onClick={() => handleEvalSubmit(this, 1)}
                             ></input>
                           </Grid>
                         </Grid>
@@ -420,15 +427,15 @@ class Index extends Component {
                               <Calendar2
                                 onChange={(e) => onChange(e, this)}
                                 value={this.state.date}
+                                minDate={new Date()}
                               />
                             </Grid>
                             <Grid className="selTimeSlot">
                               <Grid>
                                 <label>Select time slot</label>
                               </Grid>
-                              ;
                               <Grid className="selTimeAM">
-                                ,{' '}
+                                {' '}
                                 {this.state.appointDate &&
                                 this.state.appointDate.length > 0 ? (
                                   Availabledays(
@@ -529,6 +536,19 @@ class Index extends Component {
                                 )}
                               </Grid>
                             </Grid>
+                          </Grid>
+                          {error_section == 70 && (
+                            <div className="err_message2 err_message3">
+                              {errorChrMsg}
+                            </div>
+                          )}
+                          <Grid className="infoShwSave3">
+                            <input
+                              type="submit"
+                              value="Submit"
+                              disabled={this.state.appointDate.length == 0}
+                              onClick={() => handleEvalSubmit(this, 2)}
+                            ></input>
                           </Grid>
                         </Grid>
                       )}

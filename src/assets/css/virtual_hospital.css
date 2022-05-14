@@ -14572,3 +14572,10 @@ label.errMsgStyleSecPart {
 .sickAllMngSec {
   margin-top: 10px;
 }
+.err_message3 {
+  margin-top: 8px;
+}
+
+.declineListCol {
+  background-color: #d3d3d3;
+}

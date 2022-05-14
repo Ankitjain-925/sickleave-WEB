@@ -1,28 +1,28 @@
-import React, { Component } from "react";
-import Grid from "@material-ui/core/Grid";
-import axios from "axios";
-import sitedata from "sitedata";
-import { commonHeader } from "component/CommonHeader/index";
-import { getLanguage } from "translations/index";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import { LoginReducerAim } from "Screens/Login/actions";
-import { LanguageFetchReducer } from "Screens/actions";
-import { Settings } from "Screens/Login/setting";
-import { authy } from "Screens/Login/authy.js";
-import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
-import Loader from "Screens/Components/Loader/index";
-import LeftMenu from "Screens/Components/Menus/PatientLeftMenu/index";
-import LeftMenuMobile from "Screens/Components/Menus/PatientLeftMenu/mobile";
-import { getDate, getTime } from "Screens/Components/BasicMethod/index";
-import Pagination from "Screens/Components/Pagination/index";
-import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
-import Modal from "@material-ui/core/Modal";
-import { GetShowLabel1 } from "Screens/Components/GetMetaData/index.js";
-import FileViews from "Screens/Components/TimelineComponent/FileViews/index";
-import PainPoint from "Screens/Components/PointPain/index";
-import {GetLanguageDropdown} from 'Screens/Components/GetMetaData/index.js';
-import { OptionList } from "Screens/Login/metadataaction";
+import React, { Component } from 'react';
+import Grid from '@material-ui/core/Grid';
+import axios from 'axios';
+import sitedata from 'sitedata';
+import { commonHeader } from 'component/CommonHeader/index';
+import { getLanguage } from 'translations/index';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { LoginReducerAim } from 'Screens/Login/actions';
+import { LanguageFetchReducer } from 'Screens/actions';
+import { Settings } from 'Screens/Login/setting';
+import { authy } from 'Screens/Login/authy.js';
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
+import Loader from 'Screens/Components/Loader/index';
+import LeftMenu from 'Screens/Components/Menus/PatientLeftMenu/index';
+import LeftMenuMobile from 'Screens/Components/Menus/PatientLeftMenu/mobile';
+import { getDate, getTime } from 'Screens/Components/BasicMethod/index';
+import Pagination from 'Screens/Components/Pagination/index';
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
+import Modal from '@material-ui/core/Modal';
+import { GetShowLabel1 } from 'Screens/Components/GetMetaData/index.js';
+import FileViews from 'Screens/Components/TimelineComponent/FileViews/index';
+import PainPoint from 'Screens/Components/PointPain/index';
+import { GetLanguageDropdown } from 'Screens/Components/GetMetaData/index.js';
+import { OptionList } from 'Screens/Login/metadataaction';
 
 class Index extends Component {
   constructor(props) {
@@ -34,7 +34,7 @@ class Index extends Component {
       openDetail: false,
       gender: this.props.stateLoginValueAim?.user?.sex,
       newTask: {},
-      Allsituation:[],
+      Allsituation: [],
       // allMetadata: [],
     };
   }
@@ -49,7 +49,6 @@ class Index extends Component {
       this.GetLanguageMetadata();
     }
   };
-
 
   GetLanguageMetadata = () => {
     if (this.state.allMetadata) {
@@ -78,27 +77,25 @@ class Index extends Component {
       this.GetLanguageMetadata();
     });
   }
-  
-
-
-  
 
   allgetData = (patient_id) => {
+    this.setState({ loaderImage: true });
     let translate = getLanguage(this.props.stateLanguageType);
     let { Something_went_wrong } = translate;
     axios
       .get(
-        sitedata.data.path + "/vactive/GetAllPatientData/" + patient_id,
+        sitedata.data.path + '/vactive/GetAllPatientData/' + patient_id,
         commonHeader(this.props.stateLoginValueAim.token)
       )
       .then((responce) => {
         this.setState({ loaderImage: false });
         if (responce.data.hassuccessed) {
           let data = responce.data;
-          this.setState({ AllDataSec: data.data });
+          this.setState({ AllDataSec: data.data, loaderImage: false });
         } else {
           this.setState({
             errorMsg: Something_went_wrong,
+            loaderImage: false,
           });
         }
       });
@@ -214,9 +211,9 @@ class Index extends Component {
             this.props.settings &&
             this.props.settings.setting &&
             this.props.settings.setting.mode &&
-            this.props.settings.setting.mode === "dark"
-              ? "homeBg homeBgDrk"
-              : "homeBg"
+            this.props.settings.setting.mode === 'dark'
+              ? 'homeBg homeBgDrk'
+              : 'homeBg'
           }
         >
           {this.state.loaderImage && <Loader />}
@@ -256,11 +253,17 @@ class Index extends Component {
                             <Tbody>
                               {this.state.AllDataSec?.length > 0 &&
                                 this.state.AllDataSec.map((item, index) => (
-                                  <Tr>
+                                  <Tr
+                                    className={
+                                      item && item?.is_decline
+                                        ? 'declineListCol'
+                                        : ''
+                                    }
+                                  >
                                     <Td>
                                       <p>
                                         {item && !item?.due_on?.date ? (
-                                          "-"
+                                          '-'
                                         ) : (
                                           <>
                                             {getDate(
@@ -293,34 +296,34 @@ class Index extends Component {
                                     </Td>
                                     {/* <Td>{item.task_name}</Td> */}
 
-                                    <Td>{item.headache ? "Yes" : "No"}</Td>
+                                    <Td>{item.headache ? 'Yes' : 'No'}</Td>
 
                                     <Td>
-                                      {item.stomach_problems ? "Yes" : "No"}
+                                      {item.stomach_problems ? 'Yes' : 'No'}
                                     </Td>
 
-                                    <Td>{item.diarrhea ? "Yes" : "No"}</Td>
+                                    <Td>{item.diarrhea ? 'Yes' : 'No'}</Td>
 
-                                    <Td>{item.have_fever ? "Yes" : "No"}</Td>
+                                    <Td>{item.have_fever ? 'Yes' : 'No'}</Td>
 
-                                    <Td>{item.back_pain ? "Yes" : "No"}</Td>
-
-                                    <Td>
-                                      {item.cough_and_snees ? "Yes" : "No"}
-                                    </Td>
+                                    <Td>{item.back_pain ? 'Yes' : 'No'}</Td>
 
                                     <Td>
-                                      {item.feel_depressed ? "Yes" : "No"}
+                                      {item.cough_and_snees ? 'Yes' : 'No'}
                                     </Td>
 
                                     <Td>
-                                      {item.cardiac_problems ? "Yes" : "No"}
+                                      {item.feel_depressed ? 'Yes' : 'No'}
+                                    </Td>
+
+                                    <Td>
+                                      {item.cardiac_problems ? 'Yes' : 'No'}
                                     </Td>
 
                                     <Td className="presEditDot scndOptionIner">
                                       <a className="openScndhrf">
                                         <img
-                                          src={require("assets/images/three_dots_t.png")}
+                                          src={require('assets/images/three_dots_t.png')}
                                           alt=""
                                           title=""
                                           className="openScnd"
@@ -333,7 +336,7 @@ class Index extends Component {
                                               }}
                                             >
                                               <img
-                                                src={require("assets/images/details.svg")}
+                                                src={require('assets/images/details.svg')}
                                                 alt=""
                                                 title=""
                                               />
@@ -352,7 +355,7 @@ class Index extends Component {
                                               // }}
                                               >
                                                 <img
-                                                  src={require("assets/virtual_images/pencil-1.svg")}
+                                                  src={require('assets/virtual_images/pencil-1.svg')}
                                                   alt=""
                                                   title=""
                                                 />
@@ -368,7 +371,7 @@ class Index extends Component {
                                                 }}
                                               >
                                                 <img
-                                                  src={require("assets/images/cancel-request.svg")}
+                                                  src={require('assets/images/cancel-request.svg')}
                                                   alt=""
                                                   title=""
                                                 />
@@ -389,7 +392,7 @@ class Index extends Component {
                                               // }}
                                               >
                                                 <img
-                                                  src={require("assets/images/download.svg")}
+                                                  src={require('assets/images/download.svg')}
                                                   alt=""
                                                   title=""
                                                 />
@@ -398,7 +401,7 @@ class Index extends Component {
                                             </li>
                                           )}
 
-                                          {(item.status === "done" ||
+                                          {(item.status === 'done' ||
                                             item?.comments?.length > 0 ||
                                             item?.attachments?.length > 0) && (
                                             <>
@@ -409,7 +412,7 @@ class Index extends Component {
                                                 // }
                                                 >
                                                   <img
-                                                    src={require("assets/images/details.svg")}
+                                                    src={require('assets/images/details.svg')}
                                                     alt=""
                                                     title=""
                                                   />
@@ -430,7 +433,7 @@ class Index extends Component {
                               <Grid item xs={12} md={6}>
                                 <Grid className="totalOutOff">
                                   <a>
-                                    {this.state.currentPage} of{" "}
+                                    {this.state.currentPage} of{' '}
                                     {this.state.totalPage}
                                   </a>
                                 </Grid>
@@ -466,9 +469,9 @@ class Index extends Component {
                   this.props.settings &&
                   this.props.settings.setting &&
                   this.props.settings.setting.mode &&
-                  this.props.settings.setting.mode === "dark"
-                    ? "darkTheme"
-                    : ""
+                  this.props.settings.setting.mode === 'dark'
+                    ? 'darkTheme'
+                    : ''
                 }
               >
                 <Grid className="creatTaskModel">
@@ -480,7 +483,7 @@ class Index extends Component {
                             <Grid className="creatLblClose createLSet">
                               <a onClick={this.handleCloseDetail}>
                                 <img
-                                  src={require("assets/images/close-search.svg")}
+                                  src={require('assets/images/close-search.svg')}
                                   alt=""
                                   title=""
                                 />
@@ -667,14 +670,6 @@ class Index extends Component {
                                   </Grid>
                                   <Grid xs={4} md={4}>
                                     <label>{Hba1c}</label>
-                                    {console.log("ffsfsd",  GetShowLabel1(
-                                          this.state.Allsituation,
-                                          this.state.newTask?.headache_situation
-                                            ?.value,
-                                          this.props.stateLanguageType,
-                                          true,
-                                          "anamnesis"
-                                        ))}
                                     <p>
                                       {this.state.newTask &&
                                         this.state.newTask?.headache_Hba1c}
@@ -694,7 +689,7 @@ class Index extends Component {
                                             ?.value,
                                           this.props.stateLanguageType,
                                           true,
-                                          "anamnesis"
+                                          'anamnesis'
                                         )}
                                     </p>
                                   </Grid>
@@ -714,7 +709,7 @@ class Index extends Component {
                                   <label>{headache_need_to_vomit}</label>
                                   {this.state.newTask &&
                                   this.state.newTask?.headache_need_to_vomit ===
-                                    "yes" ? (
+                                    'yes' ? (
                                     <p>{yes}</p>
                                   ) : (
                                     <p>{no}</p>
@@ -724,7 +719,7 @@ class Index extends Component {
                                   <label>{headache_onset_of_pain}</label>
                                   {this.state.newTask &&
                                   this.state.newTask?.headache_onset_of_pain ===
-                                    "yes" ? (
+                                    'yes' ? (
                                     <p>{yes}</p>
                                   ) : (
                                     <p>{no}</p>
@@ -736,7 +731,7 @@ class Index extends Component {
                                 </Grid>
                                 {this.state.newTask &&
                                 this.state.newTask?.take_painkillers ===
-                                  "yes" ? (
+                                  'yes' ? (
                                   <p>{yes}</p>
                                 ) : (
                                   <p>{no}</p>
@@ -747,7 +742,7 @@ class Index extends Component {
                                 </Grid>
                                 {this.state.newTask &&
                                 this.state.newTask?.undergoing_treatment ===
-                                  "yes" ? (
+                                  'yes' ? (
                                   <p>{yes}</p>
                                 ) : (
                                   <p>{no}</p>
@@ -769,7 +764,7 @@ class Index extends Component {
                                 <Grid>
                                   <h2>{Pain_begin}</h2>
                                   <PainPoint
-                                   id="View2"
+                                    id="View2"
                                     gender={this.state.gender}
                                     painPoint={
                                       this.state.newTask
@@ -796,7 +791,7 @@ class Index extends Component {
                                     <label>{stomach_sternum}</label>
                                     {this.state.newTask &&
                                     this.state.newTask
-                                      ?.stomach_behind_the_sternum === "yes" ? (
+                                      ?.stomach_behind_the_sternum === 'yes' ? (
                                       <p>{yes}</p>
                                     ) : (
                                       <p>{no}</p>
@@ -806,7 +801,7 @@ class Index extends Component {
                                     <label>{stomach_attack}</label>
                                     {this.state.newTask &&
                                     this.state.newTask?.stomach_heart_attack ===
-                                      "yes" ? (
+                                      'yes' ? (
                                       <p>{yes}</p>
                                     ) : (
                                       <p>{no}</p>
@@ -817,7 +812,7 @@ class Index extends Component {
 
                                     {this.state.newTask &&
                                     this.state.newTask
-                                      ?.stomach_heart_failure === "yes" ? (
+                                      ?.stomach_heart_failure === 'yes' ? (
                                       <p>{yes}</p>
                                     ) : (
                                       <p>{no}</p>
@@ -883,7 +878,7 @@ class Index extends Component {
                                               ?.stomach_situation?.value,
                                             this.props.stateLanguageType,
                                             true,
-                                            "anamnesis"
+                                            'anamnesis'
                                           )}
                                       </p>
                                     </Grid>
@@ -896,7 +891,7 @@ class Index extends Component {
                                     {this.state.newTask &&
                                     this.state.newTask
                                       ?.stomach_continuously_or_periodically ===
-                                      "yes" ? (
+                                      'yes' ? (
                                       <p>{yes}</p>
                                     ) : (
                                       <p>{no}</p>
@@ -918,7 +913,7 @@ class Index extends Component {
                                     </Grid>
                                     {this.state.newTask &&
                                     this.state.newTask
-                                      ?.stomach_take_painkillers === "yes" ? (
+                                      ?.stomach_take_painkillers === 'yes' ? (
                                       <p>{yes}</p>
                                     ) : (
                                       <p>{no}</p>
@@ -941,7 +936,7 @@ class Index extends Component {
                                     {this.state.newTask &&
                                     this.state.newTask
                                       ?.stomach_undergoing_treatment ===
-                                      "yes" ? (
+                                      'yes' ? (
                                       <p>{yes}</p>
                                     ) : (
                                       <p>{no}</p>
@@ -976,7 +971,7 @@ class Index extends Component {
                                   {this.state.newTask &&
                                   this.state.newTask
                                     ?.diarrhea_suffer_from_vomiting ===
-                                    "yes" ? (
+                                    'yes' ? (
                                     <p>{yes}</p>
                                   ) : (
                                     <p>{no}</p>
@@ -999,7 +994,7 @@ class Index extends Component {
                                     {this.state.newTask &&
                                     this.state.newTask
                                       ?.diarrhea_envi_suffer_symtoms ===
-                                      "yes" ? (
+                                      'yes' ? (
                                       <p>{yes}</p>
                                     ) : (
                                       <p>{no}</p>
@@ -1010,7 +1005,7 @@ class Index extends Component {
 
                                     {this.state.newTask &&
                                     this.state.newTask
-                                      ?.diarrhea_liquids_with_you === "yes" ? (
+                                      ?.diarrhea_liquids_with_you === 'yes' ? (
                                       <p>{yes}</p>
                                     ) : (
                                       <p>{no}</p>
@@ -1044,7 +1039,7 @@ class Index extends Component {
                                   <h2>{body_temp}</h2>
                                 </Grid>
                                 <Grid container xs={12} md={12}>
-                                  <Grid xs={6} md={6} >
+                                  <Grid xs={6} md={6}>
                                     <label>{fever_top_body_temp}</label>
                                     <p>
                                       {this.state.newTask &&
@@ -1135,7 +1130,7 @@ class Index extends Component {
                                   </Grid>
                                   {this.state.newTask &&
                                   this.state.newTask?.back_pain_been_injured ===
-                                    "yes" ? (
+                                    'yes' ? (
                                     <p>{yes}</p>
                                   ) : (
                                     <p>{no}</p>
@@ -1147,7 +1142,7 @@ class Index extends Component {
                                   {this.state.newTask &&
                                   this.state.newTask
                                     ?.back_pain_physically_strained ===
-                                    "yes" ? (
+                                    'yes' ? (
                                     <p>{yes}</p>
                                   ) : (
                                     <p>{no}</p>
@@ -1158,7 +1153,7 @@ class Index extends Component {
 
                                   {this.state.newTask &&
                                   this.state.newTask
-                                    ?.back_pain_stress_depression === "yes" ? (
+                                    ?.back_pain_stress_depression === 'yes' ? (
                                     <p>{yes}</p>
                                   ) : (
                                     <p>{no}</p>
@@ -1200,7 +1195,7 @@ class Index extends Component {
                                               ?.back_pain_situation?.value,
                                             this.props.stateLanguageType,
                                             true,
-                                            "anamnesis"
+                                            'anamnesis'
                                           )}
                                       </p>
                                     </Grid>
@@ -1209,7 +1204,7 @@ class Index extends Component {
                                     <label>{back_attack}</label>
                                     {this.state.newTask &&
                                     this.state.newTask
-                                      ?.back_pain_heart_attack === "yes" ? (
+                                      ?.back_pain_heart_attack === 'yes' ? (
                                       <p>{yes}</p>
                                     ) : (
                                       <p>{no}</p>
@@ -1219,7 +1214,7 @@ class Index extends Component {
                                     <label>{back_failure}</label>
                                     {this.state.newTask &&
                                     this.state.newTask
-                                      ?.back_pain_heart_failure === "yes" ? (
+                                      ?.back_pain_heart_failure === 'yes' ? (
                                       <p>{yes}</p>
                                     ) : (
                                       <p>{no}</p>
@@ -1289,7 +1284,7 @@ class Index extends Component {
                                   </Grid>
                                   {this.state.newTask &&
                                   this.state.newTask
-                                    ?.cough_envi_suffer_symtoms === "yes" ? (
+                                    ?.cough_envi_suffer_symtoms === 'yes' ? (
                                     <p>{yes}</p>
                                   ) : (
                                     <p>{no}</p>
@@ -1346,7 +1341,7 @@ class Index extends Component {
 
                                     {this.state.newTask &&
                                     this.state.newTask
-                                      ?.depressed_do_you_sleep === "yes" ? (
+                                      ?.depressed_do_you_sleep === 'yes' ? (
                                       <p>{yes}</p>
                                     ) : (
                                       <p>{no}</p>
@@ -1358,7 +1353,7 @@ class Index extends Component {
                                     {this.state.newTask &&
                                     this.state.newTask
                                       ?.depressed_suicidal_thoughts ===
-                                      "yes" ? (
+                                      'yes' ? (
                                       <p>{yes}</p>
                                     ) : (
                                       <p>{no}</p>
@@ -1369,7 +1364,7 @@ class Index extends Component {
 
                                     {this.state.newTask &&
                                     this.state.newTask
-                                      ?.depressed_hurt_yourself === "yes" ? (
+                                      ?.depressed_hurt_yourself === 'yes' ? (
                                       <p>{yes}</p>
                                     ) : (
                                       <p>{no}</p>
@@ -1386,7 +1381,7 @@ class Index extends Component {
                                   <h2>{blood_pressure}</h2>
                                 </Grid>
                                 <Grid container xs={12} md={12}>
-                                <Grid xs={6} md={6}>
+                                  <Grid xs={6} md={6}>
                                     <label>{rr_systolic}</label>
                                     <p>
                                       {this.state.newTask &&
@@ -1401,7 +1396,7 @@ class Index extends Component {
                                         this.state.newTask
                                           ?.cardiac_rr_diastolic}
                                     </p>
-                                  </Grid>                                  
+                                  </Grid>
                                 </Grid>
 
                                 <Grid container xs={12} md={12}>
@@ -1410,7 +1405,7 @@ class Index extends Component {
 
                                     {this.state.newTask &&
                                     this.state.newTask?.cardiac_heart_attack ===
-                                      "yes" ? (
+                                      'yes' ? (
                                       <p>{yes}</p>
                                     ) : (
                                       <p>{no}</p>
@@ -1421,7 +1416,7 @@ class Index extends Component {
 
                                     {this.state.newTask &&
                                     this.state.newTask
-                                      ?.cardiac_heart_failure === "yes" ? (
+                                      ?.cardiac_heart_failure === 'yes' ? (
                                       <p>{yes}</p>
                                     ) : (
                                       <p>{no}</p>
@@ -1431,7 +1426,7 @@ class Index extends Component {
                                     <label>{cardiac_dizziness}</label>
                                     {this.state.newTask &&
                                     this.state.newTask
-                                      ?.cardiac_have_dizziness === "yes" ? (
+                                      ?.cardiac_have_dizziness === 'yes' ? (
                                       <p>{yes}</p>
                                     ) : (
                                       <p>{no}</p>
@@ -1442,7 +1437,7 @@ class Index extends Component {
 
                                     {this.state.newTask &&
                                     this.state.newTask
-                                      ?.cardiac_have_shoulder_pain === "yes" ? (
+                                      ?.cardiac_have_shoulder_pain === 'yes' ? (
                                       <p>{yes}</p>
                                     ) : (
                                       <p>{no}</p>
