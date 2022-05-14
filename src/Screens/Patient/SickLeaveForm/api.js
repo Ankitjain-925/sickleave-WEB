@@ -596,45 +596,46 @@ export const handleEvalSubmit = (current) => {
                                                                                                                                           .DataprotectionRules ===
                                                                                                                                           true
                                                                                                                                       ) {
-                                                                                                                                        // current.setState({loaderImage : true});
-                                                                                                                                        // axios
-                                                                                                                                        //   .post(
-                                                                                                                                        //     sitedata
-                                                                                                                                        //       .data
-                                                                                                                                        //       .path +
-                                                                                                                                        //       '/vh/AddTask',
+                                                                                                                                        current.setState({loaderImage : true});
+                                                                                                                                        axios
+                                                                                                                                          .post(
+                                                                                                                                            sitedata
+                                                                                                                                              .data
+                                                                                                                                              .path +
+                                                                                                                                              '/vh/AddTask',
 
-                                                                                                                                        //     data,
-                                                                                                                                        //     commonHeader(
-                                                                                                                                        //       current.props.stateLoginValueAim?.token
-                                                                                                                                        //     )
-                                                                                                                                        //   )
-                                                                                                                                        // .then(
-                                                                                                                                        //   (
-                                                                                                                                        //     responce
-                                                                                                                                        //   ) => {
-                                                                                                                                        //     setUpdateQues(
-                                                                                                                                        //       {}
-                                                                                                                                        //     );
+                                                                                                                                             data,
+                                                                                                                                            commonHeader(
+                                                                                                                                              current.props.stateLoginValueAim?.token
+                                                                                                                                            )
+                                                                                                                                          )
+                                                                                                                                        .then(
+                                                                                                                                          (
+                                                                                                                                            responce
+                                                                                                                                          ) => {
+                                                                                                                                            // setUpdateQues(
+                                                                                                                                            //   {}
+                                                                                                                                            // );
                                                                                                                                         current.setState(
                                                                                                                                           {
+                                                                                                                                            updateQues: {},
                                                                                                                                             loaderImage: false,
                                                                                                                                             openCalendar: true,
                                                                                                                                             DataprotectionRules: false,
                                                                                                                                           }
                                                                                                                                         );
-                                                                                                                                        //   }
-                                                                                                                                        // )
-                                                                                                                                        // .catch(
-                                                                                                                                        //   function (
-                                                                                                                                        //     error
-                                                                                                                                        //   ) {
-                                                                                                                                        //     console.log(
-                                                                                                                                        //       'error'
-                                                                                                                                        //     );
-                                                                                                                                        //        current.setState({loaderImage : false});
-                                                                                                                                        //       }
-                                                                                                                                        //     );
+                                                                                                                                          }
+                                                                                                                                        )
+                                                                                                                                        .catch(
+                                                                                                                                          function (
+                                                                                                                                            error
+                                                                                                                                          ) {
+                                                                                                                                            console.log(
+                                                                                                                                              'error'
+                                                                                                                                            );
+                                                                                                                                               current.setState({loaderImage : false});
+                                                                                                                                              }
+                                                                                                                                            );
                                                                                                                                       } else {
                                                                                                                                         current.setState(
                                                                                                                                           {
@@ -1387,14 +1388,12 @@ export const onChange = (date, current) => {
       days = 'sunday';
       break;
   }
-  console.log('current.state.appointmentData', current.state.appointmentData);
   let appointmentData = current.state.appointmentData;
   var appointDate;
-  if (appointmentData && appointmentData.length > 0 && appointmentData[0]) {
-    Object.entries(appointmentData[0]).map(([key, value]) => {
+  if (appointmentData) {
+    Object.entries(appointmentData).map(([key, value]) => {
       if (key == days) {
         appointDate = value;
-        console.log('appointDate', appointDate);
         current.setState({ appointDate: appointDate });
       }
     });
@@ -1472,3 +1471,8 @@ export const getCalendarData = (current) => {
       }
     });
 };
+
+export const SelectTimeSlot = (AppointDay, Ai, current) => {
+  console.log('AppointDay', AppointDay, 'AI', Ai);
+  current.setState({currentSelected: Ai})   
+}

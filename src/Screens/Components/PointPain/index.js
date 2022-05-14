@@ -119,12 +119,12 @@ class PointPain extends Component {
             {/* <img src={require('assets/images/persionPainEqual.svg')} alt="" title="" /> */}
           </a>
           {/* <a className="painAreasimg"><img src={require('assets/images/patient-back.svg')} alt="" title="" /></a> */}
-          {!this.state.isView && (
+          
             <a className="painAreasTxt" onClick={this.removedata}>
+            {!this.state.isView && (<>
               <img src={require('assets/images/eraser.svg')} alt="" title="" />
-              {clear_point}
+              {clear_point}</>)}
             </a>
-          )}
         </Grid>
       </Grid>
     );

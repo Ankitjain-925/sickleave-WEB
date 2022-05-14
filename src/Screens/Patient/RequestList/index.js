@@ -33,7 +33,7 @@ class Index extends Component {
       // AllData1: [],
 
       openDetail: false,
-      gender: "female",
+      gender: this.props.stateLoginValueAim?.user?.sex,
       newTask: {},
       Allsituation: [],
       // allMetadata: [],
@@ -793,6 +793,7 @@ class Index extends Component {
                                 <Grid>
                                   <h1>{Pain_begin}</h1>
                                   <PainPoint
+                                   id="View2"
                                     gender={this.state.gender}
                                     painPoint={
                                       this.state.newTask
@@ -804,6 +805,7 @@ class Index extends Component {
                                 <Grid>
                                   <h1>{hurtnow}</h1>
                                   <PainPoint
+                                    id="View1"
                                     gender={this.state.gender}
                                     painPoint={
                                       this.state.newTask

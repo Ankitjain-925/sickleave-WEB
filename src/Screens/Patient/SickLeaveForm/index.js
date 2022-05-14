@@ -33,6 +33,7 @@ import {
   handleEvalSubmit,
   updateAllEntrySec1,
   updateAllEntrySec2,
+  SelectTimeSlot
 } from './api';
 class Index extends Component {
   constructor(props) {
@@ -470,19 +471,17 @@ class Index extends Component {
                                             'undefined' &&
                                           iA === 0 ? (
                                             <a
-                                            // className={
-                                            //   this.state.currentSelected ===
-                                            //     0 && 'current_selected'
-                                            // }
-                                            // onClick={() => {
-                                            //   this.findAppointment(
-                                            //     'tab3',
-                                            //     this.state.doc_select,
-                                            //     this.stateappointType,
-                                            //     this.state.apointDay,
-                                            //     iA
-                                            //   );
-                                            // }}
+                                            className={
+                                              this.state.currentSelected ===
+                                                0 && 'current_selected'
+                                            }
+                                            onClick={() => {
+                                              SelectTimeSlot(
+                                                this.state.apointDay,
+                                                iA,
+                                                this
+                                              );
+                                            }}
                                             >
                                               {this.state.appointDate[iA] +
                                                 ' - ' +
@@ -493,22 +492,20 @@ class Index extends Component {
                                             this.state.appointDate[iA + 1] !==
                                               'undefined' && (
                                               <a
-                                              // className={
-                                              //   this.state.currentSelected &&
-                                              //   this.state.currentSelected ===
-                                              //     iA
-                                              //     ? 'current_selected'
-                                              //     : ''
-                                              // }
-                                              // onClick={() => {
-                                              //   this.findAppointment(
-                                              //     'tab3',
-                                              //     doc_select,
-                                              //     appointType,
-                                              //     apointDay,
-                                              //     iA
-                                              //   );
-                                              // }}
+                                              className={
+                                                this.state.currentSelected &&
+                                                this.state.currentSelected ===
+                                                  iA
+                                                  ? 'current_selected'
+                                                  : ''
+                                              }
+                                              onClick={() => {
+                                                SelectTimeSlot(
+                                                  this.state.apointDay,
+                                                  iA,
+                                                  this
+                                                );
+                                              }}
                                               >
                                                 {this.state.appointDate[iA] +
                                                   ' - ' +
