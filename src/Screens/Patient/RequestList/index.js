@@ -34,7 +34,7 @@ class Index extends Component {
       // AllData1: [],
 
       openDetail: false,
-      gender: 'female',
+       gender: this.props.stateLoginValueAim?.user?.sex,
       newTask: {},
       Allsituation: [],
       // allMetadata: [],
