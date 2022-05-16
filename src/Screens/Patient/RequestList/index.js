@@ -23,6 +23,8 @@ import FileViews from 'Screens/Components/TimelineComponent/FileViews/index';
 import PainPoint from 'Screens/Components/PointPain/index';
 import { GetLanguageDropdown } from 'Screens/Components/GetMetaData/index.js';
 import { OptionList } from 'Screens/Login/metadataaction';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import { ApprovedPayment } from '../SickLeaveForm/api';
 
 class Index extends Component {
   constructor(props) {
@@ -32,7 +34,7 @@ class Index extends Component {
       // AllData1: [],
 
       openDetail: false,
-      gender: this.props.stateLoginValueAim?.user?.sex,
+      gender: 'female',
       newTask: {},
       Allsituation: [],
       // allMetadata: [],
@@ -49,6 +51,13 @@ class Index extends Component {
     }
   };
 
+  ApprovedPayment = (data) => {
+    console.log(' ApprovedPayment', data);
+    this.props.history.push({
+      pathname: '/patient/sick-request',
+      state: { updateQues: data },
+    });
+  };
   GetLanguageMetadata = () => {
     if (this.state.allMetadata) {
       var Allsituation = GetLanguageDropdown(
@@ -125,7 +134,6 @@ class Index extends Component {
       cancel_request,
       Download_Bill,
       give_feedback,
-
       headache_undergoing_treatment,
       no,
       yes,
@@ -234,7 +242,7 @@ class Index extends Component {
                       </Grid> */}
                       </Grid>
                       <Grid className="presPkgIner2">
-                        <Grid className="presOpinionIner">
+                        <Grid className="presOpinionIner ">
                           <Table>
                             <Thead>
                               <Tr>
@@ -295,30 +303,65 @@ class Index extends Component {
                                     </Td>
                                     {/* <Td>{item.task_name}</Td> */}
 
-                                    <Td>{item.headache ? 'Yes' : 'No'}</Td>
-
                                     <Td>
-                                      {item.stomach_problems ? 'Yes' : 'No'}
-                                    </Td>
-
-                                    <Td>{item.diarrhea ? 'Yes' : 'No'}</Td>
-
-                                    <Td>{item.have_fever ? 'Yes' : 'No'}</Td>
-
-                                    <Td>{item.back_pain ? 'Yes' : 'No'}</Td>
-
-                                    <Td>
-                                      {item.cough_and_snees ? 'Yes' : 'No'}
+                                      {item.headache === 'yes' ? 'Yes' : 'No'}
                                     </Td>
 
                                     <Td>
-                                      {item.feel_depressed ? 'Yes' : 'No'}
+                                      {item.stomach_problems === 'yes'
+                                        ? 'Yes'
+                                        : 'No'}
                                     </Td>
 
                                     <Td>
-                                      {item.cardiac_problems ? 'Yes' : 'No'}
+                                      {item.diarrhea === 'yes' ? 'Yes' : 'No'}
                                     </Td>
 
+                                    <Td>
+                                      {item.have_fever === 'yes' ? 'Yes' : 'No'}
+                                    </Td>
+
+                                    <Td>
+                                      {item.back_pain === 'yes' ? 'Yes' : 'No'}
+                                    </Td>
+
+                                    <Td>
+                                      {item.cough_and_snees === 'yes'
+                                        ? 'Yes'
+                                        : 'No'}
+                                    </Td>
+
+                                    <Td>
+                                      {item.feel_depressed === 'yes'
+                                        ? 'Yes'
+                                        : 'No'}
+                                    </Td>
+
+                                    <Td>
+                                      {item.cardiac_problems === 'yes'
+                                        ? 'Yes'
+                                        : 'No'}
+                                    </Td>
+
+                                    <Td>
+                                      <a className="academy_ul">
+                                        {item?.approved == true &&
+                                          (!item.is_payment ||
+                                            item.is_payment == false) && (
+                                            <Grid>
+                                              <InfoOutlinedIcon className="InfoOutLine" />
+                                              <ul>
+                                                <li>
+                                                  <h6 className="assignHos Paymentpending">
+                                                    Your payment process is
+                                                    pending
+                                                  </h6>
+                                                </li>
+                                              </ul>
+                                            </Grid>
+                                          )}
+                                      </a>
+                                    </Td>
                                     <Td className="presEditDot scndOptionIner">
                                       <a className="openScndhrf">
                                         <img
@@ -342,16 +385,13 @@ class Index extends Component {
                                               {see_details}
                                             </a>
                                           </li>
-                                          {(!item.is_payment ||
-                                            item.is_decline) && (
+                                          {(!item?.approved ||
+                                            item?.approved !== true) && (
                                             <li>
                                               <a
-                                              // onClick={() => {
-                                              //   updateRequestBeforePayment(
-                                              //     this,
-                                              //     item
-                                              //   );
-                                              // }}
+                                                onClick={() => {
+                                                  ApprovedPayment(this, item);
+                                                }}
                                               >
                                                 <img
                                                   src={require('assets/virtual_images/pencil-1.svg')}
@@ -362,7 +402,7 @@ class Index extends Component {
                                               </a>
                                             </li>
                                           )}
-                                          {!item.is_payment && (
+                                          {/* {!item.is_payment && (
                                             <li>
                                               <a
                                                 onClick={() => {
@@ -377,18 +417,18 @@ class Index extends Component {
                                                 {cancel_request}
                                               </a>
                                             </li>
-                                          )}
+                                          )} */}
 
-                                          {item.is_payment && (
+                                          {/* {item.is_payment && (
                                             <li>
                                               <a
-                                              // onClick={() => {
-                                              //   DownloadBill(
-                                              //     this,
-                                              //     item?.payment_data?.id,
-                                              //     item?.created_at
-                                              //   );
-                                              // }}
+                                              onClick={() => {
+                                                DownloadBill(
+                                                  this,
+                                                  item?.payment_data?.id,
+                                                  item?.created_at
+                                                );
+                                              }}
                                               >
                                                 <img
                                                   src={require('assets/images/download.svg')}
@@ -398,28 +438,28 @@ class Index extends Component {
                                                 {Download_Bill}
                                               </a>
                                             </li>
-                                          )}
+                                          )} */}
 
-                                          {(item.status === 'done' ||
+                                          {/* {(item.status === "done" ||
                                             item?.comments?.length > 0 ||
                                             item?.attachments?.length > 0) && (
-                                            <>
-                                              <li>
-                                                <a
-                                                // onClick={() =>
-                                                //   handleOpFeedback(this, item)
-                                                // }
-                                                >
-                                                  <img
-                                                    src={require('assets/images/details.svg')}
-                                                    alt=""
-                                                    title=""
-                                                  />
-                                                  {give_feedback}
-                                                </a>
-                                              </li>
-                                            </>
-                                          )}
+                                              <>
+                                                <li>
+                                                  <a
+                                                  onClick={() =>
+                                                    handleOpFeedback(this, item)
+                                                  }
+                                                  >
+                                                    <img
+                                                      src={require("assets/images/details.svg")}
+                                                      alt=""
+                                                      title=""
+                                                    />
+                                                    {give_feedback}
+                                                  </a>
+                                                </li>
+                                              </>
+                                            )} */}
                                         </ul>
                                       </a>
                                     </Td>
@@ -473,6 +513,15 @@ class Index extends Component {
                     : ''
                 }
               >
+                {/* {this.state.newTask?.approved == true && (!this.state.newTask.is_payment || this.state.newTask.is_payment == false) && (
+                  <div><p>Your request is accepted by the doctor but your payment is 
+                    pending, Please do your payment otherwise the the
+                     request will cancel automatically</p></div>
+                )} */}
+                {/* {this.state.newTask?.approved?.length > 0 ? (
+                  <div><p>hello</p></div>
+                ) : null} */}
+
                 <Grid className="creatTaskModel">
                   <Grid className="creatTaskCntnt">
                     <Grid>
@@ -497,205 +546,228 @@ class Index extends Component {
                         direction="row"
                         className="setDetail-eval"
                       >
+                        {this.state.newTask?.approved == true &&
+                          (!this.state.newTask.is_payment ||
+                            this.state.newTask.is_payment == false) && (
+                            <div className="Paymentpending">
+                              <p>
+                                Your request is accepted by the doctor but your
+                                payment is pending, Please do your payment
+                                otherwise the request will cancel automatically
+                              </p>
+                            </div>
+                          )}
                         <Grid item xs={12} md={12} className="taskDescp">
                           <Grid className="stndQues stndQues1">
-                            <Grid>
-                              <Grid className="allSickHeadSec">
-                                <h2>{Headache}</h2>
-                              </Grid>
+                            {this.state.newTask.headache === 'yes' && (
                               <Grid>
-                                <h2>{Pain_begin}</h2>
-                              </Grid>
-                              <Grid container xs={12} md={12}>
-                                <Grid xs={3} md={3}>
-                                  <label>{headache_painbegin_back}</label>
-                                  {this.state.newTask &&
-                                  this.state.newTask
-                                    ?.headache_painbegin_back === true ? (
-                                    <p>{yes}</p>
-                                  ) : (
-                                    <p>{no}</p>
-                                  )}
+                                <Grid className="allSickHeadSec">
+                                  <h3>{Headache}</h3>
                                 </Grid>
-                                <Grid xs={3} md={3}>
-                                  <label>{headache_painbegin_front}</label>
-                                  {this.state.newTask &&
-                                  this.state.newTask
-                                    ?.headache_painbegin_front === true ? (
-                                    <p>{yes}</p>
-                                  ) : (
-                                    <p>{no}</p>
-                                  )}
-                                </Grid>
-                                <Grid xs={3} md={3}>
-                                  <label>{headache_painbegin_left}</label>
-                                  {this.state.newTask &&
-                                  this.state.newTask
-                                    ?.headache_painbegin_left === true ? (
-                                    <p>{yes}</p>
-                                  ) : (
-                                    <p>{no}</p>
-                                  )}
-                                </Grid>
-                                <Grid xs={3} md={3}>
-                                  <label>{headache_painbegin_right}</label>
-                                  {this.state.newTask &&
-                                  this.state.newTask
-                                    ?.headache_painbegin_right === true ? (
-                                    <p>{yes}</p>
-                                  ) : (
-                                    <p>{no}</p>
-                                  )}
-                                </Grid>
-                                <Grid xs={3} md={3}>
-                                  <label>{headache_painbegin_top}</label>
-                                  {this.state.newTask &&
-                                  this.state.newTask?.headache_painbegin_top ===
-                                    true ? (
-                                    <p>{yes}</p>
-                                  ) : (
-                                    <p>{no}</p>
-                                  )}
-                                </Grid>
-                              </Grid>
-
-                              <Grid>
                                 <Grid>
-                                  <h2>{hurtnow}</h2>
+                                  <h1>{Pain_begin}</h1>
                                 </Grid>
                                 <Grid container xs={12} md={12}>
                                   <Grid xs={3} md={3}>
-                                    <label>{headache_hurtnow_back}</label>
+                                    <label>{headache_painbegin_back}</label>
                                     {this.state.newTask &&
                                     this.state.newTask
-                                      ?.headache_hurtnow_back === true ? (
+                                      ?.headache_painbegin_back === true ? (
                                       <p>{yes}</p>
                                     ) : (
                                       <p>{no}</p>
                                     )}
                                   </Grid>
                                   <Grid xs={3} md={3}>
-                                    <label>{headache_hurtnow_front}</label>
+                                    <label>{headache_painbegin_front}</label>
                                     {this.state.newTask &&
                                     this.state.newTask
-                                      ?.headache_hurtnow_front === true ? (
+                                      ?.headache_painbegin_front === true ? (
                                       <p>{yes}</p>
                                     ) : (
                                       <p>{no}</p>
                                     )}
                                   </Grid>
                                   <Grid xs={3} md={3}>
-                                    <label>{headache_hurtnow_left}</label>
+                                    <label>{headache_painbegin_left}</label>
                                     {this.state.newTask &&
                                     this.state.newTask
-                                      ?.headache_hurtnow_left === true ? (
+                                      ?.headache_painbegin_left === true ? (
                                       <p>{yes}</p>
                                     ) : (
                                       <p>{no}</p>
                                     )}
                                   </Grid>
                                   <Grid xs={3} md={3}>
-                                    <label>{headache_hurtnow_right}</label>
+                                    <label>{headache_painbegin_right}</label>
                                     {this.state.newTask &&
                                     this.state.newTask
-                                      ?.headache_hurtnow_right === true ? (
+                                      ?.headache_painbegin_right === true ? (
                                       <p>{yes}</p>
                                     ) : (
                                       <p>{no}</p>
                                     )}
                                   </Grid>
                                   <Grid xs={3} md={3}>
-                                    <label>{headache_hurtnow_top}</label>
+                                    <label>{headache_painbegin_top}</label>
                                     {this.state.newTask &&
-                                    this.state.newTask?.headache_hurtnow_top ===
-                                      true ? (
+                                    this.state.newTask
+                                      ?.headache_painbegin_top === true ? (
                                       <p>{yes}</p>
                                     ) : (
                                       <p>{no}</p>
                                     )}
                                   </Grid>
                                 </Grid>
-                              </Grid>
 
-                              <Grid>
                                 <Grid>
-                                  <h2>{blood_pressure}</h2>
-                                </Grid>
-                                <Grid container xs={12} md={12}>
-                                  <Grid xs={6} md={6}>
-                                    <label>{rr_systolic}</label>
-                                    <p>
-                                      {this.state.newTask &&
-                                        this.state.newTask.headache_rr_systolic}
-                                    </p>
+                                  <Grid>
+                                    <h1>{hurtnow}</h1>
                                   </Grid>
-                                  <Grid xs={6} md={6}>
-                                    <label>{RR_diastolic}</label>
-                                    <p>
+                                  <Grid container xs={12} md={12}>
+                                    <Grid xs={3} md={3}>
+                                      <label>{headache_hurtnow_back}</label>
                                       {this.state.newTask &&
-                                        this.state.newTask
-                                          .headache_rr_diastolic}
-                                    </p>
+                                      this.state.newTask
+                                        ?.headache_hurtnow_back === true ? (
+                                        <p>{yes}</p>
+                                      ) : (
+                                        <p>{no}</p>
+                                      )}
+                                    </Grid>
+                                    <Grid xs={3} md={3}>
+                                      <label>{headache_hurtnow_front}</label>
+                                      {this.state.newTask &&
+                                      this.state.newTask
+                                        ?.headache_hurtnow_front === true ? (
+                                        <p>{yes}</p>
+                                      ) : (
+                                        <p>{no}</p>
+                                      )}
+                                    </Grid>
+                                    <Grid xs={3} md={3}>
+                                      <label>{headache_hurtnow_left}</label>
+                                      {this.state.newTask &&
+                                      this.state.newTask
+                                        ?.headache_hurtnow_left === true ? (
+                                        <p>{yes}</p>
+                                      ) : (
+                                        <p>{no}</p>
+                                      )}
+                                    </Grid>
+                                    <Grid xs={3} md={3}>
+                                      <label>{headache_hurtnow_right}</label>
+                                      {this.state.newTask &&
+                                      this.state.newTask
+                                        ?.headache_hurtnow_right === true ? (
+                                        <p>{yes}</p>
+                                      ) : (
+                                        <p>{no}</p>
+                                      )}
+                                    </Grid>
+                                    <Grid xs={3} md={3}>
+                                      <label>{headache_hurtnow_top}</label>
+                                      {this.state.newTask &&
+                                      this.state.newTask
+                                        ?.headache_hurtnow_top === true ? (
+                                        <p>{yes}</p>
+                                      ) : (
+                                        <p>{no}</p>
+                                      )}
+                                    </Grid>
                                   </Grid>
                                 </Grid>
-                              </Grid>
 
-                              <Grid>
                                 <Grid>
-                                  <h2>{body_temp}</h2>
-                                </Grid>
-                                <Grid>
-                                  <label>{headache_body_temp}</label>
-                                </Grid>
-                                <p>
-                                  {this.state.newTask &&
-                                    this.state.newTask?.headache_body_temp}
-                                </p>
-                              </Grid>
-                              {/* {this.state.newTask.headache_have_diabetes ===
-                                "yes" && ( */}
-                              <Grid>
-                                <Grid>
-                                  <h2>{diabetes}</h2>
-                                </Grid>
-                                <Grid container xs={12} md={12}>
-                                  <Grid xs={4} md={4}>
-                                    <label>{blood_sugar}</label>
-                                    <p>
-                                      {this.state.newTask &&
-                                        this.state.newTask
-                                          ?.headache_blood_sugar}
-                                    </p>
+                                  <Grid>
+                                    <h1>{blood_pressure}</h1>
                                   </Grid>
-                                  <Grid xs={4} md={4}>
-                                    <label>{Hba1c}</label>
-                                    <p>
-                                      {this.state.newTask &&
-                                        this.state.newTask?.headache_Hba1c}
-                                    </p>
+                                  <Grid container xs={12} md={12}>
+                                    <Grid xs={6} md={6}>
+                                      <label>{rr_systolic}</label>
+                                      <p>
+                                        {this.state.newTask &&
+                                          this.state.newTask
+                                            .headache_rr_systolic}
+                                      </p>
+                                    </Grid>
+                                    <Grid xs={6} md={6}>
+                                      <label>{RR_diastolic}</label>
+                                      <p>
+                                        {this.state.newTask &&
+                                          this.state.newTask
+                                            .headache_rr_diastolic}
+                                      </p>
+                                    </Grid>
                                   </Grid>
-                                  <Grid xs={4} md={4}>
-                                    <label>{situation}</label>
-                                    <p>
-                                      {this.state.newTask &&
-                                        this.state.newTask
-                                          ?.headache_situation &&
-                                        this.state.newTask?.headache_situation
-                                          ?.value &&
-                                        GetShowLabel1(
-                                          this.state.Allsituation,
-                                          this.state.newTask?.headache_situation
-                                            ?.value,
-                                          this.props.stateLanguageType,
-                                          true,
-                                          'anamnesis'
+                                </Grid>
+
+                                <Grid>
+                                  <Grid>
+                                    <h1>{body_temp}</h1>
+                                  </Grid>
+                                  <Grid>
+                                    <label>{headache_body_temp}</label>
+                                  </Grid>
+                                  <p>
+                                    {this.state.newTask &&
+                                      this.state.newTask?.headache_body_temp}
+                                  </p>
+                                </Grid>
+                                {this.state.newTask.headache_have_diabetes ===
+                                  'yes' && (
+                                  <Grid>
+                                    <Grid>
+                                      <h1>{diabetes}</h1>
+                                    </Grid>
+                                    <Grid container xs={12} md={12}>
+                                      <Grid xs={4} md={4}>
+                                        <label>{blood_sugar}</label>
+                                        <p>
+                                          {this.state.newTask &&
+                                            this.state.newTask
+                                              ?.headache_blood_sugar}
+                                        </p>
+                                      </Grid>
+                                      <Grid xs={4} md={4}>
+                                        <label>{Hba1c}</label>
+                                        {console.log(
+                                          'ffsfsd',
+                                          GetShowLabel1(
+                                            this.state.Allsituation,
+                                            this.state.newTask
+                                              ?.headache_situation?.value,
+                                            this.props.stateLanguageType,
+                                            true,
+                                            'anamnesis'
+                                          )
                                         )}
-                                    </p>
+                                        <p>
+                                          {this.state.newTask &&
+                                            this.state.newTask?.headache_Hba1c}
+                                        </p>
+                                      </Grid>
+                                      <Grid xs={4} md={4}>
+                                        <label>{situation}</label>
+                                        <p>
+                                          {this.state.newTask &&
+                                            this.state.newTask
+                                              ?.headache_situation &&
+                                            this.state.newTask
+                                              ?.headache_situation?.value &&
+                                            GetShowLabel1(
+                                              this.state.Allsituation,
+                                              this.state.newTask
+                                                ?.headache_situation?.value,
+                                              this.props.stateLanguageType,
+                                              true,
+                                              'anamnesis'
+                                            )}
+                                        </p>
+                                      </Grid>
+                                    </Grid>
                                   </Grid>
-                                </Grid>
-                              </Grid>
-
-                              <Grid>
+                                )}
                                 <Grid className="sickAllMngSec">
                                   <label>{quality_of_pain}</label>
                                 </Grid>
@@ -755,15 +827,15 @@ class Index extends Component {
                                     this.state.newTask?.headache_pain_intensity}
                                 </p>
                               </Grid>
-
+                            )}
+                            {this.state.newTask.stomach_problems === 'yes' && (
                               <Grid>
                                 <Grid className="allSickHeadSec">
-                                  <h2>{stomach_problems}</h2>
+                                  <h3>{stomach_problems}</h3>
                                 </Grid>
                                 <Grid>
-                                  <h2>{Pain_begin}</h2>
+                                  <h1>{Pain_begin}</h1>
                                   <PainPoint
-                                    id="View2"
                                     gender={this.state.gender}
                                     painPoint={
                                       this.state.newTask
@@ -773,9 +845,8 @@ class Index extends Component {
                                   />
                                 </Grid>
                                 <Grid>
-                                  <h2>{hurtnow}</h2>
+                                  <h1>{hurtnow}</h1>
                                   <PainPoint
-                                    id="View1"
                                     gender={this.state.gender}
                                     painPoint={
                                       this.state.newTask
@@ -821,7 +892,7 @@ class Index extends Component {
 
                                 <Grid>
                                   <Grid>
-                                    <h2>{blood_pressure}</h2>
+                                    <h1>{blood_pressure}</h1>
                                   </Grid>
                                   <Grid container xs={12} md={12}>
                                     <Grid xs={6} md={6}>
@@ -842,47 +913,49 @@ class Index extends Component {
                                     </Grid>
                                   </Grid>
                                 </Grid>
-
-                                <Grid>
+                                {this.state.newTask.stomach_have_diabetes ===
+                                  'yes' && (
                                   <Grid>
-                                    <h2>{diabetes}</h2>
-                                  </Grid>
-                                  <Grid container xs={12} md={12}>
-                                    <Grid xs={4} md={4}>
-                                      <label>{blood_sugar}</label>
-                                      <p>
-                                        {this.state.newTask &&
-                                          this.state.newTask
-                                            ?.stomach_blood_sugar}
-                                      </p>
+                                    <Grid>
+                                      <h1>{diabetes}</h1>
                                     </Grid>
-                                    <Grid xs={4} md={4}>
-                                      <label>{Hba1c}</label>
-                                      <p>
-                                        {this.state.newTask &&
-                                          this.state.newTask?.stomach_Hba1c}
-                                      </p>
-                                    </Grid>
-                                    <Grid xs={4} md={4}>
-                                      <label>{situation}</label>
-                                      <p>
-                                        {this.state.newTask &&
-                                          this.state.newTask
-                                            ?.stomach_situation &&
-                                          this.state.newTask?.stomach_situation
-                                            ?.value &&
-                                          GetShowLabel1(
-                                            this.state.Allsituation,
+                                    <Grid container xs={12} md={12}>
+                                      <Grid xs={4} md={4}>
+                                        <label>{blood_sugar}</label>
+                                        <p>
+                                          {this.state.newTask &&
                                             this.state.newTask
-                                              ?.stomach_situation?.value,
-                                            this.props.stateLanguageType,
-                                            true,
-                                            'anamnesis'
-                                          )}
-                                      </p>
+                                              ?.stomach_blood_sugar}
+                                        </p>
+                                      </Grid>
+                                      <Grid xs={4} md={4}>
+                                        <label>{Hba1c}</label>
+                                        <p>
+                                          {this.state.newTask &&
+                                            this.state.newTask?.stomach_Hba1c}
+                                        </p>
+                                      </Grid>
+                                      <Grid xs={4} md={4}>
+                                        <label>{situation}</label>
+                                        <p>
+                                          {this.state.newTask &&
+                                            this.state.newTask
+                                              ?.stomach_situation &&
+                                            this.state.newTask
+                                              ?.stomach_situation?.value &&
+                                            GetShowLabel1(
+                                              this.state.Allsituation,
+                                              this.state.newTask
+                                                ?.stomach_situation?.value,
+                                              this.props.stateLanguageType,
+                                              true,
+                                              'anamnesis'
+                                            )}
+                                        </p>
+                                      </Grid>
                                     </Grid>
                                   </Grid>
-                                </Grid>
+                                )}
 
                                 <Grid>
                                   <Grid className="sickAllMngSec">
@@ -897,7 +970,7 @@ class Index extends Component {
                                     )}
                                   </Grid>
                                   <Grid>
-                                    <h2>{body_temp}</h2>
+                                    <h1>{body_temp}</h1>
                                   </Grid>
                                   <Grid>
                                     <label>{stomach_temp}</label>
@@ -943,10 +1016,11 @@ class Index extends Component {
                                   </Grid>
                                 </Grid>
                               </Grid>
-
+                            )}
+                            {this.state.newTask.diarrhea === 'yes' && (
                               <Grid>
                                 <Grid className="allSickHeadSec">
-                                  <h2>{diarrhea}</h2>
+                                  <h3>{diarrhea}</h3>
                                 </Grid>
                                 <Grid>
                                   <Grid className="sickAllMngSec">
@@ -978,7 +1052,7 @@ class Index extends Component {
                                 </Grid>
                                 <Grid>
                                   <Grid>
-                                    <h2>{body_temp}</h2>
+                                    <h1>{body_temp}</h1>
                                   </Grid>
                                   <Grid>
                                     <label>{diarrhea_body_temp}</label>
@@ -1012,10 +1086,11 @@ class Index extends Component {
                                   </Grid>
                                 </Grid>
                               </Grid>
-
+                            )}
+                            {this.state.newTask.have_fever === 'yes' && (
                               <Grid>
                                 <Grid className="allSickHeadSec">
-                                  <h2>{fever}</h2>
+                                  <h3>{fever}</h3>
                                 </Grid>
 
                                 <Grid>
@@ -1035,7 +1110,7 @@ class Index extends Component {
                                   </p>
                                 </Grid>
                                 <Grid>
-                                  <h2>{body_temp}</h2>
+                                  <h1>{body_temp}</h1>
                                 </Grid>
                                 <Grid container xs={12} md={12}>
                                   <Grid xs={6} md={6}>
@@ -1063,32 +1138,38 @@ class Index extends Component {
                                       this.state.newTask?.fever_pain_intensity}
                                   </p>
                                 </Grid>
-                                <Grid>
-                                  <h2>{cough}</h2>
-                                </Grid>
+                                {this.state.newTask.fever_have_a_cough ===
+                                  'yes' && (
+                                  <Grid>
+                                    <Grid>
+                                      <h1>{cough}</h1>
+                                    </Grid>
 
-                                <Grid container xs={12} md={12}>
-                                  <Grid xs={6} md={6}>
-                                    <label>{fever_cold}</label>
-                                    {this.state.newTask &&
-                                    this.state.newTask?.fever_cold === true ? (
-                                      <p>{yes}</p>
-                                    ) : (
-                                      <p>{no}</p>
-                                    )}
-                                  </Grid>
-                                  <Grid xs={6} md={6}>
-                                    <label>{fever_hoarseness}</label>
+                                    <Grid container xs={12} md={12}>
+                                      <Grid xs={6} md={6}>
+                                        <label>{fever_cold}</label>
+                                        {this.state.newTask &&
+                                        this.state.newTask?.fever_cold ===
+                                          true ? (
+                                          <p>{yes}</p>
+                                        ) : (
+                                          <p>{no}</p>
+                                        )}
+                                      </Grid>
+                                      <Grid xs={6} md={6}>
+                                        <label>{fever_hoarseness}</label>
 
-                                    {this.state.newTask &&
-                                    this.state.newTask?.fever_hoarseness ===
-                                      true ? (
-                                      <p>{yes}</p>
-                                    ) : (
-                                      <p>{no}</p>
-                                    )}
+                                        {this.state.newTask &&
+                                        this.state.newTask?.fever_hoarseness ===
+                                          true ? (
+                                          <p>{yes}</p>
+                                        ) : (
+                                          <p>{no}</p>
+                                        )}
+                                      </Grid>
+                                    </Grid>
                                   </Grid>
-                                </Grid>
+                                )}
                                 <Grid>
                                   <Grid className="sickAllMngSec">
                                     <label>{fever_sputum}</label>
@@ -1102,10 +1183,11 @@ class Index extends Component {
                                   />
                                 </Grid>
                               </Grid>
-
+                            )}
+                            {this.state.newTask.back_pain === 'yes' && (
                               <Grid>
                                 <Grid className="allSickHeadSec">
-                                  <h2>{back_pain}</h2>
+                                  <h3>{back_pain}</h3>
                                 </Grid>
                                 <Grid>
                                   <Grid className="sickAllMngSec">
@@ -1158,96 +1240,99 @@ class Index extends Component {
                                     <p>{no}</p>
                                   )}
                                 </Grid>
-
-                                <Grid>
-                                  <Grid>
-                                    <h2>{diabetes} </h2>
-                                  </Grid>
-                                  <Grid container xs={12} md={12}>
-                                    <Grid xs={4} md={4}>
-                                      <label>{blood_sugar}</label>
-                                      <p>
-                                        {this.state.newTask &&
-                                          this.state.newTask
-                                            ?.back_pain_blood_sugar}
-                                      </p>
-                                    </Grid>
-                                    <Grid xs={4} md={4}>
-                                      <label>{Hba1c}</label>
-                                      <p>
-                                        {this.state.newTask &&
-                                          this.state.newTask?.back_pain_Hba1c}
-                                      </p>
-                                    </Grid>
-
-                                    <Grid xs={4} md={4}>
-                                      <label>{situation}</label>
-                                      <p>
-                                        {this.state.newTask &&
-                                          this.state.newTask
-                                            ?.back_pain_situation &&
-                                          this.state.newTask
-                                            ?.back_pain_situation?.value &&
-                                          GetShowLabel1(
-                                            this.state.Allsituation,
-                                            this.state.newTask
-                                              ?.back_pain_situation?.value,
-                                            this.props.stateLanguageType,
-                                            true,
-                                            'anamnesis'
-                                          )}
-                                      </p>
-                                    </Grid>
-                                  </Grid>
-                                  <Grid className="sickAllMngSec">
-                                    <label>{back_attack}</label>
-                                    {this.state.newTask &&
-                                    this.state.newTask
-                                      ?.back_pain_heart_attack === 'yes' ? (
-                                      <p>{yes}</p>
-                                    ) : (
-                                      <p>{no}</p>
-                                    )}
-                                  </Grid>
-                                  <Grid className="sickAllMngSec">
-                                    <label>{back_failure}</label>
-                                    {this.state.newTask &&
-                                    this.state.newTask
-                                      ?.back_pain_heart_failure === 'yes' ? (
-                                      <p>{yes}</p>
-                                    ) : (
-                                      <p>{no}</p>
-                                    )}
-                                  </Grid>
+                                {this.state.newTask.back_pain_have_diabetes ===
+                                  'yes' && (
                                   <Grid>
                                     <Grid>
-                                      <h2>{blood_pressure}</h2>
+                                      <h1>{diabetes} </h1>
                                     </Grid>
                                     <Grid container xs={12} md={12}>
-                                      <Grid xs={6} md={6}>
-                                        <label>{rr_systolic}</label>
+                                      <Grid xs={4} md={4}>
+                                        <label>{blood_sugar}</label>
                                         <p>
                                           {this.state.newTask &&
                                             this.state.newTask
-                                              ?.back_pain_rr_systolic}
+                                              ?.back_pain_blood_sugar}
                                         </p>
                                       </Grid>
-                                      <Grid xs={6} md={6}>
-                                        <label>{RR_diastolic}</label>
+                                      <Grid xs={4} md={4}>
+                                        <label>{Hba1c}</label>
+                                        <p>
+                                          {this.state.newTask &&
+                                            this.state.newTask?.back_pain_Hba1c}
+                                        </p>
+                                      </Grid>
+
+                                      <Grid xs={4} md={4}>
+                                        <label>{situation}</label>
                                         <p>
                                           {this.state.newTask &&
                                             this.state.newTask
-                                              ?.back_pain_rr_diastolic}
+                                              ?.back_pain_situation &&
+                                            this.state.newTask
+                                              ?.back_pain_situation?.value &&
+                                            GetShowLabel1(
+                                              this.state.Allsituation,
+                                              this.state.newTask
+                                                ?.back_pain_situation?.value,
+                                              this.props.stateLanguageType,
+                                              true,
+                                              'anamnesis'
+                                            )}
                                         </p>
+                                      </Grid>
+                                    </Grid>
+                                    <Grid className="sickAllMngSec">
+                                      <label>{back_attack}</label>
+                                      {this.state.newTask &&
+                                      this.state.newTask
+                                        ?.back_pain_heart_attack === 'yes' ? (
+                                        <p>{yes}</p>
+                                      ) : (
+                                        <p>{no}</p>
+                                      )}
+                                    </Grid>
+                                    <Grid className="sickAllMngSec">
+                                      <label>{back_failure}</label>
+                                      {this.state.newTask &&
+                                      this.state.newTask
+                                        ?.back_pain_heart_failure === 'yes' ? (
+                                        <p>{yes}</p>
+                                      ) : (
+                                        <p>{no}</p>
+                                      )}
+                                    </Grid>
+                                    <Grid>
+                                      <Grid>
+                                        <h1>{blood_pressure}</h1>
+                                      </Grid>
+                                      <Grid container xs={12} md={12}>
+                                        <Grid xs={6} md={6}>
+                                          <label>{rr_systolic}</label>
+                                          <p>
+                                            {this.state.newTask &&
+                                              this.state.newTask
+                                                ?.back_pain_rr_systolic}
+                                          </p>
+                                        </Grid>
+                                        <Grid xs={6} md={6}>
+                                          <label>{RR_diastolic}</label>
+                                          <p>
+                                            {this.state.newTask &&
+                                              this.state.newTask
+                                                ?.back_pain_rr_diastolic}
+                                          </p>
+                                        </Grid>
                                       </Grid>
                                     </Grid>
                                   </Grid>
-                                </Grid>
+                                )}
                               </Grid>
-
+                            )}
+                            {this.state.newTask.cough_and_snees === 'yes' && (
                               <Grid>
                                 <Grid className="allSickHeadSec">
-                                  <h2>{cough_and_snees}</h2>
+                                  <h3>{cough_and_snees}</h3>
                                 </Grid>
                                 <Grid>
                                   <Grid className="sickAllMngSec">
@@ -1266,7 +1351,7 @@ class Index extends Component {
                                   </p>
                                 </Grid>
                                 <Grid>
-                                  <h2>{body_temp}</h2>
+                                  <h1>{body_temp}</h1>
                                 </Grid>
                                 <Grid>
                                   <Grid>
@@ -1303,10 +1388,11 @@ class Index extends Component {
                                   />
                                 </Grid>
                               </Grid>
-
+                            )}
+                            {this.state.newTask.feel_depressed === 'yes' && (
                               <Grid>
                                 <Grid className="allSickHeadSec">
-                                  <h2>{feel_depressed}</h2>
+                                  <h3>{feel_depressed}</h3>
                                 </Grid>
                                 <Grid>
                                   <Grid className="sickAllMngSec">
@@ -1371,13 +1457,14 @@ class Index extends Component {
                                   </Grid>
                                 </Grid>
                               </Grid>
-
+                            )}
+                            {this.state.newTask.cardiac_problems === 'yes' && (
                               <Grid>
                                 <Grid className="allSickHeadSec">
-                                  <h2>{cardiac_problems}</h2>
+                                  <h3>{cardiac_problems}</h3>
                                 </Grid>
                                 <Grid>
-                                  <h2>{blood_pressure}</h2>
+                                  <h1>{blood_pressure}</h1>
                                 </Grid>
                                 <Grid container xs={12} md={12}>
                                   <Grid xs={6} md={6}>
@@ -1443,9 +1530,7 @@ class Index extends Component {
                                   </Grid>
                                 </Grid>
                               </Grid>
-
-                              {/* )} */}
-                            </Grid>
+                            )}
                           </Grid>
                         </Grid>
                       </Grid>
