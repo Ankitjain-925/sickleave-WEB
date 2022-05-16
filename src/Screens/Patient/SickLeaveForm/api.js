@@ -721,8 +721,13 @@ export const handleEvalSubmit = (current, value) => {
       }
     }
   } else {
+    var slot = current.state.currentSelected;
     if (current.state.assinged_to) {
       data.assinged_to = current.state.assinged_to;
+    }
+    if (current.state.appointDate && current.state.appointDate.length > 0) {
+      data.start = current.state.appointDate[slot];
+      data.end = current.state.appointDate[slot + 1];
     }
     if (
       (current.state.currentSelected && current.state.currentSelected > -1) ||
@@ -1524,6 +1529,7 @@ export const getCalendarData = (current) => {
             },
           ],
         });
+
         setTimeout(() => onChange(new Date(), current), 200);
       }
     });

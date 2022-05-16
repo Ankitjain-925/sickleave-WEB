@@ -41,7 +41,6 @@ class Index extends Component {
 
   componentDidMount() {
     this.allgetData(this.props.stateLoginValueAim.user._id);
-    // console.log("hgfhfhfh", this.props.stateLoginValueAim.user._id);
     this.getMetadata();
   }
   componentDidUpdate = (prevProps, prevState) => {
@@ -1387,7 +1386,6 @@ class Index extends Component {
                                       {this.state.newTask &&
                                         this.state.newTask?.cardiac_rr_systolic}
                                     </p>
-                                    {/* {console.log("abc", this.state.newTask)} */}
                                   </Grid>
                                   <Grid xs={6} md={6}>
                                     <label>{RR_diastolic}</label>
