@@ -33,7 +33,7 @@ import {
   handleEvalSubmit,
   updateAllEntrySec1,
   updateAllEntrySec2,
-  SelectTimeSlot
+  SelectTimeSlot,
 } from './api';
 class Index extends Component {
   constructor(props) {
@@ -50,6 +50,8 @@ class Index extends Component {
       date: new Date(),
       appointmentData: [],
       appointDate: [],
+      assinged_to: [{}],
+      currentSelected: -1,
     };
   }
 
@@ -62,6 +64,7 @@ class Index extends Component {
   componentDidMount = () => {
     this.getMetadata();
     getCalendarData(this);
+    // onChange(new Date(), this);
   };
 
   getMetadata = () => {
@@ -77,6 +80,7 @@ class Index extends Component {
       errorChrMsg,
       DataprotectionRules,
       openCalendar,
+      appointDate,
     } = this.state;
     return (
       <Grid
@@ -89,7 +93,6 @@ class Index extends Component {
             : 'homeBg'
         }
       >
-        {console.log('this.state.appointDate', this.state.appointDate)}
         {this.state.loaderImage && <Loader />}
         <Grid className="homeBgIner">
           <Grid container direction="row" justify="center">
@@ -399,6 +402,11 @@ class Index extends Component {
                                 label="I have react and understood the Data protection rules and Regulations of Aimedis."
                               />
                             </Grid>
+                            {error_section == 73 && (
+                              <div className="err_message2 err_message3">
+                                {errorChrMsg}
+                              </div>
+                            )}
                             {error_section == 45 && (
                               <div className="err_message2">{errorChrMsg}</div>
                             )}
@@ -407,7 +415,7 @@ class Index extends Component {
                             <input
                               type="submit"
                               value="Submit"
-                              onClick={() => handleEvalSubmit(this)}
+                              onClick={() => handleEvalSubmit(this, 1)}
                             ></input>
                           </Grid>
                         </Grid>
@@ -419,17 +427,15 @@ class Index extends Component {
                               <Calendar2
                                 onChange={(e) => onChange(e, this)}
                                 value={this.state.date}
+                                minDate={new Date()}
                               />
                             </Grid>
                             <Grid className="selTimeSlot">
                               <Grid>
                                 <label>Select time slot</label>
                               </Grid>
-                              {console.log(
-                                'this.state.appointDate',
-                                this.state.appointDate
-                              )}
                               <Grid className="selTimeAM">
+                                {' '}
                                 {this.state.appointDate &&
                                 this.state.appointDate.length > 0 ? (
                                   Availabledays(
@@ -471,17 +477,17 @@ class Index extends Component {
                                             'undefined' &&
                                           iA === 0 ? (
                                             <a
-                                            className={
-                                              this.state.currentSelected ===
-                                                0 && 'current_selected'
-                                            }
-                                            onClick={() => {
-                                              SelectTimeSlot(
-                                                this.state.apointDay,
-                                                iA,
-                                                this
-                                              );
-                                            }}
+                                              className={
+                                                this.state.currentSelected ===
+                                                  0 && 'current_selected'
+                                              }
+                                              onClick={() => {
+                                                SelectTimeSlot(
+                                                  this.state.apointDay,
+                                                  iA,
+                                                  this
+                                                );
+                                              }}
                                             >
                                               {this.state.appointDate[iA] +
                                                 ' - ' +
@@ -492,20 +498,20 @@ class Index extends Component {
                                             this.state.appointDate[iA + 1] !==
                                               'undefined' && (
                                               <a
-                                              className={
-                                                this.state.currentSelected &&
-                                                this.state.currentSelected ===
-                                                  iA
-                                                  ? 'current_selected'
-                                                  : ''
-                                              }
-                                              onClick={() => {
-                                                SelectTimeSlot(
-                                                  this.state.apointDay,
-                                                  iA,
-                                                  this
-                                                );
-                                              }}
+                                                className={
+                                                  this.state.currentSelected &&
+                                                  this.state.currentSelected ===
+                                                    iA
+                                                    ? 'current_selected'
+                                                    : ''
+                                                }
+                                                onClick={() => {
+                                                  SelectTimeSlot(
+                                                    this.state.apointDay,
+                                                    iA,
+                                                    this
+                                                  );
+                                                }}
                                               >
                                                 {this.state.appointDate[iA] +
                                                   ' - ' +
@@ -530,6 +536,19 @@ class Index extends Component {
                                 )}
                               </Grid>
                             </Grid>
+                          </Grid>
+                          {error_section == 70 && (
+                            <div className="err_message2 err_message3">
+                              {errorChrMsg}
+                            </div>
+                          )}
+                          <Grid className="infoShwSave3">
+                            <input
+                              type="submit"
+                              value="Submit"
+                              disabled={this.state.appointDate.length == 0}
+                              onClick={() => handleEvalSubmit(this, 2)}
+                            ></input>
                           </Grid>
                         </Grid>
                       )}

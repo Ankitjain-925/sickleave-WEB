@@ -73,6 +73,10 @@ class Index extends Component {
     this.props.history.push('/patient/request-list');
   };
 
+  call = () => {
+    this.props.history.push('/video-call/:id');
+  };
+
   render() {
     let translate = getLanguage(this.props.stateLanguageType);
     let { my_profile, profile_setting, Language, DarkMode, logout } = translate;
@@ -152,7 +156,31 @@ class Index extends Component {
                 <span>{'Request List'}</span>
               </a>
             </li>
-
+            <li
+              className={
+                this.props.currentPage === 'feedback' ? 'menuActv' : ''
+              }
+            >
+              <a onClick={this.call}>
+                {this.props.settings &&
+                this.props.settings.setting &&
+                this.props.settings.setting.mode &&
+                this.props.settings.setting.mode === 'dark' ? (
+                  <img
+                    src={require('assets/images/nav-journal-white.svg')}
+                    alt=""
+                    title=""
+                  />
+                ) : (
+                  <img
+                    src={require('assets/images/nav-journal.svg')}
+                    alt=""
+                    title=""
+                  />
+                )}
+                <span>Video call</span>
+              </a>
+            </li>
             <li
               className={this.props.currentPage === 'profile' ? 'menuActv' : ''}
             >

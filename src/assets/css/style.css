@@ -16894,8 +16894,8 @@ select:-webkit-autofill:focus {
   .selTimeSlot {
     margin-left: 0px !important;
     margin-right: 0px !important;
-    width: 98% !important;
-    margin: 0 auto !important;
+    width: 375px !important;
+    /* margin: 0 auto !important; */
     border: 1px solid #f2f2f2;
     padding: 0px !important;
   }
