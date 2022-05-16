@@ -25,7 +25,7 @@ import { GetLanguageDropdown } from 'Screens/Components/GetMetaData/index.js';
 import { OptionList } from "Screens/Login/metadataaction";
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import {
-  ApprovedPayment
+  EditRequest
 } from "../SickLeaveForm/api";
 
 class Index extends Component {
@@ -361,7 +361,7 @@ class Index extends Component {
                                            <li>
                                                 <a
                                                 onClick={() => {
-                                                  ApprovedPayment(
+                                                  EditRequest(
                                                     this,
                                                     item
                                                   );

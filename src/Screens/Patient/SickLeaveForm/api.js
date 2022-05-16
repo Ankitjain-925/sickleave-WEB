@@ -14,9 +14,8 @@ export const GetLanguageMetadata = (current) => {
   current.setState({ Allsituation: Allsituation });
 };
 
-export const ApprovedPayment = (current, data) => {
-  console.log(' ApprovedPayment',data)
-  current.props.history.push({
+export const EditRequest = (current, data) => {
+   current.props.history.push({
     pathname: '/patient/sick-request',
     state: {updateQues: data },
   });
