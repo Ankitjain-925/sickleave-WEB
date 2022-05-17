@@ -30,7 +30,7 @@ class Index extends Component {
     this.state = {
       AllDataSec: [],
       openDetail: false,
-      gender: 'female',
+       gender: this.props.stateLoginValueAim?.user?.sex,
       newTask: {},
       Allsituation: [],
       openPayment: false,
