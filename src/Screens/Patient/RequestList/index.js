@@ -19,25 +19,21 @@ import Pagination from 'Screens/Components/Pagination/index';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import Modal from '@material-ui/core/Modal';
 import { GetShowLabel1 } from 'Screens/Components/GetMetaData/index.js';
-import FileViews from 'Screens/Components/TimelineComponent/FileViews/index';
 import PainPoint from 'Screens/Components/PointPain/index';
 import { GetLanguageDropdown } from 'Screens/Components/GetMetaData/index.js';
 import { OptionList } from 'Screens/Login/metadataaction';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import { ApprovedPayment } from '../SickLeaveForm/api';
-
 class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
       AllDataSec: [],
-      // AllData1: [],
-
       openDetail: false,
       gender: 'female',
       newTask: {},
       Allsituation: [],
-      // allMetadata: [],
+      openPayment: false,
     };
   }
 
@@ -52,7 +48,6 @@ class Index extends Component {
   };
 
   ApprovedPayment = (data) => {
-    console.log(' ApprovedPayment', data);
     this.props.history.push({
       pathname: '/patient/sick-request',
       state: { updateQues: data },
@@ -117,6 +112,13 @@ class Index extends Component {
     this.setState({ openDetail: true, newTask: item });
   };
 
+  PaymentDue = (data) => {
+    this.props.history.push({
+      pathname: '/patient/request-list/payment',
+      state: { data: data },
+    });
+  };
+
   render() {
     let translate = getLanguage(this.props.stateLanguageType);
     let {
@@ -163,7 +165,6 @@ class Index extends Component {
       headache_painbegin_left,
       headache_painbegin_right,
       Pain_begin,
-
       stomach_temp,
       stomach_take_painkillers,
       stomach_intensity,
@@ -173,13 +174,11 @@ class Index extends Component {
       stomach_failure,
       stomach_periodically,
       // PainPoint,
-
       diarrhea_vomiting,
       diarrhea_body_temp,
       diarrhea_suffer_symtoms,
       diarrhea_liquids,
       diarrhea_symptoms_begin,
-
       cough,
       fever_cold,
       fever_hoarseness,
@@ -188,29 +187,26 @@ class Index extends Component {
       fever_top_body_temp,
       fever_low_body_temp,
       fever_pain_intensity,
-
       back_strained,
       back_depression,
       back_attack,
       back_failure,
       back_symptoms_begin,
       back_injured,
-
       cough_symptoms_begin,
       cough_suffer_symtoms,
       cough_allergies,
-
       pain_level,
       depressed_do_you_sleep,
       depressed_suicidal_thoughts,
       depressed_hurt_yourself,
       depressed_symptoms_begin,
-
       cardiac_heart_attack,
       cardiac_heart_failure,
       cardiac_dizziness,
       cardiac_shoulder_pain,
     } = translate;
+
     return (
       <Grid>
         <Grid
@@ -237,9 +233,6 @@ class Index extends Component {
                         <Grid item xs={12} md={6}>
                           <label>Request List</label>
                         </Grid>
-                        {/* <Grid item xs={12} md={6} className="docsOpinRght">
-                          <a onClick={this.handlePicEval}>+ {New} {"Picture Evaluation"}</a>
-                      </Grid> */}
                       </Grid>
                       <Grid className="presPkgIner2">
                         <Grid className="presOpinionIner ">
@@ -293,16 +286,7 @@ class Index extends Component {
                                                 ?.time_format
                                           )}
                                       </p>
-                                      {/* {getDate(
-                                      item && item?.created_at,
-                                      this.props.settings &&
-                                      this.props.settings?.setting &&
-                                      this.props.settings?.setting
-                                        ?.date_format
-                                    )} */}
                                     </Td>
-                                    {/* <Td>{item.task_name}</Td> */}
-
                                     <Td>
                                       {item.headache === 'yes' ? 'Yes' : 'No'}
                                     </Td>
@@ -402,64 +386,24 @@ class Index extends Component {
                                               </a>
                                             </li>
                                           )}
-                                          {/* {!item.is_payment && (
+
+                                          {(!item?.ispayment ||
+                                            item?.approved !== true) && (
                                             <li>
                                               <a
                                                 onClick={() => {
-                                                  this.deleteRequest(item._id);
+                                                  this.PaymentDue(item);
                                                 }}
                                               >
                                                 <img
-                                                  src={require('assets/images/cancel-request.svg')}
+                                                  src={require('assets/virtual_images/pencil-1.svg')}
                                                   alt=""
                                                   title=""
                                                 />
-                                                {cancel_request}
+                                                Payment due
                                               </a>
                                             </li>
-                                          )} */}
-
-                                          {/* {item.is_payment && (
-                                            <li>
-                                              <a
-                                              onClick={() => {
-                                                DownloadBill(
-                                                  this,
-                                                  item?.payment_data?.id,
-                                                  item?.created_at
-                                                );
-                                              }}
-                                              >
-                                                <img
-                                                  src={require('assets/images/download.svg')}
-                                                  alt=""
-                                                  title=""
-                                                />
-                                                {Download_Bill}
-                                              </a>
-                                            </li>
-                                          )} */}
-
-                                          {/* {(item.status === "done" ||
-                                            item?.comments?.length > 0 ||
-                                            item?.attachments?.length > 0) && (
-                                              <>
-                                                <li>
-                                                  <a
-                                                  onClick={() =>
-                                                    handleOpFeedback(this, item)
-                                                  }
-                                                  >
-                                                    <img
-                                                      src={require("assets/images/details.svg")}
-                                                      alt=""
-                                                      title=""
-                                                    />
-                                                    {give_feedback}
-                                                  </a>
-                                                </li>
-                                              </>
-                                            )} */}
+                                          )}
                                         </ul>
                                       </a>
                                     </Td>
@@ -731,17 +675,6 @@ class Index extends Component {
                                       </Grid>
                                       <Grid xs={4} md={4}>
                                         <label>{Hba1c}</label>
-                                        {console.log(
-                                          'ffsfsd',
-                                          GetShowLabel1(
-                                            this.state.Allsituation,
-                                            this.state.newTask
-                                              ?.headache_situation?.value,
-                                            this.props.stateLanguageType,
-                                            true,
-                                            'anamnesis'
-                                          )
-                                        )}
                                         <p>
                                           {this.state.newTask &&
                                             this.state.newTask?.headache_Hba1c}

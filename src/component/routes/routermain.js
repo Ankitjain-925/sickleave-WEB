@@ -1,16 +1,17 @@
-import React, { Component } from "react";
-import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
-import Grid from "@material-ui/core/Grid";
-import Register from "Screens/Register";
-import Login from "Screens/Login";
-import ForgotPass from "Screens/ChangePassword";
-import ChangePass from "Screens/ChangePassword/changepassword";
-import NotFound from "Screens/Components/NotFound";
-import RegSuccuss from "Screens/Components/RegSuccess/index";
-import Form from "Screens/Patient/SickLeaveForm/index";
-import RequestList from "Screens/Patient/RequestList/index";
+import React, { Component } from 'react';
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import Grid from '@material-ui/core/Grid';
+import Register from 'Screens/Register';
+import Login from 'Screens/Login';
+import ForgotPass from 'Screens/ChangePassword';
+import ChangePass from 'Screens/ChangePassword/changepassword';
+import NotFound from 'Screens/Components/NotFound';
+import RegSuccuss from 'Screens/Components/RegSuccess/index';
+import Form from 'Screens/Patient/SickLeaveForm/index';
+import RequestList from 'Screens/Patient/RequestList/index';
 import PatientProfile from 'Screens/Patient/Profile/index';
 import VideoCall from 'Screens/VideoCall/index';
+import Payment from 'Screens/Patient/RequestList/Payment/index';
 
 class Routermain extends Component {
   render() {
@@ -62,6 +63,11 @@ class Routermain extends Component {
               exact
               path="/patient/request-list"
               render={(props) => <RequestList {...props} />}
+            />
+            <Route
+              exact
+              path="/patient/request-list/payment"
+              render={(props) => <Payment {...props} />}
             />
             <Route
               path="*"
