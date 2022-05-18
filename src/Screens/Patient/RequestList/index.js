@@ -23,7 +23,10 @@ import PainPoint from 'Screens/Components/PointPain/index';
 import { GetLanguageDropdown } from 'Screens/Components/GetMetaData/index.js';
 import { OptionList } from 'Screens/Login/metadataaction';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import { ApprovedPayment } from '../SickLeaveForm/api';
+import {
+  EditRequest
+} from "../SickLeaveForm/api";
+
 class Index extends Component {
   constructor(props) {
     super(props);
@@ -374,8 +377,12 @@ class Index extends Component {
                                             <li>
                                               <a
                                                 onClick={() => {
-                                                  ApprovedPayment(this, item);
+                                                  EditRequest(
+                                                    this,
+                                                    item
+                                                  );
                                                 }}
+                                                
                                               >
                                                 <img
                                                   src={require('assets/virtual_images/pencil-1.svg')}
