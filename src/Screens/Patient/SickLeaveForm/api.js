@@ -14,12 +14,33 @@ export const GetLanguageMetadata = (current) => {
   current.setState({ Allsituation: Allsituation });
 };
 
-export const ApprovedPayment = (current, data) => {
-  console.log(' ApprovedPayment', data);
-  current.props.history.push({
+
+export const EditRequest = (current, data) => {
+     current.props.history.push({
     pathname: '/patient/sick-request',
-    state: { updateQues: data },
+    state: {updateQues: data },
+
   });
+};
+
+export const saveOnDB = (current) => {
+  current.setState({ loaderImage: true });
+   if (current.state.updateQues._id) {
+    console.log('current',current.state.updateQues._id)
+    axios
+      .put(
+        sitedata.data.path + '/vh/AddTask/'+ current.state.updateQues._id ,
+        commonHeader(current.props.stateLoginValueAim.token)
+      )
+      .then((responce) => {
+        current.setState({ loaderImage: false });
+        if (responce.data.hassuccessed) {
+          current.props.history.push('/patient/request-list');
+        }
+      });
+  } else {
+    current.setState({ loaderImage: false });
+  }
 };
 
 // Set the state of questions
@@ -639,6 +660,7 @@ export const handleEvalSubmit = (current, value) => {
                                                                                                                                                 }
                                                                                                                                               );
                                                                                                                                             }
+                                                                                                                                            
                                                                                                                                             current.setState(
                                                                                                                                               {
                                                                                                                                                 openCalendar: true,
@@ -744,7 +766,27 @@ export const handleEvalSubmit = (current, value) => {
       current.setState({
         loaderImage: true,
       });
-      // axios
+
+      if (data?._id) {
+     
+     axios
+          .put(
+            sitedata.data.path + '/vh/AddTask/' + data._id,
+            data,
+            commonHeader(current.props.stateLoginValueAim.token)
+          )
+          .then((responce) => {
+            if (responce.data.hassuccessed) {
+              current.setState({
+               updateQues: data,
+              });
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }else{
+         // axios
       //   .post(
       //     sitedata.data.path + '/vh/AddTask',
 
@@ -767,6 +809,7 @@ export const handleEvalSubmit = (current, value) => {
       //     loaderImage: false,
       //   });
       // });
+          }
     } else {
       current.setState({
         error_section: 70,
