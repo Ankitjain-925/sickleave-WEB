@@ -15,10 +15,10 @@ export const GetLanguageMetadata = (current) => {
 };
 
 export const ApprovedPayment = (current, data) => {
-  console.log(' ApprovedPayment',data)
+  console.log(' ApprovedPayment', data);
   current.props.history.push({
     pathname: '/patient/sick-request',
-    state: {updateQues: data },
+    state: { updateQues: data },
   });
 };
 
@@ -744,28 +744,29 @@ export const handleEvalSubmit = (current, value) => {
       current.setState({
         loaderImage: true,
       });
-      axios
-        .post(
-          sitedata.data.path + '/vh/AddTask',
+      // axios
+      //   .post(
+      //     sitedata.data.path + '/vh/AddTask',
 
-          data,
-          commonHeader(current.props.stateLoginValueAim?.token)
-        )
-        .then((responce) => {
-          current.setState({
-            updateQues: {},
-            loaderImage: false,
-            openCalendar: false,
-            DataprotectionRules: false,
-            currentSelected: -1,
-          });
-        })
-        .catch(function (error) {
-          console.log('error');
-          current.setState({
-            loaderImage: false,
-          });
-        });
+      //     data,
+      //     commonHeader(current.props.stateLoginValueAim?.token)
+      //   )
+      //   .then((responce) => {
+      current.setState({
+        updateQues: {},
+        loaderImage: false,
+        openCalendar: false,
+        DataprotectionRules: false,
+        currentSelected: -1,
+      });
+      current.props.history.push('/patient/request-list');
+      // })
+      // .catch(function (error) {
+      //   console.log('error');
+      //   current.setState({
+      //     loaderImage: false,
+      //   });
+      // });
     } else {
       current.setState({
         error_section: 70,
