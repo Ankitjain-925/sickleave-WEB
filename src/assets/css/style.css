@@ -16649,7 +16649,7 @@ td.dotsImgColor.pivoted {
   margin-top: 12px !important;
 }
 .presOpinionIner .responsiveTable td:nth-child(2) {
-  display: flex;
+  /* display: flex; */
   align-items: center;
   padding: 17px 14px;
   word-break: break-all;

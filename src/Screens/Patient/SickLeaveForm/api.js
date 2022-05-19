@@ -3,33 +3,173 @@ import sitedata from 'sitedata';
 import { commonHeader } from 'component/CommonHeader/index';
 import Timezone from 'timezon.json';
 import { GetLanguageDropdown } from 'Screens/Components/GetMetaData/index.js';
+import { getLanguage } from 'translations/index';
 
-export const GetLanguageMetadata = (current) => {
-  var Allsituation = GetLanguageDropdown(
-    current.state.allMetadata &&
-      current.state.allMetadata.situation &&
-      current.state.allMetadata.situation,
-    current.props.stateLanguageType
-  );
-  current.setState({ Allsituation: Allsituation });
+//Not need yet this for the payment
+export const fromEuroToCent = (amount, current) => {
+  return parseInt(amount * 100);
 };
 
+export const CancelClick = (current) => {
+  current.props.history.push('/patient/request-list');
+};
+
+// For send meeting link patient as well as doctor
+export const sendLinkDocPat = (payValue, taskValue, current) => {
+  console.log('data', taskValue);
+  var data = {};
+  let patientEmail = current.props.stateLoginValueAim.user.email;
+  data.task_id = taskValue?._id;
+  data.date = taskValue?.created_at;
+  data.start_time = taskValue?.start;
+  data.end_time = taskValue?.end;
+  data.patient_mail = patientEmail;
+  data.patient_profile_id = taskValue?.patient?.profile_id;
+  data.patient_id = taskValue?.patient_id;
+  data.doctor_profile_id = taskValue?.assinged_to[0]?.profile_id;
+  data.doctor_id = taskValue?.assinged_to[0]?.user_id;
+  data.session_id = data.doctor_profile_id + data.patient_profile_id;
+  // +_+finalvalue
+  let link = {
+    doctor_link:
+      sitedata.data.path +
+      '/video-call/' +
+      data?.doctor_profile_id +
+      '/' +
+      data?.session_id,
+    patient_link:
+      sitedata.data.path +
+      '/video-call/' +
+      data?.patient_profile_id +
+      '/' +
+      data?.session_id,
+  };
+  data.link = link;
+  console.log('data?.date', data?.date, 'data?.start_time', data?.start_time);
+  var Datenew = new Date(data?.date).setHours(15, 30);
+  console.log('Datenew', Datenew);
+  // Datanew convert time stamp ();
+  console.log('data', data);
+  // data.patient_link;
+  // current.setState({ loaderImage: true });
+  axios
+    // .post(
+    //   sitedata.data.path + '/vactive/AddMeeting' + data,
+    //   commonHeader(current.props.stateLoginValueAim.token)
+    // )
+    .then((responce) => {
+      if (responce.data.hassuccessed) {
+        current.setState({ loaderImage: false });
+        // this.props.history.push('/patient/request-list');
+      } else {
+        current.setState({ loaderImage: false });
+      }
+    });
+};
+
+// For payment stripe
+export const saveOnDB1 = (payment, task, current) => {
+  current.setState({ loaderImage: true });
+  if (current.state.updateEvaluate._id) {
+    axios
+      .put(
+        sitedata.data.path + '/vh/AddTask/' + current.state.updateEvaluate._id,
+        { payment_data: payment?.data?.payment_data, is_payment: true },
+        commonHeader(current.props.stateLoginValueAim.token)
+      )
+      .then((responce) => {
+        console.log('responce', responce);
+        sendLinkDocPat(payment, task, current);
+        current.setState({ loaderImage: false });
+        if (responce.data.hassuccessed) {
+          current.props.history.push('/patient/request-list');
+        }
+      });
+  } else {
+    current.setState({ loaderImage: false });
+  }
+};
+//Get All information Related to Metadata
+export const getMetadata = (current) => {
+  current.setState({ allMetadata: current.props.metadata }, () => {
+    GetLanguageMetadata(current);
+  });
+};
+
+export const GetLanguageMetadata = (current) => {
+  if (current.state.allMetadata) {
+    var Allsituation = GetLanguageDropdown(
+      current.state.allMetadata &&
+        current.state.allMetadata.situation &&
+        current.state.allMetadata.situation,
+      current.props.stateLanguageType
+    );
+    var Allsmoking_status = GetLanguageDropdown(
+      current.state.allMetadata &&
+        current.state.allMetadata.smoking_status &&
+        current.state.allMetadata.smoking_status,
+      current.props.stateLanguageType
+    );
+    current.setState({
+      Allsituation: Allsituation,
+      Allsmoking_status: Allsmoking_status,
+    });
+  }
+};
+
+export const allgetData = (patient_id, current) => {
+  current.setState({ loaderImage: true });
+  let translate = getLanguage(current.props.stateLanguageType);
+  let { Something_went_wrong } = translate;
+  axios
+    .get(
+      sitedata.data.path + '/vactive/GetAllPatientData/' + patient_id,
+      commonHeader(current.props.stateLoginValueAim.token)
+    )
+    .then((responce) => {
+      current.setState({ loaderImage: false });
+      if (responce.data.hassuccessed) {
+        let data = responce.data;
+        current.setState({ AllDataSec: data.data, loaderImage: false });
+      } else {
+        current.setState({
+          errorMsg: Something_went_wrong,
+          loaderImage: false,
+        });
+      }
+    });
+};
+
+export const PaymentDue = (data, current) => {
+  console.log('data', data);
+  console.log('stateLoginValueAim', current.props.stateLoginValueAim);
+  current.props.history.push({
+    pathname: '/patient/request-list/payment',
+    state: { data: data },
+  });
+};
+
+export const handleCloseDetail = (current) => {
+  current.setState({ openDetail: false });
+};
+
+export const handleOpenDetail = (item, current) => {
+  current.setState({ openDetail: true, newTask: item });
+};
 
 export const EditRequest = (current, data) => {
-     current.props.history.push({
+  current.props.history.push({
     pathname: '/patient/sick-request',
-    state: {updateQues: data },
-
+    state: { updateQues: data },
   });
 };
 
 export const saveOnDB = (current) => {
   current.setState({ loaderImage: true });
-   if (current.state.updateQues._id) {
-    console.log('current',current.state.updateQues._id)
+  if (current.state.updateQues._id) {
     axios
       .put(
-        sitedata.data.path + '/vh/AddTask/'+ current.state.updateQues._id ,
+        sitedata.data.path + '/vh/AddTask/' + current.state.updateQues._id,
         commonHeader(current.props.stateLoginValueAim.token)
       )
       .then((responce) => {
@@ -660,12 +800,66 @@ export const handleEvalSubmit = (current, value) => {
                                                                                                                                                 }
                                                                                                                                               );
                                                                                                                                             }
-                                                                                                                                            
-                                                                                                                                            current.setState(
-                                                                                                                                              {
-                                                                                                                                                openCalendar: true,
-                                                                                                                                              }
-                                                                                                                                            );
+                                                                                                                                            if (
+                                                                                                                                              data?._id
+                                                                                                                                            ) {
+                                                                                                                                              axios
+                                                                                                                                                .put(
+                                                                                                                                                  sitedata
+                                                                                                                                                    .data
+                                                                                                                                                    .path +
+                                                                                                                                                    '/vh/AddTask/' +
+                                                                                                                                                    data._id,
+                                                                                                                                                  data,
+                                                                                                                                                  commonHeader(
+                                                                                                                                                    current
+                                                                                                                                                      .props
+                                                                                                                                                      .stateLoginValueAim
+                                                                                                                                                      .token
+                                                                                                                                                  )
+                                                                                                                                                )
+                                                                                                                                                .then(
+                                                                                                                                                  (
+                                                                                                                                                    responce
+                                                                                                                                                  ) => {
+                                                                                                                                                    if (
+                                                                                                                                                      responce
+                                                                                                                                                        .data
+                                                                                                                                                        .hassuccessed
+                                                                                                                                                    ) {
+                                                                                                                                                      current.setState(
+                                                                                                                                                        {
+                                                                                                                                                          updateQues:
+                                                                                                                                                            {},
+                                                                                                                                                          loaderImage: false,
+                                                                                                                                                          openCalendar: false,
+                                                                                                                                                          DataprotectionRules: false,
+                                                                                                                                                          currentSelected:
+                                                                                                                                                            -1,
+                                                                                                                                                        }
+                                                                                                                                                      );
+                                                                                                                                                      current.props.history.push(
+                                                                                                                                                        '/patient/request-list'
+                                                                                                                                                      );
+                                                                                                                                                    }
+                                                                                                                                                  }
+                                                                                                                                                )
+                                                                                                                                                .catch(
+                                                                                                                                                  function (
+                                                                                                                                                    error
+                                                                                                                                                  ) {
+                                                                                                                                                    console.log(
+                                                                                                                                                      error
+                                                                                                                                                    );
+                                                                                                                                                  }
+                                                                                                                                                );
+                                                                                                                                            } else {
+                                                                                                                                              current.setState(
+                                                                                                                                                {
+                                                                                                                                                  openCalendar: true,
+                                                                                                                                                }
+                                                                                                                                              );
+                                                                                                                                            }
                                                                                                                                           } else {
                                                                                                                                             current.setState(
                                                                                                                                               {
@@ -767,49 +961,29 @@ export const handleEvalSubmit = (current, value) => {
         loaderImage: true,
       });
 
-      if (data?._id) {
-     
-     axios
-          .put(
-            sitedata.data.path + '/vh/AddTask/' + data._id,
-            data,
-            commonHeader(current.props.stateLoginValueAim.token)
-          )
-          .then((responce) => {
-            if (responce.data.hassuccessed) {
-              current.setState({
-               updateQues: data,
-              });
-            }
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      }else{
-         // axios
-      //   .post(
-      //     sitedata.data.path + '/vh/AddTask',
+      axios
+        .post(
+          sitedata.data.path + '/vh/AddTask',
 
-      //     data,
-      //     commonHeader(current.props.stateLoginValueAim?.token)
-      //   )
-      //   .then((responce) => {
-      current.setState({
-        updateQues: {},
-        loaderImage: false,
-        openCalendar: false,
-        DataprotectionRules: false,
-        currentSelected: -1,
-      });
-      current.props.history.push('/patient/request-list');
-      // })
-      // .catch(function (error) {
-      //   console.log('error');
-      //   current.setState({
-      //     loaderImage: false,
-      //   });
-      // });
-          }
+          data,
+          commonHeader(current.props.stateLoginValueAim?.token)
+        )
+        .then((responce) => {
+          current.setState({
+            updateQues: {},
+            loaderImage: false,
+            openCalendar: false,
+            DataprotectionRules: false,
+            currentSelected: -1,
+          });
+          current.props.history.push('/patient/request-list');
+        })
+        .catch(function (error) {
+          console.log('error');
+          current.setState({
+            loaderImage: false,
+          });
+        });
     } else {
       current.setState({
         error_section: 70,

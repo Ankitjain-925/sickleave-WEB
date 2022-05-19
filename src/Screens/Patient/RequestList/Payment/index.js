@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 import sitedata from 'sitedata';
-import { commonHeader } from 'component/CommonHeader/index';
 import { getLanguage } from 'translations/index';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -18,6 +17,11 @@ import { OptionList } from 'Screens/Login/metadataaction';
 import StripeCheckout from 'react-stripe-checkout';
 import { confirmAlert } from 'react-confirm-alert';
 import { getPublishableKey } from 'Screens/Components/CardInput/getPriceId';
+import {
+  saveOnDB1,
+  CancelClick,
+  fromEuroToCent,
+} from '../../SickLeaveForm/api';
 
 const CURRENCY = 'EUR';
 const STRIPE_PUBLISHABLE = getPublishableKey();
@@ -29,6 +33,7 @@ class Index extends Component {
     this.StripeClick = React.createRef();
     this.state = {
       loaderImage: false,
+      dataForLInk: {},
     };
   }
 
@@ -39,35 +44,6 @@ class Index extends Component {
       });
     }
   }
-
-  //Not need yet this for the payment
-  fromEuroToCent = (amount) => {
-    return parseInt(amount * 100);
-  };
-
-  CancelClick = () => {
-    this.props.history.push('/patient/request-list');
-  };
-
-  saveOnDB = (payment) => {
-    this.setState({ loaderImage: true });
-    if (this.state.updateEvaluate._id) {
-      axios
-        .put(
-          sitedata.data.path + '/vh/AddTask/' + this.state.updateEvaluate._id,
-          { payment_data: payment?.data?.payment_data, is_payment: true },
-          commonHeader(this.props.stateLoginValueAim.token)
-        )
-        .then((responce) => {
-          this.setState({ loaderImage: false });
-          if (responce.data.hassuccessed) {
-            this.props.history.push('/patient/request-list');
-          }
-        });
-    } else {
-      this.setState({ loaderImage: false });
-    }
-  };
 
   render() {
     let translate = getLanguage(this.props.stateLanguageType);
@@ -94,7 +70,7 @@ class Index extends Component {
                 <button
                   onClick={() => {
                     onClose();
-                    this.saveOnDB(data);
+                    saveOnDB1(data, this.state.updateEvaluate, this);
                   }}
                 >
                   {ok}
@@ -151,7 +127,7 @@ class Index extends Component {
         name={name}
         image="https://sys.aimedis.io/static/media/LogoPNG.03ac2d92.png"
         description={description}
-        amount={this.fromEuroToCent(amount)}
+        amount={fromEuroToCent(amount, this)}
         token={onToken}
         currency={CURRENCY}
         stripeKey={STRIPE_PUBLISHABLE}
@@ -168,7 +144,7 @@ class Index extends Component {
         .post(sitedata.data.path + '/lms_stripeCheckout/intent-pop', {
           source: token.id,
           currency: CURRENCY,
-          amount: this.fromEuroToCent(25),
+          amount: fromEuroToCent(25, this),
         })
         .then(successPayment, this.setState({ addtocart: [] }))
         .catch(errorPayment);
@@ -213,7 +189,7 @@ class Index extends Component {
                               <Grid item xs={12} md={6}>
                                 <button
                                   onClick={() => {
-                                    this.CancelClick();
+                                    CancelClick(this);
                                   }}
                                   // className="CutomStripeButton"
                                 >
