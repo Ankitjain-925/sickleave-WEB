@@ -22,6 +22,7 @@ import SneezSection from './SneezSection';
 import CPSection from './CPSection';
 import DepressedSection from './DepressedSection';
 import Calendar2 from 'react-calendar';
+import { getLanguage } from 'translations/index';
 import {
   GetLanguageMetadata,
   onChange,
@@ -80,6 +81,27 @@ class Index extends Component {
 
  
   render() {
+    let translate = getLanguage(this.props.stateLanguageType);
+    let {
+     Sick_Certificate,
+     You_have_a_headache,
+     You_have_Stomach_Problems,
+     You_have_Diarrhea,
+     You_have_Fever,
+     You_have_Back_pain,
+     You_have_Cough_and_Snees,
+     You_feel_Depressed,
+     you_have_Cardiac_Problems,
+     Data_protection_rules,
+     Select_time_slot
+   
+  
+    
+     
+     
+     
+
+    } = translate;
     const {
       updateQues,
       error_section,
@@ -111,7 +133,7 @@ class Index extends Component {
                   <Grid className="docsOpinion">
                     <Grid container direction="row" className="docsOpinLbl">
                       <Grid item xs={12} md={6}>
-                        <label>Sick Leave Certificate</label>
+                        <label>{Sick_Certificate}</label>
                       </Grid>
                     </Grid>
                   </Grid>
@@ -125,7 +147,7 @@ class Index extends Component {
                                 updateAllEntrySec={(e) =>
                                   updateAllEntrySec(e, 'headache', this)
                                 }
-                                label="You have a headache?"
+                                label={You_have_a_headache}
                                 value={updateQues.headache}
                               />
                             </Grid>
@@ -157,7 +179,7 @@ class Index extends Component {
                                     updateAllEntrySec={(e) =>
                                       updateAllEntrySec(e, 'stomach_problems', this)
                                     }
-                                    label="You have Stomach Problems?"
+                                    label={You_have_Stomach_Problems}
                                     value={updateQues?.stomach_problems}
                                   />
                                 </Grid>
@@ -191,7 +213,7 @@ class Index extends Component {
                                 updateAllEntrySec={(e) =>
                                   updateAllEntrySec(e, 'diarrhea', this)
                                 }
-                                label="You have Diarrhea?"
+                                label={You_have_Diarrhea}
                                 value={updateQues?.diarrhea}
                               />
                             </Grid>
@@ -224,7 +246,7 @@ class Index extends Component {
                                 updateAllEntrySec={(e) =>
                                   updateAllEntrySec(e, 'have_fever', this)
                                 }
-                                label="You have Fever?"
+                                label={You_have_Fever}
                                 value={updateQues?.have_fever}
                               />
                             </Grid>
@@ -257,7 +279,7 @@ class Index extends Component {
                                 updateAllEntrySec={(e) =>
                                   updateAllEntrySec(e, 'back_pain', this)
                                 }
-                                label="You have Back pain?"
+                                label={You_have_Back_pain}
                                 value={updateQues?.back_pain}
                               />
                             </Grid>
@@ -293,7 +315,7 @@ class Index extends Component {
                                 updateAllEntrySec={(e) =>
                                   updateAllEntrySec(e, 'cough_and_snees', this)
                                 }
-                                label="You have Cough and Snees?"
+                                label={You_have_Cough_and_Snees}
                                 value={updateQues?.cough_and_snees}
                               />
                             </Grid>
@@ -325,7 +347,7 @@ class Index extends Component {
                                 updateAllEntrySec={(e) =>
                                   updateAllEntrySec(e, 'feel_depressed', this)
                                 }
-                                label="You feel Depressed?"
+                                label={You_feel_Depressed}
                                 value={updateQues?.feel_depressed}
                               />
                             </Grid>
@@ -357,7 +379,7 @@ class Index extends Component {
                                 updateAllEntrySec={(e) =>
                                   updateAllEntrySec(e, 'cardiac_problems', this)
                                 }
-                                label="you have Cardiac Problems?"
+                                label={you_have_Cardiac_Problems}
                                 value={updateQues?.cardiac_problems}
                               />
                             </Grid>
@@ -405,7 +427,7 @@ class Index extends Component {
                                     className="PIC_Condition"
                                   />
                                 }
-                                label="I have react and understood the Data protection rules and Regulations of Aimedis."
+                                label={Data_protection_rules}
                               />
                             </Grid>
                             {error_section == 73 && (
@@ -440,7 +462,7 @@ class Index extends Component {
                             </Grid>
                             <Grid className="selTimeSlot">
                               <Grid>
-                                <label>Select time slot</label>
+                                <label>{Select_time_slot}</label>
                               </Grid>
                               <Grid className="selTimeAM">
                                 {' '}

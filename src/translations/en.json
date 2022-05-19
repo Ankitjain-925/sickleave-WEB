@@ -1786,6 +1786,20 @@
    "cardiac_shoulder_pain":"Shoulder pain",
    "cardiac_heart_attack":"Heart attack",
    "cardiac_heart_failure":"Heart failure",
-   "quality_of_pain":"Quality Pain"
+   "quality_of_pain":"Quality Pain",
+   "Sick_Certificate":"Sick Leave Certificate",
+   "You_have_a_headache":"You have a headache?",
+   "You_have_Stomach_Problems":"You have Stomach Problems?",
+   "You_have_Diarrhea":"You have Diarrhea?",
+   "You_have_Fever":"You have Fever?",
+   "You_have_Back_pain":"You have Back pain?",
+   "You_have_Cough_and_Snees":"You have Cough and Snees?",
+   "You_feel_Depressed":"You feel Depressed?",
+   "you_have_Cardiac_Problems":"you have Cardiac Problems?",
+   "Data_protection_rules":"I have react and understood the Data protection rules and Regulations of Aimedis.",
+   "Select_time_slot":"Select time slot",
+   "Details":"Details",
+   "Request_List":"Request List"
+   
   }
 }

@@ -54,13 +54,7 @@ class Index extends Component {
     }
   };
 
-  ApprovedPayment = (data) => {
-    console.log(' ApprovedPayment', data);
-    this.props.history.push({
-      pathname: '/patient/sick-request',
-      state: { updateQues: data },
-    });
-  };
+ 
   GetLanguageMetadata = () => {
     if (this.state.allMetadata) {
       var Allsituation = GetLanguageDropdown(
@@ -123,6 +117,8 @@ class Index extends Component {
   render() {
     let translate = getLanguage(this.props.stateLanguageType);
     let {
+      Request_List,
+      Details,
       added_on,
       Headache,
       stomach_problems,
@@ -238,7 +234,7 @@ class Index extends Component {
                     <Grid className="docsOpinion docsAllOption">
                       <Grid container direction="row" className="docsOpinLbl">
                         <Grid item xs={12} md={6}>
-                          <label>Request List</label>
+                          <label>{Request_List}</label>
                         </Grid>
                         {/* <Grid item xs={12} md={6} className="docsOpinRght">
                           <a onClick={this.handlePicEval}>+ {New} {"Picture Evaluation"}</a>
@@ -544,7 +540,7 @@ class Index extends Component {
                                 />
                               </a>
                             </Grid>
-                            <label>Details</label>
+                            <label>{Details}</label>
                           </Grid>
                         </Grid>
                       </Grid>

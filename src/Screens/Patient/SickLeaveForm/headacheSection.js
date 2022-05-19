@@ -8,12 +8,17 @@ import SymptomQuestions from "../../Components/TimelineComponent/CovidSymptomsFi
 import SelectByTwo from "Screens/Components/SelectbyTwo/index";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
+
+
 function Index(props) {
-  return (
+    
+   
+ return (
+     
     <Grid className="borderLineAfer">
     <Grid className="bgncmnSpc">
         <Grid className="bgncmnLbl">
-        <label>Where did the pain begin?</label>
+        <label>Where_did_the_pain_begin</label>
         </Grid>
         <Grid container direction="row" justify="center">
         <Grid item xs={12} md={12}>
@@ -596,6 +601,7 @@ function Index(props) {
     </Grid>
     </Grid>          
   );
+  
 }
 
 export default Index;
