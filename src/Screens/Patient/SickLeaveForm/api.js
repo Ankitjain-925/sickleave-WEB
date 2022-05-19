@@ -14,11 +14,12 @@ export const GetLanguageMetadata = (current) => {
   current.setState({ Allsituation: Allsituation });
 };
 
+
 export const EditRequest = (current, data) => {
      current.props.history.push({
     pathname: '/patient/sick-request',
     state: {updateQues: data },
- 
+
   });
 };
 
@@ -750,7 +751,6 @@ export const handleEvalSubmit = (current, value) => {
       }
     }
   } else {
-    {console.log('datangfhgfjg',data)}
     var slot = current.state.currentSelected;
     if (current.state.assinged_to) {
       data.assinged_to = current.state.assinged_to;
@@ -766,6 +766,7 @@ export const handleEvalSubmit = (current, value) => {
       current.setState({
         loaderImage: true,
       });
+
       if (data?._id) {
      
      axios
@@ -785,34 +786,29 @@ export const handleEvalSubmit = (current, value) => {
             console.log(error);
           });
       }else{
-      axios
-        .post(
-          sitedata.data.path + '/vh/AddTask',
+         // axios
+      //   .post(
+      //     sitedata.data.path + '/vh/AddTask',
 
-          data,
-          commonHeader(current.props.stateLoginValueAim?.token)
-        )
-        .then((responce) => {
-        
-          current.setState({
-            updateQues: {},
-            loaderImage: false,
-            openCalendar: false,
-            DataprotectionRules: false,
-            currentSelected: -1,
-            
-          });
-          if(current.state.updateQues){
-          current.setState({openCalendar:false})
-        
-          current.props.history.push('/patient/request-list');}
-        })
-        .catch(function (error) {
-          console.log('error');
-          current.setState({
-            loaderImage: false,
-          });
-        });
+      //     data,
+      //     commonHeader(current.props.stateLoginValueAim?.token)
+      //   )
+      //   .then((responce) => {
+      current.setState({
+        updateQues: {},
+        loaderImage: false,
+        openCalendar: false,
+        DataprotectionRules: false,
+        currentSelected: -1,
+      });
+      current.props.history.push('/patient/request-list');
+      // })
+      // .catch(function (error) {
+      //   console.log('error');
+      //   current.setState({
+      //     loaderImage: false,
+      //   });
+      // });
           }
     } else {
       current.setState({
