@@ -77,6 +77,7 @@ class Index extends Component {
         this.setState({
           setCss: 'setColorOfMsg1',
           msg: 'User is successfully login',
+
           loaderImage: false,
         });
         this.getSessionId();

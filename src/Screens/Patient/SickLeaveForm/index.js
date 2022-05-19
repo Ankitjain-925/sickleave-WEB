@@ -34,7 +34,7 @@ import {
   updateAllEntrySec1,
   updateAllEntrySec2,
   SelectTimeSlot,
-  saveOnDB
+  saveOnDB,
 } from './api';
 class Index extends Component {
   constructor(props) {
@@ -63,22 +63,20 @@ class Index extends Component {
   };
 
   componentDidMount = () => {
-    console.log('this.props.location.state', this.props.location.state)
-    if(this.props.location.state?.updateQues){
-        this.setState({updateQues: this.props.location.state?.updateQues})
+    if (this.props.location.state?.updateQues) {
+      this.setState({ updateQues: this.props.location.state?.updateQues });
     }
     this.getMetadata();
     getCalendarData(this);
     // onChange(new Date(), this);
   };
 
-  getMetadata = () => {        
+  getMetadata = () => {
     this.setState({ allMetadata: this.props.metadata }, () => {
       GetLanguageMetadata(this);
     });
   };
 
- 
   render() {
     const {
       updateQues,
@@ -92,9 +90,9 @@ class Index extends Component {
       <Grid
         className={
           this.props.settings &&
-            this.props.settings.setting &&
-            this.props.settings.setting.mode &&
-            this.props.settings.setting.mode === 'dark'
+          this.props.settings.setting &&
+          this.props.settings.setting.mode &&
+          this.props.settings.setting.mode === 'dark'
             ? 'homeBg darkTheme homeBgDrk'
             : 'homeBg'
         }
@@ -150,21 +148,21 @@ class Index extends Component {
                               errorChrMsg={this.state.errorChrMsg}
                             />
                           )}
-                      
-                              <Grid className="sickQuesSec">
-                                <Grid className="fatiqueQues fatiqueQuess1">
-                                  <FatiqueQuestion
-                                    updateAllEntrySec={(e) =>
-                                      updateAllEntrySec(e, 'stomach_problems', this)
-                                    }
-                                    label="You have Stomach Problems?"
-                                    value={updateQues?.stomach_problems}
-                                  />
-                                </Grid>
-                                {error_section == 49 && (
-                                  <div className="err_message2">{errorChrMsg}</div>
-                                )}
-                              </Grid>  
+
+                          <Grid className="sickQuesSec">
+                            <Grid className="fatiqueQues fatiqueQuess1">
+                              <FatiqueQuestion
+                                updateAllEntrySec={(e) =>
+                                  updateAllEntrySec(e, 'stomach_problems', this)
+                                }
+                                label="You have Stomach Problems?"
+                                value={updateQues?.stomach_problems}
+                              />
+                            </Grid>
+                            {error_section == 49 && (
+                              <div className="err_message2">{errorChrMsg}</div>
+                            )}
+                          </Grid>
                           {updateQues &&
                             updateQues?.stomach_problems === 'yes' && (
                               <StomachSection
@@ -184,7 +182,7 @@ class Index extends Component {
                                 user={this.props.stateLoginValueAim?.user}
                               />
                             )}
-                          
+
                           <Grid className="sickQuesSec">
                             <Grid className="fatiqueQues fatiqueQuess1">
                               <FatiqueQuestion
@@ -393,7 +391,7 @@ class Index extends Component {
                                     name="DataprotectionRules"
                                     value={
                                       DataprotectionRules &&
-                                        DataprotectionRules == true
+                                      DataprotectionRules == true
                                         ? false
                                         : true
                                     }
@@ -418,12 +416,10 @@ class Index extends Component {
                             )}
                           </Grid>
                           <Grid className="infoShwSave3">
-                          
                             <input
                               type="submit"
                               value="Submit"
                               onClick={() => handleEvalSubmit(this, 1)}
-                             
                             ></input>
                           </Grid>
                         </Grid>
@@ -445,7 +441,7 @@ class Index extends Component {
                               <Grid className="selTimeAM">
                                 {' '}
                                 {this.state.appointDate &&
-                                  this.state.appointDate.length > 0 ? (
+                                this.state.appointDate.length > 0 ? (
                                   Availabledays(
                                     this.state.selectedDate,
                                     this.state.appointmentData.appointment_days
@@ -454,10 +450,10 @@ class Index extends Component {
                                       <span>NotAvailable !</span>
                                     </Grid>
                                   ) : ExitinHoliday(
-                                    this.state.selectedDate,
-                                    this.state.appointmentData.holidays_start,
-                                    this.state.appointmentData.holidays_end
-                                  ) ? (
+                                      this.state.selectedDate,
+                                      this.state.appointmentData.holidays_start,
+                                      this.state.appointmentData.holidays_end
+                                    ) ? (
                                     <Grid>
                                       <span>holiday !</span>
                                     </Grid>
@@ -481,9 +477,9 @@ class Index extends Component {
                                       return (
                                         <Grid>
                                           {this.state.appointDate[iA + 1] &&
-                                            this.state.appointDate[iA + 1] !==
+                                          this.state.appointDate[iA + 1] !==
                                             'undefined' &&
-                                            iA === 0 ? (
+                                          iA === 0 ? (
                                             <a
                                               className={
                                                 this.state.currentSelected ===
@@ -524,7 +520,7 @@ class Index extends Component {
                                                 {this.state.appointDate[iA] +
                                                   ' - ' +
                                                   this.state.appointDate[
-                                                  iA + 1
+                                                    iA + 1
                                                   ]}
                                               </a>
                                             )
@@ -560,9 +556,6 @@ class Index extends Component {
                           </Grid>
                         </Grid>
                       )}
-                     
-                    
-                    
                     </Grid>
                   </Grid>
 
