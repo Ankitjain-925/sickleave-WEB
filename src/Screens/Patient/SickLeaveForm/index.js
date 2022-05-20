@@ -408,7 +408,7 @@ class Index extends Component {
                             )}
 
                           <Grid>
-                            <Grid className="sickCheckSec">
+                            <Grid className="sickCheckSec fatiqueQuess1">
                               <FormControlLabel
                                 control={
                                   <Checkbox

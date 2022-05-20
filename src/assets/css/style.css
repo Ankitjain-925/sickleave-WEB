@@ -13742,7 +13742,7 @@ a.academy_ul ul li img {
   color: #fff;
   border: none;
   border-radius: 8px;
-  padding: 5px 8%;
+  padding: 8px 8%;
   font-weight: 600;
   margin-top: 10px;
 }
@@ -14768,8 +14768,25 @@ span.unread_msg_notifyspan {
 .LogoForms img {
   width: 50px !important;
 }
+/*For LMS*/
 button.CutomStripeButton {
-  opacity: 0 !important;
+  background: #00ABAF !important;
+  color: #fff !important;
+  padding: 5px 20px !important;
+  border-radius: 5px !important;
+  height: 40px !important;
+  width: 100% !important;
+  font-weight: 800 !important;
+}
+button.CutomStripeButton span {
+  background: #00ABAF !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
+  border-radius: 0px !important;
+}
+
+button.CutomStripeButton{
+  opacity: 1 !important;
 }
 .homeBgDrk .NotFoundContent {
   color: #bfc1c1 !important;
@@ -15150,19 +15167,7 @@ a.painAreasTxt {
   line-height: 18px;
   margin-bottom: 12px;
 }
-/*For LMS*/
-button.CutomStripeButton {
-  background: #00abaf !important;
-  color: #fff !important;
-  padding: 5px 20px !important;
-  border-radius: 5px !important;
-}
-button.CutomStripeButton span {
-  background: #00abaf !important;
-  text-shadow: none !important;
-  box-shadow: none !important;
-  border-radius: 0px !important;
-}
+
 .cardAddedWish {
   border: 1px solid #00abaf;
 }
@@ -18200,4 +18205,9 @@ span.PIC_Condition:hover {
 .fillDiaAll label,
 .rrSysto label {
   margin-bottom: 8px;
+  
+}
+.hurtit label{
+   font-family: Muli;
+ font-weight: 600;
 }

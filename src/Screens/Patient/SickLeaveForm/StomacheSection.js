@@ -15,7 +15,7 @@ function Index(props) {
     <Grid className="borderLineAfer">
     <Grid className="fillDia">
       <Grid className="bgncmnSpc">
-        <Grid className="bgncmnLbl">
+        <Grid className="bgncmnLbl hurtit">
           <label>Where did the pain begin?</label>
         </Grid>
         <PainPoint
@@ -44,7 +44,7 @@ function Index(props) {
       </Grid>
     </Grid>
     <Grid className="fillDia">
-      <Grid className="bgncmnSpc">
+      <Grid className="bgncmnSpc  ">
         <Grid className="bgncmnLbl">
           <label>Where does it hurt now?</label>
         </Grid>
@@ -73,6 +73,8 @@ function Index(props) {
         )}
       </Grid>
     </Grid>
+    <Grid className="sickQuesSec">
+    <Grid className="fatiqueQues fatiqueQuess1">
     <FatiqueQuestion
       updateAllEntrySec={(e) =>
         props.updateAllEntrySec(
@@ -84,6 +86,8 @@ function Index(props) {
       label="Do you have pain behind the sternum?"
       value={props.updateQues?.stomach_behind_the_sternum}
     />
+    </Grid>
+    </Grid>
     <Grid className="sickQuesSec">
     <Grid className="fatiqueQues fatiqueQuess1">
       <FatiqueQuestion
@@ -110,7 +114,7 @@ function Index(props) {
       <div className="err_message2">{props.errorChrMsg}</div>
     )}
     <Grid className="haveCmnSpc">
-      <Grid className="bgncmnLbl">
+      <Grid className="bgncmnLbl hurtit ">
         <label>
           Do you suffer from high or low blood pressure
           if so can you give the values?
@@ -236,7 +240,7 @@ function Index(props) {
     )}
     <Grid className="textFieldArea1">
       <Grid className="bgncmnSpc">
-        <Grid className="bgncmnLbl">
+        <Grid className="bgncmnLbl hurtit">
           <label>
             If you have Temperature, please tell me in
             C?
@@ -281,7 +285,7 @@ function Index(props) {
     </Grid>
 
     <Grid className="bgncmnSpc">
-      <Grid className="bgncmnLbl">
+      <Grid className="bgncmnLbl hurtit">
         <label>
           On a scale of 1 - 10, how would you describe
           the intensity of the pain?

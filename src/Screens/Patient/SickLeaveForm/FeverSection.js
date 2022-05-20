@@ -13,7 +13,7 @@ function Index(props) {
   return (
     <Grid className="borderLineAfer">
       <Grid className="bgncmnSpc">
-        <Grid className="bgncmnLbl">
+        <Grid className="bgncmnLbl hurtit">
           <label>When did the symptoms begin?</label>
         </Grid>
         <Grid>
@@ -41,7 +41,7 @@ function Index(props) {
       <Grid className="textFieldArea1">
         <Grid className="bgncmnSpc">
           <Grid>
-            <Grid className="bgncmnLbl">
+            <Grid className="bgncmnLbl hurtit">
               <label>
                 In which range do the temperatures move throughout the day?
               </label>
@@ -87,7 +87,7 @@ function Index(props) {
       </Grid>
 
       <Grid className="bgncmnSpc">
-        <Grid className="bgncmnLbl">
+        <Grid className="bgncmnLbl hurtit">
           <label>
             On a scale of 1 - 10, how would you describe the intensity of the
             pain?
@@ -176,7 +176,7 @@ function Index(props) {
           </Grid>
         </Grid>
       )}
-      <Grid className="fillDiaAll">
+      <Grid className="fillDiaAll hurtit">
         <label>Sputum? If sputum, what consistency and color?</label>
         <NotesEditor
           name="fever_sputum"

@@ -11,7 +11,7 @@ function Index(props) {
   return (
     <Grid className="borderLineAfer">
     <Grid className="bgncmnSpc">
-      <Grid className="bgncmnLbl">
+      <Grid className="bgncmnLbl hurtit">
         <label>When did the symptoms begin?</label>
       </Grid>
       <Grid>
@@ -62,7 +62,7 @@ function Index(props) {
     )}
     <Grid className="bgncmnSpc">
       <Grid className="textFieldArea1">
-        <Grid className="bgncmnLbl">
+        <Grid className="bgncmnLbl hurtit">
           <label>
             If you have Temperature, please tell me in C
             ?

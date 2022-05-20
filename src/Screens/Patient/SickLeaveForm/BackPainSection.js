@@ -9,7 +9,7 @@ function Index(props) {
   return (
     <Grid className="borderLineAfer">
       <Grid className="bgncmnSpc">
-        <Grid className="bgncmnLbl">
+        <Grid className="bgncmnLbl hurtit">
           <label>When did the symptoms begin?</label>
         </Grid>
         <Grid>
@@ -143,7 +143,7 @@ function Index(props) {
         <div className="err_message2">{props.errorChrMsg}</div>
       )}
       <Grid>
-        <Grid className="bgncmnLbl">
+        <Grid className="bgncmnLbl hurtit">
           <label>
             Do you suffer from high or low blood pressure if so can you give the
             values?

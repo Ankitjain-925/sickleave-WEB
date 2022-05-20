@@ -1798,7 +1798,9 @@
    "Data_protection_rules":"I have react and understood the Data protection rules and Regulations of Aimedis.",
    "Select_time_slot":"Select time slot",
    "Details":"Details",
-   "Request_List":"Request List"
+   "Request_List":"Request List",
+   "Request_list_payment":"Request list payment",
+   "Payment":"Payment"
    
   }
 }

@@ -71,7 +71,7 @@ class Index extends Component {
 
   render() {
     let translate = getLanguage(this.props.stateLanguageType);
-    let { pay_with_stripe, payment, cancel } = translate;
+    let { pay_with_stripe, Payment, cancel,Request_list_payment } = translate;
 
     //Success payment alert after payment is success
     const successPayment = (data) => {
@@ -156,7 +156,7 @@ class Index extends Component {
         currency={CURRENCY}
         stripeKey={STRIPE_PUBLISHABLE}
         label={pay_with_stripe}
-        // className="CutomStripeButton"
+        className='CutomStripeButton'
         email={email}
         closed={this.onClosed}
       />
@@ -197,7 +197,7 @@ class Index extends Component {
                     <Grid className="docsOpinion">
                       <Grid container direction="row" className="docsOpinLbl">
                         <Grid item xs={12} md={6}>
-                          <label>Request list payment</label>
+                          <label>{Request_list_payment}</label>
                         </Grid>
                       </Grid>
                     </Grid>
@@ -205,7 +205,7 @@ class Index extends Component {
                       <Grid className="cnfrmDiaMain profilePkg cnfrmDiaMain1">
                         <div className="payment_sec_extra_ser1">
                           <div className="sbu_button">
-                            <h2>{payment}</h2>
+                            <h2>{Payment}</h2>
                             <Grid container direction="row" spacing={2}>
                               <Grid item xs={12} md={6}>
                                 <Checkout />
@@ -215,7 +215,7 @@ class Index extends Component {
                                   onClick={() => {
                                     this.CancelClick();
                                   }}
-                                  // className="CutomStripeButton"
+                                  className="CutomStripeButton"
                                 >
                                   {cancel}
                                 </button>

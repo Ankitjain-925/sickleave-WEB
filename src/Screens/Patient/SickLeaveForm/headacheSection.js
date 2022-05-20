@@ -17,8 +17,8 @@ function Index(props) {
      
     <Grid className="borderLineAfer">
     <Grid className="bgncmnSpc">
-        <Grid className="bgncmnLbl">
-        <label>Where_did_the_pain_begin</label>
+        <Grid className="bgncmnLbl hurtit">
+        <label>Where did the pain begin ?</label>
         </Grid>
         <Grid container direction="row" justify="center">
         <Grid item xs={12} md={12}>
@@ -178,7 +178,7 @@ function Index(props) {
         </Grid>
     </Grid>
     <Grid className="bgncmnSpc">
-        <Grid className="bgncmnLbl">
+        <Grid className="bgncmnLbl hurtit">
         <label>Where does it hurt now?</label>
         </Grid>
         <Grid container direction="row" justify="center">
@@ -339,7 +339,7 @@ function Index(props) {
         </Grid>
     </Grid>
     <Grid className="bgncmnSpc">
-        <Grid className="bgncmnLbl">
+        <Grid className="bgncmnLbl hurtit">
         <label>What is your Blood pressure ?</label>
         </Grid>
         <Grid container direction="row" spacing="1">
@@ -384,7 +384,7 @@ function Index(props) {
 
     <Grid className="bgncmnSpc">
         <Grid className="textFieldArea1">
-        <Grid className="bgncmnLbl">
+        <Grid className="bgncmnLbl hurtit">
             <label>
             If you have Temperature, please tell me in C
             ?
@@ -408,7 +408,7 @@ function Index(props) {
         </Grid>
     </Grid>
 
-    <Grid className="bgncmnSpc">
+    <Grid className="bgncmnSpc hurtit">
     <Grid className="fatiqueQues fatiqueQuess1">
         <FatiqueQuestion
         updateAllEntrySec={(e) =>
@@ -485,7 +485,7 @@ function Index(props) {
         )}
     </Grid>
 
-    <Grid className="bgncmnSpc">
+    <Grid className="bgncmnSpc hurtit">
         <Grid className="fillDiaAll">
         {/* <label>
         How would you describe the quality of pain?
@@ -498,6 +498,7 @@ function Index(props) {
         }
         value={props.updateQues?.quality_of_pain}
     />  */}
+
         <SymptomQuestions
             updateEntryState1={(e) =>
             props.updateAllEntrySec(
@@ -505,10 +506,12 @@ function Index(props) {
                 "headache_quality_of_pain"
             )
             }
+           
             comesFrom="Feedback"
             label="How would you describe the quality of pain?
         (Throbbing, stinging ...)"
             value={props.updateQues?.headache_quality_of_pain}
+           
         />
         {props.error_section == 6 && (
             <div className="err_message2">
@@ -517,7 +520,7 @@ function Index(props) {
         )}
         </Grid>
     </Grid>
-    <Grid className="bgncmnSpc">
+    <Grid className="bgncmnSpc hurtit ">
     <Grid className="fatiqueQues fatiqueQuess1">
         <FatiqueQuestion
         updateAllEntrySec={(e) =>
@@ -558,7 +561,7 @@ function Index(props) {
         </div>
         )}
     </Grid>
-    <Grid className="bgncmnSpc">
+    <Grid className="bgncmnSpc hurtit">
         <label>
         On a scale of 1 - 10, how would you describe the
         intensity of the pain?
@@ -587,7 +590,7 @@ function Index(props) {
             "headache_undergoing_treatment"
             )
         }
-        label="Are you already undergoing treatment for your Headace?"
+        label="Are you already undergoing treatment for your Headache?"
         value={
             props.updateQues?.headache_undergoing_treatment
         }

@@ -9,7 +9,7 @@ function Index(props) {
   return (
     <Grid className="borderLineAfer">
       <Grid className="bgncmnSpc">
-        <Grid className="bgncmnLbl">
+        <Grid className="bgncmnLbl hurtit">
           <label>What is your Blood pressure ?</label>
         </Grid>
         <Grid container direction="row" spacing="1">
