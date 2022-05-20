@@ -18,7 +18,7 @@ export const CancelClick = (current) => {
 export const sendLinkDocPat = (payValue, taskValue, current) => {
   console.log('data', taskValue);
   var data = {};
-  let patientEmail = current.props.stateLoginValueAim.user.email;
+  let patientEmail = current?.props?.stateLoginValueAim?.user?.email;
   data.task_id = taskValue?._id;
   data.date = taskValue?.created_at;
   data.start_time = taskValue?.start;
@@ -28,33 +28,31 @@ export const sendLinkDocPat = (payValue, taskValue, current) => {
   data.patient_id = taskValue?.patient_id;
   data.doctor_profile_id = taskValue?.assinged_to[0]?.profile_id;
   data.doctor_id = taskValue?.assinged_to[0]?.user_id;
-  data.session_id = data.doctor_profile_id + data.patient_profile_id;
-  // +_+finalvalue
+  var t1 = data.start_time.split(':');
+  var Datenew = new Date(data?.date).setHours(t1[0]);
+  data.session_id = data.doctor_profile_id + data.patient_profile_id + Datenew;
+  let path = sitedata.data.path;
+  let result = path && path.replace('/api/v4', '');
   let link = {
     doctor_link:
-      sitedata.data.path +
+      result +
       '/video-call/' +
       data?.doctor_profile_id +
       '/' +
       data?.session_id,
     patient_link:
-      sitedata.data.path +
+      result +
       '/video-call/' +
       data?.patient_profile_id +
       '/' +
       data?.session_id,
   };
   data.link = link;
-  console.log('data?.date', data?.date, 'data?.start_time', data?.start_time);
-  var Datenew = new Date(data?.date).setHours(15, 30);
-  console.log('Datenew', Datenew);
-  // Datanew convert time stamp ();
   console.log('data', data);
-  // data.patient_link;
   // current.setState({ loaderImage: true });
   axios
     // .post(
-    //   sitedata.data.path + '/vactive/AddMeeting' + data,
+    //   sitedata.data.path + '/vactive/AddMeeting' ,data,
     //   commonHeader(current.props.stateLoginValueAim.token)
     // )
     .then((responce) => {
