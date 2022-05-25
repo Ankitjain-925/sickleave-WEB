@@ -74,7 +74,7 @@ class Index extends Component {
   };
 
   call = () => {
-    this.props.history.push('/video-call/:id');
+    this.props.history.push(`/video-call/:user_id/:session_id`);
   };
 
   render() {

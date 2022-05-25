@@ -112,6 +112,9 @@ function Index(props) {
           label="Do you have a cough?"
           value={props.updateQues?.fever_have_a_cough}
         />
+        {props.error_section == 75 && (
+          <div className="err_message2">{props.errorChrMsg}</div>
+        )}
       </Grid>
       {props.updateQues && props.updateQues?.fever_have_a_cough === 'yes' && (
         <Grid className="fatiqueQues">
@@ -171,6 +174,9 @@ function Index(props) {
                   </Grid>
                   <Grid item xs={4} md={4}></Grid>
                 </Grid>
+                {props.error_section == 76 && (
+                  <div className="err_message2">{props.errorChrMsg}</div>
+                )}
               </Grid>
             </Grid>
           </Grid>
