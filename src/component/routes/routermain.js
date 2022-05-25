@@ -56,7 +56,7 @@ class Routermain extends Component {
 
             <Route
               exact
-              path="/video-call/:id"
+              path="/video-call/:user_id/:session_id"
               render={(props) => <VideoCall {...props} />}
             />
             <Route
