@@ -132,7 +132,7 @@ class Index extends Component {
         currency={CURRENCY}
         stripeKey={STRIPE_PUBLISHABLE}
         label={pay_with_stripe}
-        // className="CutomStripeButton"
+        className="CutomStripeButton"
         email={email}
         closed={this.onClosed}
       />
@@ -191,7 +191,7 @@ class Index extends Component {
                                   onClick={() => {
                                     CancelClick(this);
                                   }}
-                                  // className="CutomStripeButton"
+                                  className="CutomStripeButton"
                                 >
                                   {cancel}
                                 </button>

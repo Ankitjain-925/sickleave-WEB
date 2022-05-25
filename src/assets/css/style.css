@@ -14769,7 +14769,7 @@ span.unread_msg_notifyspan {
   width: 50px !important;
 }
 button.CutomStripeButton {
-  opacity: 0 !important;
+  opacity: 1 !important;
 }
 .homeBgDrk .NotFoundContent {
   color: #bfc1c1 !important;
@@ -15150,8 +15150,27 @@ a.painAreasTxt {
   line-height: 18px;
   margin-bottom: 12px;
 }
-/*For LMS*/
 button.CutomStripeButton {
+  background: #00abaf !important;
+  color: #fff !important;
+  padding: 5px 20px !important;
+  border-radius: 5px !important;
+  height: 40px !important;
+  width: 100% !important;
+  font-weight: 800 !important;
+}
+button.CutomStripeButton span {
+  background: #00abaf !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
+  border-radius: 0px !important;
+}
+
+/* button.CutomStripeButton{
+  opacity: 1 !important;
+} */
+/*For LMS*/
+/* button.CutomStripeButton {
   background: #00abaf !important;
   color: #fff !important;
   padding: 5px 20px !important;
@@ -15162,7 +15181,7 @@ button.CutomStripeButton span {
   text-shadow: none !important;
   box-shadow: none !important;
   border-radius: 0px !important;
-}
+}  */
 .cardAddedWish {
   border: 1px solid #00abaf;
 }

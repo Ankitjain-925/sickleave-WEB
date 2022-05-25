@@ -338,24 +338,24 @@ class Index extends Component {
                                             </li>
                                           )}
 
-                                          {/* {item?.approved == true &&
+                                          {item?.approved == true &&
                                             (!item.is_payment ||
-                                              item.is_payment == false) && ( */}
-                                          <li>
-                                            <a
-                                              onClick={() => {
-                                                PaymentDue(item, this);
-                                              }}
-                                            >
-                                              <img
-                                                src={require('assets/virtual_images/pencil-1.svg')}
-                                                alt=""
-                                                title=""
-                                              />
-                                              Payment due
-                                            </a>
-                                          </li>
-                                          {/* )} */}
+                                              item.is_payment == false) && (
+                                              <li>
+                                                <a
+                                                  onClick={() => {
+                                                    PaymentDue(item, this);
+                                                  }}
+                                                >
+                                                  <img
+                                                    src={require('assets/virtual_images/pencil-1.svg')}
+                                                    alt=""
+                                                    title=""
+                                                  />
+                                                  Payment due
+                                                </a>
+                                              </li>
+                                            )}
                                         </ul>
                                       </a>
                                     </Td>

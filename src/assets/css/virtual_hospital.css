@@ -14599,8 +14599,64 @@ label.errMsgStyleSecPart {
 
 .Paymentpending {
   color: red;
+  background-color: #ffffff;
 }
 .InfoOutLine {
   color: red;
   font-size: 20px !important;
+}
+
+.manageVideoCall .css-1yrthcx {
+  width: 65% !important;
+}
+.allWebVideoSec {
+  margin: 30px 30px 30px 10px;
+}
+
+.allSickVideoSec h3 {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 18px;
+  margin-bottom: 0px;
+  color: #404646;
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
+.allWebVideoSec .MuiGrid-justify-xs-center {
+  justify-content: flex-start !important;
+}
+.allHeadSection {
+  border: 1.5px solid #00abaf;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.stomachVideoSec {
+  margin-top: 30px;
+}
+
+.sickImageVideoSec {
+  border: 1px solid gray;
+  padding: 20px;
+  border-radius: 50%;
+  width: 10%;
+  height: 50px;
+  margin-bottom: 12px;
+}
+.topSickVideoSec {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.topTxtVideoSec {
+  margin-left: 30px;
+}
+
+.msgSectionCss {
+  font-weight: 600;
+  font-size: 23px;
+  text-align: center;
+  margin-top: 20%;
+  color: #696969;
 }
