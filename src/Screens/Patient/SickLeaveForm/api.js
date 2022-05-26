@@ -17,27 +17,22 @@ export const CancelClick = (current) => {
 
 // For send meeting link patient as well as doctor
 export const sendLinkDocPat = (payValue, taskValue, current) => {
-  console.log('data', taskValue);
   var data = {};
   let patientEmail = current?.props?.stateLoginValueAim?.user?.email;
   data.task_id = taskValue?._id;
   data.date =
-    taskValue?.created_at &&
-    getDate(
-      taskValue?.created_at,
-      current.props.settings &&
-        current.props.settings?.setting &&
-        current.props.settings?.setting?.date_format
-    );
-  data.start_time = taskValue?.start;
-  data.end_time = taskValue?.end;
+    taskValue?.date;
+    var tq1 = taskValue?.start.split(':');
+    var tq2 = taskValue?.end.split(':');
+  data.start_time = new Date(new Date(taskValue?.date).setHours(tq1[0], tq1[1]));
+  data.end_time = new Date(new Date(taskValue?.date).setHours(tq2[0], tq2[1]));
   data.patient_mail = patientEmail;
   data.patient_profile_id = taskValue?.patient?.profile_id;
   data.patient_id = taskValue?.patient_id;
   data.doctor_profile_id = taskValue?.assinged_to[0]?.profile_id;
   data.doctor_id = taskValue?.assinged_to[0]?.user_id;
-  var t1 = data.start_time.split(':');
-  var Datenew = new Date(taskValue?.created_at).setHours(t1[0]);
+  var t1 = taskValue?.start.split(':');
+  var Datenew = new Date(taskValue?.date).setHours(t1[0]);
   data.sesion_id = data.doctor_profile_id + data.patient_profile_id + Datenew;
   let path = getLink();
   let link = {
@@ -47,7 +42,6 @@ export const sendLinkDocPat = (payValue, taskValue, current) => {
       path + '/video-call/' + data?.patient_profile_id + '/' + data?.sesion_id,
   };
   data.link = link;
-  console.log('data', data);
   current.setState({ loaderImage: true });
   axios
     .post(
@@ -86,9 +80,9 @@ export const saveOnDB1 = (payment, task, current) => {
   let path = getLink();
   var t1 = task?.start.split(':');
   var date =
-    task?.created_at &&
+    task?.date &&
     getDate(
-      task?.created_at,
+      task?.date,
       current.props.settings &&
         current.props.settings?.setting &&
         current.props.settings?.setting?.date_format
@@ -98,11 +92,12 @@ export const saveOnDB1 = (payment, task, current) => {
     task?.assinged_to[0]?.profile_id + task?.patient?.profile_id + Datenew;
   current.setState({ loaderImage: true });
   if (current.state.updateEvaluate._id) {
+    console.log('fsdfsdf payment?.data?.paymentData',  payment?.data?.paymentData)
     axios
       .put(
         sitedata.data.path + '/vh/AddTask/' + current.state.updateEvaluate._id,
         {
-          payment_data: payment?.data?.payment_data,
+          payment_data: payment?.data?.paymentData,
           is_payment: true,
           link: {
             doctor_link:
@@ -957,9 +952,11 @@ export const handleEvalSubmit = (current, value) => {
     if (current.state.assinged_to) {
       data.assinged_to = current.state.assinged_to;
     }
+    console.log('dsfsdfsdf', current.state.date);
     if (current.state.appointDate && current.state.appointDate.length > 0) {
       data.start = current.state.appointDate[slot];
       data.end = current.state.appointDate[slot + 1];
+      data.date = current.state.date
     }
     if (
       (current.state.currentSelected && current.state.currentSelected > -1) ||

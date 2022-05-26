@@ -28,6 +28,7 @@ import {
   getMetadata,
   GetLanguageMetadata,
 } from '../SickLeaveForm/api';
+import moment from "moment"
 
 class Index extends Component {
   constructor(props) {
@@ -288,8 +289,7 @@ class Index extends Component {
                                               <ul>
                                                 <li>
                                                   <h6 className="assignHos Paymentpending">
-                                                    Your payment process is
-                                                    pending
+                                                    Your payment process is pending
                                                   </h6>
                                                 </li>
                                               </ul>
@@ -321,7 +321,7 @@ class Index extends Component {
                                             </a>
                                           </li>
                                           {(!item?.approved ||
-                                            item?.approved == true) && (
+                                            item?.approved != true) && (
                                             <li>
                                               <a
                                                 onClick={() => {
@@ -356,6 +356,30 @@ class Index extends Component {
                                                 </a>
                                               </li>
                                             )}
+                                          {item && item.certificate && <li onClick={() => {
+                                              
+                                            }}>
+                                          <a>
+                                          <img
+                                              src={require('assets/virtual_images/menudocs.jpg')}
+                                              alt=""
+                                              title=""
+                                            />
+                                          <>Download Certificate</>
+                                          </a>
+                                          </li>}
+                                          {item.link?.patient_link && <li onClick={() => {
+                                              this.props.cretficate()
+                                            }}>
+                                            <a>
+                                            <img
+                                                  src={require('assets/virtual_images/menudocs.jpg')}
+                                                  alt=""
+                                                  title=""
+                                                />
+                                            <a href={item.link?.patient_link}>Join Meeting</a>
+                                            </a>
+                                          </li>}
                                         </ul>
                                       </a>
                                     </Td>
@@ -446,6 +470,14 @@ class Index extends Component {
                           )}
                         <Grid item xs={12} md={12} className="taskDescp">
                           <Grid className="stndQues stndQues1">
+                          <Grid>
+                            <h3>Appointment Date:</h3>
+                            {moment(this.state.newTask?.date).format("MMM DD, YYYY") }
+                          </Grid> 
+                          <Grid>
+                            <h3>Appointment Time:</h3>
+                            {this.state.newTask?.start} - {this.state.newTask?.end}
+                          </Grid> 
                             {this.state.newTask.headache === 'yes' && (
                               <Grid>
                                 <Grid className="allSickHeadSec">
