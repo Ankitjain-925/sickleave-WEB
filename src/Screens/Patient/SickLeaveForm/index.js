@@ -382,39 +382,43 @@ class Index extends Component {
                                 errorChrMsg={this.state.errorChrMsg}
                               />
                             )}
-
-                          <Grid>
-                            <Grid className="sickCheckSec">
-                              <FormControlLabel
-                                control={
-                                  <Checkbox
-                                    name="DataprotectionRules"
-                                    value={
-                                      DataprotectionRules &&
-                                      DataprotectionRules == true
-                                        ? false
-                                        : true
+                          {this.state.updateQues &&
+                            !this.state.updateQues?._id && (
+                              <Grid>
+                                <Grid className="sickCheckSec">
+                                  <FormControlLabel
+                                    control={
+                                      <Checkbox
+                                        name="DataprotectionRules"
+                                        value={
+                                          DataprotectionRules &&
+                                          DataprotectionRules == true
+                                            ? false
+                                            : true
+                                        }
+                                        color="#00ABAF"
+                                        checked={DataprotectionRules}
+                                        onChange={(e) => {
+                                          updateAllEntrySec2(e, this);
+                                        }}
+                                        className="PIC_Condition"
+                                      />
                                     }
-                                    color="#00ABAF"
-                                    checked={DataprotectionRules}
-                                    onChange={(e) => {
-                                      updateAllEntrySec2(e, this);
-                                    }}
-                                    className="PIC_Condition"
+                                    label="I have react and understood the Data protection rules and Regulations of Aimedis."
                                   />
-                                }
-                                label="I have react and understood the Data protection rules and Regulations of Aimedis."
-                              />
-                            </Grid>
-                            {error_section == 73 && (
-                              <div className="err_message2 err_message3">
-                                {errorChrMsg}
-                              </div>
+                                </Grid>
+                                {error_section == 73 && (
+                                  <div className="err_message2 err_message3">
+                                    {errorChrMsg}
+                                  </div>
+                                )}
+                                {error_section == 45 && (
+                                  <div className="err_message2">
+                                    {errorChrMsg}
+                                  </div>
+                                )}
+                              </Grid>
                             )}
-                            {error_section == 45 && (
-                              <div className="err_message2">{errorChrMsg}</div>
-                            )}
-                          </Grid>
                           <Grid className="infoShwSave3">
                             <input
                               type="submit"

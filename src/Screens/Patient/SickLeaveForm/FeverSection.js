@@ -50,7 +50,7 @@ function Index(props) {
               <label>Top Value :Number in C (35 - 43)</label>
               <input
                 type="number"
-                placeholder="36.6"
+                placeholder="40.5"
                 name="fever_top_body_temp"
                 onChange={(e) =>
                   props.updateAllEntrySec1(e, 'fever_top_body_temp')
