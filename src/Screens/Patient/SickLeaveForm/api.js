@@ -20,11 +20,12 @@ export const sendLinkDocPat = (payValue, taskValue, current) => {
   var data = {};
   let patientEmail = current?.props?.stateLoginValueAim?.user?.email;
   data.task_id = taskValue?._id;
-  data.date =
-    taskValue?.date;
-    var tq1 = taskValue?.start.split(':');
-    var tq2 = taskValue?.end.split(':');
-  data.start_time = new Date(new Date(taskValue?.date).setHours(tq1[0], tq1[1]));
+  data.date = taskValue?.date;
+  var tq1 = taskValue?.start.split(':');
+  var tq2 = taskValue?.end.split(':');
+  data.start_time = new Date(
+    new Date(taskValue?.date).setHours(tq1[0], tq1[1])
+  );
   data.end_time = new Date(new Date(taskValue?.date).setHours(tq2[0], tq2[1]));
   data.patient_mail = patientEmail;
   data.patient_profile_id = taskValue?.patient?.profile_id;
@@ -60,17 +61,17 @@ export const sendLinkDocPat = (payValue, taskValue, current) => {
 };
 
 export function getLink() {
-  let env = "DEV";
-  let url = "";
-  if (typeof window !== "undefined") {
+  let env = 'DEV';
+  let url = '';
+  if (typeof window !== 'undefined') {
     let target = window.location.href;
-    env = target.match(/localhost/) ? "DEV" : "PRD";
+    env = target.match(/localhost/) ? 'DEV' : 'PRD';
   }
-  let STRIPE_PUBLISHABLE
-  if (env === "DEV") {
-    STRIPE_PUBLISHABLE = "http://localhost:3000/sys-n-sick";
+  let STRIPE_PUBLISHABLE;
+  if (env === 'DEV') {
+    STRIPE_PUBLISHABLE = 'http://localhost:3000/sys-n-sick';
   } else {
-    STRIPE_PUBLISHABLE = "https://virtualhospital.aimedis.io/sys-n-sick";
+    STRIPE_PUBLISHABLE = 'https://virtualhospital.aimedis.io/sys-n-sick';
   }
   return STRIPE_PUBLISHABLE;
 }
@@ -92,7 +93,6 @@ export const saveOnDB1 = (payment, task, current) => {
     task?.assinged_to[0]?.profile_id + task?.patient?.profile_id + Datenew;
   current.setState({ loaderImage: true });
   if (current.state.updateEvaluate._id) {
-    console.log('fsdfsdf payment?.data?.paymentData',  payment?.data?.paymentData)
     axios
       .put(
         sitedata.data.path + '/vh/AddTask/' + current.state.updateEvaluate._id,
@@ -969,7 +969,7 @@ export const handleEvalSubmit = (current, value) => {
     if (current.state.appointDate && current.state.appointDate.length > 0) {
       data.start = current.state.appointDate[slot];
       data.end = current.state.appointDate[slot + 1];
-      data.date = current.state.date
+      data.date = current.state.date;
     }
     if (
       (current.state.currentSelected && current.state.currentSelected > -1) ||
