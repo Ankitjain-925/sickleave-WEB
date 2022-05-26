@@ -30,6 +30,7 @@ import {
 } from '../SickLeaveForm/api';
 import moment from "moment"
 
+
 class Index extends Component {
   constructor(props) {
     super(props);
@@ -368,7 +369,7 @@ class Index extends Component {
                                           <>Download Certificate</>
                                           </a>
                                           </li>}
-                                          {item.link?.patient_link && <li onClick={() => {
+                                          {item.link?.patient_link &&  !item.meetingjoined &&<li onClick={() => {
                                               this.props.cretficate()
                                             }}>
                                             <a>
