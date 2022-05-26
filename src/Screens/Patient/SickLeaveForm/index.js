@@ -432,6 +432,7 @@ class Index extends Component {
                                 onChange={(e) => onChange(e, this)}
                                 value={this.state.date}
                                 minDate={new Date()}
+                                minTime={new Date()}
                               />
                             </Grid>
                             <Grid className="selTimeSlot">

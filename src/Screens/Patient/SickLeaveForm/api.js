@@ -37,7 +37,7 @@ export const sendLinkDocPat = (payValue, taskValue, current) => {
   data.doctor_profile_id = taskValue?.assinged_to[0]?.profile_id;
   data.doctor_id = taskValue?.assinged_to[0]?.user_id;
   var t1 = data.start_time.split(':');
-  var Datenew = new Date(data?.date).setHours(t1[0]);
+  var Datenew = new Date(taskValue?.created_at).setHours(t1[0]);
   data.sesion_id = data.doctor_profile_id + data.patient_profile_id + Datenew;
   let path = 'http://localhost:3000/sys-n-sick';
   let link = {

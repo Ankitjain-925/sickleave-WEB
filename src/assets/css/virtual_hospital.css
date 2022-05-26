@@ -14588,7 +14588,8 @@ label.errMsgStyleSecPart {
 }
 
 .declineListCol {
-  background-color: #d3d3d3;
+  background-color: rgb(0 0 0 / 25%);
+  color: black !important;
 }
 .InfoOutLine {
   color: grey;
@@ -14659,4 +14660,8 @@ label.errMsgStyleSecPart {
   text-align: center;
   margin-top: 20%;
   color: #696969;
+}
+
+.declineListCol .homeBgDrk .presOpinionIner td.pivoted {
+  color: #000 !important;
 }
