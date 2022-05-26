@@ -39,7 +39,7 @@ export const sendLinkDocPat = (payValue, taskValue, current) => {
   var t1 = data.start_time.split(':');
   var Datenew = new Date(data?.date).setHours(t1[0]);
   data.sesion_id = data.doctor_profile_id + data.patient_profile_id + Datenew;
-  let path = 'http://localhost:3000/sys-n-sick';
+  let path = getLink();
   let link = {
     doctor_link:
       path + '/video-call/' + data?.doctor_profile_id + '/' + data?.sesion_id,
@@ -65,9 +65,25 @@ export const sendLinkDocPat = (payValue, taskValue, current) => {
     });
 };
 
+export function getLink() {
+  let env = "DEV";
+  let url = "";
+  if (typeof window !== "undefined") {
+    let target = window.location.href;
+    env = target.match(/localhost/) ? "DEV" : "PRD";
+  }
+  let STRIPE_PUBLISHABLE
+  if (env === "DEV") {
+    STRIPE_PUBLISHABLE = "http://localhost:3000/sys-n-sick";
+  } else {
+    STRIPE_PUBLISHABLE = "https://virtualhospital.aimedis.io/sys-n-sick";
+  }
+  return STRIPE_PUBLISHABLE;
+}
+
 // For payment stripe
 export const saveOnDB1 = (payment, task, current) => {
-  let path = 'http://localhost:3000/sys-n-sick';
+  let path = getLink();
   var t1 = task?.start.split(':');
   var date =
     task?.created_at &&
