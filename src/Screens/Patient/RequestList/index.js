@@ -279,14 +279,14 @@ class Index extends Component {
                                         ? 'Yes'
                                         : 'No'}
                                     </Td>
-                                    <Td>
+                                    <Td className="billDots">
                                       <a className="academy_ul">
                                         {item?.approved == true &&
                                           (!item.is_payment ||
                                             item.is_payment == false) && (
                                             <Grid>
                                               <InfoOutlinedIcon className="InfoOutLine" />
-                                              <ul>
+                                              <ul className="listBullets">
                                                 <li>
                                                   <h6 className="assignHos Paymentpending">
                                                     Your payment process is pending

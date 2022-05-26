@@ -179,7 +179,6 @@ export const allgetData = (patient_id, current) => {
 };
 
 export const PaymentDue = (data, current) => {
-  console.log('data', data);
   current.props.history.push({
     pathname: '/patient/request-list/payment',
     state: { data: data },
@@ -822,14 +821,28 @@ export const handleEvalSubmit = (current, value) => {
                                                                                                                                               'yes'
                                                                                                                                           ) {
                                                                                                                                             if (
-                                                                                                                                              current
+                                                                                                                                              (data._id &&
+                                                                                                                                                (current
+                                                                                                                                                  .state
+                                                                                                                                                  .DataprotectionRules ||
+                                                                                                                                                  current
+                                                                                                                                                    .state
+                                                                                                                                                    .DataprotectionRules ===
+                                                                                                                                                    false)) ||
+                                                                                                                                              (current
                                                                                                                                                 .state
                                                                                                                                                 .DataprotectionRules &&
-                                                                                                                                              current
-                                                                                                                                                .state
-                                                                                                                                                .DataprotectionRules ===
-                                                                                                                                                true
+                                                                                                                                                current
+                                                                                                                                                  .state
+                                                                                                                                                  .DataprotectionRules ===
+                                                                                                                                                  true)
                                                                                                                                             ) {
+                                                                                                                                              console.log(
+                                                                                                                                                'current',
+                                                                                                                                                current
+                                                                                                                                                  .state
+                                                                                                                                                  .appointDate
+                                                                                                                                              );
                                                                                                                                               if (
                                                                                                                                                 current
                                                                                                                                                   .state
@@ -876,7 +889,7 @@ export const handleEvalSubmit = (current, value) => {
                                                                                                                                               {
                                                                                                                                                 error_section: 73,
                                                                                                                                                 errorChrMsg:
-                                                                                                                                                  'Please select problem for sick leave certificate',
+                                                                                                                                                  'Please select atleast one problem for sick leave certificate',
                                                                                                                                               }
                                                                                                                                             );
                                                                                                                                           }
@@ -971,18 +984,12 @@ export const handleEvalSubmit = (current, value) => {
         axios
           .post(
             sitedata.data.path + '/vh/AddTask',
-
             data,
             commonHeader(current.props.stateLoginValueAim?.token)
           )
           .then((responce) => {
-            current.setState({
-              updateQues: {},
-              loaderImage: false,
-              openCalendar: false,
-              DataprotectionRules: false,
-              currentSelected: -1,
-            });
+            mailSendToDoc(data, current);
+
             current.props.history.push('/patient/request-list');
           })
           .catch(function (error) {
@@ -999,6 +1006,45 @@ export const handleEvalSubmit = (current, value) => {
       });
     }
   }
+};
+
+export const mailSendToDoc = (data, current) => {
+  var data1 = {};
+  var first_name = current.props.stateLoginValueAim?.user?.first_name;
+  var last_name = current.props.stateLoginValueAim?.user?.last_name;
+  var profile_id = current.props.stateLoginValueAim?.user?.profile_id;
+  data1.start = data.start;
+  data1.end = data.end;
+  data1.profile_id = profile_id;
+  data1.first_name = first_name;
+  data1.last_name = last_name;
+  data1.email = data.assinged_to[0].email;
+  data1.date =
+    current.state.date &&
+    getDate(
+      current.state.date,
+      current.props.settings &&
+        current.props.settings?.setting &&
+        current.props.settings?.setting?.date_format
+    );
+  axios
+    .post(
+      sitedata.data.path + '/vactive/DoctorMail',
+      data1,
+      commonHeader(current.props.stateLoginValueAim?.token)
+    )
+    .then((responce) => {
+      current.setState({
+        updateQues: {},
+        loaderImage: false,
+        openCalendar: false,
+        DataprotectionRules: false,
+        currentSelected: -1,
+      });
+    })
+    .catch(function (error) {
+      console.log('error');
+    });
 };
 
 export const updateTaskApi = (current, data) => {
@@ -1800,6 +1846,7 @@ export const getCalendarData = (current) => {
           appointmentData: data,
           assinged_to: [
             {
+              email: data1?.email,
               alies_id: data1?.alies_id,
               first_name: data1?.first_name,
               last_name: data1?.last_name,
