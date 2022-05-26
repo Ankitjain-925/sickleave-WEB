@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { LoginReducerAim } from 'Screens/Login/actions';
 import { LanguageFetchReducer } from 'Screens/actions';
 import { Settings } from 'Screens/Login/setting';
-import { update_CometUser } from 'Screens/Components/CommonApi/index';
 import { CometChat } from '@cometchat-pro/chat';
 import { COMETCHAT_CONSTANTS } from '../Components//CometChat/consts';
 import sitedata from 'sitedata.js';
@@ -17,7 +16,6 @@ import {
   // CometChatIncomingDirectCall,
   CometChatOutgoingDirectCall,
 } from './Calls/index.js';
-import { newdate } from 'Screens/Components/BasicMethod/index';
 
 class Index extends Component {
   constructor(props) {
@@ -31,17 +29,12 @@ class Index extends Component {
   componentDidMount = () => {
     const { profile_id, sesion_id } = this.props.match.params;
     this.setState({ sessionID: sesion_id });
-    this.getSessionId(sesion_id);
-    CometChat.login(profile_id, COMETCHAT_CONSTANTS.AUTH_KEY)
-      .then((resp) => {
-        this.updateCometUser(profile_id);
-      })
-      .catch((err) => {
-        console.log('err', err);
-      });
+    this.getSessionId();
   };
 
-  getSessionId = (sesion_id) => {
+  getSessionId = () => {
+    const { profile_id, sesion_id } = this.props.match.params;
+    this.setState({ loaderImage: true });
     var user_token = this.props.stateLoginValueAim.token;
     axios
       .get(
@@ -50,15 +43,23 @@ class Index extends Component {
       )
       .then((response) => {
         console.log('response', response);
-        if (response.data.hassuccessed) {
+        if (response && response.data && response.data.hassuccessed) {
+          this.setState({ loaderImage: false });
           if (response.data.message === 'link active') {
             this.setState({ sectionValue: 1 });
+            CometChat.login(profile_id, COMETCHAT_CONSTANTS.AUTH_KEY)
+              .then((resp) => {
+                this.updateCometUser(profile_id);
+              })
+              .catch((err) => {
+                this.setState({ loaderImage: false });
+              });
           }
         } else {
           if (response.data.message === 'link start soon') {
-            this.setState({ sectionValue: 2 });
+            this.setState({ sectionValue: 2, loaderImage: false });
           } else if (response.data.message === 'Link Expire') {
-            this.setState({ sectionValue: 3 });
+            this.setState({ sectionValue: 3, loaderImage: false });
           }
         }
       })
