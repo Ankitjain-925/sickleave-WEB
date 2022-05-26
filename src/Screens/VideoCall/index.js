@@ -31,8 +31,10 @@ class Index extends Component {
   }
 
   componentDidMount = () => {
-    var profile_id = this.props.stateLoginValueAim?.user?.profile_id;
+    const { profile_id, sesion_id } = this.props.match.params;
+    this.setState({ sessionID: sesion_id });
     // this.logOutClick();
+    this.getSessionId(sesion_id);
     CometChat.login(profile_id, COMETCHAT_CONSTANTS.AUTH_KEY)
       .then((resp) => {
         this.updateCometUser(profile_id);
@@ -42,12 +44,11 @@ class Index extends Component {
       });
   };
 
-  getSessionId = () => {
+  getSessionId = (sesion_id) => {
     var user_token = this.props.stateLoginValueAim.token;
     axios
       .get(
-        sitedata.data.path +
-          '/vactive/Linktime/D_nJM5yGxJvP_LBtitZLO81653453000000',
+        sitedata.data.path + '/vactive/Linktime/' + sesion_id,
         commonHeader(user_token)
       )
       .then((response) => {
@@ -88,11 +89,6 @@ class Index extends Component {
         profile_id: data,
       })
       .then((response) => {
-        this.setState({
-          setCss: 'setColorOfMsg1',
-          msg: 'User is successfully login',
-          loaderImage: false,
-        });
         this.getSessionId();
         this.startOnClick();
         this.setState({ loaderImage: false });
@@ -101,7 +97,7 @@ class Index extends Component {
   };
 
   startOnClick = () => {
-    var value = 2;
+    var value = 1;
     if (value == 1) {
       this.setState({ sectionValue: 1 });
     } else if (value == 2) {
@@ -137,6 +133,7 @@ class Index extends Component {
                         <Grid className="manageVideoCall">
                           <CometChatOutgoingDirectCall
                             open
+                            sessionID={this.state.sessionID}
                             theme={this.props.theme}
                             item={this.state.item}
                             type={this.state.type}
@@ -358,11 +355,8 @@ class Index extends Component {
               )}
               {this.state.sectionValue == 2 && (
                 <Grid className="msgSectionCss">
-                  <label>Oops!</label>
-                  <p>
-                    The meeting has not started yet, Please wait for your time
-                    slot
-                  </p>
+                  <label>Welcome</label>
+                  <p>The link will be activate very soon</p>
                 </Grid>
               )}
               {this.state.sectionValue == 3 && (
@@ -374,9 +368,8 @@ class Index extends Component {
               {this.state.sectionValue == 4 && (
                 <Grid className="msgSectionCss">
                   <p>
-                    Your request is accepted by the doctor but your payment is
-                    pending, Please do your payment otherwise the request will
-                    cancel automatically!
+                    The link is not activated due to the payment process is not
+                    completed by patient
                   </p>
                 </Grid>
               )}
