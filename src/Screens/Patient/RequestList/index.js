@@ -55,6 +55,10 @@ class Index extends Component {
     }
   };
 
+  DownloadCert = (data)=>{
+    console.log('sfdfdsf', data.certificate)
+  }
+
   render() {
     const { AllDataSec } = this.state;
     let translate = getLanguage(this.props.stateLanguageType);
@@ -287,13 +291,9 @@ class Index extends Component {
                                             item.is_payment == false) && (
                                             <Grid>
                                               <InfoOutlinedIcon className="InfoOutLine" />
-                                              <ul className="listBullets">
-                                                <li>
                                                   <h6 className="assignHos Paymentpending">
                                                     Your payment process is pending
                                                   </h6>
-                                                </li>
-                                              </ul>
                                             </Grid>
                                           )}
                                       </a>
@@ -358,11 +358,11 @@ class Index extends Component {
                                               </li>
                                             )}
                                           {item && item.certificate && <li onClick={() => {
-                                              
+                                              this.DownloadCert(item)
                                             }}>
                                           <a>
                                           <img
-                                              src={require('assets/virtual_images/menudocs.jpg')}
+                                              src={require('assets/images/details.svg')}
                                               alt=""
                                               title=""
                                             />
@@ -374,11 +374,11 @@ class Index extends Component {
                                             }}>
                                             <a>
                                             <img
-                                                  src={require('assets/virtual_images/menudocs.jpg')}
+                                                  src={require('assets/images/details.svg')}
                                                   alt=""
                                                   title=""
                                                 />
-                                            <a href={item.link?.patient_link}>Join Meeting</a>
+                                            <a href={item.link?.patient_link} target="_blank">Join Meeting</a>
                                             </a>
                                           </li>}
                                         </ul>
@@ -461,13 +461,11 @@ class Index extends Component {
                         {this.state.newTask?.approved == true &&
                           (!this.state.newTask.is_payment ||
                             this.state.newTask.is_payment == false) && (
-                            <div className="Paymentpending">
-                              <p>
+                              <p className="pending-msgPopup">
                                 Your request is accepted by the doctor but your
                                 payment is pending, Please do your payment
                                 otherwise the request will cancel automatically
-                              </p>
-                            </div>
+                              </p>    
                           )}
                         <Grid item xs={12} md={12} className="taskDescp">
                           <Grid className="stndQues stndQues1">

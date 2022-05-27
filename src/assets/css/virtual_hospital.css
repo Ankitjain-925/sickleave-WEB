@@ -10051,9 +10051,12 @@ button.crdoLghtBlu2 {
 }
 
 .payment_sec_extra_ser1 {
-  background: #fff;
+  /* background: #fff; */
   padding-bottom: 0px;
   width: 100%;
+}
+.homeBgDrk .payment_sec_extra_ser1 h2{
+  color: #fff!important;
 }
 .setPaymentBack {
   border-radius: 12px;
@@ -10063,10 +10066,10 @@ button.crdoLghtBlu2 {
   margin-top: 42px;
 }
 
-.homeBgDrk .payment_sec_extra_ser1,
+/* .homeBgDrk .payment_sec_extra_ser1,
 .homeBgDrk .setPaymentBack {
   background: #e1f7f7 !important;
-}
+} */
 @media (max-width: 959px) {
   .vh-section .prfilHghtLft p span,
   .vh-section .prfilHghtRght p span {
@@ -14597,11 +14600,24 @@ label.errMsgStyleSecPart {
 .approvedPayment {
   color: red;
 }
-
 .Paymentpending {
   color: red;
   background-color: #ffffff;
+  padding: 12px;
+  position: absolute;
+  right: -20px;
+  border-radius: 10px;
+  width: 135px;
+  border: 1px #cccc solid;
+  z-index: 99999999;
 }
+.assignHos.Paymentpending{
+  display: none;
+}
+.InfoOutLine:hover + .assignHos.Paymentpending{
+    display: block !important;
+}
+.homeBgDrk .Paymentpending {  background: #192020 !important; }
 .InfoOutLine {
   color: red;
   font-size: 20px !important;
@@ -14664,4 +14680,31 @@ label.errMsgStyleSecPart {
 
 .declineListCol .homeBgDrk .presOpinionIner td.pivoted {
   color: #000 !important;
+}
+
+.homeBgDrk .presOpinionIner td.presEditDot img {
+  background: #192020 !important;
+}
+
+.darkTheme .stndQues {
+    color: #c9caca !important;
+}
+.stndQues {
+line-height: 27px;
+}
+.pending-msgPopup{
+  padding: 12px;
+  color: red !important;
+  font-weight: 700;
+}
+.darkTheme .pending-msgPopup {
+  color: #ff6262 !important;
+}
+@media screen and (min-width: 640px) and (max-width: 959px) {
+.presOpinionIner thead th {
+  padding: 6px !important;
+}
+.presOpinionIner td.pivoted {
+  padding: 8px 5px !important;
+}
 }
