@@ -15,6 +15,32 @@ export const CancelClick = (current) => {
   current.props.history.push('/patient/request-list');
 };
 
+//for downoading the pdf
+export const DownloadCert = (data, current)=>{
+  current.setState({ loaderImage: true });
+  axios
+    .post(
+      sitedata.data.path + '/vactive/downloadSickleaveCertificate',
+      data,
+      commonHeader(current.props.stateLoginValueAim.token)
+    )
+    .then((responce) => {
+        current.setState({ loaderImage: false });
+        var data = new Blob([responce.data]);
+        if (typeof window.navigator.msSaveBlob === "function") {
+          // If it is IE that support download blob directly.
+          window.navigator.msSaveBlob(data, "report.pdf");
+        } else {
+          var blob = data;
+          var link = document.createElement("a");
+          link.href = window.URL.createObjectURL(blob);
+          link.download = "report.pdf";
+          document.body.appendChild(link);
+          link.click(); // create an <a> element and simulate the click operation.
+        }
+    });
+}
+
 // For send meeting link patient as well as doctor
 export const sendLinkDocPat = (payValue, taskValue, current) => {
   var data = {};
@@ -168,7 +194,23 @@ export const allgetData = (patient_id, current) => {
       current.setState({ loaderImage: false });
       if (responce.data.hassuccessed) {
         let data = responce.data;
-        current.setState({ AllDataSec: data.data, loaderImage: false });
+        var totalPage = Math.ceil(data?.data?.length / 20);
+        current.setState({ AllDataSec1 : data.data, loaderImage: false , totalPage: totalPage,
+          currentPage: 1},
+          () => {
+            if (totalPage > 1) {
+              var pages = [];
+              for (var i = 1; i <= current.state.totalPage; i++) {
+                pages.push(i);
+              }
+              current.setState({
+                AllDataSec: current.state.AllDataSec1.slice(0, 20),
+                pages: pages,
+              });
+            } else {
+              current.setState({ AllDataSec: current.state.AllDataSec1 });
+            }
+          });
       } else {
         current.setState({
           errorMsg: Something_went_wrong,

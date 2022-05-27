@@ -19,7 +19,7 @@ import { GetShowLabel1 } from 'Screens/Components/GetMetaData/index.js';
 import PainPoint from 'Screens/Components/PointPain/index';
 import { OptionList } from 'Screens/Login/metadataaction';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import { EditRequest } from '../SickLeaveForm/api';
+import { EditRequest , DownloadCert} from '../SickLeaveForm/api';
 import {
   PaymentDue,
   handleOpenDetail,
@@ -41,6 +41,8 @@ class Index extends Component {
       newTask: {},
       Allsituation: [],
       openPayment: false,
+      totalPage: 1,
+      currentPage: 1,
     };
   }
 
@@ -55,9 +57,15 @@ class Index extends Component {
     }
   };
 
-  DownloadCert = (data)=>{
-    console.log('sfdfdsf', data.certificate)
-  }
+  onChangePage = (pageNumber) => {
+    this.setState({
+      AllDataSec: this.state.AllDataSec1.slice(
+        (pageNumber - 1) * 20,
+        pageNumber * 20
+      ),
+      currentPage: pageNumber,
+    });
+  };
 
   render() {
     const { AllDataSec } = this.state;
@@ -359,7 +367,7 @@ class Index extends Component {
                                               </li>
                                             )}
                                           {item && item.certificate && <li onClick={() => {
-                                              this.DownloadCert(item)
+                                              DownloadCert(item?.certificate, this)
                                             }}>
                                           <a>
                                           <img
@@ -402,14 +410,7 @@ class Index extends Component {
                               <Grid item xs={12} md={6}>
                                 {this.state.totalPage > 1 && (
                                   <Grid className="prevNxtpag">
-                                    <Pagination
-                                      totalPage={this.state.totalPage}
-                                      currentPage={this.state.currentPage}
-                                      pages={this.state.pages}
-                                      onChangePage={(page) => {
-                                        this.onChangePage(page);
-                                      }}
-                                    />
+                                     <Pagination totalPage={this.state.totalPage} currentPage={this.state.currentPage} pages={this.state.pages} onChangePage={(page) => { this.onChangePage(page) }} />
                                   </Grid>
                                 )}
                               </Grid>
