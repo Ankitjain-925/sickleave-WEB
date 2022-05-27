@@ -10,77 +10,195 @@ import { CometChat } from '@cometchat-pro/chat';
 import { COMETCHAT_CONSTANTS } from '../Components//CometChat/consts';
 import sitedata from 'sitedata.js';
 import axios from 'axios';
-import { commonHeader } from 'component/CommonHeader/index';
 import {
   // CometChatIncomingCall,
   // CometChatIncomingDirectCall,
   CometChatOutgoingDirectCall,
 } from './Calls/index.js';
-
+import { getLanguage } from 'translations/index';
+import { GetShowLabel1 } from 'Screens/Components/GetMetaData/index.js';
+import { getMetadata, GetLanguageMetadata } from '../Patient/SickLeaveForm/api';
+import PainPoint from 'Screens/Components/PointPain/index';
+import { getDate, getTime } from 'Screens/Components/BasicMethod/index';
+var situations = [
+  {
+    label: 'POSTPRANDIAL ',
+    label_ar: 'ما بعد الأكل ',
+    label_ch: '餐后 ',
+    label_de: 'NACH DEM ESSEN',
+    label_en: 'POSTPRANDIAL ',
+    label_fr: 'POSTPRANDIAL ',
+    label_nl: 'POSTPRANDIAAL ',
+    label_pt: 'PÓS-PRANDIAL',
+    label_rs: 'Постпрандиальная',
+    label_sp: 'POSTPRANDIAL ',
+    label_sw: 'Baada ya akula',
+    label_tr: 'TOK KARNINA ',
+    value: 'stress',
+  },
+  {
+    label: 'EMPTY STOMACH',
+    label_ar: 'معدة فارغة',
+    label_ch: '空腹',
+    label_de: 'NÜCHTERN',
+    label_en: 'EMPTY STOMACH',
+    label_fr: 'ESTOMAC VIDE',
+    label_nl: 'LEGE MAAG',
+    label_pt: 'ESTÔMAGO VAZIO',
+    label_rs: 'Пустой желудок',
+    label_sp: 'ESTOMAGO VACIO',
+    label_sw: 'Tumbo kavu',
+    label_tr: 'AÇ KARNINA',
+    value: 'relaxed',
+  },
+];
 class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
       loaderImage: false,
       sectionValue: 0,
+      Allsituation: situations,
+      gender: this.props.stateLoginValueAim?.user?.sex,
     };
   }
 
   componentDidMount = () => {
     const { profile_id, sesion_id } = this.props.match.params;
     this.setState({ sessionID: sesion_id });
+    CometChat.login(profile_id, COMETCHAT_CONSTANTS.AUTH_KEY)
+      .then((resp) => {
+        axios
+          .post(sitedata.data.path + '/cometUserList', {
+            profile_id: profile_id,
+          })
+          .then((response) => {})
+          .catch((err) => {});
+      })
+      .catch((err) => {});
     this.getSessionId();
+    getMetadata(this);
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevProps.stateLanguageType !== this.props.stateLanguageType) {
+      GetLanguageMetadata(this);
+    }
   };
 
   getSessionId = () => {
     const { profile_id, sesion_id } = this.props.match.params;
     this.setState({ loaderImage: true });
-    var user_token = this.props.stateLoginValueAim.token;
     axios
-      .get(
-        sitedata.data.path + '/vactive/Linktime/' + sesion_id,
-        commonHeader(user_token)
-      )
+      .get(sitedata.data.path + '/vactive/Linktime/' + sesion_id)
       .then((response) => {
-        console.log('response', response);
         if (response && response.data && response.data.hassuccessed) {
-          this.setState({ loaderImage: false });
           if (response.data.message === 'link active') {
-            this.setState({ sectionValue: 1 });
-            CometChat.login(profile_id, COMETCHAT_CONSTANTS.AUTH_KEY)
-              .then((resp) => {
-                this.updateCometUser(profile_id);
-              })
-              .catch((err) => {
-                this.setState({ loaderImage: false });
-              });
+            this.setState({
+              sectionValue: 1,
+              allTasks: response.data.data.Task,
+              loaderImage: false,
+            });
           }
         } else {
           if (response.data.message === 'link start soon') {
             this.setState({ sectionValue: 2, loaderImage: false });
-          } else if (response.data.message === 'Link Expire') {
+          } else {
             this.setState({ sectionValue: 3, loaderImage: false });
           }
         }
       })
       .catch((err) => {
         console.log('err', err);
+        this.setState({ loaderImage: false });
       });
   };
 
-  updateCometUser = async (data) => {
-    // this.setState({ loaderImage: true });
-    axios
-      .post(sitedata.data.path + '/cometUserList', {
-        profile_id: data,
-      })
-      .then((response) => {
-        // this.setState({ loaderImage: false });
-      })
-      .catch((err) => {});
-  };
-
   render() {
+    const { allTasks } = this.state;
+    let translate = getLanguage(this.props.stateLanguageType);
+    let {
+      Headache,
+      stomach_problems,
+      diarrhea,
+      fever,
+      back_pain,
+      cough_and_snees,
+      feel_depressed,
+      cardiac_problems,
+      see_details,
+      edit_request,
+      cancel_request,
+      Download_Bill,
+      give_feedback,
+      headache_undergoing_treatment,
+      no,
+      yes,
+      headache_need_to_vomit,
+      quality_of_pain,
+      headache_onset_of_pain,
+      headache_take_painkillers,
+      pain_levelsss,
+      diabetes,
+      blood_sugar,
+      Hba1c,
+      situation,
+      rr_systolic,
+      RR_diastolic,
+      body_temp,
+      headache_hurtnow_left,
+      headache_hurtnow_right,
+      headache_hurtnow_top,
+      blood_pressure,
+      headache_painbegin_top,
+      hurtnow,
+      headache_hurtnow_back,
+      headache_hurtnow_front,
+      headache_painbegin_back,
+      headache_painbegin_front,
+      headache_painbegin_left,
+      headache_painbegin_right,
+      Pain_begin,
+      stomach_temp,
+      stomach_take_painkillers,
+      stomach_intensity,
+      stomach_undergoing_treatment,
+      stomach_sternum,
+      stomach_attack,
+      stomach_failure,
+      stomach_periodically,
+      diarrhea_vomiting,
+      diarrhea_body_temp,
+      diarrhea_suffer_symtoms,
+      diarrhea_liquids,
+      diarrhea_symptoms_begin,
+      cough,
+      fever_cold,
+      fever_hoarseness,
+      fever_sputum,
+      fever_symptoms_begin,
+      fever_top_body_temp,
+      fever_low_body_temp,
+      fever_pain_intensity,
+      back_strained,
+      back_depression,
+      back_attack,
+      back_failure,
+      back_symptoms_begin,
+      back_injured,
+      cough_symptoms_begin,
+      cough_suffer_symtoms,
+      cough_allergies,
+      pain_level,
+      depressed_do_you_sleep,
+      depressed_suicidal_thoughts,
+      depressed_hurt_yourself,
+      depressed_symptoms_begin,
+      cardiac_heart_attack,
+      cardiac_heart_failure,
+      cardiac_dizziness,
+      cardiac_shoulder_pain,
+    } = translate;
     return (
       <Grid
         className={
@@ -125,197 +243,1046 @@ class Index extends Component {
                                   <img src="" alt="" />
                                 </Grid>
                                 <Grid className="topTxtVideoSec">
-                                  <p>Naveen kumar</p>
-                                  <label>profile_id</label>
+                                  <p>
+                                    {allTasks?.patient.first_name}{' '}
+                                    {allTasks?.patient.last_name}
+                                  </p>
+                                  <label>{allTasks?.patient.profile_id}</label>
                                 </Grid>
                               </Grid>
-                              <Grid>
-                                <h3>Headache</h3>
-                              </Grid>
-                              <Grid className="allHeadSection">
+                              {allTasks && allTasks?.headache === 'yes' && (
                                 <Grid>
                                   <Grid>
-                                    <h3>Pain begin</h3>
+                                    <h3>{Headache}</h3>
                                   </Grid>
-                                  <Grid
-                                    container
-                                    direction="row"
-                                    justify="center"
-                                  >
-                                    <Grid item xs={12} md={12}>
+                                  <Grid className="allHeadSection">
+                                    <Grid>
+                                      <Grid>
+                                        <h3>{Pain_begin}</h3>
+                                      </Grid>
                                       <Grid
                                         container
                                         direction="row"
                                         justify="center"
                                       >
-                                        <Grid item xs={3} md={3} lg={3}>
-                                          <label>Back</label>
-                                          <p>Yes</p>
-                                        </Grid>
-                                        <Grid item xs={3} md={3} lg={3}>
-                                          <label>Back</label>
-                                          <p>Yes</p>
-                                        </Grid>
-                                        <Grid item xs={3} md={3} lg={3}>
-                                          <label>Back</label>
-                                          <p>Yes</p>
-                                        </Grid>
-                                        <Grid item xs={3} md={3} lg={3}>
-                                          <label>Back</label>
-                                          <p>Yes</p>
-                                        </Grid>
-                                        <Grid item xs={3} md={3} lg={3}>
-                                          <label>Back</label>
-                                          <p>Yes</p>
+                                        <Grid item xs={12} md={12}>
+                                          <Grid
+                                            container
+                                            direction="row"
+                                            justify="center"
+                                          >
+                                            <Grid item xs={3} md={3} lg={3}>
+                                              <label>
+                                                {headache_painbegin_back}
+                                              </label>
+                                              {allTasks &&
+                                              allTasks?.headache_painbegin_back ===
+                                                true ? (
+                                                <p>{yes}</p>
+                                              ) : (
+                                                <p>{no}</p>
+                                              )}
+                                            </Grid>
+                                            <Grid item xs={3} md={3} lg={3}>
+                                              <label>
+                                                {headache_painbegin_front}
+                                              </label>
+                                              {allTasks &&
+                                              allTasks?.headache_painbegin_front ===
+                                                true ? (
+                                                <p>{yes}</p>
+                                              ) : (
+                                                <p>{no}</p>
+                                              )}
+                                            </Grid>
+                                            <Grid item xs={3} md={3} lg={3}>
+                                              <label>
+                                                {headache_painbegin_left}
+                                              </label>
+                                              {allTasks &&
+                                              allTasks?.headache_painbegin_left ===
+                                                true ? (
+                                                <p>{yes}</p>
+                                              ) : (
+                                                <p>{no}</p>
+                                              )}
+                                            </Grid>
+                                            <Grid item xs={3} md={3} lg={3}>
+                                              <label>
+                                                {headache_painbegin_right}
+                                              </label>
+                                              {allTasks &&
+                                              allTasks?.headache_painbegin_right ===
+                                                true ? (
+                                                <p>{yes}</p>
+                                              ) : (
+                                                <p>{no}</p>
+                                              )}
+                                            </Grid>
+                                            <Grid item xs={3} md={3} lg={3}>
+                                              <label>
+                                                {headache_painbegin_top}
+                                              </label>
+                                              {allTasks &&
+                                              allTasks?.headache_painbegin_top ===
+                                                true ? (
+                                                <p>{yes}</p>
+                                              ) : (
+                                                <p>{no}</p>
+                                              )}
+                                            </Grid>
+                                          </Grid>
                                         </Grid>
                                       </Grid>
                                     </Grid>
-                                  </Grid>
-                                </Grid>
-                                <Grid>
-                                  <Grid>
-                                    <h3>Hurt now</h3>
-                                  </Grid>
-                                  <Grid>
-                                    <Grid
-                                      container
-                                      direction="row"
-                                      justify="center"
-                                    >
-                                      <Grid item xs={12} md={12}>
+                                    <Grid>
+                                      <Grid>
+                                        <h3>{hurtnow}</h3>
+                                      </Grid>
+                                      <Grid>
                                         <Grid
                                           container
                                           direction="row"
                                           justify="center"
                                         >
-                                          <Grid item xs={3} md={3} lg={3}>
-                                            <label>Back</label>
-                                            <p>Yes</p>
-                                          </Grid>
-                                          <Grid item xs={3} md={3} lg={3}>
-                                            <label>Back</label>
-                                            <p>Yes</p>
-                                          </Grid>
-                                          <Grid item xs={3} md={3} lg={3}>
-                                            <label>Back</label>
-                                            <p>Yes</p>
-                                          </Grid>
-                                          <Grid item xs={3} md={3} lg={3}>
-                                            <label>Back</label>
-                                            <p>Yes</p>
-                                          </Grid>
-                                          <Grid item xs={3} md={3} lg={3}>
-                                            <label>Back</label>
-                                            <p>Yes</p>
+                                          <Grid item xs={12} md={12}>
+                                            <Grid
+                                              container
+                                              direction="row"
+                                              justify="center"
+                                            >
+                                              <Grid item xs={3} md={3} lg={3}>
+                                                <label>
+                                                  {headache_hurtnow_back}
+                                                </label>
+                                                {allTasks &&
+                                                allTasks?.headache_hurtnow_back ===
+                                                  true ? (
+                                                  <p>{yes}</p>
+                                                ) : (
+                                                  <p>{no}</p>
+                                                )}
+                                              </Grid>
+                                              <Grid item xs={3} md={3} lg={3}>
+                                                <label>
+                                                  {headache_hurtnow_front}
+                                                </label>
+                                                {allTasks &&
+                                                allTasks?.headache_hurtnow_front ===
+                                                  true ? (
+                                                  <p>{yes}</p>
+                                                ) : (
+                                                  <p>{no}</p>
+                                                )}
+                                              </Grid>
+                                              <Grid item xs={3} md={3} lg={3}>
+                                                <label>
+                                                  {headache_hurtnow_left}
+                                                </label>
+                                                {allTasks &&
+                                                allTasks?.headache_hurtnow_left ===
+                                                  true ? (
+                                                  <p>{yes}</p>
+                                                ) : (
+                                                  <p>{no}</p>
+                                                )}
+                                              </Grid>
+                                              <Grid item xs={3} md={3} lg={3}>
+                                                <label>
+                                                  {headache_hurtnow_right}
+                                                </label>
+                                                {allTasks &&
+                                                allTasks?.headache_hurtnow_right ===
+                                                  true ? (
+                                                  <p>{yes}</p>
+                                                ) : (
+                                                  <p>{no}</p>
+                                                )}
+                                              </Grid>
+                                              <Grid item xs={3} md={3} lg={3}>
+                                                <label>
+                                                  {headache_hurtnow_top}
+                                                </label>
+                                                {allTasks &&
+                                                allTasks?.headache_hurtnow_top ===
+                                                  true ? (
+                                                  <p>{yes}</p>
+                                                ) : (
+                                                  <p>{no}</p>
+                                                )}
+                                              </Grid>
+                                            </Grid>
                                           </Grid>
                                         </Grid>
                                       </Grid>
                                     </Grid>
-                                  </Grid>
-                                </Grid>
-                                <Grid>
-                                  <Grid>
-                                    <h3>Blood Pressure</h3>
-                                  </Grid>
-                                  <Grid container xs={12} md={12}>
-                                    <Grid xs={6} md={6}>
-                                      <label>Systolic</label>
-                                    </Grid>
-                                    <Grid xs={6} md={6}>
-                                      <label>Diastolic</label>
-                                    </Grid>
-                                  </Grid>
-                                </Grid>
-
-                                <Grid>
-                                  <Grid>
-                                    <h3>Body Temperature</h3>
-                                  </Grid>
-                                  <Grid>
-                                    <label>Body temperature</label>
-                                  </Grid>
-                                </Grid>
-
-                                <Grid>
-                                  <Grid>
-                                    <h3>Diabetes</h3>
-                                  </Grid>
-                                  <Grid container xs={12} md={12}>
-                                    <Grid xs={4} md={4}>
-                                      <label>Blood Sugar</label>
-                                    </Grid>
-                                    <Grid xs={4} md={4}>
-                                      <label>Hba1c</label>
-                                    </Grid>
-                                    <Grid xs={4} md={4}>
-                                      <label>situation</label>
-                                    </Grid>
-                                  </Grid>
-                                </Grid>
-
-                                <Grid>
-                                  <Grid>
-                                    <h3>Quality Pain</h3>
-                                  </Grid>
-                                  <Grid>
-                                    <h3>Headache need to vomit</h3>
-                                  </Grid>
-                                  <Grid>
-                                    <h3>Headache onset of pain</h3>
-                                  </Grid>
-                                  <Grid>
-                                    <h3>Painkillers</h3>
-                                  </Grid>
-                                  <Grid>
-                                    <h3>Headache treatment</h3>
-                                  </Grid>
-                                  <Grid>
-                                    <h3>Pain intensity</h3>
-                                  </Grid>
-                                </Grid>
-                              </Grid>
-
-                              <Grid>
-                                <Grid className="stomachVideoSec">
-                                  <h3>Stomach</h3>
-                                </Grid>
-
-                                <Grid className="allHeadSection">
-                                  <Grid>
-                                    <h3>Pain begin</h3>
-                                  </Grid>
-
-                                  <Grid>
-                                    <h3>Hurt now</h3>
-                                  </Grid>
-
-                                  <Grid container xs={12} md={12}>
-                                    <Grid xs={4} md={4}>
-                                      <label>Stomach sternum</label>
-                                    </Grid>
-                                    <Grid xs={4} md={4}>
-                                      <label>Stomach attack</label>
-                                    </Grid>
-                                    <Grid xs={4} md={4}>
-                                      <label>Stomach failure</label>
-                                    </Grid>
-                                  </Grid>
-
-                                  <Grid>
                                     <Grid>
-                                      <h3>Blood Pressure</h3>
+                                      <Grid>
+                                        <h3>{blood_pressure}</h3>
+                                      </Grid>
+                                      <Grid container xs={12} md={12}>
+                                        <Grid xs={6} md={6}>
+                                          <label>{rr_systolic}</label>
+                                          <p>
+                                            {allTasks &&
+                                              allTasks?.headache_rr_systolic}
+                                          </p>
+                                        </Grid>
+                                        <Grid xs={6} md={6}>
+                                          <label>{RR_diastolic}</label>
+                                          <p>
+                                            {allTasks &&
+                                              allTasks?.headache_rr_diastolic}
+                                          </p>
+                                        </Grid>
+                                      </Grid>
+                                    </Grid>
+
+                                    <Grid>
+                                      <Grid>
+                                        <h3>{body_temp}</h3>
+                                      </Grid>
+                                      <Grid>
+                                        <p>
+                                          {allTasks &&
+                                            allTasks?.headache_body_temp}
+                                        </p>
+                                      </Grid>
+                                    </Grid>
+
+                                    <Grid>
+                                      <Grid>
+                                        <h3>{diabetes}</h3>
+                                      </Grid>
+                                      <Grid container xs={12} md={12}>
+                                        <Grid xs={4} md={4}>
+                                          <label>{blood_sugar}</label>
+                                          <p>
+                                            {allTasks &&
+                                              allTasks?.headache_blood_sugar}
+                                          </p>
+                                        </Grid>
+                                        <Grid xs={4} md={4}>
+                                          <label>{Hba1c}</label>
+                                          <p>
+                                            {allTasks &&
+                                              allTasks?.headache_Hba1c}
+                                          </p>
+                                        </Grid>
+                                        <Grid xs={4} md={4}>
+                                          <label>{situation}</label>
+                                          <p>
+                                            {allTasks &&
+                                              allTasks?.headache_situation &&
+                                              allTasks?.headache_situation
+                                                ?.value &&
+                                              GetShowLabel1(
+                                                this.state.Allsituation,
+                                                allTasks?.headache_situation
+                                                  ?.value,
+                                                this.props.stateLanguageType,
+                                                true,
+                                                'anamnesis'
+                                              )}
+                                          </p>
+                                        </Grid>
+                                      </Grid>
+                                    </Grid>
+
+                                    <Grid>
+                                      <Grid>
+                                        <h3>{quality_of_pain}</h3>
+                                        <p>
+                                          {allTasks &&
+                                            allTasks?.headache_quality_of_pain}
+                                        </p>
+                                      </Grid>
+                                      <Grid>
+                                        <h3>{headache_need_to_vomit}</h3>
+                                        {allTasks &&
+                                        allTasks?.headache_need_to_vomit ===
+                                          'yes' ? (
+                                          <p>{yes}</p>
+                                        ) : (
+                                          <p>{no}</p>
+                                        )}
+                                      </Grid>
+                                      <Grid>
+                                        <h3>{headache_onset_of_pain}</h3>
+                                        {allTasks &&
+                                        allTasks?.headache_onset_of_pain ===
+                                          'yes' ? (
+                                          <p>{yes}</p>
+                                        ) : (
+                                          <p>{no}</p>
+                                        )}
+                                      </Grid>
+                                      <Grid>
+                                        <h3>{headache_take_painkillers}</h3>
+                                        {allTasks &&
+                                        allTasks?.take_painkillers === 'yes' ? (
+                                          <p>{yes}</p>
+                                        ) : (
+                                          <p>{no}</p>
+                                        )}
+                                      </Grid>
+                                      <Grid>
+                                        <h3>{headache_undergoing_treatment}</h3>
+                                        {allTasks &&
+                                        allTasks?.undergoing_treatment ===
+                                          'yes' ? (
+                                          <p>{yes}</p>
+                                        ) : (
+                                          <p>{no}</p>
+                                        )}
+                                      </Grid>
+                                      <Grid>
+                                        <h3>{pain_levelsss}</h3>
+                                        <p>
+                                          {allTasks &&
+                                            allTasks?.headache_pain_intensity}
+                                        </p>
+                                      </Grid>
+                                    </Grid>
+                                  </Grid>
+                                </Grid>
+                              )}
+                              {allTasks &&
+                                allTasks?.stomach_problems === 'yes' && (
+                                  <Grid>
+                                    <Grid className="stomachVideoSec">
+                                      <h3>{stomach_problems}</h3>
+                                    </Grid>
+
+                                    <Grid className="allHeadSection">
+                                      <Grid>
+                                        <h3>{Pain_begin}</h3>
+                                        <PainPoint
+                                          gender={this.state.gender}
+                                          painPoint={
+                                            allTasks &&
+                                            allTasks?.stomach_painbegin_painPoint
+                                          }
+                                          isView={true}
+                                        />
+                                      </Grid>
+
+                                      <Grid>
+                                        <h3>{hurtnow}</h3>
+                                        <PainPoint
+                                          gender={this.state.gender}
+                                          painPoint={
+                                            allTasks &&
+                                            allTasks?.stomach_hurtnow_painPoint
+                                          }
+                                          isView={true}
+                                        />
+                                      </Grid>
+
+                                      <Grid container xs={12} md={12}>
+                                        <Grid xs={4} md={4}>
+                                          <label>{stomach_sternum}</label>
+                                          {allTasks &&
+                                          allTasks?.stomach_behind_the_sternum ===
+                                            'yes' ? (
+                                            <p>{yes}</p>
+                                          ) : (
+                                            <p>{no}</p>
+                                          )}
+                                        </Grid>
+                                        <Grid xs={4} md={4}>
+                                          <label>{stomach_attack}</label>
+                                          {allTasks &&
+                                          allTasks?.stomach_heart_attack ===
+                                            'yes' ? (
+                                            <p>{yes}</p>
+                                          ) : (
+                                            <p>{no}</p>
+                                          )}
+                                        </Grid>
+                                        <Grid xs={4} md={4}>
+                                          <label>{stomach_failure}</label>
+                                          {allTasks &&
+                                          allTasks?.stomach_heart_failure ===
+                                            'yes' ? (
+                                            <p>{yes}</p>
+                                          ) : (
+                                            <p>{no}</p>
+                                          )}
+                                        </Grid>
+                                      </Grid>
+
+                                      <Grid>
+                                        <Grid>
+                                          <h3>{blood_pressure}</h3>
+                                        </Grid>
+                                        <Grid container xs={12} md={12}>
+                                          <Grid xs={6} md={6}>
+                                            <label>{rr_systolic}</label>
+                                            <p>
+                                              {allTasks &&
+                                                allTasks?.stomach_rr_systolic}
+                                            </p>
+                                          </Grid>
+                                          <Grid xs={6} md={6}>
+                                            <label>{RR_diastolic}</label>
+                                            <p>
+                                              {allTasks &&
+                                                allTasks?.stomach_rr_diastolic}
+                                            </p>
+                                          </Grid>
+                                        </Grid>
+                                      </Grid>
+                                      {allTasks &&
+                                        allTasks?.stomach_have_diabetes ===
+                                          'yes' && (
+                                          <Grid>
+                                            <Grid>
+                                              <h3>{diabetes}</h3>
+                                            </Grid>
+                                            <Grid container xs={12} md={12}>
+                                              <Grid xs={4} md={4}>
+                                                <label>{blood_sugar}</label>
+                                                <p>
+                                                  {allTasks &&
+                                                    allTasks?.stomach_blood_sugar}
+                                                </p>
+                                              </Grid>
+                                              <Grid xs={4} md={4}>
+                                                <label>{Hba1c}</label>
+                                                <p>
+                                                  {allTasks &&
+                                                    allTasks?.stomach_Hba1c}
+                                                </p>
+                                              </Grid>
+                                              <Grid xs={4} md={4}>
+                                                <label>{situation}</label>
+                                                <p>
+                                                  {allTasks &&
+                                                    allTasks?.stomach_situation &&
+                                                    allTasks?.stomach_situation
+                                                      ?.value &&
+                                                    GetShowLabel1(
+                                                      this.state.Allsituation,
+                                                      allTasks &&
+                                                        allTasks
+                                                          ?.stomach_situation
+                                                          ?.value,
+                                                      this.props
+                                                        .stateLanguageType,
+                                                      true,
+                                                      'anamnesis'
+                                                    )}
+                                                </p>
+                                              </Grid>
+                                            </Grid>
+                                          </Grid>
+                                        )}
+                                      <Grid>
+                                        <Grid className="sickAllMngSec">
+                                          <label>{stomach_periodically}</label>
+                                          {allTasks &&
+                                          allTasks?.stomach_continuously_or_periodically ===
+                                            'yes' ? (
+                                            <p>{yes}</p>
+                                          ) : (
+                                            <p>{no}</p>
+                                          )}
+                                        </Grid>
+                                        <Grid>
+                                          <h3>{body_temp}</h3>
+                                        </Grid>
+                                        <Grid>
+                                          <label>{stomach_temp}</label>
+                                        </Grid>
+                                        <p>
+                                          {allTasks &&
+                                            allTasks?.stomach_body_temp}
+                                        </p>
+                                        <Grid>
+                                          <Grid className="sickAllMngSec">
+                                            <label>
+                                              {stomach_take_painkillers}
+                                            </label>
+                                          </Grid>
+                                          {allTasks &&
+                                          allTasks?.stomach_take_painkillers ===
+                                            'yes' ? (
+                                            <p>{yes}</p>
+                                          ) : (
+                                            <p>{no}</p>
+                                          )}
+                                        </Grid>
+                                        <Grid className="sickAllMngSec">
+                                          <label>{stomach_intensity}</label>
+                                          <p>
+                                            {allTasks &&
+                                              allTasks?.stomach_pain_intensity}
+                                          </p>
+                                        </Grid>
+                                        <Grid>
+                                          <Grid className="sickAllMngSec">
+                                            <label>
+                                              {stomach_undergoing_treatment}
+                                            </label>
+                                          </Grid>
+                                          {allTasks &&
+                                          allTasks?.stomach_undergoing_treatment ===
+                                            'yes' ? (
+                                            <p>{yes}</p>
+                                          ) : (
+                                            <p>{no}</p>
+                                          )}
+                                        </Grid>
+                                      </Grid>
+                                    </Grid>
+                                  </Grid>
+                                )}
+                              {allTasks && allTasks?.diarrhea === 'yes' && (
+                                <Grid>
+                                  <Grid className="stomachVideoSec">
+                                    <h3>{diarrhea}</h3>
+                                  </Grid>
+                                  <Grid className="allHeadSection">
+                                    <Grid>
+                                      <Grid className="sickAllMngSec">
+                                        <label>{diarrhea_symptoms_begin}</label>
+                                      </Grid>
+                                      <p>
+                                        {getDate(
+                                          allTasks &&
+                                            allTasks?.diarrhea_symptoms_begin,
+                                          this.props.settings &&
+                                            this.props.settings?.setting &&
+                                            this.props.settings?.setting
+                                              ?.date_format
+                                        )}
+                                      </p>
+                                    </Grid>
+                                    <Grid className="sickAllMngSec">
+                                      <label>{diarrhea_vomiting}</label>
+
+                                      {allTasks &&
+                                      allTasks?.diarrhea_suffer_from_vomiting ===
+                                        'yes' ? (
+                                        <p>{yes}</p>
+                                      ) : (
+                                        <p>{no}</p>
+                                      )}
+                                    </Grid>
+                                    <Grid>
+                                      <Grid>
+                                        <h3>{body_temp}</h3>
+                                      </Grid>
+                                      <Grid>
+                                        <label>{diarrhea_body_temp}</label>
+                                      </Grid>
+                                      <p>
+                                        {allTasks &&
+                                          allTasks?.diarrhea_body_temp}
+                                      </p>
+                                      <Grid className="sickAllMngSec">
+                                        <label>{diarrhea_suffer_symtoms}</label>
+
+                                        {allTasks &&
+                                        allTasks?.diarrhea_envi_suffer_symtoms ===
+                                          'yes' ? (
+                                          <p>{yes}</p>
+                                        ) : (
+                                          <p>{no}</p>
+                                        )}
+                                      </Grid>
+                                      <Grid className="sickAllMngSec">
+                                        <label>{diarrhea_liquids}</label>
+
+                                        {allTasks &&
+                                        allTasks?.diarrhea_liquids_with_you ===
+                                          'yes' ? (
+                                          <p>{yes}</p>
+                                        ) : (
+                                          <p>{no}</p>
+                                        )}
+                                      </Grid>
+                                    </Grid>
+                                  </Grid>
+                                </Grid>
+                              )}
+                              {allTasks && allTasks?.have_fever === 'yes' && (
+                                <Grid>
+                                  <Grid className="stomachVideoSec">
+                                    <h3>{fever}</h3>
+                                  </Grid>
+                                  <Grid className="allHeadSection">
+                                    <Grid>
+                                      <Grid className="sickAllMngSec">
+                                        <label>{fever_symptoms_begin}</label>
+                                      </Grid>
+                                      <p>
+                                        {getDate(
+                                          allTasks &&
+                                            allTasks?.fever_symptoms_begin,
+                                          this.props.settings &&
+                                            this.props.settings?.setting &&
+                                            this.props.settings?.setting
+                                              ?.date_format
+                                        )}
+                                      </p>
+                                    </Grid>
+                                    <Grid>
+                                      <h3>{body_temp}</h3>
                                     </Grid>
                                     <Grid container xs={12} md={12}>
                                       <Grid xs={6} md={6}>
-                                        <label>Systolic</label>
+                                        <label>{fever_top_body_temp}</label>
+                                        <p>
+                                          {allTasks &&
+                                            allTasks?.fever_top_body_temp}
+                                        </p>
                                       </Grid>
                                       <Grid xs={6} md={6}>
-                                        <label>Diastolic</label>
+                                        <label>{fever_low_body_temp}</label>
+                                        <p>
+                                          {allTasks &&
+                                            allTasks?.fever_low_body_temp}
+                                        </p>
+                                      </Grid>
+                                    </Grid>
+
+                                    <Grid>
+                                      <Grid className="sickAllMngSec">
+                                        <label>{fever_pain_intensity}</label>
+                                      </Grid>
+                                      <p>
+                                        {allTasks &&
+                                          allTasks?.fever_pain_intensity}
+                                      </p>
+                                    </Grid>
+                                    {allTasks &&
+                                      allTasks?.fever_have_a_cough ===
+                                        'yes' && (
+                                        <Grid>
+                                          <Grid>
+                                            <h3>{cough}</h3>
+                                          </Grid>
+
+                                          <Grid container xs={12} md={12}>
+                                            <Grid xs={6} md={6}>
+                                              <label>{fever_cold}</label>
+                                              {allTasks &&
+                                              allTasks?.fever_cold === true ? (
+                                                <p>{yes}</p>
+                                              ) : (
+                                                <p>{no}</p>
+                                              )}
+                                            </Grid>
+                                            <Grid xs={6} md={6}>
+                                              <label>{fever_hoarseness}</label>
+
+                                              {allTasks &&
+                                              allTasks?.fever_hoarseness ===
+                                                true ? (
+                                                <p>{yes}</p>
+                                              ) : (
+                                                <p>{no}</p>
+                                              )}
+                                            </Grid>
+                                          </Grid>
+                                        </Grid>
+                                      )}
+                                    <Grid>
+                                      <Grid className="sickAllMngSec">
+                                        <label>{fever_sputum}</label>
+                                      </Grid>
+                                      <p
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            allTasks && allTasks?.fever_sputum,
+                                        }}
+                                      />
+                                    </Grid>
+                                  </Grid>
+                                </Grid>
+                              )}
+                              {allTasks && allTasks?.back_pain === 'yes' && (
+                                <Grid>
+                                  <Grid className="stomachVideoSec">
+                                    <h3>{back_pain}</h3>
+                                  </Grid>
+                                  <Grid className="allHeadSection">
+                                    <Grid>
+                                      <Grid className="sickAllMngSec">
+                                        <label>{back_symptoms_begin}</label>
+                                      </Grid>
+                                      <p>
+                                        {getDate(
+                                          allTasks &&
+                                            allTasks?.back_pain_symptoms_begin,
+                                          this.props.settings &&
+                                            this.props.settings?.setting &&
+                                            this.props.settings?.setting
+                                              ?.date_format
+                                        )}
+                                      </p>
+                                    </Grid>
+                                    <Grid>
+                                      <Grid className="sickAllMngSec">
+                                        <label>{back_injured}</label>
+                                      </Grid>
+                                      {allTasks &&
+                                      allTasks?.back_pain_been_injured ===
+                                        'yes' ? (
+                                        <p>{yes}</p>
+                                      ) : (
+                                        <p>{no}</p>
+                                      )}
+                                    </Grid>
+                                    <Grid className="sickAllMngSec">
+                                      <label>{back_strained}</label>
+
+                                      {allTasks &&
+                                      allTasks?.back_pain_physically_strained ===
+                                        'yes' ? (
+                                        <p>{yes}</p>
+                                      ) : (
+                                        <p>{no}</p>
+                                      )}
+                                    </Grid>
+                                    <Grid className="sickAllMngSec">
+                                      <label>{back_depression}</label>
+
+                                      {allTasks &&
+                                      allTasks?.back_pain_stress_depression ===
+                                        'yes' ? (
+                                        <p>{yes}</p>
+                                      ) : (
+                                        <p>{no}</p>
+                                      )}
+                                    </Grid>
+                                    {allTasks &&
+                                      allTasks?.back_pain_have_diabetes ===
+                                        'yes' && (
+                                        <Grid>
+                                          <Grid>
+                                            <h3>{diabetes} </h3>
+                                          </Grid>
+                                          <Grid container xs={12} md={12}>
+                                            <Grid xs={4} md={4}>
+                                              <label>{blood_sugar}</label>
+                                              <p>
+                                                {allTasks &&
+                                                  allTasks?.back_pain_blood_sugar}
+                                              </p>
+                                            </Grid>
+                                            <Grid xs={4} md={4}>
+                                              <label>{Hba1c}</label>
+                                              <p>
+                                                {allTasks &&
+                                                  allTasks?.back_pain_Hba1c}
+                                              </p>
+                                            </Grid>
+
+                                            <Grid xs={4} md={4}>
+                                              <label>{situation}</label>
+                                              <p>
+                                                {allTasks &&
+                                                  allTasks?.back_pain_situation &&
+                                                  allTasks &&
+                                                  allTasks?.back_pain_situation
+                                                    ?.value &&
+                                                  GetShowLabel1(
+                                                    this.state.Allsituation,
+                                                    allTasks &&
+                                                      allTasks
+                                                        ?.back_pain_situation
+                                                        ?.value,
+                                                    this.props
+                                                      .stateLanguageType,
+                                                    true,
+                                                    'anamnesis'
+                                                  )}
+                                              </p>
+                                            </Grid>
+                                          </Grid>
+                                          <Grid className="sickAllMngSec">
+                                            <label>{back_attack}</label>
+                                            {allTasks &&
+                                            allTasks?.back_pain_heart_attack ===
+                                              'yes' ? (
+                                              <p>{yes}</p>
+                                            ) : (
+                                              <p>{no}</p>
+                                            )}
+                                          </Grid>
+                                          <Grid className="sickAllMngSec">
+                                            <label>{back_failure}</label>
+                                            {allTasks &&
+                                            allTasks?.back_pain_heart_failure ===
+                                              'yes' ? (
+                                              <p>{yes}</p>
+                                            ) : (
+                                              <p>{no}</p>
+                                            )}
+                                          </Grid>
+                                          <Grid>
+                                            <Grid>
+                                              <h3>{blood_pressure}</h3>
+                                            </Grid>
+                                            <Grid container xs={12} md={12}>
+                                              <Grid xs={6} md={6}>
+                                                <label>{rr_systolic}</label>
+                                                <p>
+                                                  {allTasks &&
+                                                    allTasks?.back_pain_rr_systolic}
+                                                </p>
+                                              </Grid>
+                                              <Grid xs={6} md={6}>
+                                                <label>{RR_diastolic}</label>
+                                                <p>
+                                                  {allTasks &&
+                                                    allTasks?.back_pain_rr_diastolic}
+                                                </p>
+                                              </Grid>
+                                            </Grid>
+                                          </Grid>
+                                        </Grid>
+                                      )}
+                                  </Grid>
+                                </Grid>
+                              )}
+                              {allTasks && allTasks?.cough_and_snees === 'yes' && (
+                                <Grid>
+                                  <Grid className="stomachVideoSec">
+                                    <h3>{cough_and_snees}</h3>
+                                  </Grid>
+                                  <Grid className="allHeadSection">
+                                    <Grid>
+                                      <Grid className="sickAllMngSec">
+                                        <label>{cough_symptoms_begin}</label>
+                                      </Grid>
+                                      <p>
+                                        {getDate(
+                                          allTasks &&
+                                            allTasks?.cough_symptoms_begin,
+                                          this.props.settings &&
+                                            this.props.settings?.setting &&
+                                            this.props.settings?.setting
+                                              ?.date_format
+                                        )}
+                                      </p>
+                                    </Grid>
+                                    <Grid>
+                                      <h3>{body_temp}</h3>
+                                    </Grid>
+                                    <Grid>
+                                      {/* <Grid>
+                                        <label>{body_temp}</label>
+                                      </Grid> */}
+                                      <p>
+                                        {allTasks && allTasks?.cough_body_temp}
+                                      </p>
+                                    </Grid>
+                                    <Grid>
+                                      <Grid className="sickAllMngSec">
+                                        <label>{cough_suffer_symtoms}</label>
+                                      </Grid>
+                                      {allTasks &&
+                                      allTasks?.cough_envi_suffer_symtoms ===
+                                        'yes' ? (
+                                        <p>{yes}</p>
+                                      ) : (
+                                        <p>{no}</p>
+                                      )}
+                                    </Grid>
+                                    <Grid>
+                                      <Grid className="sickAllMngSec">
+                                        <label>{cough_allergies}</label>
+                                      </Grid>
+                                      <p
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            allTasks &&
+                                            allTasks?.cough_suffer_from_allergies,
+                                        }}
+                                      />
+                                    </Grid>
+                                  </Grid>
+                                </Grid>
+                              )}
+                              {allTasks && allTasks?.feel_depressed === 'yes' && (
+                                <Grid>
+                                  <Grid className="stomachVideoSec">
+                                    <h3>{feel_depressed}</h3>
+                                  </Grid>
+                                  <Grid className="allHeadSection">
+                                    <Grid>
+                                      <Grid className="sickAllMngSec">
+                                        <label>
+                                          {depressed_symptoms_begin}
+                                        </label>
+                                      </Grid>
+                                      <p>
+                                        {getDate(
+                                          allTasks &&
+                                            allTasks?.depressed_symptoms_begin,
+                                          this.props.settings &&
+                                            this.props.settings?.setting &&
+                                            this.props.settings?.setting
+                                              ?.date_format
+                                        )}
+                                      </p>
+                                    </Grid>
+                                    <Grid>
+                                      <Grid className="sickAllMngSec">
+                                        <label>{pain_level}</label>
+                                      </Grid>
+                                      <p>
+                                        {allTasks &&
+                                          allTasks?.depressed_pain_intensity}
+                                      </p>
+                                    </Grid>
+                                    <Grid container xs={12} md={12}>
+                                      <Grid
+                                        xs={4}
+                                        md={4}
+                                        className="sickAllMngSec"
+                                      >
+                                        <label>{depressed_do_you_sleep}</label>
+
+                                        {allTasks &&
+                                        allTasks?.depressed_do_you_sleep ===
+                                          'yes' ? (
+                                          <p>{yes}</p>
+                                        ) : (
+                                          <p>{no}</p>
+                                        )}
+                                      </Grid>
+                                      <Grid
+                                        xs={4}
+                                        md={4}
+                                        className="sickAllMngSec"
+                                      >
+                                        <label>
+                                          {depressed_suicidal_thoughts}
+                                        </label>
+
+                                        {allTasks &&
+                                        allTasks?.depressed_suicidal_thoughts ===
+                                          'yes' ? (
+                                          <p>{yes}</p>
+                                        ) : (
+                                          <p>{no}</p>
+                                        )}
+                                      </Grid>
+                                      <Grid
+                                        xs={4}
+                                        md={4}
+                                        className="sickAllMngSec"
+                                      >
+                                        <label>{depressed_hurt_yourself}</label>
+
+                                        {allTasks &&
+                                        allTasks?.depressed_hurt_yourself ===
+                                          'yes' ? (
+                                          <p>{yes}</p>
+                                        ) : (
+                                          <p>{no}</p>
+                                        )}
                                       </Grid>
                                     </Grid>
                                   </Grid>
                                 </Grid>
-                              </Grid>
+                              )}
+                              {allTasks &&
+                                allTasks?.cardiac_problems === 'yes' && (
+                                  <Grid>
+                                    <Grid className="stomachVideoSec">
+                                      <h3>{cardiac_problems}</h3>
+                                    </Grid>
+                                    <Grid className="allHeadSection">
+                                      <Grid>
+                                        <h3>{blood_pressure}</h3>
+                                      </Grid>
+                                      <Grid container xs={12} md={12}>
+                                        <Grid xs={6} md={6}>
+                                          <label>{rr_systolic}</label>
+                                          <p>
+                                            {allTasks &&
+                                              allTasks?.cardiac_rr_systolic}
+                                          </p>
+                                        </Grid>
+                                        <Grid xs={6} md={6}>
+                                          <label>{RR_diastolic}</label>
+                                          <p>
+                                            {allTasks &&
+                                              allTasks?.cardiac_rr_diastolic}
+                                          </p>
+                                        </Grid>
+                                      </Grid>
+
+                                      <Grid container xs={12} md={12}>
+                                        <Grid
+                                          xs={3}
+                                          md={3}
+                                          className="sickAllMngSec"
+                                        >
+                                          <label>{cardiac_heart_attack}</label>
+
+                                          {allTasks &&
+                                          allTasks?.cardiac_heart_attack ===
+                                            'yes' ? (
+                                            <p>{yes}</p>
+                                          ) : (
+                                            <p>{no}</p>
+                                          )}
+                                        </Grid>
+                                        <Grid
+                                          xs={3}
+                                          md={3}
+                                          className="sickAllMngSec"
+                                        >
+                                          <label>{cardiac_heart_failure}</label>
+
+                                          {allTasks &&
+                                          allTasks?.cardiac_heart_failure ===
+                                            'yes' ? (
+                                            <p>{yes}</p>
+                                          ) : (
+                                            <p>{no}</p>
+                                          )}
+                                        </Grid>
+                                        <Grid
+                                          xs={3}
+                                          md={3}
+                                          className="sickAllMngSec"
+                                        >
+                                          <label>{cardiac_dizziness}</label>
+                                          {allTasks &&
+                                          allTasks?.cardiac_have_dizziness ===
+                                            'yes' ? (
+                                            <p>{yes}</p>
+                                          ) : (
+                                            <p>{no}</p>
+                                          )}
+                                        </Grid>
+                                        <Grid
+                                          xs={3}
+                                          md={3}
+                                          className="sickAllMngSec"
+                                        >
+                                          <label>{cardiac_shoulder_pain}</label>
+
+                                          {allTasks &&
+                                          allTasks?.cardiac_have_shoulder_pain ===
+                                            'yes' ? (
+                                            <p>{yes}</p>
+                                          ) : (
+                                            <p>{no}</p>
+                                          )}
+                                        </Grid>
+                                      </Grid>
+                                    </Grid>
+                                  </Grid>
+                                )}
                             </Grid>
                           </Grid>
                         </Grid>
@@ -334,14 +1301,6 @@ class Index extends Component {
                 <Grid className="msgSectionCss">
                   <label>Oops!</label>
                   <p>Link has been expired, Please book time slot again</p>
-                </Grid>
-              )}
-              {this.state.sectionValue == 4 && (
-                <Grid className="msgSectionCss">
-                  <p>
-                    The link is not activated due to the payment process is not
-                    completed by patient
-                  </p>
                 </Grid>
               )}
             </Grid>

@@ -837,27 +837,6 @@ export const handleEvalSubmit = (current, value) => {
                                                                                                                                                   .DataprotectionRules ===
                                                                                                                                                   true)
                                                                                                                                             ) {
-                                                                                                                                              console.log(
-                                                                                                                                                'current',
-                                                                                                                                                current
-                                                                                                                                                  .state
-                                                                                                                                                  .appointDate
-                                                                                                                                              );
-                                                                                                                                              if (
-                                                                                                                                                current
-                                                                                                                                                  .state
-                                                                                                                                                  .appointDate
-                                                                                                                                                  .length ==
-                                                                                                                                                0
-                                                                                                                                              ) {
-                                                                                                                                                current.setState(
-                                                                                                                                                  {
-                                                                                                                                                    error_section: 70,
-                                                                                                                                                    errorChrMsg:
-                                                                                                                                                      'There is no doctor availiable yet please try after some time!',
-                                                                                                                                                  }
-                                                                                                                                                );
-                                                                                                                                              }
                                                                                                                                               if (
                                                                                                                                                 data?._id &&
                                                                                                                                                 (!data.is_decline ||
@@ -965,7 +944,6 @@ export const handleEvalSubmit = (current, value) => {
     if (current.state.assinged_to) {
       data.assinged_to = current.state.assinged_to;
     }
-    console.log('dsfsdfsdf', current.state.date);
     if (current.state.appointDate && current.state.appointDate.length > 0) {
       data.start = current.state.appointDate[slot];
       data.end = current.state.appointDate[slot + 1];
@@ -1776,6 +1754,27 @@ export const onChange = (date, current) => {
       }
     });
   }
+  // if (
+  //   appointmentData.length <= 0 ||
+  //   (appointmentData &&
+  //     appointmentData.monday.length <= 0 &&
+  //     appointmentData.tuesday.length <= 0 &&
+  //     appointmentData.wednesday.length <= 0 &&
+  //     appointmentData.thursday.length <= 0 &&
+  //     appointmentData.friday.length <= 0 &&
+  //     appointmentData.saturday.length <= 0)
+  // ) {
+  //   current.setState({
+  //     error_section: 70,
+  //     errorChrMsg:
+  //       'There is no doctor availiable yet please try after some time!',
+  //   });
+  // } else {
+  //   current.setState({
+  //     error_section: 70,
+  //     errorChrMsg: '',
+  //   });
+  // }
   current.setState({ apointDay: days, selectedDate: date1 });
 };
 
@@ -1842,6 +1841,27 @@ export const getCalendarData = (current) => {
       if (response?.data && response?.data?.data) {
         var data1 = response?.data?.data[0]?.data;
         var data = response?.data?.data[0]?.sickleave[0];
+        if (
+          response.data.data[0].sickleave.length > 0 &&
+          (data?.monday?.length > 0 ||
+            data?.tuesday?.length > 0 ||
+            data?.wednesday?.length > 0 ||
+            data?.thursday?.length > 0 ||
+            data?.friday?.length > 0 ||
+            data?.saturday?.length > 0)
+        ) {
+          current.setState({
+            error_section: 70,
+            errorChrMsg: '',
+          });
+        } else {
+          console.log('check');
+          current.setState({
+            error_section: 70,
+            errorChrMsg:
+              'There is no doctor availiable yet please try after some time!',
+          });
+        }
         current.setState({
           appointmentData: data,
           assinged_to: [
