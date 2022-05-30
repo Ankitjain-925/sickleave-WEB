@@ -328,14 +328,18 @@ class CometChatCallScreen extends React.PureComponent {
     CometChat.startCall(
       callSettings,
       el,
+
       new CometChat.OngoingCallListener({
         onCallEnded: (call) => {
+          let value = 4;
+          this.props.endCallScreen(value);
           if (this.context) {
             this.context.setCallInProgress({}, '');
           }
           Storage.removeItem(enums.CONSTANTS['ACTIVECALL']);
           this.props.actionGenerated(enums.ACTIONS['DIRECT_CALL_ENDED']);
         },
+
         onError: (error) => {
           if (this.context) {
             this.context.setCallInProgress(null, '');

@@ -19,7 +19,7 @@ import { GetShowLabel1 } from 'Screens/Components/GetMetaData/index.js';
 import PainPoint from 'Screens/Components/PointPain/index';
 import { OptionList } from 'Screens/Login/metadataaction';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import { EditRequest , DownloadCert} from '../SickLeaveForm/api';
+import { EditRequest, DownloadCert } from '../SickLeaveForm/api';
 import {
   PaymentDue,
   handleOpenDetail,
@@ -29,7 +29,6 @@ import {
   GetLanguageMetadata,
 } from '../SickLeaveForm/api';
 import moment from 'moment';
-
 
 class Index extends Component {
   constructor(props) {
@@ -299,10 +298,9 @@ class Index extends Component {
                                             item.is_payment == false) && (
                                             <Grid>
                                               <InfoOutlinedIcon className="InfoOutLine" />
-                                                  <h6 className="assignHos Paymentpending">
-                                                    Your payment process is
-                                                    pending
-                                                  </h6>
+                                              <h6 className="assignHos Paymentpending">
+                                                Your payment process is pending
+                                              </h6>
                                             </Grid>
                                           )}
                                       </a>
@@ -366,30 +364,49 @@ class Index extends Component {
                                                 </a>
                                               </li>
                                             )}
-                                          {item && item.certificate && <li onClick={() => {
-                                              DownloadCert(item?.certificate, this)
-                                            }}>
-                                          <a>
-                                          <img
-                                              src={require('assets/images/details.svg')}
-                                              alt=""
-                                              title=""
-                                            />
-                                          <>Download Certificate</>
-                                          </a>
-                                          </li>}
-                                          {item.link?.patient_link &&  !item.meetingjoined &&<li onClick={() => {
-                                              this.props.cretficate()
-                                            }}>
-                                            <a>
-                                            <img
+                                          {item && item.certificate && (
+                                            <li
+                                              onClick={() => {
+                                                DownloadCert(
+                                                  item?.certificate,
+                                                  this
+                                                );
+                                              }}
+                                            >
+                                              <a>
+                                                <img
                                                   src={require('assets/images/details.svg')}
                                                   alt=""
                                                   title=""
                                                 />
-                                            <a href={item.link?.patient_link} target="_blank">Join Meeting</a>
-                                            </a>
-                                          </li>}
+                                                <>Download Certificate</>
+                                              </a>
+                                            </li>
+                                          )}
+                                          {item.link?.patient_link &&
+                                            !item.meetingjoined && (
+                                              <li
+                                                onClick={() => {
+                                                  this.props.cretficate();
+                                                }}
+                                              >
+                                                <a>
+                                                  <img
+                                                    src={require('assets/images/details.svg')}
+                                                    alt=""
+                                                    title=""
+                                                  />
+                                                  <a
+                                                    href={
+                                                      item.link?.patient_link
+                                                    }
+                                                    target="_blank"
+                                                  >
+                                                    Join Meeting
+                                                  </a>
+                                                </a>
+                                              </li>
+                                            )}
                                         </ul>
                                       </a>
                                     </Td>
@@ -410,7 +427,14 @@ class Index extends Component {
                               <Grid item xs={12} md={6}>
                                 {this.state.totalPage > 1 && (
                                   <Grid className="prevNxtpag">
-                                     <Pagination totalPage={this.state.totalPage} currentPage={this.state.currentPage} pages={this.state.pages} onChangePage={(page) => { this.onChangePage(page) }} />
+                                    <Pagination
+                                      totalPage={this.state.totalPage}
+                                      currentPage={this.state.currentPage}
+                                      pages={this.state.pages}
+                                      onChangePage={(page) => {
+                                        this.onChangePage(page);
+                                      }}
+                                    />
                                   </Grid>
                                 )}
                               </Grid>
@@ -463,11 +487,11 @@ class Index extends Component {
                         {this.state.newTask?.approved == true &&
                           (!this.state.newTask.is_payment ||
                             this.state.newTask.is_payment == false) && (
-                              <p className="pending-msgPopup">
-                                Your request is accepted by the doctor but your
-                                payment is pending, Please do your payment
-                                otherwise the request will cancel automatically
-                              </p>    
+                            <p className="pending-msgPopup">
+                              Your request is accepted by the doctor but your
+                              payment is pending, Please do your payment
+                              otherwise the request will cancel automatically
+                            </p>
                           )}
                         <Grid item xs={12} md={12} className="taskDescp">
                           <Grid className="stndQues stndQues1">

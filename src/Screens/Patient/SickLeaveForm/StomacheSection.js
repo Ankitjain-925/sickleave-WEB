@@ -137,6 +137,9 @@ function Index(props) {
           label="Do you have diabetes? If so, what is your blood sugar?"
           value={props.updateQues?.stomach_have_diabetes}
         />
+        {props.error_section == 80 && (
+          <div className="err_message2">{props.errorChrMsg}</div>
+        )}
       </Grid>
       {props.updateQues && props.updateQues?.stomach_have_diabetes === 'yes' && (
         <>

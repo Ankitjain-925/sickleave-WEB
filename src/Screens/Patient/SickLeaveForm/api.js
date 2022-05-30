@@ -16,7 +16,7 @@ export const CancelClick = (current) => {
 };
 
 //for downoading the pdf
-export const DownloadCert = (data, current)=>{
+export const DownloadCert = (data, current) => {
   current.setState({ loaderImage: true });
   axios
     .post(
@@ -25,21 +25,21 @@ export const DownloadCert = (data, current)=>{
       commonHeader(current.props.stateLoginValueAim.token)
     )
     .then((responce) => {
-        current.setState({ loaderImage: false });
-        var data = new Blob([responce.data]);
-        if (typeof window.navigator.msSaveBlob === "function") {
-          // If it is IE that support download blob directly.
-          window.navigator.msSaveBlob(data, "report.pdf");
-        } else {
-          var blob = data;
-          var link = document.createElement("a");
-          link.href = window.URL.createObjectURL(blob);
-          link.download = "report.pdf";
-          document.body.appendChild(link);
-          link.click(); // create an <a> element and simulate the click operation.
-        }
+      current.setState({ loaderImage: false });
+      var data = new Blob([responce.data]);
+      if (typeof window.navigator.msSaveBlob === 'function') {
+        // If it is IE that support download blob directly.
+        window.navigator.msSaveBlob(data, 'report.pdf');
+      } else {
+        var blob = data;
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = 'report.pdf';
+        document.body.appendChild(link);
+        link.click(); // create an <a> element and simulate the click operation.
+      }
     });
-}
+};
 
 // For send meeting link patient as well as doctor
 export const sendLinkDocPat = (payValue, taskValue, current) => {
@@ -95,7 +95,7 @@ export function getLink() {
   }
   let STRIPE_PUBLISHABLE;
   if (env === 'DEV') {
-    STRIPE_PUBLISHABLE = 'https://virtualhospital.aimedis.io/sys-n-sick';
+    STRIPE_PUBLISHABLE = 'http://localhost:3000/sys-n-sick';
   } else {
     STRIPE_PUBLISHABLE = 'https://virtualhospital.aimedis.io/sys-n-sick';
   }
@@ -106,15 +106,7 @@ export function getLink() {
 export const saveOnDB1 = (payment, task, current) => {
   let path = getLink();
   var t1 = task?.start.split(':');
-  var date =
-    task?.date &&
-    getDate(
-      task?.date,
-      current.props.settings &&
-        current.props.settings?.setting &&
-        current.props.settings?.setting?.date_format
-    );
-  var Datenew = new Date(date).setHours(t1[0]);
+  var Datenew = new Date(task?.date).setHours(t1[0]);
   var sesion_id =
     task?.assinged_to[0]?.profile_id + task?.patient?.profile_id + Datenew;
   current.setState({ loaderImage: true });
@@ -195,8 +187,13 @@ export const allgetData = (patient_id, current) => {
       if (responce.data.hassuccessed) {
         let data = responce.data;
         var totalPage = Math.ceil(data?.data?.length / 20);
-        current.setState({ AllDataSec1 : data.data, loaderImage: false , totalPage: totalPage,
-          currentPage: 1},
+        current.setState(
+          {
+            AllDataSec1: data.data,
+            loaderImage: false,
+            totalPage: totalPage,
+            currentPage: 1,
+          },
           () => {
             if (totalPage > 1) {
               var pages = [];
@@ -210,7 +207,8 @@ export const allgetData = (patient_id, current) => {
             } else {
               current.setState({ AllDataSec: current.state.AllDataSec1 });
             }
-          });
+          }
+        );
       } else {
         current.setState({
           errorMsg: Something_went_wrong,
@@ -1068,6 +1066,7 @@ export const mailSendToDoc = (data, current) => {
 };
 
 export const updateTaskApi = (current, data) => {
+  data.is_decline = false;
   axios
     .put(
       sitedata.data.path + '/vh/AddTask/' + data?._id,
@@ -1893,14 +1892,11 @@ export const getCalendarData = (current) => {
             data?.saturday?.length > 0)
         ) {
           current.setState({
-            error_section: 70,
-            errorChrMsg: '',
+            errorChrMsg1: '',
           });
         } else {
-          console.log('check');
           current.setState({
-            error_section: 70,
-            errorChrMsg:
+            errorChrMsg1:
               'There is no doctor availiable yet please try after some time!',
           });
         }
