@@ -53,6 +53,7 @@ class Index extends Component {
       appointDate: [],
       assinged_to: [{}],
       currentSelected: -1,
+      errorChrMsg1: '',
     };
   }
 
@@ -546,11 +547,11 @@ class Index extends Component {
                               </Grid>
                             </Grid>
                           </Grid>
-                          {error_section == 70 && (
-                            <div className="err_message2 err_message3">
-                              {errorChrMsg}
-                            </div>
-                          )}
+                          {/* {error_section == 70 && ( */}
+                          <div className="err_message2 err_message3">
+                            {this.state.errorChrMsg1}
+                          </div>
+                          {/* )} */}
                           <Grid className="infoShwSave3">
                             <input
                               type="submit"

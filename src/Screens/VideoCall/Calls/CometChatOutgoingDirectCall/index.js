@@ -146,6 +146,7 @@ class CometChatOutgoingDirectCall extends React.Component {
     // if (this.state.callInProgress) {
     callScreen = (
       <CometChatCallScreen
+        endCallScreen={(value) => this.props.endCallScreen(value)}
         sessionID={this.props.sessionID}
         ref={(el) => (this.callScreenRef = el)}
         loggedInUser={this.loggedInUser}

@@ -114,6 +114,19 @@ class Index extends Component {
       });
   };
 
+  endCallScreen = (value) => {
+    let task_id = this.state.allTasks?._id;
+    this.setState({ loaderImage: true });
+    axios
+      .put(sitedata.data.path + '/vactive/joinmeeting/' + task_id)
+      .then((responce) => {
+        this.setState({ sectionValue: value, loaderImage: false });
+      })
+      .catch(() => {
+        this.setState({ loaderImage: false });
+      });
+  };
+
   render() {
     const { allTasks } = this.state;
     let translate = getLanguage(this.props.stateLanguageType);
@@ -222,6 +235,7 @@ class Index extends Component {
                         <Grid className="manageVideoCall">
                           <CometChatOutgoingDirectCall
                             open
+                            endCallScreen={(value) => this.endCallScreen(value)}
                             sessionID={this.state.sessionID}
                             theme={this.props.theme}
                             item={this.state.item}
@@ -1301,6 +1315,11 @@ class Index extends Component {
                 <Grid className="msgSectionCss">
                   <label>Oops!</label>
                   <p>Link has been expired, Please book time slot again</p>
+                </Grid>
+              )}
+              {this.state.sectionValue == 4 && (
+                <Grid className="msgSectionCss">
+                  <p>Meeting has ended</p>
                 </Grid>
               )}
             </Grid>
