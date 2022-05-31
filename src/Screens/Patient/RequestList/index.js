@@ -81,9 +81,6 @@ class Index extends Component {
       cardiac_problems,
       see_details,
       edit_request,
-      cancel_request,
-      Download_Bill,
-      give_feedback,
       headache_undergoing_treatment,
       no,
       yes,
@@ -152,6 +149,13 @@ class Index extends Component {
       cardiac_heart_failure,
       cardiac_dizziness,
       cardiac_shoulder_pain,
+      download_certificate,
+      payment_due,
+      join_meeting,
+      Details,
+      your_request_is_accepted_by_the_doctor,
+      appointment_date,
+      appointment_time,
     } = translate;
 
     return (
@@ -360,7 +364,7 @@ class Index extends Component {
                                                     alt=""
                                                     title=""
                                                   />
-                                                  Payment due
+                                                  {payment_due}
                                                 </a>
                                               </li>
                                             )}
@@ -379,11 +383,13 @@ class Index extends Component {
                                                   alt=""
                                                   title=""
                                                 />
-                                                <>Download Certificate</>
+                                                <>{download_certificate}</>
                                               </a>
                                             </li>
                                           )}
                                           {item.link?.patient_link &&
+                                            (!item?.is_decline ||
+                                              item?.is_decline === false) &&
                                             !item.meetingjoined && (
                                               <li
                                                 onClick={() => {
@@ -402,7 +408,7 @@ class Index extends Component {
                                                     }
                                                     target="_blank"
                                                   >
-                                                    Join Meeting
+                                                    {join_meeting}
                                                   </a>
                                                 </a>
                                               </li>
@@ -475,7 +481,7 @@ class Index extends Component {
                                 />
                               </a>
                             </Grid>
-                            <label>Details</label>
+                            <label>{Details}</label>
                           </Grid>
                         </Grid>
                       </Grid>
@@ -488,21 +494,19 @@ class Index extends Component {
                           (!this.state.newTask.is_payment ||
                             this.state.newTask.is_payment == false) && (
                             <p className="pending-msgPopup">
-                              Your request is accepted by the doctor but your
-                              payment is pending, Please do your payment
-                              otherwise the request will cancel automatically
+                              {your_request_is_accepted_by_the_doctor}
                             </p>
                           )}
                         <Grid item xs={12} md={12} className="taskDescp">
                           <Grid className="stndQues stndQues1">
                             <Grid>
-                              <h3>Appointment Date:</h3>
+                              <h3>{appointment_date}</h3>
                               {moment(this.state.newTask?.date).format(
                                 'MMM DD, YYYY'
                               )}
                             </Grid>
                             <Grid>
-                              <h3>Appointment Time:</h3>
+                              <h3>{appointment_time}</h3>
                               {this.state.newTask?.start} -{' '}
                               {this.state.newTask?.end}
                             </Grid>

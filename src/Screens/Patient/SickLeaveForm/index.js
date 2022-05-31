@@ -36,6 +36,8 @@ import {
   SelectTimeSlot,
   saveOnDB,
 } from './api';
+import { getLanguage } from 'translations/index';
+
 class Index extends Component {
   constructor(props) {
     super(props);
@@ -79,6 +81,23 @@ class Index extends Component {
   };
 
   render() {
+    let translate = getLanguage(this.props.stateLanguageType);
+    let {
+      sick_leave_certificate,
+      you_have_a_headache,
+      you_have_stomach_problems,
+      you_have_diarrhea,
+      Submit,
+      NotAvailable,
+      holiday,
+      slct_time_slot,
+      rules_and_regulations_of_aimedis,
+      you_have_cardiac_problems,
+      you_feel_depressed,
+      you_have_back_pain,
+      you_have_cough_and_snees,
+      you_have_fever,
+    } = translate;
     const {
       updateQues,
       error_section,
@@ -110,7 +129,7 @@ class Index extends Component {
                   <Grid className="docsOpinion">
                     <Grid container direction="row" className="docsOpinLbl">
                       <Grid item xs={12} md={6}>
-                        <label>Sick Leave Certificate</label>
+                        <label>{sick_leave_certificate}</label>
                       </Grid>
                     </Grid>
                   </Grid>
@@ -124,7 +143,7 @@ class Index extends Component {
                                 updateAllEntrySec={(e) =>
                                   updateAllEntrySec(e, 'headache', this)
                                 }
-                                label="You have a headache?"
+                                label={you_have_a_headache}
                                 value={updateQues.headache}
                               />
                             </Grid>
@@ -147,6 +166,7 @@ class Index extends Component {
                               error_section={this.state.error_section}
                               Allsituation={this.state.Allsituation}
                               errorChrMsg={this.state.errorChrMsg}
+                              stateLanguageType={this.props.stateLanguageType}
                             />
                           )}
 
@@ -156,7 +176,7 @@ class Index extends Component {
                                 updateAllEntrySec={(e) =>
                                   updateAllEntrySec(e, 'stomach_problems', this)
                                 }
-                                label="You have Stomach Problems?"
+                                label={you_have_stomach_problems}
                                 value={updateQues?.stomach_problems}
                               />
                             </Grid>
@@ -181,6 +201,7 @@ class Index extends Component {
                                 Allsituation={this.state.Allsituation}
                                 errorChrMsg={this.state.errorChrMsg}
                                 user={this.props.stateLoginValueAim?.user}
+                                stateLanguageType={this.props.stateLanguageType}
                               />
                             )}
 
@@ -190,7 +211,7 @@ class Index extends Component {
                                 updateAllEntrySec={(e) =>
                                   updateAllEntrySec(e, 'diarrhea', this)
                                 }
-                                label="You have Diarrhea?"
+                                label={you_have_diarrhea}
                                 value={updateQues?.diarrhea}
                               />
                             </Grid>
@@ -214,6 +235,7 @@ class Index extends Component {
                               error_section={this.state.error_section}
                               Allsituation={this.state.Allsituation}
                               errorChrMsg={this.state.errorChrMsg}
+                              stateLanguageType={this.props.stateLanguageType}
                             />
                           )}
 
@@ -223,7 +245,7 @@ class Index extends Component {
                                 updateAllEntrySec={(e) =>
                                   updateAllEntrySec(e, 'have_fever', this)
                                 }
-                                label="You have Fever?"
+                                label={you_have_fever}
                                 value={updateQues?.have_fever}
                               />
                             </Grid>
@@ -247,6 +269,7 @@ class Index extends Component {
                               error_section={this.state.error_section}
                               Allsituation={this.state.Allsituation}
                               errorChrMsg={this.state.errorChrMsg}
+                              stateLanguageType={this.props.stateLanguageType}
                             />
                           )}
 
@@ -256,7 +279,7 @@ class Index extends Component {
                                 updateAllEntrySec={(e) =>
                                   updateAllEntrySec(e, 'back_pain', this)
                                 }
-                                label="You have Back pain?"
+                                label={you_have_back_pain}
                                 value={updateQues?.back_pain}
                               />
                             </Grid>
@@ -283,6 +306,7 @@ class Index extends Component {
                               DateFormat={
                                 this.props.Settings?.setting?.date_format
                               }
+                              stateLanguageType={this.props.stateLanguageType}
                             />
                           )}
 
@@ -292,7 +316,7 @@ class Index extends Component {
                                 updateAllEntrySec={(e) =>
                                   updateAllEntrySec(e, 'cough_and_snees', this)
                                 }
-                                label="You have Cough and Snees?"
+                                label={you_have_cough_and_snees}
                                 value={updateQues?.cough_and_snees}
                               />
                             </Grid>
@@ -316,6 +340,7 @@ class Index extends Component {
                               error_section={this.state.error_section}
                               Allsituation={this.state.Allsituation}
                               errorChrMsg={this.state.errorChrMsg}
+                              stateLanguageType={this.props.stateLanguageType}
                             />
                           )}
                           <Grid className="sickQuesSec">
@@ -324,7 +349,7 @@ class Index extends Component {
                                 updateAllEntrySec={(e) =>
                                   updateAllEntrySec(e, 'feel_depressed', this)
                                 }
-                                label="You feel Depressed?"
+                                label={you_feel_depressed}
                                 value={updateQues?.feel_depressed}
                               />
                             </Grid>
@@ -348,6 +373,7 @@ class Index extends Component {
                               error_section={this.state.error_section}
                               Allsituation={this.state.Allsituation}
                               errorChrMsg={this.state.errorChrMsg}
+                              stateLanguageType={this.props.stateLanguageType}
                             />
                           )}
                           <Grid className="sickQuesSec">
@@ -356,7 +382,7 @@ class Index extends Component {
                                 updateAllEntrySec={(e) =>
                                   updateAllEntrySec(e, 'cardiac_problems', this)
                                 }
-                                label="you have Cardiac Problems?"
+                                label={you_have_cardiac_problems}
                                 value={updateQues?.cardiac_problems}
                               />
                             </Grid>
@@ -381,6 +407,7 @@ class Index extends Component {
                                 error_section={this.state.error_section}
                                 Allsituation={this.state.Allsituation}
                                 errorChrMsg={this.state.errorChrMsg}
+                                stateLanguageType={this.props.stateLanguageType}
                               />
                             )}
                           {this.state.updateQues &&
@@ -405,7 +432,7 @@ class Index extends Component {
                                         className="PIC_Condition"
                                       />
                                     }
-                                    label="I have react and understood the Data protection rules and Regulations of Aimedis."
+                                    label={rules_and_regulations_of_aimedis}
                                   />
                                 </Grid>
                                 {error_section == 73 && (
@@ -423,7 +450,7 @@ class Index extends Component {
                           <Grid className="infoShwSave3">
                             <input
                               type="submit"
-                              value="Submit"
+                              value={Submit}
                               onClick={() => handleEvalSubmit(this, 1)}
                             ></input>
                           </Grid>
@@ -442,7 +469,7 @@ class Index extends Component {
                             </Grid>
                             <Grid className="selTimeSlot">
                               <Grid>
-                                <label>Select time slot</label>
+                                <label>{slct_time_slot}</label>
                               </Grid>
                               <Grid className="selTimeAM">
                                 {' '}
@@ -453,7 +480,7 @@ class Index extends Component {
                                     this.state.appointmentData.appointment_days
                                   ) ? (
                                     <Grid>
-                                      <span>NotAvailable !</span>
+                                      <span>{NotAvailable}</span>
                                     </Grid>
                                   ) : ExitinHoliday(
                                       this.state.selectedDate,
@@ -461,7 +488,7 @@ class Index extends Component {
                                       this.state.appointmentData.holidays_end
                                     ) ? (
                                     <Grid>
-                                      <span>holiday !</span>
+                                      <span>{holiday}</span>
                                     </Grid>
                                   ) : (
                                     this.state.appointDate.map((data, iA) => {
@@ -537,11 +564,11 @@ class Index extends Component {
                                   )
                                 ) : this.state.appointDate !== undefined ? (
                                   <Grid>
-                                    <span>NotAvailable !</span>
+                                    <span>{NotAvailable}</span>
                                   </Grid>
                                 ) : (
                                   <Grid>
-                                    <span>NotAvailable !</span>
+                                    <span>{NotAvailable}</span>
                                   </Grid>
                                 )}
                               </Grid>
@@ -555,7 +582,7 @@ class Index extends Component {
                           <Grid className="infoShwSave3">
                             <input
                               type="submit"
-                              value="Submit"
+                              value={Submit}
                               disabled={this.state.appointDate.length == 0}
                               onClick={() => handleEvalSubmit(this, 2)}
                             ></input>
