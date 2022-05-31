@@ -47,7 +47,7 @@ class Index extends Component {
 
   render() {
     let translate = getLanguage(this.props.stateLanguageType);
-    let { pay_with_stripe, payment, cancel } = translate;
+    let { pay_with_stripe, payment, cancel, request_list_payment } = translate;
 
     //Success payment alert after payment is success
     const successPayment = (data) => {
@@ -173,7 +173,7 @@ class Index extends Component {
                     <Grid className="docsOpinion">
                       <Grid container direction="row" className="docsOpinLbl">
                         <Grid item xs={12} md={6}>
-                          <label>Request list payment</label>
+                          <label>{request_list_payment}</label>
                         </Grid>
                       </Grid>
                     </Grid>

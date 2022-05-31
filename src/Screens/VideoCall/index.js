@@ -139,11 +139,6 @@ class Index extends Component {
       cough_and_snees,
       feel_depressed,
       cardiac_problems,
-      see_details,
-      edit_request,
-      cancel_request,
-      Download_Bill,
-      give_feedback,
       headache_undergoing_treatment,
       no,
       yes,
@@ -211,6 +206,11 @@ class Index extends Component {
       cardiac_heart_failure,
       cardiac_dizziness,
       cardiac_shoulder_pain,
+      meeting_has_ended,
+      link_has_been_expired,
+      Oops,
+      activate_very_soon,
+      Welcome,
     } = translate;
     return (
       <Grid
@@ -1307,19 +1307,19 @@ class Index extends Component {
               )}
               {this.state.sectionValue == 2 && (
                 <Grid className="msgSectionCss">
-                  <label>Welcome</label>
-                  <p>The link will be activate very soon</p>
+                  <label>{Welcome}</label>
+                  <p>{activate_very_soon}</p>
                 </Grid>
               )}
               {this.state.sectionValue == 3 && (
                 <Grid className="msgSectionCss">
-                  <label>Oops!</label>
-                  <p>Link has been expired, Please book time slot again</p>
+                  <label>{Oops}</label>
+                  <p>{link_has_been_expired}</p>
                 </Grid>
               )}
               {this.state.sectionValue == 4 && (
                 <Grid className="msgSectionCss">
-                  <p>Meeting has ended</p>
+                  <p>{meeting_has_ended}</p>
                 </Grid>
               )}
             </Grid>

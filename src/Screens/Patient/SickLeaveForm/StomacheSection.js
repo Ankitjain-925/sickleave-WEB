@@ -5,8 +5,29 @@ import MMHG from 'Screens/Components/mmHgField/index';
 import PainIntensity from 'Screens/Components/PainIntansity/index';
 import SelectByTwo from 'Screens/Components/SelectbyTwo/index';
 import PainPoint from '../../Components/PointPain/index';
+import { getLanguage } from 'translations/index';
 
 function Index(props) {
+  let translate = getLanguage(props.stateLanguageType);
+  const {
+    do_you_have_diabetes,
+    Do_you_suffer_from_high_or_low_blood,
+    diagnosed_Heart_failure,
+    had_a_heart_attack,
+    where_did_the_pain_begin,
+    where_does_it_hurt_now,
+    pain_behind_the_sternum,
+    RR_diastolic,
+    rr_systolic,
+    occur_continuously_or_periodically,
+    undergoing_treatment_for_this_Problem,
+    you_describe_the_intensity,
+    do_you_take_painkillers,
+    temperature_please_tell_me_in_C,
+    situation,
+    Hba1c,
+    blood_sugar,
+  } = translate;
   useEffect(() => {}, []);
 
   return (
@@ -14,7 +35,7 @@ function Index(props) {
       <Grid className="fillDia">
         <Grid className="bgncmnSpc">
           <Grid className="bgncmnLbl">
-            <label>Where did the pain begin?</label>
+            <label>{where_did_the_pain_begin}</label>
           </Grid>
           <PainPoint
             id="New_id1"
@@ -36,7 +57,7 @@ function Index(props) {
       <Grid className="fillDia">
         <Grid className="bgncmnSpc">
           <Grid className="bgncmnLbl">
-            <label>Where does it hurt now?</label>
+            <label>{where_does_it_hurt_now}</label>
           </Grid>
           <PainPoint
             id="New_id2"
@@ -61,7 +82,7 @@ function Index(props) {
             updateAllEntrySec={(e) =>
               props.updateAllEntrySec(e, 'stomach_behind_the_sternum', 2)
             }
-            label="Do you have pain behind the sternum?"
+            label={pain_behind_the_sternum}
             value={props.updateQues?.stomach_behind_the_sternum}
           />
         </Grid>
@@ -72,7 +93,7 @@ function Index(props) {
             updateAllEntrySec={(e) =>
               props.updateAllEntrySec(e, 'stomach_heart_attack')
             }
-            label="Have you ever had a heart attack?"
+            label={had_a_heart_attack}
             value={props.updateQues?.stomach_heart_attack}
           />
         </Grid>
@@ -83,7 +104,7 @@ function Index(props) {
             updateAllEntrySec={(e) =>
               props.updateAllEntrySec(e, 'stomach_heart_failure')
             }
-            label="Do you suffer from diagnosed Heart failure?"
+            label={diagnosed_Heart_failure}
             value={props.updateQues?.stomach_heart_failure}
           />
         </Grid>
@@ -93,10 +114,7 @@ function Index(props) {
       )}
       <Grid className="haveCmnSpc">
         <Grid className="bgncmnLbl">
-          <label>
-            Do you suffer from high or low blood pressure if so can you give the
-            values?
-          </label>
+          <label>{Do_you_suffer_from_high_or_low_blood}</label>
         </Grid>
         <Grid container direction="row" spacing="1">
           <Grid item md={6} sm={6}>
@@ -104,7 +122,7 @@ function Index(props) {
               <MMHG
                 name="stomach_rr_systolic"
                 Unit="mmHg"
-                label="RR_systolic"
+                label={rr_systolic}
                 onChange={(e) => props.updateAllEntrySec1(e)}
                 value={props.updateQues?.stomach_rr_systolic}
               />
@@ -118,7 +136,7 @@ function Index(props) {
               <MMHG
                 name="stomach_rr_diastolic"
                 Unit="mmHg"
-                label="RR_diastolic"
+                label={RR_diastolic}
                 onChange={(e) => props.updateAllEntrySec1(e)}
                 value={props.updateQues?.stomach_rr_diastolic}
               />
@@ -134,7 +152,7 @@ function Index(props) {
           updateAllEntrySec={(e) =>
             props.updateAllEntrySec(e, 'stomach_have_diabetes')
           }
-          label="Do you have diabetes? If so, what is your blood sugar?"
+          label={do_you_have_diabetes}
           value={props.updateQues?.stomach_have_diabetes}
         />
         {props.error_section == 80 && (
@@ -149,7 +167,7 @@ function Index(props) {
                 <MMHG
                   name="stomach_blood_sugar"
                   Unit="mg/dl"
-                  label="Blood sugar"
+                  label={blood_sugar}
                   onChange={(e) => props.updateAllEntrySec1(e)}
                   value={props.updateQues?.stomach_blood_sugar}
                 />
@@ -163,7 +181,7 @@ function Index(props) {
                 <MMHG
                   name="stomach_Hba1c"
                   Unit="%"
-                  label="Hba1c"
+                  label={Hba1c}
                   onChange={(e) => props.updateAllEntrySec1(e)}
                   value={props.updateQues?.stomach_Hba1c}
                 />
@@ -173,7 +191,7 @@ function Index(props) {
           <Grid className="fillDia">
             <SelectByTwo
               name="stomach_situation"
-              label="Situation"
+              label={situation}
               options={props.Allsituation}
               onChange={(e) => props.updateAllEntrySec(e, 'stomach_situation')}
               value={props.updateQues?.stomach_situation}
@@ -187,7 +205,7 @@ function Index(props) {
             updateAllEntrySec={(e) =>
               props.updateAllEntrySec(e, 'stomach_continuously_or_periodically')
             }
-            label="Do the symptoms occur continuously or periodically?"
+            label={occur_continuously_or_periodically}
             value={props.updateQues?.stomach_continuously_or_periodically}
           />
         </Grid>
@@ -198,7 +216,7 @@ function Index(props) {
       <Grid className="textFieldArea1">
         <Grid className="bgncmnSpc">
           <Grid className="bgncmnLbl">
-            <label>If you have Temperature, please tell me in C?</label>
+            <label>{temperature_please_tell_me_in_C}</label>
           </Grid>
           <input
             type="number"
@@ -221,7 +239,7 @@ function Index(props) {
             updateAllEntrySec={(e) =>
               props.updateAllEntrySec(e, 'stomach_take_painkillers')
             }
-            label="Do you take painkillers ?"
+            label={do_you_take_painkillers}
             value={props.updateQues?.stomach_take_painkillers}
           />
         </Grid>
@@ -232,10 +250,7 @@ function Index(props) {
       </Grid>
       <Grid className="bgncmnSpc">
         <Grid className="bgncmnLbl">
-          <label>
-            On a scale of 1 - 10, how would you describe the intensity of the
-            pain?
-          </label>
+          <label>{you_describe_the_intensity}</label>
         </Grid>
         <PainIntensity
           name="stomach_pain_intensity"
@@ -253,7 +268,7 @@ function Index(props) {
           updateAllEntrySec={(e) =>
             props.updateAllEntrySec(e, 'stomach_undergoing_treatment')
           }
-          label="Are you already undergoing treatment for this Problem ?"
+          label={undergoing_treatment_for_this_Problem}
           value={props.updateQues?.stomach_undergoing_treatment}
         />
       </Grid>
