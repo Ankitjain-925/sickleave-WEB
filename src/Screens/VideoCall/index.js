@@ -101,10 +101,15 @@ class Index extends Component {
             });
           }
         } else {
-          if (response.data.message === 'link start soon') {
+          if (
+            response.data.message === 'Link will active soon' ||
+            response.data.message === 'link start soon'
+          ) {
             this.setState({ sectionValue: 2, loaderImage: false });
-          } else {
+          } else if (response.data.message === 'Link Expire') {
             this.setState({ sectionValue: 3, loaderImage: false });
+          } else {
+            this.setState({ sectionValue: 5, loaderImage: false });
           }
         }
       })
@@ -210,7 +215,7 @@ class Index extends Component {
       link_has_been_expired,
       Oops,
       activate_very_soon,
-      Welcome,
+      welcome,
     } = translate;
     return (
       <Grid
@@ -1307,7 +1312,7 @@ class Index extends Component {
               )}
               {this.state.sectionValue == 2 && (
                 <Grid className="msgSectionCss">
-                  <label>{Welcome}</label>
+                  <label>{welcome}</label>
                   <p>{activate_very_soon}</p>
                 </Grid>
               )}
@@ -1320,6 +1325,15 @@ class Index extends Component {
               {this.state.sectionValue == 4 && (
                 <Grid className="msgSectionCss">
                   <p>{meeting_has_ended}</p>
+                </Grid>
+              )}
+              {this.state.sectionValue == 5 && (
+                <Grid className="msgSectionCss">
+                  <label>{Oops}</label>
+                  <p>
+                    Meeting not available please check your meeting key or link
+                    again
+                  </p>
                 </Grid>
               )}
             </Grid>

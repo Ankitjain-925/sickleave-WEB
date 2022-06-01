@@ -79,7 +79,15 @@ class Index extends Component {
 
   render() {
     let translate = getLanguage(this.props.stateLanguageType);
-    let { my_profile, profile_setting, Language, DarkMode, logout } = translate;
+    let {
+      my_profile,
+      profile_setting,
+      Language,
+      DarkMode,
+      logout,
+      request_list,
+      sick_request,
+    } = translate;
     return (
       <Grid
         item
@@ -128,7 +136,7 @@ class Index extends Component {
                     title=""
                   />
                 )}
-                <span>{'Sick Request'}</span>
+                <span>{sick_request}</span>
               </a>
             </li>
             <li
@@ -153,7 +161,7 @@ class Index extends Component {
                     title=""
                   />
                 )}
-                <span>{'Request List'}</span>
+                <span>{request_list}</span>
               </a>
             </li>
             {/* <li
