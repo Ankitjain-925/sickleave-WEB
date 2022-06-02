@@ -1848,6 +1848,9 @@
     "join_meeting": "Join Meeting",
     "your_request_is_accepted_by_the_doctor": "Your request is accepted by the doctor but your payment is pending, Please do your payment otherwise the request will cancel automatically",
     "appointment_date": "Appointment Date:",
-    "appointment_time": "Appointment Time:"
+    "appointment_time": "Appointment Time:",
+    "your_payment_process_is_pending": "Your payment process is pending",
+    "request_list": "Request List",
+    "sick_request": "Sick Request"
   }
 }
