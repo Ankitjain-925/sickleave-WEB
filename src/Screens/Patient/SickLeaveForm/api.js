@@ -1093,6 +1093,8 @@ export const updateTaskApi = (current, data) => {
 
 // Validate all fields
 export const validatePainHeart = (check, value, item, current) => {
+  let translate = getLanguage(current.props.stateLanguageType);
+  let { please_select, with_yes_no, Pain_begin, hurtnow } = translate;
   var bpPattern = /^[0-9]+$/;
   var Valid = bpPattern.test(value);
   if (item === 'painbegin' && check === 'yes') {
@@ -1105,7 +1107,7 @@ export const validatePainHeart = (check, value, item, current) => {
     ) {
       current.setState({
         error_section: 1,
-        errorChrMsg: 'Please select pain begin',
+        errorChrMsg: please_select + ' ' + Pain_begin,
       });
       MoveTop(0);
       return false;
@@ -1122,7 +1124,7 @@ export const validatePainHeart = (check, value, item, current) => {
     ) {
       current.setState({
         error_section: 2,
-        errorChrMsg: 'Please select hurt now',
+        errorChrMsg: please_select + ' ' + hurtnow,
       });
       MoveTop(0);
       return false;
@@ -1796,27 +1798,6 @@ export const onChange = (date, current) => {
       }
     });
   }
-  // if (
-  //   appointmentData.length <= 0 ||
-  //   (appointmentData &&
-  //     appointmentData.monday.length <= 0 &&
-  //     appointmentData.tuesday.length <= 0 &&
-  //     appointmentData.wednesday.length <= 0 &&
-  //     appointmentData.thursday.length <= 0 &&
-  //     appointmentData.friday.length <= 0 &&
-  //     appointmentData.saturday.length <= 0)
-  // ) {
-  //   current.setState({
-  //     error_section: 70,
-  //     errorChrMsg:
-  //       'There is no doctor availiable yet please try after some time!',
-  //   });
-  // } else {
-  //   current.setState({
-  //     error_section: 70,
-  //     errorChrMsg: '',
-  //   });
-  // }
   current.setState({ apointDay: days, selectedDate: date1 });
 };
 

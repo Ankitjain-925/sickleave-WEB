@@ -1710,6 +1710,9 @@
     "edit_request": "Anfrage bearbeiten",
     "your_payment_process_is_pending": "Ihr Zahlungsvorgang steht noch aus",
     "request_list": "Wunschliste",
-    "sick_request": "Kranke Anfrage"
+    "sick_request": "Kranke Anfrage",
+    "with_yes_no": "with YES / NO",
+    "please_select": "Please select",
+    "Pain_begin": "Pain begin"
   }
 }

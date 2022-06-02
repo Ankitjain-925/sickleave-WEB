@@ -60,17 +60,28 @@ class Index extends Component {
       sectionValue: 0,
       Allsituation: situations,
       gender: this.props.stateLoginValueAim?.user?.sex,
+      AllIds: this.props.match.params,
     };
   }
 
   componentDidMount = () => {
-    const { profile_id, sesion_id } = this.props.match.params;
-    this.setState({ sessionID: sesion_id });
-    CometChat.login(profile_id, COMETCHAT_CONSTANTS.AUTH_KEY)
+    const { AllIds } = this.state;
+    let sessionId = this.state.AllIds?.sesion_id;
+    let callType = 'DIRECT';
+    CometChat.getCallParticipantCount(sessionId, callType).then(
+      (count) => {
+        console.log('Participants count =', count);
+      },
+      (error) => {
+        console.log('Some error occurred =', error);
+      }
+    );
+    console.log('AllIds?.profile_id', AllIds?.profile_id);
+    CometChat.login(AllIds?.profile_id, COMETCHAT_CONSTANTS.AUTH_KEY)
       .then((resp) => {
         axios
           .post(sitedata.data.path + '/cometUserList', {
-            profile_id: profile_id,
+            profile_id: AllIds?.profile_id,
           })
           .then((response) => {})
           .catch((err) => {});
@@ -87,7 +98,7 @@ class Index extends Component {
   };
 
   getSessionId = () => {
-    const { profile_id, sesion_id } = this.props.match.params;
+    var sesion_id = this.state.AllIds?.sesion_id;
     this.setState({ loaderImage: true });
     axios
       .get(sitedata.data.path + '/vactive/Linktime/' + sesion_id)
@@ -241,7 +252,7 @@ class Index extends Component {
                           <CometChatOutgoingDirectCall
                             open
                             endCallScreen={(value) => this.endCallScreen(value)}
-                            sessionID={this.state.sessionID}
+                            sessionID={this.state.AllIds?.sesion_id}
                             theme={this.props.theme}
                             item={this.state.item}
                             type={this.state.type}
