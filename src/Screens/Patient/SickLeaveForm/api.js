@@ -95,7 +95,7 @@ export function getLink() {
   }
   let STRIPE_PUBLISHABLE;
   if (env === 'DEV') {
-    STRIPE_PUBLISHABLE = 'http://localhost:3000/sys-n-sick';
+    STRIPE_PUBLISHABLE = 'https://virtualhospital.aimedis.io/sys-n-sick';
   } else {
     STRIPE_PUBLISHABLE = 'https://virtualhospital.aimedis.io/sys-n-sick';
   }
@@ -1905,3 +1905,52 @@ export const getCalendarData = (current) => {
 export const SelectTimeSlot = (AppointDay, Ai, current) => {
   current.setState({ currentSelected: Ai });
 };
+
+// export const DownloadBill = (current, id, bill_date) => {
+//   var data = {},
+//     senddata = {};
+//   data.patient_id = current.props.stateLoginValueAim.user?._id;
+//   data.profile_id = current.props.stateLoginValueAim.user?.profile_id;
+//   data.first_name = current.props.stateLoginValueAim.user?.first_name;
+//   data.last_name = current.props.stateLoginValueAim.user?.last_name;
+//   data.alies_id = current.props.stateLoginValueAim.user?.alies_id;
+//   data.mobile = current.props.stateLoginValueAim.user?.mobile;
+//   data.email = current.props.stateLoginValueAim.user?.email;
+//   data.profile_image = current.props.stateLoginValueAim.user?.image;
+//   data.address = current.props.stateLoginValueAim.user?.address;
+//   data.postal_code = current.props.stateLoginValueAim.user?.postal_code;
+//   data.country = current.props.stateLoginValueAim.user?.country?.label;
+//   data.city = current.props.stateLoginValueAim.user?.city;
+//   data.birthday = current.props.stateLoginValueAim.user?.birthday;
+//   senddata.invoice_id = id;
+//   senddata.bill_date = bill_date;
+//   senddata.data = data;
+//   current.setState({ loaderImage: true });
+//   axios
+//     .post(sitedata.data.dowload_link + '/vh/downloadPEBill', senddata, {
+//       responseType: 'blob',
+//     })
+//     .then((res) => {
+//       setTimeout(() => {
+//         current.setState({ loaderImage: false });
+//       }, 3000);
+//       var data = new Blob([res.data]);
+//       if (typeof window.navigator.msSaveBlob === 'function') {
+//         // If it is IE that support download blob directly.
+//         window.navigator.msSaveBlob(data, 'Bill.pdf');
+//       } else {
+//         var blob = data;
+//         var link = document.createElement('a');
+//         link.href = window.URL.createObjectURL(blob);
+//         link.download = 'Bill.pdf';
+//         document.body.appendChild(link);
+//         link.click(); // create an <a> element and simulate the click operation.
+//       }
+//     })
+//     .catch((err) => {
+//       current.setState({ loaderImage: false });
+//     })
+//     .catch((err) => {
+//       current.setState({ loaderImage: false });
+//     });
+// };

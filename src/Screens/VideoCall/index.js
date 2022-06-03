@@ -61,6 +61,7 @@ class Index extends Component {
       Allsituation: situations,
       gender: this.props.stateLoginValueAim?.user?.sex,
       AllIds: this.props.match.params,
+      countUser: {},
     };
   }
 
@@ -71,12 +72,12 @@ class Index extends Component {
     CometChat.getCallParticipantCount(sessionId, callType).then(
       (count) => {
         console.log('Participants count =', count);
+        this.setState({ countUser: count });
       },
       (error) => {
         console.log('Some error occurred =', error);
       }
     );
-    console.log('AllIds?.profile_id', AllIds?.profile_id);
     CometChat.login(AllIds?.profile_id, COMETCHAT_CONSTANTS.AUTH_KEY)
       .then((resp) => {
         axios
@@ -132,6 +133,7 @@ class Index extends Component {
 
   endCallScreen = (value) => {
     let task_id = this.state.allTasks?._id;
+    // if (this.state.countUser && this.state.countUser > 0) {
     this.setState({ loaderImage: true });
     axios
       .put(sitedata.data.path + '/vactive/joinmeeting/' + task_id)
@@ -141,6 +143,7 @@ class Index extends Component {
       .catch(() => {
         this.setState({ loaderImage: false });
       });
+    // }
   };
 
   render() {

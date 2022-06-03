@@ -494,7 +494,7 @@ class Index extends Component {
                         )}
                       </Grid>
                     </Grid>
-                    {this.state.thisverify && (
+                    {/* {this.state.thisverify && (
                       <Grid className="logRow">
                         <Grid>
                           <label>{two_fac_auth}</label>
@@ -510,26 +510,26 @@ class Index extends Component {
                           />
                         </Grid>
                       </Grid>
-                    )}
+                    )} */}
 
                     <Grid className="logRow">
-                      {!this.state.thisverify ? (
-                        <Grid className="regCrtAc">
-                          <input
-                            type="submit"
-                            value={login_LOGIN_btn}
-                            onClick={this.BtnSubmit.bind(this)}
-                          />
-                        </Grid>
-                      ) : (
-                        <Grid className="regCrtAc">
-                          <input
-                            type="submit"
-                            value="VERIFY"
-                            onClick={this.Verifycode.bind(this)}
-                          />
-                        </Grid>
-                      )}
+                      {/* {!this.state.thisverify ? ( */}
+                      <Grid className="regCrtAc">
+                        <input
+                          type="submit"
+                          value={login_LOGIN_btn}
+                          onClick={this.BtnSubmit.bind(this)}
+                        />
+                      </Grid>
+                      {/* ) : (
+                      <Grid className="regCrtAc">
+                        <input
+                          type="submit"
+                          value="VERIFY"
+                          onClick={this.Verifycode.bind(this)}
+                        />
+                      </Grid>
+                      )} */}
                     </Grid>
                     <p className="regOnlog">
                       {login_an_account}{' '}

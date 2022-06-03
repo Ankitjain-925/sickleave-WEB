@@ -157,6 +157,7 @@ class Index extends Component {
       appointment_date,
       appointment_time,
       your_payment_process_is_pending,
+      Download_Bill,
     } = translate;
 
     return (
@@ -429,6 +430,27 @@ class Index extends Component {
                                                   >
                                                     {join_meeting}
                                                   </a>
+                                                </a>
+                                              </li>
+                                            )}
+                                          {item.meetingjoined &&
+                                            item.meetingjoined === true && (
+                                              <li>
+                                                <a
+                                                // onClick={() => {
+                                                //   DownloadBill(
+                                                //     this,
+                                                //     item?.payment_data?.id,
+                                                //     item?.created_at
+                                                //   );
+                                                // }}
+                                                >
+                                                  <img
+                                                    src={require('assets/images/download.svg')}
+                                                    alt=""
+                                                    title=""
+                                                  />
+                                                  {Download_Bill}
                                                 </a>
                                               </li>
                                             )}
