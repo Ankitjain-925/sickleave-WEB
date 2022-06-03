@@ -1700,6 +1700,16 @@
     "join_meeting": "Tritt dem Treffen bei",
     "your_request_is_accepted_by_the_doctor": "Ihre Anfrage wird vom Arzt akzeptiert, aber Ihre Zahlung steht noch aus. Bitte leisten Sie Ihre Zahlung, andernfalls wird die Anfrage automatisch storniert",
     "appointment_date": "Termin:",
-    "appointment_time": "Termin:"
+    "appointment_time": "Termin:",
+    "added_on": "Hinzugefügt zu",
+    "stomach_problems": "Magenprobleme",
+    "back_pain": "Rückenschmerzen",
+    "cough_and_snees": "Husten und Niesen",
+    "feel_depressed": "Deprimiert",
+    "cardiac_problems": "Herzprobleme",
+    "edit_request": "Anfrage bearbeiten",
+    "your_payment_process_is_pending": "Ihr Zahlungsvorgang steht noch aus",
+    "request_list": "Wunschliste",
+    "sick_request": "Kranke Anfrage"
   }
 }

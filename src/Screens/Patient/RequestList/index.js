@@ -73,8 +73,8 @@ class Index extends Component {
       added_on,
       Headache,
       stomach_problems,
-      diarrhea,
-      fever,
+      Diarrhea,
+      Fever,
       back_pain,
       cough_and_snees,
       feel_depressed,
@@ -156,6 +156,7 @@ class Index extends Component {
       your_request_is_accepted_by_the_doctor,
       appointment_date,
       appointment_time,
+      your_payment_process_is_pending,
     } = translate;
 
     return (
@@ -193,8 +194,8 @@ class Index extends Component {
                                 <Th>{added_on}</Th>
                                 <Th>{Headache}</Th>
                                 <Th>{stomach_problems}</Th>
-                                <Th>{diarrhea}</Th>
-                                <Th>{fever}</Th>
+                                <Th>{Diarrhea}</Th>
+                                <Th>{Fever}</Th>
                                 <Th>{back_pain}</Th>
                                 <Th>{cough_and_snees}</Th>
                                 <Th>{feel_depressed}</Th>
@@ -242,58 +243,74 @@ class Index extends Component {
                                     <Td>
                                       {item &&
                                       item.headache &&
-                                      item.headache === 'yes'
-                                        ? 'Yes'
-                                        : 'No'}
+                                      item.headache === 'yes' ? (
+                                        <>{yes}</>
+                                      ) : (
+                                        <>{no}</>
+                                      )}
                                     </Td>
                                     <Td>
                                       {item &&
                                       item.stomach_problems &&
-                                      item.stomach_problems === 'yes'
-                                        ? 'Yes'
-                                        : 'No'}
+                                      item.stomach_problems === 'yes' ? (
+                                        <>{yes}</>
+                                      ) : (
+                                        <>{no}</>
+                                      )}
                                     </Td>
                                     <Td>
                                       {item &&
                                       item.diarrhea &&
-                                      item.diarrhea === 'yes'
-                                        ? 'Yes'
-                                        : 'No'}
+                                      item.diarrhea === 'yes' ? (
+                                        <>{yes}</>
+                                      ) : (
+                                        <>{no}</>
+                                      )}
                                     </Td>
                                     <Td>
                                       {item &&
                                       item.have_fever &&
-                                      item.have_fever === 'yes'
-                                        ? 'Yes'
-                                        : 'No'}
+                                      item.have_fever === 'yes' ? (
+                                        <>{yes}</>
+                                      ) : (
+                                        <>{no}</>
+                                      )}
                                     </Td>
                                     <Td>
                                       {item &&
                                       item.back_pain &&
-                                      item.back_pain === 'yes'
-                                        ? 'Yes'
-                                        : 'No'}
+                                      item.back_pain === 'yes' ? (
+                                        <>{yes}</>
+                                      ) : (
+                                        <>{no}</>
+                                      )}
                                     </Td>
                                     <Td>
                                       {item &&
                                       item.cough_and_snees &&
-                                      item.cough_and_snees === 'yes'
-                                        ? 'Yes'
-                                        : 'No'}
+                                      item.cough_and_snees === 'yes' ? (
+                                        <>{yes}</>
+                                      ) : (
+                                        <>{no}</>
+                                      )}
                                     </Td>
                                     <Td>
                                       {item &&
                                       item.feel_depressed &&
-                                      item.feel_depressed === 'yes'
-                                        ? 'Yes'
-                                        : 'No'}
+                                      item.feel_depressed === 'yes' ? (
+                                        <>{yes}</>
+                                      ) : (
+                                        <>{no}</>
+                                      )}
                                     </Td>
                                     <Td>
                                       {item &&
                                       item.cardiac_problems &&
-                                      item.cardiac_problems === 'yes'
-                                        ? 'Yes'
-                                        : 'No'}
+                                      item.cardiac_problems === 'yes' ? (
+                                        <>{yes}</>
+                                      ) : (
+                                        <>{no}</>
+                                      )}
                                     </Td>
                                     <Td className="billDots">
                                       <a className="academy_ul">
@@ -303,7 +320,9 @@ class Index extends Component {
                                             <Grid>
                                               <InfoOutlinedIcon className="InfoOutLine" />
                                               <h6 className="assignHos Paymentpending">
-                                                Your payment process is pending
+                                                {
+                                                  your_payment_process_is_pending
+                                                }
                                               </h6>
                                             </Grid>
                                           )}
@@ -960,7 +979,7 @@ class Index extends Component {
                             {this.state.newTask.diarrhea === 'yes' && (
                               <Grid>
                                 <Grid className="allSickHeadSec">
-                                  <h3>{diarrhea}</h3>
+                                  <h3>{Diarrhea}</h3>
                                 </Grid>
                                 <Grid>
                                   <Grid className="sickAllMngSec">
@@ -1030,7 +1049,7 @@ class Index extends Component {
                             {this.state.newTask.have_fever === 'yes' && (
                               <Grid>
                                 <Grid className="allSickHeadSec">
-                                  <h3>{fever}</h3>
+                                  <h3>{Fever}</h3>
                                 </Grid>
 
                                 <Grid>
