@@ -1851,6 +1851,7 @@
     "appointment_time": "Appointment Time:",
     "your_payment_process_is_pending": "Your payment process is pending",
     "request_list": "Request List",
-    "sick_request": "Sick Request"
+    "sick_request": "Sick Request",
+    "Download_Bill": "Download Bill"
   }
 }
