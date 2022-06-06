@@ -1093,7 +1093,14 @@ export const updateTaskApi = (current, data) => {
 // Validate all fields
 export const validatePainHeart = (check, value, item, current) => {
   let translate = getLanguage(current.props.stateLanguageType);
-  let { please_select, with_yes_no, Pain_begin, hurtnow } = translate;
+
+  let {please_select,Pain_begin,hurt_now,Quality_of_pain,please_enter,Undergoing_treatment,with_yes_no,pain_point,
+    continuously_or_periodically,take_painkillers, suffer_from_vomiting,environmental_suffer_symtoms,keep_liquids_with,
+    valid_body_temp,please_enter_sputum_intensity,back_symptoms_begin,rr_systolic,bp_should_number,systolic_value_between,
+    RR_diastolic,diastolic_in_number,diastolic_value_between,pain_intensity,body_temp,Body_temp_bet,diabetes,enter_blood_sugar,
+    blood_sugar_in_number,blood_sugar_between,enter_hba1c,Hba1c_should_between,fev_cough,atleast_condition,low_value,top_value,
+    fever_low_body_temp,of_body_temprature} = translate;
+
   var bpPattern = /^[0-9]+$/;
   var Valid = bpPattern.test(value);
   if (item === 'painbegin' && check === 'yes') {
@@ -1106,7 +1113,7 @@ export const validatePainHeart = (check, value, item, current) => {
     ) {
       current.setState({
         error_section: 1,
-        errorChrMsg: please_select + ' ' + Pain_begin,
+        errorChrMsg: please_select + " " + Pain_begin,
       });
       MoveTop(0);
       return false;
@@ -1123,7 +1130,7 @@ export const validatePainHeart = (check, value, item, current) => {
     ) {
       current.setState({
         error_section: 2,
-        errorChrMsg: please_select + ' ' + hurtnow,
+        errorChrMsg: please_select + " " + hurt_now,
       });
       MoveTop(0);
       return false;
@@ -1134,7 +1141,7 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value && !(value > -1)) {
       current.setState({
         error_section: 6,
-        errorChrMsg: 'Please enter Quality of pain valuey',
+        errorChrMsg: please_enter + " " + Quality_of_pain,
       });
       MoveTop(250);
       return false;
@@ -1145,7 +1152,7 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value) {
       current.setState({
         error_section: 11,
-        errorChrMsg: 'Please select Undergoing treatment with YES / No',
+        errorChrMsg: please_select + " " + Undergoing_treatment + " " + with_yes_no,
       });
       MoveTop(550);
       return false;
@@ -1161,7 +1168,7 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value) {
       current.setState({
         error_section: section,
-        errorChrMsg: 'Please select Pain point',
+        errorChrMsg: please_select + " " + pain_point,
       });
       MoveTop(0);
       return false;
@@ -1175,7 +1182,7 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value) {
       current.setState({
         error_section: 16,
-        errorChrMsg: 'Please select Continuously or Periodically with Yes / No',
+        errorChrMsg: please_select + " " + continuously_or_periodically + " " + with_yes_no,
       });
       MoveTop(450);
       return false;
@@ -1186,7 +1193,7 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value) {
       current.setState({
         error_section: 18,
-        errorChrMsg: 'Please select Take painkillers with Yes / No',
+        errorChrMsg: please_select + " " + take_painkillers + " " + with_yes_no,
       });
       MoveTop(250);
       return false;
@@ -1197,7 +1204,7 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value) {
       current.setState({
         error_section: 20,
-        errorChrMsg: 'Please select Undergoing treatment with Yes / No',
+        errorChrMsg: please_select + " " +  Undergoing_treatment + " " + with_yes_no,
       });
       MoveTop(550);
       return false;
@@ -1208,7 +1215,7 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value) {
       current.setState({
         error_section: 22,
-        errorChrMsg: 'Please select Suffer from vomiting with Yes / No',
+        errorChrMsg: please_select + " " + suffer_from_vomiting + " " + with_yes_no,
       });
       MoveTop(550);
       return false;
@@ -1224,7 +1231,7 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value) {
       current.setState({
         error_section: section,
-        errorChrMsg: 'Please select Environmental Suffer symtoms with YES / NO',
+        errorChrMsg: please_select + " " + environmental_suffer_symtoms + " " + with_yes_no,
       });
       MoveTop(550);
       return false;
@@ -1235,7 +1242,7 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value) {
       current.setState({
         error_section: 25,
-        errorChrMsg: 'Please select keep Liquids with you with YES / NO',
+        errorChrMsg: please_select + " " + keep_liquids_with + " " + with_yes_no,
       });
       MoveTop(550);
       return false;
@@ -1248,19 +1255,19 @@ export const validatePainHeart = (check, value, item, current) => {
   ) {
     var section = item === 'fever_low_body_temp' ? 28 : 27;
     var currentItem =
-      item === 'fever_low_body_temp' ? 'low value' : 'top value';
+      item === fever_low_body_temp ? low_value : top_value;
     if (!value) {
       current.setState({
         error_section: section,
         errorChrMsg:
-          'Please Enter' + ' ' + currentItem + ' ' + 'of body temprature',
+        please_enter + ' ' + currentItem + ' ' + of_body_temprature,
       });
       MoveTop(550);
       return false;
     } else if (value < 36 || value > 41) {
       current.setState({
         error_section: section,
-        errorChrMsg: 'Please Enter valid body temprature',
+        errorChrMsg: valid_body_temp,
       });
       MoveTop(550);
       return false;
@@ -1277,7 +1284,7 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value || value === '<p><br></p>' || value === '<p></p>') {
       current.setState({
         error_section: section,
-        errorChrMsg: 'Please enter sputum intensity',
+        errorChrMsg: please_enter_sputum_intensity,
       });
       MoveTop(450);
       return false;
@@ -1305,7 +1312,7 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value) {
       current.setState({
         error_section: section,
-        errorChrMsg: 'Please enter Symptoms begin',
+        errorChrMsg: please_enter + " " + back_symptoms_begin,
       });
       MoveTop(550);
       return false;
@@ -1330,28 +1337,28 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value) {
       current.setState({
         error_section: section,
-        errorChrMsg: 'Please enter RR Systolic',
+        errorChrMsg: please_enter + " " + rr_systolic,
       });
       MoveTop(250);
       return false;
     } else if (!Valid) {
       current.setState({
         error_section: section,
-        errorChrMsg: 'RR Systolic bp should be in number',
+        errorChrMsg: rr_systolic + " " + bp_should_number,
       });
       MoveTop(250);
       return false;
     } else if (value < 120) {
       current.setState({
         error_section: section,
-        errorChrMsg: 'Please select systolic bp value between 120-140',
+        errorChrMsg: systolic_value_between,
       });
       MoveTop(250);
       return false;
     } else if (value > 140) {
       current.setState({
         error_section: section,
-        errorChrMsg: 'Please select systolic bp value between 120-140',
+        errorChrMsg: systolic_value_between,
       });
       MoveTop(250);
       return false;
@@ -1376,28 +1383,28 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value) {
       current.setState({
         error_section: section,
-        errorChrMsg: 'Please enter RR Diastolic',
+        errorChrMsg: please_enter + " " + RR_diastolic,
       });
       MoveTop(250);
       return false;
     } else if (!Valid) {
       current.setState({
         error_section: section,
-        errorChrMsg: 'Diastolic bp should be in number',
+        errorChrMsg: diastolic_in_number,
       });
       MoveTop(250);
       return false;
     } else if (value < 80) {
       current.setState({
         error_section: section,
-        errorChrMsg: 'Please select Diastolic bp value between 80-90',
+        errorChrMsg: diastolic_value_between,
       });
       MoveTop(250);
       return false;
     } else if (value > 90) {
       current.setState({
         error_section: section,
-        errorChrMsg: 'Please select Diastolic bp value between 80-90',
+        errorChrMsg: diastolic_value_between,
       });
       MoveTop(250);
       return false;
@@ -1422,7 +1429,7 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value && !(value > 0)) {
       current.setState({
         error_section: section,
-        errorChrMsg: 'Please enter Pain intensity',
+        errorChrMsg: please_enter + " " + pain_intensity,
       });
       MoveTop(450);
       return false;
@@ -1448,14 +1455,14 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value) {
       current.setState({
         error_section: section,
-        errorChrMsg: 'Please enter Body temperature',
+        errorChrMsg: please_enter + " " + body_temp,
       });
       MoveTop(550);
       return false;
     } else if (value < 36 || value > 41) {
       current.setState({
         error_section: section,
-        errorChrMsg: 'Please select Body temperature between 36-41',
+        errorChrMsg: please_select + " " + Body_temp_bet,
       });
       MoveTop(550);
       return false;
@@ -1466,7 +1473,7 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value.headache_have_diabetes) {
       current.setState({
         error_section: 46,
-        errorChrMsg: 'Please select Diabetes with YES / NO',
+        errorChrMsg: please_select + " " + diabetes + " " + with_yes_no,
       });
       MoveTop(200);
       return false;
@@ -1477,14 +1484,14 @@ export const validatePainHeart = (check, value, item, current) => {
       if (!value.headache_blood_sugar) {
         current.setState({
           error_section: 47,
-          errorChrMsg: 'Please enter Blood sugar',
+          errorChrMsg: enter_blood_sugar,
         });
         MoveTop(200);
         return false;
       } else if (!valid) {
         current.setState({
           error_section: 47,
-          errorChrMsg: 'Blood sugar should be in number',
+          errorChrMsg: blood_sugar_in_number,
         });
         MoveTop(200);
         MoveTop(0);
@@ -1492,7 +1499,7 @@ export const validatePainHeart = (check, value, item, current) => {
       } else if (value?.headache_blood_sugar < 160) {
         current.setState({
           error_section: 47,
-          errorChrMsg: 'Blood sugar should be between 160-240',
+          errorChrMsg: blood_sugar_between,
         });
         MoveTop(200);
         MoveTop(0);
@@ -1500,7 +1507,7 @@ export const validatePainHeart = (check, value, item, current) => {
       } else if (value?.headache_blood_sugar > 240) {
         current.setState({
           error_section: 47,
-          errorChrMsg: 'Blood sugar should be between 160-240',
+          errorChrMsg: blood_sugar_between,
         });
         MoveTop(200);
         MoveTop(0);
@@ -1508,7 +1515,7 @@ export const validatePainHeart = (check, value, item, current) => {
       } else if (!value.headache_Hba1c) {
         current.setState({
           error_section: 56,
-          errorChrMsg: 'Please enter Hba1c',
+          errorChrMsg: enter_hba1c,
         });
         MoveTop(200);
         MoveTop(0);
@@ -1516,7 +1523,7 @@ export const validatePainHeart = (check, value, item, current) => {
       } else if (calHba1c < 57 / 10) {
         current.setState({
           error_section: 56,
-          errorChrMsg: 'Hba1c should be between 57-64',
+          errorChrMsg: Hba1c_should_between,
         });
         MoveTop(200);
         MoveTop(0);
@@ -1524,7 +1531,7 @@ export const validatePainHeart = (check, value, item, current) => {
       } else if (calHba1c > 64 / 10) {
         current.setState({
           error_section: 56,
-          errorChrMsg: 'Hba1c should be between 57-64',
+          errorChrMsg: Hba1c_should_between,
         });
         MoveTop(200);
         MoveTop(0);
@@ -1539,7 +1546,7 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value.fever_have_a_cough) {
       current.setState({
         error_section: 75,
-        errorChrMsg: 'Please select Cough with YES / NO',
+        errorChrMsg: please_select + " " + fev_cough + " " + with_yes_no,
       });
       MoveTop(200);
       return false;
@@ -1547,7 +1554,7 @@ export const validatePainHeart = (check, value, item, current) => {
       if (!value.fever_cold && !value.fever_hoarseness) {
         current.setState({
           error_section: 76,
-          errorChrMsg: 'Please select atleast one condition',
+          errorChrMsg: please_select + " " + atleast_condition,
         });
         MoveTop(200);
         return false;
