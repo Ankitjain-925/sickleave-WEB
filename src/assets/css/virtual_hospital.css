@@ -10055,8 +10055,8 @@ button.crdoLghtBlu2 {
   padding-bottom: 0px;
   width: 100%;
 }
-.homeBgDrk .payment_sec_extra_ser1 h2{
-  color: #fff!important;
+.homeBgDrk .payment_sec_extra_ser1 h2 {
+  color: #fff !important;
 }
 .setPaymentBack {
   border-radius: 12px;
@@ -14611,13 +14611,15 @@ label.errMsgStyleSecPart {
   border: 1px #cccc solid;
   z-index: 99999999;
 }
-.assignHos.Paymentpending{
+.assignHos.Paymentpending {
   display: none;
 }
-.InfoOutLine:hover + .assignHos.Paymentpending{
-    display: block !important;
+.InfoOutLine:hover + .assignHos.Paymentpending {
+  display: block !important;
 }
-.homeBgDrk .Paymentpending {  background: #192020 !important; }
+.homeBgDrk .Paymentpending {
+  background: #192020 !important;
+}
 .InfoOutLine {
   color: red;
   font-size: 20px !important;
@@ -14687,12 +14689,12 @@ label.errMsgStyleSecPart {
 }
 
 .darkTheme .stndQues {
-    color: #c9caca !important;
+  color: #c9caca !important;
 }
 .stndQues {
-line-height: 27px;
+  line-height: 27px;
 }
-.pending-msgPopup{
+.pending-msgPopup {
   padding: 12px;
   color: red !important;
   font-weight: 700;
@@ -14701,10 +14703,30 @@ line-height: 27px;
   color: #ff6262 !important;
 }
 @media screen and (min-width: 640px) and (max-width: 959px) {
-.presOpinionIner thead th {
-  padding: 6px !important;
+  .presOpinionIner thead th {
+    padding: 6px !important;
+  }
+  .presOpinionIner td.pivoted {
+    padding: 8px 5px !important;
+  }
 }
-.presOpinionIner td.pivoted {
-  padding: 8px 5px !important;
-}
+
+/* .dowloadCerSick  {
+  display: flex;
+  align-items: flex-start;
+  color: #404646;
+  font-family: Muli;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 14px;
+  list-style-type: none;
+  cursor: pointer;
+  padding: 8px 12px;
+  display: inline !important;
+  padding: 0px !important;
+} */
+
+.dowloadCerSick ul li a {
+  display: flex !important;
 }
