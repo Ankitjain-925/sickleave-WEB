@@ -1849,9 +1849,25 @@
     "your_request_is_accepted_by_the_doctor": "Your request is accepted by the doctor but your payment is pending, Please do your payment otherwise the request will cancel automatically",
     "appointment_date": "Appointment Date:",
     "appointment_time": "Appointment Time:",
-    "your_payment_process_is_pending": "Your payment process is pending",
-    "request_list": "Request List",
-    "sick_request": "Sick Request",
-    "Download_Bill": "Download Bill"
+
+    "hurt_now":"hurt now",
+    "Quality_of_pain":"Quality of pain value",
+    "Undergoing_treatment":"Undergoing treatment",
+    "pain_point":"Pain point",
+    "continuously_or_periodically":"Continuously or Periodically",
+    "take_painkillers":"Take painkillers",
+    "suffer_from_vomiting":"Suffer from vomiting",
+    "environmental_suffer_symtoms":"Environmental Suffer symtoms",
+    "keep_liquids_with":"keep Liquids with you",
+    "please_enter_sputum_intensity":"Please enter sputum intensity",
+    "bp_should_number":"bp should be in number",
+    "Body_temp_bet":"Body temperature between 36-41",
+    "blood_sugar_between":"Blood sugar should be between 160-240",
+    "Hba1c_should_between":"Hba1c should be between 57-64",
+    "fev_cough":"Cough",
+    "atleast_condition":"atleast one condition",
+    "low_value":"low value",
+    "top_value":"top value",
+    "of_body_temprature":"of body temprature"
   }
 }
