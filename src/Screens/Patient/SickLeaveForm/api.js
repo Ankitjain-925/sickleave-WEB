@@ -111,7 +111,6 @@ export const saveOnDB1 = (payment, task, current) => {
     task?.assinged_to[0]?.profile_id + task?.patient?.profile_id + Datenew;
   current.setState({ loaderImage: true });
   if (current.state.updateEvaluate._id) {
-    console.log('paymentdata', payment?.data?.paymentData);
     axios
       .put(
         sitedata.data.path + '/vh/AddTask/' + current.state.updateEvaluate._id,

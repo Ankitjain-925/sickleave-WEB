@@ -20,6 +20,7 @@ import { GetShowLabel1 } from 'Screens/Components/GetMetaData/index.js';
 import { getMetadata, GetLanguageMetadata } from '../Patient/SickLeaveForm/api';
 import PainPoint from 'Screens/Components/PointPain/index';
 import { getDate, getTime } from 'Screens/Components/BasicMethod/index';
+import { S3Image } from 'Screens/Components/GetS3Images/index';
 var situations = [
   {
     label: 'POSTPRANDIAL ',
@@ -61,23 +62,13 @@ class Index extends Component {
       Allsituation: situations,
       gender: this.props.stateLoginValueAim?.user?.sex,
       AllIds: this.props.match.params,
-      countUser: {},
+      uniqueUser: {},
     };
   }
 
   componentDidMount = () => {
     const { AllIds } = this.state;
-    let sessionId = this.state.AllIds?.sesion_id;
     let callType = 'DIRECT';
-    CometChat.getCallParticipantCount(sessionId, callType).then(
-      (count) => {
-        console.log('Participants count =', count);
-        this.setState({ countUser: count });
-      },
-      (error) => {
-        console.log('Some error occurred =', error);
-      }
-    );
     CometChat.login(AllIds?.profile_id, COMETCHAT_CONSTANTS.AUTH_KEY)
       .then((resp) => {
         axios
@@ -133,17 +124,28 @@ class Index extends Component {
 
   endCallScreen = (value) => {
     let task_id = this.state.allTasks?._id;
-    // if (this.state.countUser && this.state.countUser > 0) {
-    this.setState({ loaderImage: true });
-    axios
-      .put(sitedata.data.path + '/vactive/joinmeeting/' + task_id)
-      .then((responce) => {
-        this.setState({ sectionValue: value, loaderImage: false });
-      })
-      .catch(() => {
-        this.setState({ loaderImage: false });
-      });
-    // }
+    this.setState({ sectionValue: value });
+    if (this.state.uniqueUser && this.state.uniqueUser?.length === 2) {
+      this.setState({ loaderImage: true });
+      axios
+        .put(sitedata.data.path + '/vactive/joinmeeting/' + task_id)
+        .then((responce) => {
+          this.setState({ loaderImage: false });
+        })
+        .catch(() => {
+          this.setState({ loaderImage: false });
+        });
+    }
+  };
+
+  userListCall = (userList) => {
+    let unique =
+      userList &&
+      userList?.length > 0 &&
+      userList
+        .map((item) => item?.uid)
+        .filter((value, index, self) => self.indexOf(value) === index);
+    this.setState({ uniqueUser: unique });
   };
 
   render() {
@@ -254,6 +256,9 @@ class Index extends Component {
                         <Grid className="manageVideoCall">
                           <CometChatOutgoingDirectCall
                             open
+                            userListCall={(userList) =>
+                              this.userListCall(userList)
+                            }
                             endCallScreen={(value) => this.endCallScreen(value)}
                             sessionID={this.state.AllIds?.sesion_id}
                             theme={this.props.theme}
@@ -273,7 +278,7 @@ class Index extends Component {
                             <Grid className="allSickVideoSec">
                               <Grid className="topSickVideoSec">
                                 <Grid className="sickImageVideoSec">
-                                  <img src="" alt="" />
+                                  <S3Image imgUrl={allTasks?.patient?.image} />
                                 </Grid>
                                 <Grid className="topTxtVideoSec">
                                   <p>

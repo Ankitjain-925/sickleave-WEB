@@ -329,7 +329,7 @@ class Index extends Component {
                                           )}
                                       </a>
                                     </Td>
-                                    <Td className="presEditDot scndOptionIner">
+                                    <Td className="presEditDot scndOptionIner dowloadCerSick">
                                       <a className="openScndhrf">
                                         <img
                                           src={require('assets/images/three_dots_t.png')}
@@ -353,22 +353,26 @@ class Index extends Component {
                                             </a>
                                           </li>
                                           {(!item?.approved ||
-                                            item?.approved != true) && (
-                                            <li>
-                                              <a
-                                                onClick={() => {
-                                                  EditRequest(this, item);
-                                                }}
-                                              >
-                                                <img
-                                                  src={require('assets/virtual_images/pencil-1.svg')}
-                                                  alt=""
-                                                  title=""
-                                                />
-                                                {edit_request}
-                                              </a>
-                                            </li>
-                                          )}
+                                            item?.approved != true) &&
+                                            (!item?.is_decline ||
+                                              item?.is_decline === false) &&
+                                            (!item.meetingjoined ||
+                                              item.meetingjoined === false) && (
+                                              <li>
+                                                <a
+                                                  onClick={() => {
+                                                    EditRequest(this, item);
+                                                  }}
+                                                >
+                                                  <img
+                                                    src={require('assets/virtual_images/pencil-1.svg')}
+                                                    alt=""
+                                                    title=""
+                                                  />
+                                                  {edit_request}
+                                                </a>
+                                              </li>
+                                            )}
 
                                           {item?.approved == true &&
                                             (!item.is_payment ||
@@ -412,9 +416,9 @@ class Index extends Component {
                                               item?.is_decline === false) &&
                                             !item.meetingjoined && (
                                               <li
-                                                onClick={() => {
-                                                  this.props.cretficate();
-                                                }}
+                                              // onClick={() => {
+                                              //   this.props.cretficate();
+                                              // }}
                                               >
                                                 <a>
                                                   <img
