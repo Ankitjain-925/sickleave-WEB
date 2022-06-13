@@ -277,7 +277,7 @@ class Index extends Component {
                           <Grid className="allWebVideoSec ">
                             <Grid className="allSickVideoSec">
                               <Grid className="topSickVideoSec">
-                                <Grid className="sickImageVideoSec">
+                                <Grid className="profileImagePat">
                                   <S3Image imgUrl={allTasks?.patient?.image} />
                                 </Grid>
                                 <Grid className="topTxtVideoSec">
