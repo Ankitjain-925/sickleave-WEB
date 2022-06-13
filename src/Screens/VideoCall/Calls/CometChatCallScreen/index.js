@@ -310,8 +310,7 @@ class CometChatCallScreen extends React.PureComponent {
   };
 
   startDirectCall = (call) => {
-    const sessionId = `abcd_123`;
-    console.log('ok', sessionId);
+    const sessionId = this.props.sessionID;
     // const customCSS = this.context.UIKitSettings.customCSS;
     const showRecordingButton = true;
     // this.context.UIKitSettings.showCallRecordingOption;
@@ -329,14 +328,24 @@ class CometChatCallScreen extends React.PureComponent {
     CometChat.startCall(
       callSettings,
       el,
+
       new CometChat.OngoingCallListener({
         onCallEnded: (call) => {
+          let value = 4;
+          this.props.endCallScreen(value);
           if (this.context) {
             this.context.setCallInProgress({}, '');
           }
           Storage.removeItem(enums.CONSTANTS['ACTIVECALL']);
           this.props.actionGenerated(enums.ACTIONS['DIRECT_CALL_ENDED']);
         },
+        onUserListUpdated: (userList) => {
+          this.props.userListCall(userList);
+          console.log('user list:', userList);
+        },
+        // onUserJoined: (user) => {
+        //   console.log('user', user);
+        // },s
         onError: (error) => {
           if (this.context) {
             this.context.setCallInProgress(null, '');
@@ -347,6 +356,7 @@ class CometChatCallScreen extends React.PureComponent {
             error && error.hasOwnProperty('code') ? error.code : 'ERROR';
           this.context.setToastMessage('error', errorCode);
         },
+
         onRecordingStarted: (recordingStartedBy) => {
           // This event will work in JS SDK v3.0.2-beta1 & later.
           console.log('Listener => onRecordingStarted:', recordingStartedBy);
@@ -435,7 +445,6 @@ class CometChatCallScreen extends React.PureComponent {
           }
         },
         onCallEnded: (endedCall) => {
-          console.log('1');
           /* Notification received here if current ongoing call is ended. */
           if (this.context) {
             this.context.setCallInProgress(null, '');

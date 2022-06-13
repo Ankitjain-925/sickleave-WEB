@@ -6,15 +6,29 @@ import PainIntensity from 'Screens/Components/PainIntansity/index';
 import DateFormat from 'Screens/Components/DateFormat/index';
 import NotesEditor from '../../Components/Editor/index';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { getLanguage } from 'translations/index';
 
 function Index(props) {
+  let translate = getLanguage(props.stateLanguageType);
+  const {
+    when_did_the_symptoms_begin,
+    in_move_throughout_the_day,
+    top,
+    low,
+    value_Number_in_C,
+    you_describe_the_intensity,
+    do_you_have_a_cough,
+    hoarseness,
+    cold,
+    sputum_what_consistency_and_color,
+  } = translate;
   useEffect(() => {}, []);
 
   return (
     <Grid className="borderLineAfer">
       <Grid className="bgncmnSpc">
         <Grid className="bgncmnLbl">
-          <label>When did the symptoms begin?</label>
+          <label>{when_did_the_symptoms_begin}</label>
         </Grid>
         <Grid>
           <DateFormat
@@ -42,15 +56,15 @@ function Index(props) {
         <Grid className="bgncmnSpc">
           <Grid>
             <Grid className="bgncmnLbl">
-              <label>
-                In which range do the temperatures move throughout the day?
-              </label>
+              <label>{in_move_throughout_the_day}</label>
             </Grid>
             <Grid>
-              <label>Top Value :Number in C (35 - 43)</label>
+              <label>
+                {top} {value_Number_in_C}
+              </label>
               <input
                 type="number"
-                placeholder="36.6"
+                placeholder="40.5"
                 name="fever_top_body_temp"
                 onChange={(e) =>
                   props.updateAllEntrySec1(e, 'fever_top_body_temp')
@@ -65,7 +79,9 @@ function Index(props) {
           </Grid>
           <Grid>
             <Grid>
-              <label>Low Value : Number in C (35 - 43)</label>
+              <label>
+                {low} {value_Number_in_C}
+              </label>
             </Grid>
             <Grid>
               <input
@@ -88,10 +104,7 @@ function Index(props) {
 
       <Grid className="bgncmnSpc">
         <Grid className="bgncmnLbl">
-          <label>
-            On a scale of 1 - 10, how would you describe the intensity of the
-            pain?
-          </label>
+          <label>{you_describe_the_intensity}</label>
         </Grid>
         <PainIntensity
           name="fever_pain_intensity"
@@ -109,9 +122,12 @@ function Index(props) {
           updateAllEntrySec={(e) =>
             props.updateAllEntrySec(e, 'fever_have_a_cough')
           }
-          label="Do you have a cough?"
+          label={do_you_have_a_cough}
           value={props.updateQues?.fever_have_a_cough}
         />
+        {props.error_section == 75 && (
+          <div className="err_message2">{props.errorChrMsg}</div>
+        )}
       </Grid>
       {props.updateQues && props.updateQues?.fever_have_a_cough === 'yes' && (
         <Grid className="fatiqueQues">
@@ -140,7 +156,7 @@ function Index(props) {
                             className="PIC_Condition"
                           />
                         }
-                        label="Cold ?"
+                        label={cold}
                       />
                     </Grid>
                   </Grid>
@@ -165,19 +181,22 @@ function Index(props) {
                             className="PIC_Condition"
                           />
                         }
-                        label="Hoarseness?"
+                        label={hoarseness}
                       />
                     </Grid>
                   </Grid>
                   <Grid item xs={4} md={4}></Grid>
                 </Grid>
+                {props.error_section == 76 && (
+                  <div className="err_message2">{props.errorChrMsg}</div>
+                )}
               </Grid>
             </Grid>
           </Grid>
         </Grid>
       )}
       <Grid className="fillDiaAll">
-        <label>Sputum? If sputum, what consistency and color?</label>
+        <label>{sputum_what_consistency_and_color}</label>
         <NotesEditor
           name="fever_sputum"
           onChange={(e) => props.updateAllEntrySec(e, 'fever_sputum')}

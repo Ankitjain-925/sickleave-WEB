@@ -19,7 +19,7 @@ import { GetShowLabel1 } from 'Screens/Components/GetMetaData/index.js';
 import PainPoint from 'Screens/Components/PointPain/index';
 import { OptionList } from 'Screens/Login/metadataaction';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import { EditRequest } from '../SickLeaveForm/api';
+import { EditRequest, DownloadCert } from '../SickLeaveForm/api';
 import {
   PaymentDue,
   handleOpenDetail,
@@ -28,6 +28,7 @@ import {
   getMetadata,
   GetLanguageMetadata,
 } from '../SickLeaveForm/api';
+import moment from 'moment';
 
 class Index extends Component {
   constructor(props) {
@@ -39,6 +40,8 @@ class Index extends Component {
       newTask: {},
       Allsituation: [],
       openPayment: false,
+      totalPage: 1,
+      currentPage: 1,
     };
   }
 
@@ -53,6 +56,16 @@ class Index extends Component {
     }
   };
 
+  onChangePage = (pageNumber) => {
+    this.setState({
+      AllDataSec: this.state.AllDataSec1.slice(
+        (pageNumber - 1) * 20,
+        pageNumber * 20
+      ),
+      currentPage: pageNumber,
+    });
+  };
+
   render() {
     const { AllDataSec } = this.state;
     let translate = getLanguage(this.props.stateLanguageType);
@@ -60,17 +73,14 @@ class Index extends Component {
       added_on,
       Headache,
       stomach_problems,
-      diarrhea,
-      fever,
+      Diarrhea,
+      Fever,
       back_pain,
       cough_and_snees,
       feel_depressed,
       cardiac_problems,
       see_details,
       edit_request,
-      cancel_request,
-      Download_Bill,
-      give_feedback,
       headache_undergoing_treatment,
       no,
       yes,
@@ -139,6 +149,15 @@ class Index extends Component {
       cardiac_heart_failure,
       cardiac_dizziness,
       cardiac_shoulder_pain,
+      download_certificate,
+      payment_due,
+      join_meeting,
+      Details,
+      your_request_is_accepted_by_the_doctor,
+      appointment_date,
+      appointment_time,
+      your_payment_process_is_pending,
+      Download_Bill,
     } = translate;
 
     return (
@@ -176,8 +195,8 @@ class Index extends Component {
                                 <Th>{added_on}</Th>
                                 <Th>{Headache}</Th>
                                 <Th>{stomach_problems}</Th>
-                                <Th>{diarrhea}</Th>
-                                <Th>{fever}</Th>
+                                <Th>{Diarrhea}</Th>
+                                <Th>{Fever}</Th>
                                 <Th>{back_pain}</Th>
                                 <Th>{cough_and_snees}</Th>
                                 <Th>{feel_depressed}</Th>
@@ -225,79 +244,92 @@ class Index extends Component {
                                     <Td>
                                       {item &&
                                       item.headache &&
-                                      item.headache === 'yes'
-                                        ? 'Yes'
-                                        : 'No'}
+                                      item.headache === 'yes' ? (
+                                        <>{yes}</>
+                                      ) : (
+                                        <>{no}</>
+                                      )}
                                     </Td>
                                     <Td>
                                       {item &&
                                       item.stomach_problems &&
-                                      item.stomach_problems === 'yes'
-                                        ? 'Yes'
-                                        : 'No'}
+                                      item.stomach_problems === 'yes' ? (
+                                        <>{yes}</>
+                                      ) : (
+                                        <>{no}</>
+                                      )}
                                     </Td>
                                     <Td>
                                       {item &&
                                       item.diarrhea &&
-                                      item.diarrhea === 'yes'
-                                        ? 'Yes'
-                                        : 'No'}
+                                      item.diarrhea === 'yes' ? (
+                                        <>{yes}</>
+                                      ) : (
+                                        <>{no}</>
+                                      )}
                                     </Td>
                                     <Td>
                                       {item &&
                                       item.have_fever &&
-                                      item.have_fever === 'yes'
-                                        ? 'Yes'
-                                        : 'No'}
+                                      item.have_fever === 'yes' ? (
+                                        <>{yes}</>
+                                      ) : (
+                                        <>{no}</>
+                                      )}
                                     </Td>
                                     <Td>
                                       {item &&
                                       item.back_pain &&
-                                      item.back_pain === 'yes'
-                                        ? 'Yes'
-                                        : 'No'}
+                                      item.back_pain === 'yes' ? (
+                                        <>{yes}</>
+                                      ) : (
+                                        <>{no}</>
+                                      )}
                                     </Td>
                                     <Td>
                                       {item &&
                                       item.cough_and_snees &&
-                                      item.cough_and_snees === 'yes'
-                                        ? 'Yes'
-                                        : 'No'}
+                                      item.cough_and_snees === 'yes' ? (
+                                        <>{yes}</>
+                                      ) : (
+                                        <>{no}</>
+                                      )}
                                     </Td>
                                     <Td>
                                       {item &&
                                       item.feel_depressed &&
-                                      item.feel_depressed === 'yes'
-                                        ? 'Yes'
-                                        : 'No'}
+                                      item.feel_depressed === 'yes' ? (
+                                        <>{yes}</>
+                                      ) : (
+                                        <>{no}</>
+                                      )}
                                     </Td>
                                     <Td>
                                       {item &&
                                       item.cardiac_problems &&
-                                      item.cardiac_problems === 'yes'
-                                        ? 'Yes'
-                                        : 'No'}
+                                      item.cardiac_problems === 'yes' ? (
+                                        <>{yes}</>
+                                      ) : (
+                                        <>{no}</>
+                                      )}
                                     </Td>
-                                    <Td>
+                                    <Td className="billDots">
                                       <a className="academy_ul">
                                         {item?.approved == true &&
                                           (!item.is_payment ||
                                             item.is_payment == false) && (
                                             <Grid>
                                               <InfoOutlinedIcon className="InfoOutLine" />
-                                              <ul>
-                                                <li>
-                                                  <h6 className="assignHos Paymentpending">
-                                                    Your payment process is
-                                                    pending
-                                                  </h6>
-                                                </li>
-                                              </ul>
+                                              <h6 className="assignHos Paymentpending">
+                                                {
+                                                  your_payment_process_is_pending
+                                                }
+                                              </h6>
                                             </Grid>
                                           )}
                                       </a>
                                     </Td>
-                                    <Td className="presEditDot scndOptionIner">
+                                    <Td className="presEditDot scndOptionIner dowloadCerSick">
                                       <a className="openScndhrf">
                                         <img
                                           src={require('assets/images/three_dots_t.png')}
@@ -321,41 +353,111 @@ class Index extends Component {
                                             </a>
                                           </li>
                                           {(!item?.approved ||
-                                            item?.approved == true) && (
-                                            <li>
-                                              <a
-                                                onClick={() => {
-                                                  EditRequest(this, item);
-                                                }}
-                                              >
+                                            item?.approved != true) &&
+                                            (!item?.is_decline ||
+                                              item?.is_decline === false) &&
+                                            (!item.meetingjoined ||
+                                              item.meetingjoined === false) && (
+                                              <li>
+                                                <a
+                                                  onClick={() => {
+                                                    EditRequest(this, item);
+                                                  }}
+                                                >
+                                                  <img
+                                                    src={require('assets/virtual_images/pencil-1.svg')}
+                                                    alt=""
+                                                    title=""
+                                                  />
+                                                  {edit_request}
+                                                </a>
+                                              </li>
+                                            )}
+
+                                          {item?.approved == true &&
+                                            (!item.is_payment ||
+                                              item.is_payment == false) && (
+                                              <li>
+                                                <a
+                                                  onClick={() => {
+                                                    PaymentDue(item, this);
+                                                  }}
+                                                >
+                                                  <img
+                                                    src={require('assets/virtual_images/pencil-1.svg')}
+                                                    alt=""
+                                                    title=""
+                                                  />
+                                                  {payment_due}
+                                                </a>
+                                              </li>
+                                            )}
+                                          {item && item.certificate && (
+                                            <li
+                                              onClick={() => {
+                                                DownloadCert(
+                                                  item?.certificate,
+                                                  this
+                                                );
+                                              }}
+                                            >
+                                              <a>
                                                 <img
-                                                  src={require('assets/virtual_images/pencil-1.svg')}
+                                                  src={require('assets/images/details.svg')}
                                                   alt=""
                                                   title=""
                                                 />
-                                                {edit_request}
+                                                <>{download_certificate}</>
                                               </a>
                                             </li>
                                           )}
-
-                                          {/* {item?.approved == true &&
-                                            (!item.is_payment ||
-                                              item.is_payment == false) && ( */}
-                                          <li>
-                                            <a
-                                              onClick={() => {
-                                                PaymentDue(item, this);
-                                              }}
-                                            >
-                                              <img
-                                                src={require('assets/virtual_images/pencil-1.svg')}
-                                                alt=""
-                                                title=""
-                                              />
-                                              Payment due
-                                            </a>
-                                          </li>
-                                          {/* )} */}
+                                          {item.link?.patient_link &&
+                                            (!item?.is_decline ||
+                                              item?.is_decline === false) &&
+                                            !item.meetingjoined && (
+                                              <li
+                                              // onClick={() => {
+                                              //   this.props.cretficate();
+                                              // }}
+                                              >
+                                                <a>
+                                                  <img
+                                                    src={require('assets/images/details.svg')}
+                                                    alt=""
+                                                    title=""
+                                                  />
+                                                  <a
+                                                    href={
+                                                      item.link?.patient_link
+                                                    }
+                                                    target="_blank"
+                                                  >
+                                                    {join_meeting}
+                                                  </a>
+                                                </a>
+                                              </li>
+                                            )}
+                                          {item.meetingjoined &&
+                                            item.meetingjoined === true && (
+                                              <li>
+                                                <a
+                                                // onClick={() => {
+                                                //   DownloadBill(
+                                                //     this,
+                                                //     item?.payment_data?.id,
+                                                //     item?.created_at
+                                                //   );
+                                                // }}
+                                                >
+                                                  <img
+                                                    src={require('assets/images/download.svg')}
+                                                    alt=""
+                                                    title=""
+                                                  />
+                                                  {Download_Bill}
+                                                </a>
+                                              </li>
+                                            )}
                                         </ul>
                                       </a>
                                     </Td>
@@ -424,7 +526,7 @@ class Index extends Component {
                                 />
                               </a>
                             </Grid>
-                            <label>Details</label>
+                            <label>{Details}</label>
                           </Grid>
                         </Grid>
                       </Grid>
@@ -436,16 +538,23 @@ class Index extends Component {
                         {this.state.newTask?.approved == true &&
                           (!this.state.newTask.is_payment ||
                             this.state.newTask.is_payment == false) && (
-                            <div className="Paymentpending">
-                              <p>
-                                Your request is accepted by the doctor but your
-                                payment is pending, Please do your payment
-                                otherwise the request will cancel automatically
-                              </p>
-                            </div>
+                            <p className="pending-msgPopup">
+                              {your_request_is_accepted_by_the_doctor}
+                            </p>
                           )}
                         <Grid item xs={12} md={12} className="taskDescp">
                           <Grid className="stndQues stndQues1">
+                            <Grid>
+                              <h3>{appointment_date}</h3>
+                              {moment(this.state.newTask?.date).format(
+                                'MMM DD, YYYY'
+                              )}
+                            </Grid>
+                            <Grid>
+                              <h3>{appointment_time}</h3>
+                              {this.state.newTask?.start} -{' '}
+                              {this.state.newTask?.end}
+                            </Grid>
                             {this.state.newTask.headache === 'yes' && (
                               <Grid>
                                 <Grid className="allSickHeadSec">
@@ -896,7 +1005,7 @@ class Index extends Component {
                             {this.state.newTask.diarrhea === 'yes' && (
                               <Grid>
                                 <Grid className="allSickHeadSec">
-                                  <h3>{diarrhea}</h3>
+                                  <h3>{Diarrhea}</h3>
                                 </Grid>
                                 <Grid>
                                   <Grid className="sickAllMngSec">
@@ -966,7 +1075,7 @@ class Index extends Component {
                             {this.state.newTask.have_fever === 'yes' && (
                               <Grid>
                                 <Grid className="allSickHeadSec">
-                                  <h3>{fever}</h3>
+                                  <h3>{Fever}</h3>
                                 </Grid>
 
                                 <Grid>

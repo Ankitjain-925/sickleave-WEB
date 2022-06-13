@@ -12,6 +12,7 @@ import RequestList from 'Screens/Patient/RequestList/index';
 import PatientProfile from 'Screens/Patient/Profile/index';
 import VideoCall from 'Screens/VideoCall/index';
 import Payment from 'Screens/Patient/RequestList/Payment/index';
+import ArchiveRequest from 'Screens/Patient/ArchiveRequest/index';
 
 class Routermain extends Component {
   render() {
@@ -56,13 +57,18 @@ class Routermain extends Component {
 
             <Route
               exact
-              path="/video-call/:id"
+              path="/video-call/:profile_id/:sesion_id"
               render={(props) => <VideoCall {...props} />}
             />
             <Route
               exact
               path="/patient/request-list"
               render={(props) => <RequestList {...props} />}
+            />
+            <Route
+              exact
+              path="/patient/archive-request"
+              render={(props) => <ArchiveRequest {...props} />}
             />
             <Route
               exact

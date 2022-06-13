@@ -4,6 +4,7 @@ import { commonHeader } from 'component/CommonHeader/index';
 import Timezone from 'timezon.json';
 import { GetLanguageDropdown } from 'Screens/Components/GetMetaData/index.js';
 import { getLanguage } from 'translations/index';
+import { getDate } from 'Screens/Components/BasicMethod/index';
 
 //Not need yet this for the payment
 export const fromEuroToCent = (amount, current) => {
@@ -14,69 +15,126 @@ export const CancelClick = (current) => {
   current.props.history.push('/patient/request-list');
 };
 
+//for downoading the pdf
+export const DownloadCert = (data, current) => {
+  current.setState({ loaderImage: true });
+  axios
+    .post(
+      sitedata.data.path + '/vactive/downloadSickleaveCertificate',
+      data,
+      commonHeader(current.props.stateLoginValueAim.token)
+    )
+    .then((responce) => {
+      current.setState({ loaderImage: false });
+      var data = new Blob([responce.data]);
+      if (typeof window.navigator.msSaveBlob === 'function') {
+        // If it is IE that support download blob directly.
+        window.navigator.msSaveBlob(data, 'report.pdf');
+      } else {
+        var blob = data;
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = 'report.pdf';
+        document.body.appendChild(link);
+        link.click(); // create an <a> element and simulate the click operation.
+      }
+    });
+};
+
 // For send meeting link patient as well as doctor
 export const sendLinkDocPat = (payValue, taskValue, current) => {
-  console.log('data', taskValue);
   var data = {};
   let patientEmail = current?.props?.stateLoginValueAim?.user?.email;
   data.task_id = taskValue?._id;
-  data.date = taskValue?.created_at;
-  data.start_time = taskValue?.start;
-  data.end_time = taskValue?.end;
+  data.date = taskValue?.date;
+  var tq1 = taskValue?.start.split(':');
+  var tq2 = taskValue?.end.split(':');
+  data.start_time = new Date(
+    new Date(taskValue?.date).setHours(tq1[0], tq1[1])
+  );
+  data.end_time = new Date(new Date(taskValue?.date).setHours(tq2[0], tq2[1]));
   data.patient_mail = patientEmail;
   data.patient_profile_id = taskValue?.patient?.profile_id;
   data.patient_id = taskValue?.patient_id;
   data.doctor_profile_id = taskValue?.assinged_to[0]?.profile_id;
   data.doctor_id = taskValue?.assinged_to[0]?.user_id;
-  var t1 = data.start_time.split(':');
-  var Datenew = new Date(data?.date).setHours(t1[0]);
-  data.session_id = data.doctor_profile_id + data.patient_profile_id + Datenew;
-  let path = sitedata.data.path;
-  let result = path && path.replace('/api/v4', '');
+  var t1 = taskValue?.start.split(':');
+  var Datenew = new Date(taskValue?.date).setHours(t1[0]);
+  data.sesion_id = data.doctor_profile_id + data.patient_profile_id + Datenew;
+  let path = getLink();
   let link = {
     doctor_link:
-      result +
-      '/video-call/' +
-      data?.doctor_profile_id +
-      '/' +
-      data?.session_id,
+      path + '/video-call/' + data?.doctor_profile_id + '/' + data?.sesion_id,
     patient_link:
-      result +
-      '/video-call/' +
-      data?.patient_profile_id +
-      '/' +
-      data?.session_id,
+      path + '/video-call/' + data?.patient_profile_id + '/' + data?.sesion_id,
   };
   data.link = link;
-  console.log('data', data);
-  // current.setState({ loaderImage: true });
+  current.setState({ loaderImage: true });
   axios
-    // .post(
-    //   sitedata.data.path + '/vactive/AddMeeting' ,data,
-    //   commonHeader(current.props.stateLoginValueAim.token)
-    // )
+    .post(
+      sitedata.data.path + '/vactive/AddMeeting',
+      data,
+      commonHeader(current.props.stateLoginValueAim.token)
+    )
     .then((responce) => {
       if (responce.data.hassuccessed) {
         current.setState({ loaderImage: false });
-        // this.props.history.push('/patient/request-list');
+        current.props.history.push('/patient/request-list');
       } else {
         current.setState({ loaderImage: false });
       }
     });
 };
 
+export function getLink() {
+  let env = 'DEV';
+  let url = '';
+  if (typeof window !== 'undefined') {
+    let target = window.location.href;
+    env = target.match(/localhost/) ? 'DEV' : 'PRD';
+  }
+  let STRIPE_PUBLISHABLE;
+  if (env === 'DEV') {
+    STRIPE_PUBLISHABLE = 'https://virtualhospital.aimedis.io/sys-n-sick';
+  } else {
+    STRIPE_PUBLISHABLE = 'https://virtualhospital.aimedis.io/sys-n-sick';
+  }
+  return STRIPE_PUBLISHABLE;
+}
+
 // For payment stripe
 export const saveOnDB1 = (payment, task, current) => {
+  let path = getLink();
+  var t1 = task?.start.split(':');
+  var Datenew = new Date(task?.date).setHours(t1[0]);
+  var sesion_id =
+    task?.assinged_to[0]?.profile_id + task?.patient?.profile_id + Datenew;
   current.setState({ loaderImage: true });
   if (current.state.updateEvaluate._id) {
     axios
       .put(
         sitedata.data.path + '/vh/AddTask/' + current.state.updateEvaluate._id,
-        { payment_data: payment?.data?.payment_data, is_payment: true },
+        {
+          payment_data: payment?.data?.paymentData,
+          is_payment: true,
+          link: {
+            doctor_link:
+              path +
+              '/video-call/' +
+              task?.assinged_to[0]?.profile_id +
+              '/' +
+              sesion_id,
+            patient_link:
+              path +
+              '/video-call/' +
+              task?.patient?.profile_id +
+              '/' +
+              sesion_id,
+          },
+        },
         commonHeader(current.props.stateLoginValueAim.token)
       )
       .then((responce) => {
-        console.log('responce', responce);
         sendLinkDocPat(payment, task, current);
         current.setState({ loaderImage: false });
         if (responce.data.hassuccessed) {
@@ -128,7 +186,29 @@ export const allgetData = (patient_id, current) => {
       current.setState({ loaderImage: false });
       if (responce.data.hassuccessed) {
         let data = responce.data;
-        current.setState({ AllDataSec: data.data, loaderImage: false });
+        var totalPage = Math.ceil(data?.data?.length / 20);
+        current.setState(
+          {
+            AllDataSec1: data.data,
+            loaderImage: false,
+            totalPage: totalPage,
+            currentPage: 1,
+          },
+          () => {
+            if (totalPage > 1) {
+              var pages = [];
+              for (var i = 1; i <= current.state.totalPage; i++) {
+                pages.push(i);
+              }
+              current.setState({
+                AllDataSec: current.state.AllDataSec1.slice(0, 20),
+                pages: pages,
+              });
+            } else {
+              current.setState({ AllDataSec: current.state.AllDataSec1 });
+            }
+          }
+        );
       } else {
         current.setState({
           errorMsg: Something_went_wrong,
@@ -139,8 +219,6 @@ export const allgetData = (patient_id, current) => {
 };
 
 export const PaymentDue = (data, current) => {
-  console.log('data', data);
-  console.log('stateLoginValueAim', current.props.stateLoginValueAim);
   current.props.history.push({
     pathname: '/patient/request-list/payment',
     state: { data: data },
@@ -527,24 +605,24 @@ export const handleEvalSubmit = (current, value) => {
                                                                               if (
                                                                                 validatePainHeart(
                                                                                   data.have_fever,
-                                                                                  data.fever_sputum,
-                                                                                  'fever_sputum',
+                                                                                  data,
+                                                                                  'fever_have_a_cough',
                                                                                   current
                                                                                 )
                                                                               ) {
                                                                                 if (
-                                                                                  validatePainHeart1(
-                                                                                    data.back_pain,
-                                                                                    data,
-                                                                                    'back_pain',
+                                                                                  validatePainHeart(
+                                                                                    data.have_fever,
+                                                                                    data.fever_sputum,
+                                                                                    'fever_sputum',
                                                                                     current
                                                                                   )
                                                                                 ) {
                                                                                   if (
-                                                                                    validatePainHeart(
+                                                                                    validatePainHeart1(
                                                                                       data.back_pain,
-                                                                                      data.back_pain_symptoms_begin,
-                                                                                      'back_pain_symptoms_begin',
+                                                                                      data,
+                                                                                      'back_pain',
                                                                                       current
                                                                                     )
                                                                                   ) {
@@ -557,324 +635,283 @@ export const handleEvalSubmit = (current, value) => {
                                                                                       )
                                                                                     ) {
                                                                                       if (
-                                                                                        validatePainHeart1(
+                                                                                        validatePainHeart(
                                                                                           data.back_pain,
-                                                                                          data.back_pain_been_injured,
-                                                                                          'back_pain_been_injured',
+                                                                                          data.back_pain_symptoms_begin,
+                                                                                          'back_pain_symptoms_begin',
                                                                                           current
                                                                                         )
                                                                                       ) {
                                                                                         if (
                                                                                           validatePainHeart1(
                                                                                             data.back_pain,
-                                                                                            data.back_pain_physically_strained,
-                                                                                            'back_pain_physically_strained',
+                                                                                            data.back_pain_been_injured,
+                                                                                            'back_pain_been_injured',
                                                                                             current
                                                                                           )
                                                                                         ) {
                                                                                           if (
                                                                                             validatePainHeart1(
                                                                                               data.back_pain,
-                                                                                              data.back_pain_stress_depression,
-                                                                                              'back_pain_stress_depression',
+                                                                                              data.back_pain_physically_strained,
+                                                                                              'back_pain_physically_strained',
                                                                                               current
                                                                                             )
                                                                                           ) {
                                                                                             if (
                                                                                               validatePainHeart1(
                                                                                                 data.back_pain,
-                                                                                                data.back_pain_heart_attack,
-                                                                                                'back_pain_heart_attack',
+                                                                                                data.back_pain_stress_depression,
+                                                                                                'back_pain_stress_depression',
                                                                                                 current
                                                                                               )
                                                                                             ) {
                                                                                               if (
                                                                                                 validatePainHeart1(
                                                                                                   data.back_pain,
-                                                                                                  data.back_pain_heart_failure,
-                                                                                                  'back_pain_heart_failure',
+                                                                                                  data.back_pain_heart_attack,
+                                                                                                  'back_pain_heart_attack',
                                                                                                   current
                                                                                                 )
                                                                                               ) {
                                                                                                 if (
-                                                                                                  validatePainHeart(
+                                                                                                  validatePainHeart1(
                                                                                                     data.back_pain,
-                                                                                                    data.back_pain_rr_systolic,
-                                                                                                    'back_pain_rr_systolic',
+                                                                                                    data.back_pain_heart_failure,
+                                                                                                    'back_pain_heart_failure',
                                                                                                     current
                                                                                                   )
                                                                                                 ) {
                                                                                                   if (
                                                                                                     validatePainHeart(
                                                                                                       data.back_pain,
-                                                                                                      data.back_pain_rr_diastolic,
-                                                                                                      'back_pain_rr_diastolic',
+                                                                                                      data.back_pain_rr_systolic,
+                                                                                                      'back_pain_rr_systolic',
                                                                                                       current
                                                                                                     )
                                                                                                   ) {
                                                                                                     if (
-                                                                                                      validatePainHeart1(
-                                                                                                        data.cough_and_snees,
-                                                                                                        data,
-                                                                                                        'cough_and_snees',
+                                                                                                      validatePainHeart(
+                                                                                                        data.back_pain,
+                                                                                                        data.back_pain_rr_diastolic,
+                                                                                                        'back_pain_rr_diastolic',
                                                                                                         current
                                                                                                       )
                                                                                                     ) {
                                                                                                       if (
-                                                                                                        validatePainHeart(
+                                                                                                        validatePainHeart1(
                                                                                                           data.cough_and_snees,
-                                                                                                          data.cough_symptoms_begin,
-                                                                                                          'cough_symptoms_begin',
+                                                                                                          data,
+                                                                                                          'cough_and_snees',
                                                                                                           current
                                                                                                         )
                                                                                                       ) {
                                                                                                         if (
                                                                                                           validatePainHeart(
                                                                                                             data.cough_and_snees,
-                                                                                                            data.cough_body_temp,
-                                                                                                            'cough_body_temp',
+                                                                                                            data.cough_symptoms_begin,
+                                                                                                            'cough_symptoms_begin',
                                                                                                             current
                                                                                                           )
                                                                                                         ) {
                                                                                                           if (
                                                                                                             validatePainHeart(
                                                                                                               data.cough_and_snees,
-                                                                                                              data.cough_envi_suffer_symtoms,
-                                                                                                              'cough_envi_suffer_symtoms',
+                                                                                                              data.cough_body_temp,
+                                                                                                              'cough_body_temp',
                                                                                                               current
                                                                                                             )
                                                                                                           ) {
                                                                                                             if (
                                                                                                               validatePainHeart(
                                                                                                                 data.cough_and_snees,
-                                                                                                                data.cough_suffer_from_allergies,
-                                                                                                                'cough_suffer_from_allergies',
+                                                                                                                data.cough_envi_suffer_symtoms,
+                                                                                                                'cough_envi_suffer_symtoms',
                                                                                                                 current
                                                                                                               )
                                                                                                             ) {
                                                                                                               if (
-                                                                                                                validatePainHeart1(
-                                                                                                                  data.feel_depressed,
-                                                                                                                  data,
-                                                                                                                  'feel_depressed',
+                                                                                                                validatePainHeart(
+                                                                                                                  data.cough_and_snees,
+                                                                                                                  data.cough_suffer_from_allergies,
+                                                                                                                  'cough_suffer_from_allergies',
                                                                                                                   current
                                                                                                                 )
                                                                                                               ) {
                                                                                                                 if (
                                                                                                                   validatePainHeart1(
                                                                                                                     data.feel_depressed,
-                                                                                                                    data.depressed_symptoms_begin,
-                                                                                                                    'depressed_symptoms_begin',
+                                                                                                                    data,
+                                                                                                                    'feel_depressed',
                                                                                                                     current
                                                                                                                   )
                                                                                                                 ) {
                                                                                                                   if (
-                                                                                                                    validatePainHeart(
+                                                                                                                    validatePainHeart1(
                                                                                                                       data.feel_depressed,
-                                                                                                                      data.depressed_pain_intensity,
-                                                                                                                      'depressed_pain_intensity',
+                                                                                                                      data.depressed_symptoms_begin,
+                                                                                                                      'depressed_symptoms_begin',
                                                                                                                       current
                                                                                                                     )
                                                                                                                   ) {
                                                                                                                     if (
-                                                                                                                      validatePainHeart1(
+                                                                                                                      validatePainHeart(
                                                                                                                         data.feel_depressed,
-                                                                                                                        data.depressed_do_you_sleep,
-                                                                                                                        'depressed_do_you_sleep',
+                                                                                                                        data.depressed_pain_intensity,
+                                                                                                                        'depressed_pain_intensity',
                                                                                                                         current
                                                                                                                       )
                                                                                                                     ) {
                                                                                                                       if (
                                                                                                                         validatePainHeart1(
                                                                                                                           data.feel_depressed,
-                                                                                                                          data.depressed_suicidal_thoughts,
-                                                                                                                          'depressed_suicidal_thoughts',
+                                                                                                                          data.depressed_do_you_sleep,
+                                                                                                                          'depressed_do_you_sleep',
                                                                                                                           current
                                                                                                                         )
                                                                                                                       ) {
                                                                                                                         if (
                                                                                                                           validatePainHeart1(
                                                                                                                             data.feel_depressed,
-                                                                                                                            data.depressed_hurt_yourself,
-                                                                                                                            'depressed_hurt_yourself',
+                                                                                                                            data.depressed_suicidal_thoughts,
+                                                                                                                            'depressed_suicidal_thoughts',
                                                                                                                             current
                                                                                                                           )
                                                                                                                         ) {
                                                                                                                           if (
                                                                                                                             validatePainHeart1(
-                                                                                                                              data.cardiac_problems,
-                                                                                                                              data,
-                                                                                                                              'cardiac_problems',
+                                                                                                                              data.feel_depressed,
+                                                                                                                              data.depressed_hurt_yourself,
+                                                                                                                              'depressed_hurt_yourself',
                                                                                                                               current
                                                                                                                             )
                                                                                                                           ) {
                                                                                                                             if (
-                                                                                                                              validatePainHeart(
+                                                                                                                              validatePainHeart1(
                                                                                                                                 data.cardiac_problems,
-                                                                                                                                data.cardiac_rr_systolic,
-                                                                                                                                'cardiac_rr_systolic',
+                                                                                                                                data,
+                                                                                                                                'cardiac_problems',
                                                                                                                                 current
                                                                                                                               )
                                                                                                                             ) {
                                                                                                                               if (
                                                                                                                                 validatePainHeart(
                                                                                                                                   data.cardiac_problems,
-                                                                                                                                  data.cardiac_rr_diastolic,
-                                                                                                                                  'cardiac_rr_diastolic',
+                                                                                                                                  data.cardiac_rr_systolic,
+                                                                                                                                  'cardiac_rr_systolic',
                                                                                                                                   current
                                                                                                                                 )
                                                                                                                               ) {
                                                                                                                                 if (
-                                                                                                                                  validatePainHeart1(
+                                                                                                                                  validatePainHeart(
                                                                                                                                     data.cardiac_problems,
-                                                                                                                                    data.cardiac_heart_attack,
-                                                                                                                                    'cardiac_heart_attack',
+                                                                                                                                    data.cardiac_rr_diastolic,
+                                                                                                                                    'cardiac_rr_diastolic',
                                                                                                                                     current
                                                                                                                                   )
                                                                                                                                 ) {
                                                                                                                                   if (
                                                                                                                                     validatePainHeart1(
                                                                                                                                       data.cardiac_problems,
-                                                                                                                                      data.cardiac_heart_failure,
-                                                                                                                                      'cardiac_heart_failure',
+                                                                                                                                      data.cardiac_heart_attack,
+                                                                                                                                      'cardiac_heart_attack',
                                                                                                                                       current
                                                                                                                                     )
                                                                                                                                   ) {
                                                                                                                                     if (
                                                                                                                                       validatePainHeart1(
                                                                                                                                         data.cardiac_problems,
-                                                                                                                                        data.cardiac_have_dizziness,
-                                                                                                                                        'cardiac_have_dizziness',
+                                                                                                                                        data.cardiac_heart_failure,
+                                                                                                                                        'cardiac_heart_failure',
                                                                                                                                         current
                                                                                                                                       )
                                                                                                                                     ) {
                                                                                                                                       if (
                                                                                                                                         validatePainHeart1(
                                                                                                                                           data.cardiac_problems,
-                                                                                                                                          data.cardiac_have_shoulder_pain,
-                                                                                                                                          'cardiac_have_shoulder_pain',
+                                                                                                                                          data.cardiac_have_dizziness,
+                                                                                                                                          'cardiac_have_dizziness',
                                                                                                                                           current
                                                                                                                                         )
                                                                                                                                       ) {
                                                                                                                                         if (
-                                                                                                                                          data.headache ===
-                                                                                                                                            'yes' ||
-                                                                                                                                          data.stomach_problems ===
-                                                                                                                                            'yes' ||
-                                                                                                                                          data.diarrhea ===
-                                                                                                                                            'yes' ||
-                                                                                                                                          data.have_fever ===
-                                                                                                                                            'yes' ||
-                                                                                                                                          data.back_pain ===
-                                                                                                                                            'yes' ||
-                                                                                                                                          data.cough_and_snees ===
-                                                                                                                                            'yes' ||
-                                                                                                                                          data.feel_depressed ===
-                                                                                                                                            'yes' ||
-                                                                                                                                          data.cardiac_problems ===
-                                                                                                                                            'yes'
+                                                                                                                                          validatePainHeart1(
+                                                                                                                                            data.cardiac_problems,
+                                                                                                                                            data.cardiac_have_shoulder_pain,
+                                                                                                                                            'cardiac_have_shoulder_pain',
+                                                                                                                                            current
+                                                                                                                                          )
                                                                                                                                         ) {
                                                                                                                                           if (
-                                                                                                                                            current
-                                                                                                                                              .state
-                                                                                                                                              .DataprotectionRules &&
-                                                                                                                                            current
-                                                                                                                                              .state
-                                                                                                                                              .DataprotectionRules ===
-                                                                                                                                              true
+                                                                                                                                            data.headache ===
+                                                                                                                                              'yes' ||
+                                                                                                                                            data.stomach_problems ===
+                                                                                                                                              'yes' ||
+                                                                                                                                            data.diarrhea ===
+                                                                                                                                              'yes' ||
+                                                                                                                                            data.have_fever ===
+                                                                                                                                              'yes' ||
+                                                                                                                                            data.back_pain ===
+                                                                                                                                              'yes' ||
+                                                                                                                                            data.cough_and_snees ===
+                                                                                                                                              'yes' ||
+                                                                                                                                            data.feel_depressed ===
+                                                                                                                                              'yes' ||
+                                                                                                                                            data.cardiac_problems ===
+                                                                                                                                              'yes'
                                                                                                                                           ) {
                                                                                                                                             if (
-                                                                                                                                              current
+                                                                                                                                              (data._id &&
+                                                                                                                                                (current
+                                                                                                                                                  .state
+                                                                                                                                                  .DataprotectionRules ||
+                                                                                                                                                  current
+                                                                                                                                                    .state
+                                                                                                                                                    .DataprotectionRules ===
+                                                                                                                                                    false)) ||
+                                                                                                                                              (current
                                                                                                                                                 .state
-                                                                                                                                                .appointDate
-                                                                                                                                                .length ==
-                                                                                                                                              0
+                                                                                                                                                .DataprotectionRules &&
+                                                                                                                                                current
+                                                                                                                                                  .state
+                                                                                                                                                  .DataprotectionRules ===
+                                                                                                                                                  true)
                                                                                                                                             ) {
-                                                                                                                                              current.setState(
-                                                                                                                                                {
-                                                                                                                                                  error_section: 70,
-                                                                                                                                                  errorChrMsg:
-                                                                                                                                                    'There is no doctor availiable yet please try after some time!',
-                                                                                                                                                }
-                                                                                                                                              );
-                                                                                                                                            }
-                                                                                                                                            if (
-                                                                                                                                              data?._id
-                                                                                                                                            ) {
-                                                                                                                                              axios
-                                                                                                                                                .put(
-                                                                                                                                                  sitedata
-                                                                                                                                                    .data
-                                                                                                                                                    .path +
-                                                                                                                                                    '/vh/AddTask/' +
-                                                                                                                                                    data._id,
-                                                                                                                                                  data,
-                                                                                                                                                  commonHeader(
-                                                                                                                                                    current
-                                                                                                                                                      .props
-                                                                                                                                                      .stateLoginValueAim
-                                                                                                                                                      .token
-                                                                                                                                                  )
-                                                                                                                                                )
-                                                                                                                                                .then(
-                                                                                                                                                  (
-                                                                                                                                                    responce
-                                                                                                                                                  ) => {
-                                                                                                                                                    if (
-                                                                                                                                                      responce
-                                                                                                                                                        .data
-                                                                                                                                                        .hassuccessed
-                                                                                                                                                    ) {
-                                                                                                                                                      current.setState(
-                                                                                                                                                        {
-                                                                                                                                                          updateQues:
-                                                                                                                                                            {},
-                                                                                                                                                          loaderImage: false,
-                                                                                                                                                          openCalendar: false,
-                                                                                                                                                          DataprotectionRules: false,
-                                                                                                                                                          currentSelected:
-                                                                                                                                                            -1,
-                                                                                                                                                        }
-                                                                                                                                                      );
-                                                                                                                                                      current.props.history.push(
-                                                                                                                                                        '/patient/request-list'
-                                                                                                                                                      );
-                                                                                                                                                    }
-                                                                                                                                                  }
-                                                                                                                                                )
-                                                                                                                                                .catch(
-                                                                                                                                                  function (
-                                                                                                                                                    error
-                                                                                                                                                  ) {
-                                                                                                                                                    console.log(
-                                                                                                                                                      error
-                                                                                                                                                    );
+                                                                                                                                              if (
+                                                                                                                                                data?._id &&
+                                                                                                                                                (!data.is_decline ||
+                                                                                                                                                  data.is_decline ==
+                                                                                                                                                    false)
+                                                                                                                                              ) {
+                                                                                                                                                updateTaskApi(
+                                                                                                                                                  current,
+                                                                                                                                                  data
+                                                                                                                                                );
+                                                                                                                                              } else {
+                                                                                                                                                current.setState(
+                                                                                                                                                  {
+                                                                                                                                                    openCalendar: true,
                                                                                                                                                   }
                                                                                                                                                 );
+                                                                                                                                              }
                                                                                                                                             } else {
                                                                                                                                               current.setState(
                                                                                                                                                 {
-                                                                                                                                                  openCalendar: true,
+                                                                                                                                                  error_section: 45,
+                                                                                                                                                  errorChrMsg:
+                                                                                                                                                    'Please select Data protection rules and Regulations of Aimedis.',
                                                                                                                                                 }
                                                                                                                                               );
                                                                                                                                             }
                                                                                                                                           } else {
                                                                                                                                             current.setState(
                                                                                                                                               {
-                                                                                                                                                error_section: 45,
+                                                                                                                                                error_section: 73,
                                                                                                                                                 errorChrMsg:
-                                                                                                                                                  'Please select Data protection rules and Regulations of Aimedis.',
+                                                                                                                                                  'Please select atleast one problem for sick leave certificate',
                                                                                                                                               }
                                                                                                                                             );
                                                                                                                                           }
-                                                                                                                                        } else {
-                                                                                                                                          current.setState(
-                                                                                                                                            {
-                                                                                                                                              error_section: 73,
-                                                                                                                                              errorChrMsg:
-                                                                                                                                                'Please select problem for sick leave certificate',
-                                                                                                                                            }
-                                                                                                                                          );
                                                                                                                                         }
                                                                                                                                       }
                                                                                                                                     }
@@ -950,6 +987,7 @@ export const handleEvalSubmit = (current, value) => {
     if (current.state.appointDate && current.state.appointDate.length > 0) {
       data.start = current.state.appointDate[slot];
       data.end = current.state.appointDate[slot + 1];
+      data.date = current.state.date;
     }
     if (
       (current.state.currentSelected && current.state.currentSelected > -1) ||
@@ -958,30 +996,27 @@ export const handleEvalSubmit = (current, value) => {
       current.setState({
         loaderImage: true,
       });
+      if (data?._id && (data?.is_decline || data?.is_decline == true)) {
+        updateTaskApi(current, data);
+      } else {
+        axios
+          .post(
+            sitedata.data.path + '/vh/AddTask',
+            data,
+            commonHeader(current.props.stateLoginValueAim?.token)
+          )
+          .then((responce) => {
+            mailSendToDoc(data, current);
 
-      axios
-        .post(
-          sitedata.data.path + '/vh/AddTask',
-
-          data,
-          commonHeader(current.props.stateLoginValueAim?.token)
-        )
-        .then((responce) => {
-          current.setState({
-            updateQues: {},
-            loaderImage: false,
-            openCalendar: false,
-            DataprotectionRules: false,
-            currentSelected: -1,
+            current.props.history.push('/patient/request-list');
+          })
+          .catch(function (error) {
+            console.log('error');
+            current.setState({
+              loaderImage: false,
+            });
           });
-          current.props.history.push('/patient/request-list');
-        })
-        .catch(function (error) {
-          console.log('error');
-          current.setState({
-            loaderImage: false,
-          });
-        });
+      }
     } else {
       current.setState({
         error_section: 70,
@@ -991,8 +1026,81 @@ export const handleEvalSubmit = (current, value) => {
   }
 };
 
+export const mailSendToDoc = (data, current) => {
+  var data1 = {};
+  var first_name = current.props.stateLoginValueAim?.user?.first_name;
+  var last_name = current.props.stateLoginValueAim?.user?.last_name;
+  var profile_id = current.props.stateLoginValueAim?.user?.profile_id;
+  data1.start = data.start;
+  data1.end = data.end;
+  data1.profile_id = profile_id;
+  data1.first_name = first_name;
+  data1.last_name = last_name;
+  data1.email = data.assinged_to[0].email;
+  data1.date =
+    current.state.date &&
+    getDate(
+      current.state.date,
+      current.props.settings &&
+        current.props.settings?.setting &&
+        current.props.settings?.setting?.date_format
+    );
+  axios
+    .post(
+      sitedata.data.path + '/vactive/DoctorMail',
+      data1,
+      commonHeader(current.props.stateLoginValueAim?.token)
+    )
+    .then((responce) => {
+      current.setState({
+        updateQues: {},
+        loaderImage: false,
+        openCalendar: false,
+        DataprotectionRules: false,
+        currentSelected: -1,
+      });
+    })
+    .catch(function (error) {
+      console.log('error');
+    });
+};
+
+export const updateTaskApi = (current, data) => {
+  data.is_decline = false;
+  axios
+    .put(
+      sitedata.data.path + '/vh/AddTask/' + data?._id,
+      data,
+      commonHeader(current.props.stateLoginValueAim.token)
+    )
+    .then((responce) => {
+      if (responce.data.hassuccessed) {
+        current.setState({
+          updateQues: {},
+          loaderImage: false,
+          openCalendar: false,
+          DataprotectionRules: false,
+          currentSelected: -1,
+        });
+        current.props.history.push('/patient/request-list');
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+
 // Validate all fields
 export const validatePainHeart = (check, value, item, current) => {
+  let translate = getLanguage(current.props.stateLanguageType);
+
+  let {please_select,Pain_begin,hurt_now,Quality_of_pain,please_enter,Undergoing_treatment,with_yes_no,pain_point,
+    continuously_or_periodically,take_painkillers, suffer_from_vomiting,environmental_suffer_symtoms,keep_liquids_with,
+    valid_body_temp,please_enter_sputum_intensity,back_symptoms_begin,rr_systolic,bp_should_number,systolic_value_between,
+    RR_diastolic,diastolic_in_number,diastolic_value_between,pain_intensity,body_temp,Body_temp_bet,diabetes,enter_blood_sugar,
+    blood_sugar_in_number,blood_sugar_between,enter_hba1c,Hba1c_should_between,fev_cough,atleast_condition,low_value,top_value,
+    fever_low_body_temp,of_body_temprature} = translate;
+
   var bpPattern = /^[0-9]+$/;
   var Valid = bpPattern.test(value);
   if (item === 'painbegin' && check === 'yes') {
@@ -1005,7 +1113,7 @@ export const validatePainHeart = (check, value, item, current) => {
     ) {
       current.setState({
         error_section: 1,
-        errorChrMsg: 'Please select pain begin',
+        errorChrMsg: please_select + " " + Pain_begin,
       });
       MoveTop(0);
       return false;
@@ -1022,7 +1130,7 @@ export const validatePainHeart = (check, value, item, current) => {
     ) {
       current.setState({
         error_section: 2,
-        errorChrMsg: 'Please select hurt now',
+        errorChrMsg: please_select + " " + hurt_now,
       });
       MoveTop(0);
       return false;
@@ -1033,7 +1141,7 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value && !(value > -1)) {
       current.setState({
         error_section: 6,
-        errorChrMsg: 'Please enter Quality of pain valuey',
+        errorChrMsg: please_enter + " " + Quality_of_pain,
       });
       MoveTop(250);
       return false;
@@ -1044,7 +1152,7 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value) {
       current.setState({
         error_section: 11,
-        errorChrMsg: 'Please select Undergoing treatment with YES / No',
+        errorChrMsg: please_select + " " + Undergoing_treatment + " " + with_yes_no,
       });
       MoveTop(550);
       return false;
@@ -1060,7 +1168,7 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value) {
       current.setState({
         error_section: section,
-        errorChrMsg: 'Please select Pain point',
+        errorChrMsg: please_select + " " + pain_point,
       });
       MoveTop(0);
       return false;
@@ -1074,7 +1182,7 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value) {
       current.setState({
         error_section: 16,
-        errorChrMsg: 'Please select Continuously or Periodically with Yes / No',
+        errorChrMsg: please_select + " " + continuously_or_periodically + " " + with_yes_no,
       });
       MoveTop(450);
       return false;
@@ -1085,7 +1193,7 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value) {
       current.setState({
         error_section: 18,
-        errorChrMsg: 'Please select Take painkillers with Yes / No',
+        errorChrMsg: please_select + " " + take_painkillers + " " + with_yes_no,
       });
       MoveTop(250);
       return false;
@@ -1096,7 +1204,7 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value) {
       current.setState({
         error_section: 20,
-        errorChrMsg: 'Please select Undergoing treatment with Yes / No',
+        errorChrMsg: please_select + " " +  Undergoing_treatment + " " + with_yes_no,
       });
       MoveTop(550);
       return false;
@@ -1107,7 +1215,7 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value) {
       current.setState({
         error_section: 22,
-        errorChrMsg: 'Please select Suffer from vomiting with Yes / No',
+        errorChrMsg: please_select + " " + suffer_from_vomiting + " " + with_yes_no,
       });
       MoveTop(550);
       return false;
@@ -1123,7 +1231,7 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value) {
       current.setState({
         error_section: section,
-        errorChrMsg: 'Please select Environmental Suffer symtoms with YES / NO',
+        errorChrMsg: please_select + " " + environmental_suffer_symtoms + " " + with_yes_no,
       });
       MoveTop(550);
       return false;
@@ -1134,7 +1242,7 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value) {
       current.setState({
         error_section: 25,
-        errorChrMsg: 'Please select keep Liquids with you with YES / NO',
+        errorChrMsg: please_select + " " + keep_liquids_with + " " + with_yes_no,
       });
       MoveTop(550);
       return false;
@@ -1147,19 +1255,19 @@ export const validatePainHeart = (check, value, item, current) => {
   ) {
     var section = item === 'fever_low_body_temp' ? 28 : 27;
     var currentItem =
-      item === 'fever_low_body_temp' ? 'low value' : 'top value';
+      item === fever_low_body_temp ? low_value : top_value;
     if (!value) {
       current.setState({
         error_section: section,
         errorChrMsg:
-          'Please Enter' + ' ' + currentItem + ' ' + 'of body temprature',
+        please_enter + ' ' + currentItem + ' ' + of_body_temprature,
       });
       MoveTop(550);
       return false;
     } else if (value < 36 || value > 41) {
       current.setState({
         error_section: section,
-        errorChrMsg: 'Please Enter valid body temprature',
+        errorChrMsg: valid_body_temp,
       });
       MoveTop(550);
       return false;
@@ -1176,7 +1284,7 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value || value === '<p><br></p>' || value === '<p></p>') {
       current.setState({
         error_section: section,
-        errorChrMsg: 'Please enter sputum intensity',
+        errorChrMsg: please_enter_sputum_intensity,
       });
       MoveTop(450);
       return false;
@@ -1204,7 +1312,7 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value) {
       current.setState({
         error_section: section,
-        errorChrMsg: 'Please enter Symptoms begin',
+        errorChrMsg: please_enter + " " + back_symptoms_begin,
       });
       MoveTop(550);
       return false;
@@ -1229,28 +1337,28 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value) {
       current.setState({
         error_section: section,
-        errorChrMsg: 'Please enter RR Systolic',
+        errorChrMsg: please_enter + " " + rr_systolic,
       });
       MoveTop(250);
       return false;
     } else if (!Valid) {
       current.setState({
         error_section: section,
-        errorChrMsg: 'RR Systolic bp should be in number',
+        errorChrMsg: rr_systolic + " " + bp_should_number,
       });
       MoveTop(250);
       return false;
     } else if (value < 120) {
       current.setState({
         error_section: section,
-        errorChrMsg: 'Please select systolic bp value between 120-140',
+        errorChrMsg: systolic_value_between,
       });
       MoveTop(250);
       return false;
     } else if (value > 140) {
       current.setState({
         error_section: section,
-        errorChrMsg: 'Please select systolic bp value between 120-140',
+        errorChrMsg: systolic_value_between,
       });
       MoveTop(250);
       return false;
@@ -1275,28 +1383,28 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value) {
       current.setState({
         error_section: section,
-        errorChrMsg: 'Please enter RR Diastolic',
+        errorChrMsg: please_enter + " " + RR_diastolic,
       });
       MoveTop(250);
       return false;
     } else if (!Valid) {
       current.setState({
         error_section: section,
-        errorChrMsg: 'Diastolic bp should be in number',
+        errorChrMsg: diastolic_in_number,
       });
       MoveTop(250);
       return false;
     } else if (value < 80) {
       current.setState({
         error_section: section,
-        errorChrMsg: 'Please select Diastolic bp value between 80-90',
+        errorChrMsg: diastolic_value_between,
       });
       MoveTop(250);
       return false;
     } else if (value > 90) {
       current.setState({
         error_section: section,
-        errorChrMsg: 'Please select Diastolic bp value between 80-90',
+        errorChrMsg: diastolic_value_between,
       });
       MoveTop(250);
       return false;
@@ -1321,7 +1429,7 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value && !(value > 0)) {
       current.setState({
         error_section: section,
-        errorChrMsg: 'Please enter Pain intensity',
+        errorChrMsg: please_enter + " " + pain_intensity,
       });
       MoveTop(450);
       return false;
@@ -1347,14 +1455,14 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value) {
       current.setState({
         error_section: section,
-        errorChrMsg: 'Please enter Body temperature',
+        errorChrMsg: please_enter + " " + body_temp,
       });
       MoveTop(550);
       return false;
     } else if (value < 36 || value > 41) {
       current.setState({
         error_section: section,
-        errorChrMsg: 'Please select Body temperature between 36-41',
+        errorChrMsg: please_select + " " + Body_temp_bet,
       });
       MoveTop(550);
       return false;
@@ -1365,7 +1473,7 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value.headache_have_diabetes) {
       current.setState({
         error_section: 46,
-        errorChrMsg: 'Please select Diabetes with YES / NO',
+        errorChrMsg: please_select + " " + diabetes + " " + with_yes_no,
       });
       MoveTop(200);
       return false;
@@ -1376,14 +1484,14 @@ export const validatePainHeart = (check, value, item, current) => {
       if (!value.headache_blood_sugar) {
         current.setState({
           error_section: 47,
-          errorChrMsg: 'Please enter Blood sugar',
+          errorChrMsg: enter_blood_sugar,
         });
         MoveTop(200);
         return false;
       } else if (!valid) {
         current.setState({
           error_section: 47,
-          errorChrMsg: 'Blood sugar should be in number',
+          errorChrMsg: blood_sugar_in_number,
         });
         MoveTop(200);
         MoveTop(0);
@@ -1391,7 +1499,7 @@ export const validatePainHeart = (check, value, item, current) => {
       } else if (value?.headache_blood_sugar < 160) {
         current.setState({
           error_section: 47,
-          errorChrMsg: 'Blood sugar should be between 160-240',
+          errorChrMsg: blood_sugar_between,
         });
         MoveTop(200);
         MoveTop(0);
@@ -1399,7 +1507,7 @@ export const validatePainHeart = (check, value, item, current) => {
       } else if (value?.headache_blood_sugar > 240) {
         current.setState({
           error_section: 47,
-          errorChrMsg: 'Blood sugar should be between 160-240',
+          errorChrMsg: blood_sugar_between,
         });
         MoveTop(200);
         MoveTop(0);
@@ -1407,7 +1515,7 @@ export const validatePainHeart = (check, value, item, current) => {
       } else if (!value.headache_Hba1c) {
         current.setState({
           error_section: 56,
-          errorChrMsg: 'Please enter Hba1c',
+          errorChrMsg: enter_hba1c,
         });
         MoveTop(200);
         MoveTop(0);
@@ -1415,7 +1523,7 @@ export const validatePainHeart = (check, value, item, current) => {
       } else if (calHba1c < 57 / 10) {
         current.setState({
           error_section: 56,
-          errorChrMsg: 'Hba1c should be between 57-64',
+          errorChrMsg: Hba1c_should_between,
         });
         MoveTop(200);
         MoveTop(0);
@@ -1423,10 +1531,32 @@ export const validatePainHeart = (check, value, item, current) => {
       } else if (calHba1c > 64 / 10) {
         current.setState({
           error_section: 56,
-          errorChrMsg: 'Hba1c should be between 57-64',
+          errorChrMsg: Hba1c_should_between,
         });
         MoveTop(200);
         MoveTop(0);
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  } else if (item === 'fever_have_a_cough' && check === 'yes') {
+    if (!value.fever_have_a_cough) {
+      current.setState({
+        error_section: 75,
+        errorChrMsg: please_select + " " + fev_cough + " " + with_yes_no,
+      });
+      MoveTop(200);
+      return false;
+    } else if (value && value.fever_have_a_cough === 'yes') {
+      if (!value.fever_cold && !value.fever_hoarseness) {
+        current.setState({
+          error_section: 76,
+          errorChrMsg: please_select + " " + atleast_condition,
+        });
+        MoveTop(200);
         return false;
       } else {
         return true;
@@ -1740,10 +1870,29 @@ export const getCalendarData = (current) => {
       if (response?.data && response?.data?.data) {
         var data1 = response?.data?.data[0]?.data;
         var data = response?.data?.data[0]?.sickleave[0];
+        if (
+          response.data.data[0].sickleave.length > 0 &&
+          (data?.monday?.length > 0 ||
+            data?.tuesday?.length > 0 ||
+            data?.wednesday?.length > 0 ||
+            data?.thursday?.length > 0 ||
+            data?.friday?.length > 0 ||
+            data?.saturday?.length > 0)
+        ) {
+          current.setState({
+            errorChrMsg1: '',
+          });
+        } else {
+          current.setState({
+            errorChrMsg1:
+              'There is no doctor availiable yet please try after some time!',
+          });
+        }
         current.setState({
           appointmentData: data,
           assinged_to: [
             {
+              email: data1?.email,
               alies_id: data1?.alies_id,
               first_name: data1?.first_name,
               last_name: data1?.last_name,
@@ -1762,3 +1911,52 @@ export const getCalendarData = (current) => {
 export const SelectTimeSlot = (AppointDay, Ai, current) => {
   current.setState({ currentSelected: Ai });
 };
+
+// export const DownloadBill = (current, id, bill_date) => {
+//   var data = {},
+//     senddata = {};
+//   data.patient_id = current.props.stateLoginValueAim.user?._id;
+//   data.profile_id = current.props.stateLoginValueAim.user?.profile_id;
+//   data.first_name = current.props.stateLoginValueAim.user?.first_name;
+//   data.last_name = current.props.stateLoginValueAim.user?.last_name;
+//   data.alies_id = current.props.stateLoginValueAim.user?.alies_id;
+//   data.mobile = current.props.stateLoginValueAim.user?.mobile;
+//   data.email = current.props.stateLoginValueAim.user?.email;
+//   data.profile_image = current.props.stateLoginValueAim.user?.image;
+//   data.address = current.props.stateLoginValueAim.user?.address;
+//   data.postal_code = current.props.stateLoginValueAim.user?.postal_code;
+//   data.country = current.props.stateLoginValueAim.user?.country?.label;
+//   data.city = current.props.stateLoginValueAim.user?.city;
+//   data.birthday = current.props.stateLoginValueAim.user?.birthday;
+//   senddata.invoice_id = id;
+//   senddata.bill_date = bill_date;
+//   senddata.data = data;
+//   current.setState({ loaderImage: true });
+//   axios
+//     .post(sitedata.data.dowload_link + '/vh/downloadPEBill', senddata, {
+//       responseType: 'blob',
+//     })
+//     .then((res) => {
+//       setTimeout(() => {
+//         current.setState({ loaderImage: false });
+//       }, 3000);
+//       var data = new Blob([res.data]);
+//       if (typeof window.navigator.msSaveBlob === 'function') {
+//         // If it is IE that support download blob directly.
+//         window.navigator.msSaveBlob(data, 'Bill.pdf');
+//       } else {
+//         var blob = data;
+//         var link = document.createElement('a');
+//         link.href = window.URL.createObjectURL(blob);
+//         link.download = 'Bill.pdf';
+//         document.body.appendChild(link);
+//         link.click(); // create an <a> element and simulate the click operation.
+//       }
+//     })
+//     .catch((err) => {
+//       current.setState({ loaderImage: false });
+//     })
+//     .catch((err) => {
+//       current.setState({ loaderImage: false });
+//     });
+// };
