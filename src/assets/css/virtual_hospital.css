@@ -14711,22 +14711,12 @@ label.errMsgStyleSecPart {
   }
 }
 
-/* .dowloadCerSick  {
-  display: flex;
-  align-items: flex-start;
-  color: #404646;
-  font-family: Muli;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0;
-  line-height: 14px;
-  list-style-type: none;
-  cursor: pointer;
-  padding: 8px 12px;
-  display: inline !important;
-  padding: 0px !important;
-} */
-
 .dowloadCerSick ul li a {
   display: flex !important;
+}
+
+.profileImagePat img {
+  width: 36px;
+  border-radius: 16px;
+  margin-bottom: 9px;
 }
