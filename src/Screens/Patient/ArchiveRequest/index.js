@@ -16,22 +16,27 @@ import { handleOpenDetail } from "../SickLeaveForm/api";
 import sitedata from "sitedata";
 import axios from "axios";
 import { commonHeader } from "component/CommonHeader/index";
+import Tab from "@material-ui/core/Tab";
+import AppBar from "@material-ui/core/AppBar";
+import Tabs from "@material-ui/core/Tabs";
+import { getDate, getTime } from "Screens/Components/BasicMethod/index";
 
 class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
       AllDataPart: [],
+      tabvalue2: this.props.tabvalue2 || 0,
     };
   }
 
-
+  handleChangeTab2 = (e, tabvalue2) => {
+    this.setState({ tabvalue2 });
+  };
 
   componentDidMount() {
     this.allgetDataPart(this.props.stateLoginValueAim.user._id);
   }
-
-
 
   allgetDataPart = (patient_id) => {
     let translate = getLanguage(this.props.stateLanguageType);
@@ -54,11 +59,8 @@ class Index extends Component {
       });
   };
 
-
-
-
   render() {
-    const { AllDataPart } = this.state;
+    const { AllDataPart, tabvalue2 } = this.state;
     let translate = getLanguage(this.props.stateLanguageType);
     let {
       added_on,
@@ -70,6 +72,8 @@ class Index extends Component {
       cough_and_snees,
       feel_depressed,
       cardiac_problems,
+      no,
+      yes,
     } = translate;
     return (
       <Grid>
@@ -97,6 +101,71 @@ class Index extends Component {
                           <label>Archived Request</label>
                         </Grid>
                       </Grid>
+
+                      <Grid className="taskCntntMng">
+                        <Grid container direction="row" alignItems="center">
+                          <Grid item xs={12} sm={6} md={7}>
+                            <AppBar position="static" className="billTabs">
+                              <Tabs
+                                value={tabvalue2}
+                                onChange={this.handleChangeTab2}
+                              >
+                                <Tab label="All" className="billtabIner" />
+                                <Tab
+                                  label="Not Attented"
+                                  className="billtabIner"
+                                />
+                                <Tab
+                                  label="Pending payment"
+                                  className="billtabIner"
+                                />
+                              </Tabs>
+                            </AppBar>
+                          </Grid>
+                          <Grid item xs={12} sm={6} md={5}>
+                            {/* <Grid className="taskSort">
+                              {this.state.showinput && (
+                                <input
+                                  className="TaskSearch"
+                                  type="text"
+                                  name="search"
+                                  placeholder="Search"
+                                  value={this.state.text}
+                                  onChange={this.FilterText}
+                                />
+                              )}
+                              <a>
+                                {!this.state.showinput ? (
+                                  <img
+                                    src={require("assets/virtual_images/search-entries.svg")}
+                                    alt=""
+                                    title=""
+                                    onClick={() => {
+                                      this.setState({
+                                        showinput: !this.state.showinput,
+                                      });
+                                    }}
+                                  />
+                                ) : (
+                                  <img
+                                    src={require("assets/images/close-search.svg")}
+                                    alt=""
+                                    title=""
+                                    onClick={() => {
+                                      this.setState({
+                                        showinput: !this.state.showinput,
+                                        text: "",
+                                      });
+                                      this.clearFilter();
+                                    }}
+                                  />
+                                )}
+                              </a>
+                            </Grid> */}
+                          </Grid>
+                        </Grid>
+                      </Grid>
+
                       <Grid className="presPkgIner2">
                         <Grid className="presOpinionIner">
                           <Table>
@@ -124,6 +193,90 @@ class Index extends Component {
                                         : ""
                                     }
                                   >
+                                    <Td>
+                                      <p>
+                                        {item && !item?.due_on?.date ? (
+                                          "-"
+                                        ) : (
+                                          <>
+                                            {getDate(
+                                              item?.due_on?.date,
+                                              this.props.settings &&
+                                                this.props.settings?.setting &&
+                                                this.props.settings?.setting
+                                                  ?.date_format
+                                            )}
+                                          </>
+                                        )}
+                                      </p>
+                                      <p>
+                                        {item?.due_on?.time &&
+                                          getTime(
+                                            new Date(item?.due_on?.time),
+                                            this.props.settings &&
+                                              this.props.settings?.setting &&
+                                              this.props.settings?.setting
+                                                ?.time_format
+                                          )}
+                                      </p>
+                                    </Td>
+                                    <Td>
+                                        {item && item.headache && item.headache === 'yes' ? (
+                                            <>{yes}</>
+                                        ) : (
+                                            <>{no}</>
+                                        )}
+                                    </Td>
+                                    <Td>
+                                        {item && item.stomach_problems && item.stomach_problems === 'yes' ? (
+                                            <>{yes}</>
+                                        ) : (
+                                            <>{no}</>
+                                        )}
+                                    </Td>
+                                    <Td>
+                                        {item && item.diarrhea && item.diarrhea === 'yes' ? (
+                                            <>{yes}</>
+                                        ) : (
+                                            <>{no}</>
+                                        )}
+                                    </Td>
+                                    <Td>
+                                        {item && item.have_fever && item.have_fever === 'yes' ? (
+                                            <>{yes}</>
+                                        ) : (
+                                            <>{no}</>
+                                        )}
+                                    </Td>
+                                    <Td>
+                                        {item && item.back_pain && item.back_pain === 'yes' ? (
+                                            <>{yes}</>
+                                        ) : (
+                                            <>{no}</>
+                                        )}
+                                    </Td>
+                                    <Td>
+                                        {item && item.cough_and_snees && item.cough_and_snees === 'yes' ? (
+                                            <>{yes}</>
+                                        ) : (
+                                            <>{no}</>
+                                        )}
+                                    </Td>
+                                    <Td>
+                                        {item && item.feel_depressed && item.feel_depressed === 'yes' ? (
+                                            <>{yes}</>
+                                        ) : (
+                                            <>{no}</>
+                                        )}
+                                    </Td>
+                                    <Td>
+                                        {item && item.cardiac_problems && item.cardiac_problems === 'yes' ? (
+                                            <>{yes}</>
+                                        ) : (
+                                            <>{no}</>
+                                        )}
+                                    </Td>
+
                                     <Td className="presEditDot scndOptionIner">
                                       <a className="openScndhrf">
                                         <img
@@ -147,11 +300,9 @@ class Index extends Component {
                                               see details
                                             </a>
                                           </li>
-                                          
 
-
-                                          {item.meetingjoined &&
-                                            item.meetingjoined === true && (
+                                          {/* {item.meetingjoined &&
+                                            item.meetingjoined === true && ( */}
                                               <li>
                                                 <a
                                                 // onClick={() => {
@@ -170,7 +321,7 @@ class Index extends Component {
                                                   Download Bill
                                                 </a>
                                               </li>
-                                            )}
+                                            {/* )} */}
                                         </ul>
                                       </a>
                                     </Td>
