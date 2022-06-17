@@ -239,9 +239,9 @@ class Index extends Component {
           this.props.settings &&
           this.props.settings.setting &&
           this.props.settings.setting.mode &&
-          this.props.settings.setting.mode === "dark"
-            ? "homeBg darkTheme homeBgDrk"
-            : "homeBg"
+          this.props.settings.setting.mode === 'dark'
+            ? 'homeBg darkTheme homeBgDrk'
+            : 'homeBg'
         }
       >
         {this.state.loaderImage && <Loader />}
@@ -277,7 +277,7 @@ class Index extends Component {
                           <Grid className="allWebVideoSec ">
                             <Grid className="allSickVideoSec">
                               <Grid className="topSickVideoSec">
-                                <Grid className="sickImageVideoSec">
+                                <Grid className="profileImagePat">
                                   <S3Image imgUrl={allTasks?.patient?.image} />
                                 </Grid>
                                 <Grid className="topTxtVideoSec">
@@ -1382,49 +1382,3 @@ export default withRouter(
     Settings,
   })(Index)
 );
-
-{
-  /* <Grid container direction="row">
-               
-                <LeftMenu isNotShow={true} currentPage="profile" />
-                <LeftMenuMobile isNotShow={true} currentPage="profile" />
-                
-                <Grid item xs={12} md={11} lg={10}>
-                  <Grid className="docsOpinion">
-                    <Grid container direction="row" className="docsOpinLbl">
-                      <Grid item xs={12} md={6}>
-                        <label>Video call</label>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={8}>
-                    <Grid className="cnfrmDiaMain2">
-                      {console.log("this.state.msg", this.state.msg)}
-                      <Grid className={this.state.setCss}>
-                        {this.state.msg}
-                      </Grid>
-                      <button onClick={this.startOnClick}>start call</button>
-                      {this.state.startCall &&
-                        (console.log("check"),
-                        (
-                          <Grid className="manageVideoCall">
-                            <CometChatOutgoingDirectCall
-                              open
-                              
-                              theme={this.props.theme}
-                              item={this.state.item}
-                              type={this.state.type}
-                              lang={this.state.lang}
-                              callType={CometChat.CALL_TYPE.VIDEO}
-                              joinDirectCall={this.state.joinDirectCall}
-                              loggedInUser={this.loggedInUser}
-                              actionGenerated={this.actionHandler}
-                            />
-                          </Grid>
-                        ))}
-                        
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Grid> */
-}
