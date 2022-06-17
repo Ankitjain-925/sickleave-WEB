@@ -57,22 +57,30 @@ class Index extends Component {
     this.props.history.push('/');
   };
 
- //For My Profile link
- ProfileLink = () => {
-  this.props.history.push('/patient');
-};
+  //For My Profile link
+  ProfileLink = () => {
+    this.props.history.push('/patient');
+  };
 
-PictureEval = () => {
-  this.props.history.push('/patient/sick-request');
-};
+  PictureEval = () => {
+    this.props.history.push('/patient/sick-request');
+  };
 
-//For Second opinion link
-feedBack = () => {
-  this.props.history.push('/patient/request-list');
-};
+  //For Second opinion link
+  feedBack = () => {
+    this.props.history.push('/patient/request-list');
+  };
   render() {
     let translate = getLanguage(this.props.stateLanguageType);
-    let { my_profile, profile_setting, Language, DarkMode, logout } = translate;
+    let {
+      my_profile,
+      profile_setting,
+      Language,
+      DarkMode,
+      logout,
+      sick_request,
+      request_list,
+    } = translate;
     return (
       <Grid
         className={
@@ -120,7 +128,7 @@ feedBack = () => {
                           title=""
                         />
                       )}
-                      <span>{'Sick Request'}</span>
+                      <span>{sick_request}</span>
                     </a>
                   </li>
                   <li
@@ -145,7 +153,7 @@ feedBack = () => {
                           title=""
                         />
                       )}
-                      <span>{'Request List'}</span>
+                      <span>{request_list}</span>
                     </a>
                   </li>
 
