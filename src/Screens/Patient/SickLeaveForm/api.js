@@ -6,6 +6,43 @@ import { GetLanguageDropdown } from 'Screens/Components/GetMetaData/index.js';
 import { getLanguage } from 'translations/index';
 import { getDate } from 'Screens/Components/BasicMethod/index';
 
+export function getHouseId() {
+  let env = 'DEV';
+  let url = '';
+  if (typeof window !== 'undefined') {
+    let target = window.location.href;
+    env = target.match(/localhost/) ? 'DEV' : 'PRD';
+  }
+  let HouseId;
+  if (env === 'DEV') {
+    HouseId = process.env.REACT_APP_DEV_HOUSE_ID;
+  } else {
+    HouseId = process.env.REACT_APP_TEST_HOUSE_ID;
+  }
+  return HouseId;
+}
+
+export const getAmountData = (current) => {
+  current.setState({ loaderImage: true });
+  axios
+    .get(
+      sitedata.data.path +
+        '/vactive/GetAmount/60fabfe5b3394533f7f9a6dc-1654919887767',
+      commonHeader(current.props.stateLoginValueAim.token)
+    )
+    .then((response) => {
+      if (response.data.hassuccessed) {
+        current.setState({
+          amountDta: response.data.sickleave_certificate_amount,
+          loaderImage: false,
+        });
+      }
+    })
+    .catch((err) => {
+      current.setState({ loaderImage: false });
+    });
+};
+
 //Not need yet this for the payment
 export const fromEuroToCent = (amount, current) => {
   return parseInt(amount * 100);
@@ -324,7 +361,7 @@ export const handleEvalSubmit = (current, value) => {
   data.archived = false;
   data.status = 'open';
   data.created_at = new Date();
-  data.house_id = '60fabfe5b3394533f7f9a6dc-1654919887767';
+  data.house_id = getHouseId();
   if (!data?.due_on?.date) {
     let due_on = data?.due_on || {};
     due_on['date'] = new Date();
