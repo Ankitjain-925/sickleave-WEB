@@ -1714,6 +1714,10 @@
     "with_yes_no": "mit JA/NEIN",
     "please_select": "Bitte auswählen",
     "Pain_begin": "Schmerzen beginnen",
-    "Download_Bill": "Rechnung herunterladen"
+    "Download_Bill": "Rechnung herunterladen",
+    "archived_request":"Archivierte Anfrage",
+    "Alls": "Alle",
+    "not_attented":"Nicht besucht",
+    "Pending_payment":"Ausstehende Zahlung"
   }
 }

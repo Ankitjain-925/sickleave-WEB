@@ -1870,7 +1870,10 @@
     "of_body_temprature": "of body temprature",
     "request_list": "Request List",
     "sick_request": "Sick Request",
-    "archived_request":"Archived Request"
-
+    "archived_request":"Archived Request",
+    "Download_Bill":"Download Bill",
+    "Alls": "All",
+    "not_attented":"Not Attented",
+    "Pending_payment":"Pending Payment"
   }
 }

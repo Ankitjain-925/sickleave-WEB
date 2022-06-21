@@ -99,6 +99,11 @@ class Index extends Component {
       no,
       yes,
       archived_request,
+      Download_Bill,
+      see_details,
+      Alls,
+      not_attented,
+      Pending_payment,
     } = translate;
     return (
       <Grid>
@@ -145,13 +150,13 @@ class Index extends Component {
                                   value={tabvalue2}
                                   onChange={this.handleChangeTab2}
                                 >
-                                  <Tab label="All" className="billtabIner" />
+                                  <Tab label={Alls} className="billtabIner" />
                                   <Tab
-                                    label="Not Attented"
+                                    label={not_attented}
                                     className="billtabIner"
                                   />
                                   <Tab
-                                    label="Pending payment"
+                                    label={Pending_payment}
                                     className="billtabIner"
                                   />
                                 </Tabs>
@@ -349,7 +354,7 @@ class Index extends Component {
                                                 alt=""
                                                 title=""
                                               />
-                                              see details
+                                              {see_details}
                                             </a>
                                           </li>
 
@@ -370,7 +375,7 @@ class Index extends Component {
                                                     alt=""
                                                     title=""
                                                   />
-                                                  Download Bill
+                                                  {Download_Bill}
                                                 </a>
                                               </li>
                                             )}
