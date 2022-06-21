@@ -83,7 +83,7 @@ class Index extends Component {
       Language,
       DarkMode,
       logout,
-      archive_request,
+      archived_request,
     } = translate;
     return (
       <Grid
@@ -183,7 +183,7 @@ class Index extends Component {
                           title=""
                         />
                       )}
-                      <span>{archive_request}</span>
+                      <span>{archived_request}</span>
                     </a>
                   </li>
 

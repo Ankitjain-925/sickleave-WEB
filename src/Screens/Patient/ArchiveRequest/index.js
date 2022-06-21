@@ -27,11 +27,34 @@ class Index extends Component {
     this.state = {
       AllDataPart: [],
       tabvalue2: this.props.tabvalue2 || 0,
+      filterAllData: [],
     };
   }
 
   handleChangeTab2 = (e, tabvalue2) => {
+    const { filterAllData } = this.state;
+
     this.setState({ tabvalue2 });
+    switch (tabvalue2) {
+      case 0:
+        this.setState({ AllDataPart: filterAllData });
+        break;
+      case 1:
+        let notattend = filterAllData.filter((item) => {
+          return item.is_payment == true;
+        });
+        this.setState({ AllDataPart: notattend });
+        break;
+      case 2:
+        let pending = filterAllData.filter((item) => {
+          return item.is_payment == false;
+        });
+        this.setState({ AllDataPart: pending });
+        break;
+      default:
+        this.setState({ AllDataPart: filterAllData });
+        break;
+    }
   };
 
   componentDidMount() {
@@ -51,6 +74,7 @@ class Index extends Component {
         if (responce.data.hassuccessed) {
           let data = responce.data;
           this.setState({ AllDataPart: data.data });
+          this.setState({ filterAllData: data.data });
         } else {
           this.setState({
             errorMsg: Something_went_wrong,
@@ -74,6 +98,7 @@ class Index extends Component {
       cardiac_problems,
       no,
       yes,
+      archived_request,
     } = translate;
     return (
       <Grid>
@@ -98,32 +123,42 @@ class Index extends Component {
                     <Grid className="docsOpinion docsAllOption">
                       <Grid container direction="row" className="docsOpinLbl">
                         <Grid item xs={12} md={6}>
-                          <label>Archived Request</label>
+                          <label>{archived_request}</label>
                         </Grid>
                       </Grid>
 
-                      <Grid className="taskCntntMng">
-                        <Grid container direction="row" alignItems="center">
-                          <Grid item xs={12} sm={6} md={7}>
-                            <AppBar position="static" className="billTabs">
-                              <Tabs
-                                value={tabvalue2}
-                                onChange={this.handleChangeTab2}
-                              >
-                                <Tab label="All" className="billtabIner" />
-                                <Tab
-                                  label="Not Attented"
-                                  className="billtabIner"
-                                />
-                                <Tab
-                                  label="Pending payment"
-                                  className="billtabIner"
-                                />
-                              </Tabs>
-                            </AppBar>
-                          </Grid>
-                          <Grid item xs={12} sm={6} md={5}>
-                            {/* <Grid className="taskSort">
+                      <Grid
+                        className={
+                          this.props.settings &&
+                          this.props.settings.setting &&
+                          this.props.settings.setting.mode &&
+                          this.props.settings.setting.mode === "dark"
+                            ? "darkTheme"
+                            : ""
+                        }
+                      >
+                        <Grid className="taskCntntMng">
+                          <Grid container direction="row" alignItems="center">
+                            <Grid item xs={12} sm={6} md={7}>
+                              <AppBar position="static" className="billTabs">
+                                <Tabs
+                                  value={tabvalue2}
+                                  onChange={this.handleChangeTab2}
+                                >
+                                  <Tab label="All" className="billtabIner" />
+                                  <Tab
+                                    label="Not Attented"
+                                    className="billtabIner"
+                                  />
+                                  <Tab
+                                    label="Pending payment"
+                                    className="billtabIner"
+                                  />
+                                </Tabs>
+                              </AppBar>
+                            </Grid>
+                            <Grid item xs={12} sm={6} md={5}>
+                              {/* <Grid className="taskSort">
                               {this.state.showinput && (
                                 <input
                                   className="TaskSearch"
@@ -162,6 +197,7 @@ class Index extends Component {
                                 )}
                               </a>
                             </Grid> */}
+                            </Grid>
                           </Grid>
                         </Grid>
                       </Grid>
@@ -221,60 +257,76 @@ class Index extends Component {
                                       </p>
                                     </Td>
                                     <Td>
-                                        {item && item.headache && item.headache === 'yes' ? (
-                                            <>{yes}</>
-                                        ) : (
-                                            <>{no}</>
-                                        )}
+                                      {item &&
+                                      item.headache &&
+                                      item.headache === "yes" ? (
+                                        <>{yes}</>
+                                      ) : (
+                                        <>{no}</>
+                                      )}
                                     </Td>
                                     <Td>
-                                        {item && item.stomach_problems && item.stomach_problems === 'yes' ? (
-                                            <>{yes}</>
-                                        ) : (
-                                            <>{no}</>
-                                        )}
+                                      {item &&
+                                      item.stomach_problems &&
+                                      item.stomach_problems === "yes" ? (
+                                        <>{yes}</>
+                                      ) : (
+                                        <>{no}</>
+                                      )}
                                     </Td>
                                     <Td>
-                                        {item && item.diarrhea && item.diarrhea === 'yes' ? (
-                                            <>{yes}</>
-                                        ) : (
-                                            <>{no}</>
-                                        )}
+                                      {item &&
+                                      item.diarrhea &&
+                                      item.diarrhea === "yes" ? (
+                                        <>{yes}</>
+                                      ) : (
+                                        <>{no}</>
+                                      )}
                                     </Td>
                                     <Td>
-                                        {item && item.have_fever && item.have_fever === 'yes' ? (
-                                            <>{yes}</>
-                                        ) : (
-                                            <>{no}</>
-                                        )}
+                                      {item &&
+                                      item.have_fever &&
+                                      item.have_fever === "yes" ? (
+                                        <>{yes}</>
+                                      ) : (
+                                        <>{no}</>
+                                      )}
                                     </Td>
                                     <Td>
-                                        {item && item.back_pain && item.back_pain === 'yes' ? (
-                                            <>{yes}</>
-                                        ) : (
-                                            <>{no}</>
-                                        )}
+                                      {item &&
+                                      item.back_pain &&
+                                      item.back_pain === "yes" ? (
+                                        <>{yes}</>
+                                      ) : (
+                                        <>{no}</>
+                                      )}
                                     </Td>
                                     <Td>
-                                        {item && item.cough_and_snees && item.cough_and_snees === 'yes' ? (
-                                            <>{yes}</>
-                                        ) : (
-                                            <>{no}</>
-                                        )}
+                                      {item &&
+                                      item.cough_and_snees &&
+                                      item.cough_and_snees === "yes" ? (
+                                        <>{yes}</>
+                                      ) : (
+                                        <>{no}</>
+                                      )}
                                     </Td>
                                     <Td>
-                                        {item && item.feel_depressed && item.feel_depressed === 'yes' ? (
-                                            <>{yes}</>
-                                        ) : (
-                                            <>{no}</>
-                                        )}
+                                      {item &&
+                                      item.feel_depressed &&
+                                      item.feel_depressed === "yes" ? (
+                                        <>{yes}</>
+                                      ) : (
+                                        <>{no}</>
+                                      )}
                                     </Td>
                                     <Td>
-                                        {item && item.cardiac_problems && item.cardiac_problems === 'yes' ? (
-                                            <>{yes}</>
-                                        ) : (
-                                            <>{no}</>
-                                        )}
+                                      {item &&
+                                      item.cardiac_problems &&
+                                      item.cardiac_problems === "yes" ? (
+                                        <>{yes}</>
+                                      ) : (
+                                        <>{no}</>
+                                      )}
                                     </Td>
 
                                     <Td className="presEditDot scndOptionIner">
@@ -301,8 +353,8 @@ class Index extends Component {
                                             </a>
                                           </li>
 
-                                          {/* {item.meetingjoined &&
-                                            item.meetingjoined === true && ( */}
+                                          {item.is_payment &&
+                                            item.is_payment === true && (
                                               <li>
                                                 <a
                                                 // onClick={() => {
@@ -321,7 +373,7 @@ class Index extends Component {
                                                   Download Bill
                                                 </a>
                                               </li>
-                                            {/* )} */}
+                                            )}
                                         </ul>
                                       </a>
                                     </Td>

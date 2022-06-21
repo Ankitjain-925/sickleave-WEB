@@ -1869,7 +1869,8 @@
     "top_value": "top value",
     "of_body_temprature": "of body temprature",
     "request_list": "Request List",
-    "sick_request": "Sick Request"
+    "sick_request": "Sick Request",
+    "archived_request":"Archived Request"
 
   }
 }
