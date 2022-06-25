@@ -86,6 +86,7 @@ class Index extends Component {
       sick_request,
       request_list,
       archive_request,
+
     } = translate;
     return (
       <Grid

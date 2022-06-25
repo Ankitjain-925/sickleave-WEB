@@ -1715,6 +1715,11 @@
     "please_select": "Bitte auswählen",
     "Pain_begin": "Schmerzen beginnen",
     "Download_Bill": "Rechnung herunterladen",
+
+    "archive_request":"Archivierte Anfrage",
+    "Alls": "Alle",
+    "not_attented":"Nicht besucht",
+    "Pending_payment":"Ausstehende Zahlung"
     "please_enter": "Bitte eingeben",
     "body_temp": "Körpertemperatur",
     "diabetes": "Diabetes",
@@ -1753,5 +1758,6 @@
     "atleast_one_problem_for": "mindestens ein Problem für",
     "data_protection_rules_and_regulations_of_aimedis.": "Datenschutzbestimmungen und -bestimmungen von Aimedis.",
     "time_slot": "Zeitfenster"
+
   }
 }
