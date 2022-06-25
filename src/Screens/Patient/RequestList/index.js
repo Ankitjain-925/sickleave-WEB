@@ -354,8 +354,8 @@ class Index extends Component {
                                           </li>
                                           {(!item?.approved ||
                                             item?.approved != true) &&
-                                            (!item?.is_decline ||
-                                              item?.is_decline === false) &&
+                                            item?.is_decline &&
+                                            item?.is_decline === true &&
                                             (!item.meetingjoined ||
                                               item.meetingjoined === false) && (
                                               <li>

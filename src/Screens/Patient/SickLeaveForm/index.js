@@ -91,11 +91,11 @@ class Index extends Component {
       NotAvailable,
       holiday,
       slct_time_slot,
-      rules_and_regulations_of_aimedis,
       you_have_cardiac_problems,
       you_feel_depressed,
       you_have_back_pain,
       you_have_cough_and_snees,
+      rules_and_regulations_of_aimedis,
       you_have_fever,
     } = translate;
     const {

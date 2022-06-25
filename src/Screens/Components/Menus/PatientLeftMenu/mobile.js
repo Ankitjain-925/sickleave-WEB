@@ -83,7 +83,10 @@ class Index extends Component {
       Language,
       DarkMode,
       logout,
-      archived_request,
+      sick_request,
+      request_list,
+      archive_request,
+
     } = translate;
     return (
       <Grid
@@ -132,7 +135,8 @@ class Index extends Component {
                           title=""
                         />
                       )}
-                      <span>{"Sick Request"}</span>
+
+                      <span>{sick_request}</span>
                     </a>
                   </li>
                   <li
@@ -183,7 +187,7 @@ class Index extends Component {
                           title=""
                         />
                       )}
-                      <span>{archived_request}</span>
+                      <span>{archive_request}</span>
                     </a>
                   </li>
 

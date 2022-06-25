@@ -19,7 +19,11 @@ import { getLanguage } from 'translations/index';
 import { GetShowLabel1 } from 'Screens/Components/GetMetaData/index.js';
 import { getMetadata, GetLanguageMetadata } from '../Patient/SickLeaveForm/api';
 import PainPoint from 'Screens/Components/PointPain/index';
-import { getDate, getTime } from 'Screens/Components/BasicMethod/index';
+import {
+  ConsoleCustom,
+  getDate,
+  getTime,
+} from 'Screens/Components/BasicMethod/index';
 import { S3Image } from 'Screens/Components/GetS3Images/index';
 var situations = [
   {
@@ -118,7 +122,7 @@ class Index extends Component {
       })
       .catch((err) => {
         console.log('err', err);
-        this.setState({ loaderImage: false });
+        this.setState({ sectionValue: 5, loaderImage: false });
       });
   };
 
