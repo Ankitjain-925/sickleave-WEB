@@ -83,6 +83,8 @@ class Index extends Component {
       Language,
       DarkMode,
       logout,
+      sick_request,
+      request_list,
       archive_request,
     } = translate;
     return (
@@ -132,7 +134,8 @@ class Index extends Component {
                           title=""
                         />
                       )}
-                      <span>{"Sick Request"}</span>
+
+                      <span>{sick_request}</span>
                     </a>
                   </li>
                   <li

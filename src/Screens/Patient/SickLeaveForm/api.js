@@ -6,6 +6,43 @@ import { GetLanguageDropdown } from 'Screens/Components/GetMetaData/index.js';
 import { getLanguage } from 'translations/index';
 import { getDate } from 'Screens/Components/BasicMethod/index';
 
+export function getHouseId() {
+  let env = 'DEV';
+  let url = '';
+  if (typeof window !== 'undefined') {
+    let target = window.location.href;
+    env = target.match(/localhost/) ? 'DEV' : 'PRD';
+  }
+  let HouseId;
+  if (env === 'DEV') {
+    HouseId = process.env.REACT_APP_DEV_HOUSE_ID;
+  } else {
+    HouseId = process.env.REACT_APP_TEST_HOUSE_ID;
+  }
+  return HouseId;
+}
+
+export const getAmountData = (current) => {
+  current.setState({ loaderImage: true });
+  axios
+    .get(
+      sitedata.data.path +
+        '/vactive/GetAmount/60fabfe5b3394533f7f9a6dc-1654919887767',
+      commonHeader(current.props.stateLoginValueAim.token)
+    )
+    .then((response) => {
+      if (response.data.hassuccessed) {
+        current.setState({
+          amountDta: response.data.sickleave_certificate_amount,
+          loaderImage: false,
+        });
+      }
+    })
+    .catch((err) => {
+      current.setState({ loaderImage: false });
+    });
+};
+
 //Not need yet this for the payment
 export const fromEuroToCent = (amount, current) => {
   return parseInt(amount * 100);
@@ -95,7 +132,7 @@ export function getLink() {
   }
   let STRIPE_PUBLISHABLE;
   if (env === 'DEV') {
-    STRIPE_PUBLISHABLE = 'https://virtualhospital.aimedis.io/sys-n-sick';
+    STRIPE_PUBLISHABLE = 'http://localhost:3000/sys-n-sick';
   } else {
     STRIPE_PUBLISHABLE = 'https://virtualhospital.aimedis.io/sys-n-sick';
   }
@@ -290,6 +327,15 @@ export const MoveTop = (top) => {
 };
 
 export const handleEvalSubmit = (current, value) => {
+  let translate = getLanguage(current.props.stateLanguageType);
+
+  let {
+    please_select,
+    data_protection_rules_and_regulations_of_aimedis,
+    atleast_one_problem_for,
+    time_slot,
+    sick_leave_certificate,
+  } = translate;
   current.setState({ errorChrMsg: '' });
   let data = {};
   data = current.state.updateQues;
@@ -315,7 +361,7 @@ export const handleEvalSubmit = (current, value) => {
   data.archived = false;
   data.status = 'open';
   data.created_at = new Date();
-  data.house_id = '60fabfe5b3394533f7f9a6dc-1654919887767';
+  data.house_id = getHouseId();
   if (!data?.due_on?.date) {
     let due_on = data?.due_on || {};
     due_on['date'] = new Date();
@@ -899,7 +945,9 @@ export const handleEvalSubmit = (current, value) => {
                                                                                                                                                 {
                                                                                                                                                   error_section: 45,
                                                                                                                                                   errorChrMsg:
-                                                                                                                                                    'Please select Data protection rules and Regulations of Aimedis.',
+                                                                                                                                                    please_select +
+                                                                                                                                                    '' +
+                                                                                                                                                    data_protection_rules_and_regulations_of_aimedis,
                                                                                                                                                 }
                                                                                                                                               );
                                                                                                                                             }
@@ -908,7 +956,11 @@ export const handleEvalSubmit = (current, value) => {
                                                                                                                                               {
                                                                                                                                                 error_section: 73,
                                                                                                                                                 errorChrMsg:
-                                                                                                                                                  'Please select atleast one problem for sick leave certificate',
+                                                                                                                                                  please_select +
+                                                                                                                                                  '' +
+                                                                                                                                                  atleast_one_problem_for +
+                                                                                                                                                  '' +
+                                                                                                                                                  sick_leave_certificate,
                                                                                                                                               }
                                                                                                                                             );
                                                                                                                                           }
@@ -1020,7 +1072,7 @@ export const handleEvalSubmit = (current, value) => {
     } else {
       current.setState({
         error_section: 70,
-        errorChrMsg: 'Please select time slot',
+        errorChrMsg: please_select + '' + time_slot,
       });
     }
   }
@@ -1109,7 +1161,7 @@ export const validatePainHeart = (check, value, item, current) => {
     environmental_suffer_symtoms,
     keep_liquids_with,
     valid_body_temp,
-    please_enter_sputum_intensity,
+    sputum_intensity,
     back_symptoms_begin,
     rr_systolic,
     bp_should_number,
@@ -1330,7 +1382,7 @@ export const validatePainHeart = (check, value, item, current) => {
     if (!value || value === '<p><br></p>' || value === '<p></p>') {
       current.setState({
         error_section: section,
-        errorChrMsg: please_enter_sputum_intensity,
+        errorChrMsg: please_enter + ' ' + sputum_intensity,
       });
       MoveTop(450);
       return false;
@@ -1616,6 +1668,34 @@ export const validatePainHeart = (check, value, item, current) => {
 };
 
 export const validatePainHeart1 = (check, value, item, current) => {
+  let translate = getLanguage(current.props.stateLanguageType);
+
+  let {
+    please_select,
+    Headache,
+    Diarrhea,
+    Fever,
+    back_pain,
+    feel_depressed,
+    cough_and_snees,
+    cardiac_problems,
+    stomach_problems,
+    need_to_vomit,
+    onset_of_pain,
+    with_yes_no,
+    take_painkillers,
+    behind_the_sternum,
+    heart_attack,
+    heart_failure,
+    been_injured,
+    strained,
+    stress_depression,
+    do_you__sleep,
+    suicidal_thoughts,
+    hurt_yourself,
+    have_dizziness,
+    have_shoulder_pain,
+  } = translate;
   if (
     (item === 'headache_need_to_vomit' ||
       item === 'headache_onset_of_pain' ||
@@ -1624,16 +1704,15 @@ export const validatePainHeart1 = (check, value, item, current) => {
   ) {
     var currentItem =
       item === 'headache_need_to_vomit'
-        ? 'Need to vomit'
+        ? need_to_vomit
         : item === 'headache_onset_of_pain'
-        ? 'Onset of pain'
-        : 'Take painkillers';
+        ? onset_of_pain
+        : take_painkillers;
 
     if (!value) {
       current.setState({
         error_section: 7,
-        errorChrMsg:
-          'Please select' + ' ' + currentItem + ' ' + 'with Yes / No',
+        errorChrMsg: please_select + ' ' + currentItem + ' ' + with_yes_no,
       });
       MoveTop(200);
       return false;
@@ -1648,16 +1727,15 @@ export const validatePainHeart1 = (check, value, item, current) => {
   ) {
     var currentItem =
       item === 'stomach_behind_the_sternum'
-        ? 'Behind the sternum'
+        ? behind_the_sternum
         : item === 'stomach_heart_attack'
-        ? 'Heart attack'
-        : 'Heart failure';
+        ? heart_attack
+        : heart_failure;
 
     if (!value) {
       current.setState({
         error_section: 8,
-        errorChrMsg:
-          'Please select' + ' ' + currentItem + ' ' + 'with Yes / No',
+        errorChrMsg: please_select + ' ' + currentItem + ' ' + with_yes_no,
       });
       MoveTop(200);
       return false;
@@ -1674,20 +1752,19 @@ export const validatePainHeart1 = (check, value, item, current) => {
   ) {
     var currentItem =
       item === 'back_pain_been_injured'
-        ? 'been Injured'
+        ? been_injured
         : item === 'back_pain_physically_strained'
-        ? 'Physically strained'
+        ? strained
         : item === 'back_pain_stress_depression'
-        ? 'Pain stress depression'
+        ? stress_depression
         : item === 'back_pain_heart_attack'
-        ? 'Heart attack'
-        : 'Heart failure';
+        ? heart_failure
+        : heart_failure;
 
     if (!value) {
       current.setState({
         error_section: 32,
-        errorChrMsg:
-          'Please select' + ' ' + currentItem + ' ' + 'with Yes / No',
+        errorChrMsg: please_select + ' ' + currentItem + ' ' + with_yes_no,
       });
       MoveTop(200);
       return false;
@@ -1702,15 +1779,14 @@ export const validatePainHeart1 = (check, value, item, current) => {
   ) {
     var currentItem =
       item === 'depressed_do_you_sleep'
-        ? 'do you Sleep'
+        ? do_you__sleep
         : item === 'depressed_suicidal_thoughts'
-        ? 'Suicidal thoughts'
-        : 'Hurt yourself';
+        ? suicidal_thoughts
+        : hurt_yourself;
     if (!value) {
       current.setState({
         error_section: 41,
-        errorChrMsg:
-          'Please select' + ' ' + currentItem + ' ' + 'with Yes / No',
+        errorChrMsg: please_select + ' ' + currentItem + ' ' + with_yes_no,
       });
       MoveTop(200);
       return false;
@@ -1726,18 +1802,17 @@ export const validatePainHeart1 = (check, value, item, current) => {
   ) {
     var currentItem =
       item === 'cardiac_heart_attack'
-        ? 'Heart attack'
+        ? heart_attack
         : item === 'cardiac_heart_failure'
-        ? 'Heart failure'
+        ? heart_failure
         : item === 'cardiac_have_dizziness'
-        ? 'have Dizziness'
-        : 'have Shoulder pain';
+        ? have_dizziness
+        : have_shoulder_pain;
 
     if (!value) {
       current.setState({
         error_section: 44,
-        errorChrMsg:
-          'Please select' + ' ' + currentItem + ' ' + 'with Yes / No',
+        errorChrMsg: please_select + ' ' + currentItem + ' ' + with_yes_no,
       });
       MoveTop(200);
       return false;
@@ -1756,20 +1831,20 @@ export const validatePainHeart1 = (check, value, item, current) => {
   ) {
     var currentItem =
       item === 'headache'
-        ? 'Headache'
+        ? Headache
         : item === 'stomach_problems'
-        ? 'Stomach problems'
+        ? stomach_problems
         : item === 'diarrhea'
-        ? 'Diarrhea'
+        ? Diarrhea
         : item === 'have_fever'
-        ? 'have Fever'
+        ? Fever
         : item === 'back_pain'
-        ? 'Back pain'
+        ? back_pain
         : item === 'feel_depressed'
-        ? 'feel Depressed'
+        ? feel_depressed
         : item === 'cough_and_snees'
-        ? 'Cough and Snees'
-        : 'Cardiac problems';
+        ? cough_and_snees
+        : cardiac_problems;
     var section =
       item === 'headache'
         ? 48
@@ -1789,8 +1864,7 @@ export const validatePainHeart1 = (check, value, item, current) => {
     if (!check) {
       current.setState({
         error_section: section,
-        errorChrMsg:
-          'Please select' + ' ' + currentItem + ' ' + 'with Yes / No',
+        errorChrMsg: please_select + ' ' + currentItem + ' ' + with_yes_no,
       });
       MoveTop(200);
       return false;
