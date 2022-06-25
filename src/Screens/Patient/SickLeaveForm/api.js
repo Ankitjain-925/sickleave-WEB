@@ -59,7 +59,7 @@ export const DownloadCert = (data, current) => {
     .post(
       sitedata.data.path + '/vactive/downloadSickleaveCertificate',
       data,
-      commonHeader(current.props.stateLoginValueAim.token)
+      { responseType: "blob" }
     )
     .then((responce) => {
       current.setState({ loaderImage: false });

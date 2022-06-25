@@ -73,6 +73,11 @@ class Index extends Component {
     this.props.history.push('/patient/request-list');
   };
 
+  //   //For Archive link
+  ArchiveLink = () => {
+    this.props.history.push('/patient/archive-request');
+}
+
   // call = () => {
   //   this.props.history.push('/video-call/:id');
   // };
@@ -86,6 +91,7 @@ class Index extends Component {
       DarkMode,
       logout,
       request_list,
+      archive_request,
       sick_request,
     } = translate;
     return (
@@ -164,6 +170,36 @@ class Index extends Component {
                 <span>{request_list}</span>
               </a>
             </li>
+
+
+            <li
+              className={
+                this.props.currentPage === 'archivelink' ? 'menuActv' : ''
+              }
+            >
+              <a onClick={this.ArchiveLink}>
+                {this.props.settings &&
+                this.props.settings.setting &&
+                this.props.settings.setting.mode &&
+                this.props.settings.setting.mode === "dark" ? (
+                  <img
+                    src={require("assets/images/archive2.png")}
+                    alt=""
+                    title=""
+                  />
+                ) : (
+                  <img
+                    src={require("assets/images/archive.png")}
+                    alt=""
+                    title=""
+                  />
+                )}
+                <span>{archive_request}</span>
+              </a>
+            </li>
+
+
+
             {/* <li
               className={
                 this.props.currentPage === 'feedback' ? 'menuActv' : ''
