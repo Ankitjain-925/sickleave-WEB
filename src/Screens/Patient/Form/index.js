@@ -1062,7 +1062,7 @@ function Index(props) {
         item === 'stomach_rr_diastolic' ||
         item === 'back_pain_rr_diastolic' ||
         item === 'cardiac_rr_diastolic') &&
-      check === 'yes'
+        check === 'yes'
     ) {
       var section =
         item === 'headache_rr_diastolic'
