@@ -98,7 +98,7 @@ class Index extends Component {
       cardiac_problems,
       no,
       yes,
-      archived_request,
+      archive_request,
       Download_Bill,
       see_details,
       Alls,
@@ -128,7 +128,7 @@ class Index extends Component {
                     <Grid className="docsOpinion docsAllOption">
                       <Grid container direction="row" className="docsOpinLbl">
                         <Grid item xs={12} md={6}>
-                          <label>{archived_request}</label>
+                          <label>{archive_request}</label>
                         </Grid>
                       </Grid>
 
