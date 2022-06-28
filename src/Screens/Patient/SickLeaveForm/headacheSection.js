@@ -9,6 +9,8 @@ import SelectByTwo from 'Screens/Components/SelectbyTwo/index';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { getLanguage } from 'translations/index';
 
+
+
 function Index(props) {
   let translate = getLanguage(props.stateLanguageType);
   const {
@@ -453,6 +455,7 @@ function Index(props) {
             updateEntryState1={(e) =>
               props.updateAllEntrySec(e, 'headache_quality_of_pain')
             }
+           
             comesFrom="Feedback"
             label={describe_the_quality_of_pain}
             value={props.updateQues?.headache_quality_of_pain}
@@ -527,6 +530,7 @@ function Index(props) {
       </Grid>
     </Grid>
   );
+  
 }
 
 export default Index;

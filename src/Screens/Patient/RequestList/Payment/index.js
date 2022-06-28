@@ -21,6 +21,7 @@ import {
   saveOnDB1,
   CancelClick,
   fromEuroToCent,
+  getAmountData,
 } from '../../SickLeaveForm/api';
 
 const CURRENCY = 'EUR';
@@ -43,11 +44,12 @@ class Index extends Component {
         updateEvaluate: this.props.location?.state?.data,
       });
     }
+    getAmountData(this);
   }
 
   render() {
     let translate = getLanguage(this.props.stateLanguageType);
-    let { pay_with_stripe, payment, cancel, request_list_payment } = translate;
+    let { pay_with_stripe, payment, cancel, request_list_payment ,Payment} = translate;
 
     //Success payment alert after payment is success
     const successPayment = (data) => {
@@ -117,7 +119,7 @@ class Index extends Component {
     const Checkout = ({
       name = 'AIS',
       description = 'Stripe Payment',
-      amount = 25,
+      amount = this.state.amountDta,
       email = this.props.stateLoginValueAim.user.email,
     }) => (
       <StripeCheckout
@@ -181,7 +183,7 @@ class Index extends Component {
                       <Grid className="cnfrmDiaMain profilePkg cnfrmDiaMain1">
                         <div className="payment_sec_extra_ser1">
                           <div className="sbu_button">
-                            <h2>{payment}</h2>
+                            <h2>{Payment}</h2>
                             <Grid container direction="row" spacing={2}>
                               <Grid item xs={12} md={6}>
                                 <Checkout />

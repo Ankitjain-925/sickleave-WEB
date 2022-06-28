@@ -22,6 +22,7 @@ import SneezSection from './SneezSection';
 import CPSection from './CPSection';
 import DepressedSection from './DepressedSection';
 import Calendar2 from 'react-calendar';
+import { getLanguage } from 'translations/index';
 import {
   GetLanguageMetadata,
   onChange,
@@ -36,7 +37,7 @@ import {
   SelectTimeSlot,
   saveOnDB,
 } from './api';
-import { getLanguage } from 'translations/index';
+
 
 class Index extends Component {
   constructor(props) {
@@ -66,6 +67,7 @@ class Index extends Component {
   };
 
   componentDidMount = () => {
+  
     if (this.props.location.state?.updateQues) {
       this.setState({ updateQues: this.props.location.state?.updateQues });
     }
@@ -91,11 +93,11 @@ class Index extends Component {
       NotAvailable,
       holiday,
       slct_time_slot,
-      rules_and_regulations_of_aimedis,
       you_have_cardiac_problems,
       you_feel_depressed,
       you_have_back_pain,
       you_have_cough_and_snees,
+      rules_and_regulations_of_aimedis,
       you_have_fever,
     } = translate;
     const {
