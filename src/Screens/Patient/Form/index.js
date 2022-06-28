@@ -3186,7 +3186,7 @@ function Index(props) {
                               </Grid>
                             </Grid>
 
-                            <FatiqueQuestion
+                            <FatiqueQuestion 
                               updateAllEntrySec={(e) =>
                                 updateAllEntrySec(e, 'cardiac_heart_attack')
                               }
