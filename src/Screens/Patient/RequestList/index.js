@@ -70,7 +70,7 @@ class Index extends Component {
     const { AllDataSec } = this.state;
     let translate = getLanguage(this.props.stateLanguageType);
     let {
-      Request_List,
+      request_list,
       Details,
       added_on,
       Headache,
@@ -186,7 +186,7 @@ class Index extends Component {
                     <Grid className="docsOpinion docsAllOption">
                       <Grid container direction="row" className="docsOpinLbl">
                         <Grid item xs={12} md={6}>
-                          <label>{Request_List}</label>
+                          <label>{request_list}</label>
                         </Grid>
                       </Grid>
                       <Grid className="presPkgIner2">
