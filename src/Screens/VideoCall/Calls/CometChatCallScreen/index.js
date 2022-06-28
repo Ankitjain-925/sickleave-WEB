@@ -339,7 +339,13 @@ class CometChatCallScreen extends React.PureComponent {
           Storage.removeItem(enums.CONSTANTS['ACTIVECALL']);
           this.props.actionGenerated(enums.ACTIONS['DIRECT_CALL_ENDED']);
         },
-
+        onUserListUpdated: (userList) => {
+          this.props.userListCall(userList);
+          console.log('user list:', userList);
+        },
+        // onUserJoined: (user) => {
+        //   console.log('user', user);
+        // },s
         onError: (error) => {
           if (this.context) {
             this.context.setCallInProgress(null, '');
@@ -350,6 +356,7 @@ class CometChatCallScreen extends React.PureComponent {
             error && error.hasOwnProperty('code') ? error.code : 'ERROR';
           this.context.setToastMessage('error', errorCode);
         },
+
         onRecordingStarted: (recordingStartedBy) => {
           // This event will work in JS SDK v3.0.2-beta1 & later.
           console.log('Listener => onRecordingStarted:', recordingStartedBy);

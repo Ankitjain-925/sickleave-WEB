@@ -21,6 +21,7 @@ import {
   saveOnDB1,
   CancelClick,
   fromEuroToCent,
+  getAmountData,
 } from '../../SickLeaveForm/api';
 
 const CURRENCY = 'EUR';
@@ -43,6 +44,7 @@ class Index extends Component {
         updateEvaluate: this.props.location?.state?.data,
       });
     }
+    getAmountData(this);
   }
 
   render() {
@@ -117,7 +119,7 @@ class Index extends Component {
     const Checkout = ({
       name = 'AIS',
       description = 'Stripe Payment',
-      amount = 25,
+      amount = this.state.amountDta,
       email = this.props.stateLoginValueAim.user.email,
     }) => (
       <StripeCheckout

@@ -19,7 +19,12 @@ import { getLanguage } from 'translations/index';
 import { GetShowLabel1 } from 'Screens/Components/GetMetaData/index.js';
 import { getMetadata, GetLanguageMetadata } from '../Patient/SickLeaveForm/api';
 import PainPoint from 'Screens/Components/PointPain/index';
-import { getDate, getTime } from 'Screens/Components/BasicMethod/index';
+import {
+  ConsoleCustom,
+  getDate,
+  getTime,
+} from 'Screens/Components/BasicMethod/index';
+import { S3Image } from 'Screens/Components/GetS3Images/index';
 var situations = [
   {
     label: 'POSTPRANDIAL ',
@@ -60,17 +65,19 @@ class Index extends Component {
       sectionValue: 0,
       Allsituation: situations,
       gender: this.props.stateLoginValueAim?.user?.sex,
+      AllIds: this.props.match.params,
+      uniqueUser: {},
     };
   }
 
   componentDidMount = () => {
-    const { profile_id, sesion_id } = this.props.match.params;
-    this.setState({ sessionID: sesion_id });
-    CometChat.login(profile_id, COMETCHAT_CONSTANTS.AUTH_KEY)
+    const { AllIds } = this.state;
+    let callType = 'DIRECT';
+    CometChat.login(AllIds?.profile_id, COMETCHAT_CONSTANTS.AUTH_KEY)
       .then((resp) => {
         axios
           .post(sitedata.data.path + '/cometUserList', {
-            profile_id: profile_id,
+            profile_id: AllIds?.profile_id,
           })
           .then((response) => {})
           .catch((err) => {});
@@ -87,7 +94,7 @@ class Index extends Component {
   };
 
   getSessionId = () => {
-    const { profile_id, sesion_id } = this.props.match.params;
+    var sesion_id = this.state.AllIds?.sesion_id;
     this.setState({ loaderImage: true });
     axios
       .get(sitedata.data.path + '/vactive/Linktime/' + sesion_id)
@@ -101,30 +108,48 @@ class Index extends Component {
             });
           }
         } else {
-          if (response.data.message === 'link start soon') {
+          if (
+            response.data.message === 'Link will active soon' ||
+            response.data.message === 'link start soon'
+          ) {
             this.setState({ sectionValue: 2, loaderImage: false });
-          } else {
+          } else if (response.data.message === 'Link Expire') {
             this.setState({ sectionValue: 3, loaderImage: false });
+          } else {
+            this.setState({ sectionValue: 5, loaderImage: false });
           }
         }
       })
       .catch((err) => {
         console.log('err', err);
-        this.setState({ loaderImage: false });
+        this.setState({ sectionValue: 5, loaderImage: false });
       });
   };
 
   endCallScreen = (value) => {
     let task_id = this.state.allTasks?._id;
-    this.setState({ loaderImage: true });
-    axios
-      .put(sitedata.data.path + '/vactive/joinmeeting/' + task_id)
-      .then((responce) => {
-        this.setState({ sectionValue: value, loaderImage: false });
-      })
-      .catch(() => {
-        this.setState({ loaderImage: false });
-      });
+    this.setState({ sectionValue: value });
+    if (this.state.uniqueUser && this.state.uniqueUser?.length === 2) {
+      this.setState({ loaderImage: true });
+      axios
+        .put(sitedata.data.path + '/vactive/joinmeeting/' + task_id)
+        .then((responce) => {
+          this.setState({ loaderImage: false });
+        })
+        .catch(() => {
+          this.setState({ loaderImage: false });
+        });
+    }
+  };
+
+  userListCall = (userList) => {
+    let unique =
+      userList &&
+      userList?.length > 0 &&
+      userList
+        .map((item) => item?.uid)
+        .filter((value, index, self) => self.indexOf(value) === index);
+    this.setState({ uniqueUser: unique });
   };
 
   render() {
@@ -210,7 +235,7 @@ class Index extends Component {
       link_has_been_expired,
       Oops,
       activate_very_soon,
-      Welcome,
+      welcome,
     } = translate;
     return (
       <Grid
@@ -235,8 +260,11 @@ class Index extends Component {
                         <Grid className="manageVideoCall">
                           <CometChatOutgoingDirectCall
                             open
+                            userListCall={(userList) =>
+                              this.userListCall(userList)
+                            }
                             endCallScreen={(value) => this.endCallScreen(value)}
-                            sessionID={this.state.sessionID}
+                            sessionID={this.state.AllIds?.sesion_id}
                             theme={this.props.theme}
                             item={this.state.item}
                             type={this.state.type}
@@ -253,8 +281,8 @@ class Index extends Component {
                           <Grid className="allWebVideoSec ">
                             <Grid className="allSickVideoSec">
                               <Grid className="topSickVideoSec">
-                                <Grid className="sickImageVideoSec">
-                                  <img src="" alt="" />
+                                <Grid className="profileImagePat">
+                                  <S3Image imgUrl={allTasks?.patient?.image} />
                                 </Grid>
                                 <Grid className="topTxtVideoSec">
                                   <p>
@@ -1307,7 +1335,7 @@ class Index extends Component {
               )}
               {this.state.sectionValue == 2 && (
                 <Grid className="msgSectionCss">
-                  <label>{Welcome}</label>
+                  <label>{welcome}</label>
                   <p>{activate_very_soon}</p>
                 </Grid>
               )}
@@ -1320,6 +1348,15 @@ class Index extends Component {
               {this.state.sectionValue == 4 && (
                 <Grid className="msgSectionCss">
                   <p>{meeting_has_ended}</p>
+                </Grid>
+              )}
+              {this.state.sectionValue == 5 && (
+                <Grid className="msgSectionCss">
+                  <label>{Oops}</label>
+                  <p>
+                    Meeting not available please check your meeting key or link
+                    again
+                  </p>
                 </Grid>
               )}
             </Grid>

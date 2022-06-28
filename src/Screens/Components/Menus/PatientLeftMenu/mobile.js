@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import Grid from '@material-ui/core/Grid';
-import { connect } from 'react-redux';
-import { LoginReducerAim } from 'Screens/Login/actions';
-import { Settings } from 'Screens/Login/setting';
-import { withRouter } from 'react-router-dom';
-import { LanguageFetchReducer } from 'Screens/actions';
-import { slide as Menu } from 'react-burger-menu';
-import Timer from 'Screens/Components/TimeLogOut/index';
-import LogOut from 'Screens/Components/LogOut/index';
-import Mode from 'Screens/Components/ThemeMode/index.js';
-import SetLanguage from 'Screens/Components/SetLanguage/index.js';
-import { getLanguage } from 'translations/index';
-import { getSetting } from '../api';
+import React, { Component } from "react";
+import Grid from "@material-ui/core/Grid";
+import { connect } from "react-redux";
+import { LoginReducerAim } from "Screens/Login/actions";
+import { Settings } from "Screens/Login/setting";
+import { withRouter } from "react-router-dom";
+import { LanguageFetchReducer } from "Screens/actions";
+import { slide as Menu } from "react-burger-menu";
+import Timer from "Screens/Components/TimeLogOut/index";
+import LogOut from "Screens/Components/LogOut/index";
+import Mode from "Screens/Components/ThemeMode/index.js";
+import SetLanguage from "Screens/Components/SetLanguage/index.js";
+import { getLanguage } from "translations/index";
+import { getSetting } from "../api";
 class Index extends Component {
   constructor(props) {
     super(props);
@@ -23,7 +23,7 @@ class Index extends Component {
       donar: {},
       contact_partner: {},
       loaderImage: false,
-      mode: 'normal',
+      mode: "normal",
     };
     new Timer(this.logOutClick.bind(this));
   }
@@ -49,39 +49,54 @@ class Index extends Component {
   };
   //For logout the User
   logOutClick = () => {
-    let email = '';
-    let password = '';
+    let email = "";
+    let password = "";
     this.props.LoginReducerAim(email, password);
-    let languageType = 'en';
+    let languageType = "en";
     this.props.LanguageFetchReducer(languageType);
-    this.props.history.push('/');
+    this.props.history.push("/");
   };
 
- //For My Profile link
- ProfileLink = () => {
-  this.props.history.push('/patient');
-};
+  //For My Profile link
+  ProfileLink = () => {
+    this.props.history.push("/patient");
+  };
 
-PictureEval = () => {
-  this.props.history.push('/patient/sick-request');
-};
+  PictureEval = () => {
+    this.props.history.push("/patient/sick-request");
+  };
 
-//For Second opinion link
-feedBack = () => {
-  this.props.history.push('/patient/request-list');
-};
+  //   //For Archive link
+  ArchiveLink = () => {
+    this.props.history.push("/patient/archive-request");
+  };
+
+  //For Second opinion link
+  feedBack = () => {
+    this.props.history.push("/patient/request-list");
+  };
   render() {
     let translate = getLanguage(this.props.stateLanguageType);
-    let { my_profile, profile_setting, Language, DarkMode, logout } = translate;
+    let {
+      my_profile,
+      profile_setting,
+      Language,
+      DarkMode,
+      logout,
+      sick_request,
+      request_list,
+      archive_request,
+
+    } = translate;
     return (
       <Grid
         className={
           this.props.settings &&
           this.props.settings.setting &&
           this.props.settings.setting.mode &&
-          this.props.settings.setting.mode === 'dark'
-            ? 'MenuMob MenuLeftDrkUpr'
-            : 'MenuMob'
+          this.props.settings.setting.mode === "dark"
+            ? "MenuMob MenuLeftDrkUpr"
+            : "MenuMob"
         }
       >
         {/* <Notification /> */}
@@ -89,7 +104,7 @@ feedBack = () => {
           <Grid item xs={6} md={6} sm={6} className="MenuMobLeft">
             <a>
               <img
-                src={require('assets/images/navigation-drawer.svg')}
+                src={require("assets/images/navigation-drawer.svg")}
                 alt=""
                 title=""
                 className="MenuImg"
@@ -100,63 +115,90 @@ feedBack = () => {
                 <ul>
                   <li
                     className={
-                      this.props.currentPage === 'picture' ? 'menuActv' : ''
+                      this.props.currentPage === "picture" ? "menuActv" : ""
                     }
                   >
                     <a onClick={this.PictureEval}>
                       {this.props.settings &&
                       this.props.settings.setting &&
                       this.props.settings.setting.mode &&
-                      this.props.settings.setting.mode === 'dark' ? (
+                      this.props.settings.setting.mode === "dark" ? (
                         <img
-                          src={require('assets/images/nav-journal-white.svg')}
+                          src={require("assets/images/nav-journal-white.svg")}
                           alt=""
                           title=""
                         />
                       ) : (
                         <img
-                          src={require('assets/images/nav-journal.svg')}
+                          src={require("assets/images/nav-journal.svg")}
                           alt=""
                           title=""
                         />
                       )}
-                      <span>{'Sick Request'}</span>
+
+                      <span>{sick_request}</span>
                     </a>
                   </li>
                   <li
                     className={
-                      this.props.currentPage === 'feedback' ? 'menuActv' : ''
+                      this.props.currentPage === "feedback" ? "menuActv" : ""
                     }
                   >
                     <a onClick={this.feedBack}>
                       {this.props.settings &&
                       this.props.settings.setting &&
                       this.props.settings.setting.mode &&
-                      this.props.settings.setting.mode === 'dark' ? (
+                      this.props.settings.setting.mode === "dark" ? (
                         <img
-                          src={require('assets/images/nav-journal-white.svg')}
+                          src={require("assets/images/nav-journal-white.svg")}
                           alt=""
                           title=""
                         />
                       ) : (
                         <img
-                          src={require('assets/images/nav-journal.svg')}
+                          src={require("assets/images/nav-journal.svg")}
                           alt=""
                           title=""
                         />
                       )}
-                      <span>{'Request List'}</span>
+                      <span>{"Request List"}</span>
                     </a>
                   </li>
 
                   <li
                     className={
-                      this.props.currentPage === 'profile' ? 'menuActv' : ''
+                      this.props.currentPage === "archivelink" ? "menuActv" : ""
+                    }
+                  >
+                    <a onClick={this.ArchiveLink}>
+                      {this.props.settings &&
+                      this.props.settings.setting &&
+                      this.props.settings.setting.mode &&
+                      this.props.settings.setting.mode === "dark" ? (
+                        <img
+                          src={require("assets/images/archive2.png")}
+                          alt=""
+                          title=""
+                        />
+                      ) : (
+                        <img
+                          src={require("assets/images/archive.png")}
+                          alt=""
+                          title=""
+                        />
+                      )}
+                      <span>{archive_request}</span>
+                    </a>
+                  </li>
+
+                  <li
+                    className={
+                      this.props.currentPage === "profile" ? "menuActv" : ""
                     }
                   >
                     <a className="profilMenu">
                       <img
-                        src={require('assets/images/nav-my-profile.svg')}
+                        src={require("assets/images/nav-my-profile.svg")}
                         alt=""
                         title=""
                       />
@@ -169,15 +211,15 @@ feedBack = () => {
                               {this.props.settings &&
                               this.props.settings.setting &&
                               this.props.settings.setting.mode &&
-                              this.props.settings.setting.mode === 'dark' ? (
+                              this.props.settings.setting.mode === "dark" ? (
                                 <img
-                                  src={require('assets/images/menudocs-white.jpg')}
+                                  src={require("assets/images/menudocs-white.jpg")}
                                   alt=""
                                   title=""
                                 />
                               ) : (
                                 <img
-                                  src={require('assets/images/menudocs.jpg')}
+                                  src={require("assets/images/menudocs.jpg")}
                                   alt=""
                                   title=""
                                 />
@@ -194,15 +236,15 @@ feedBack = () => {
                               {this.props.settings &&
                               this.props.settings.setting &&
                               this.props.settings.setting.mode &&
-                              this.props.settings.setting.mode === 'dark' ? (
+                              this.props.settings.setting.mode === "dark" ? (
                                 <img
-                                  src={require('assets/images/menudocs-white.jpg')}
+                                  src={require("assets/images/menudocs-white.jpg")}
                                   alt=""
                                   title=""
                                 />
                               ) : (
                                 <img
-                                  src={require('assets/images/menudocs.jpg')}
+                                  src={require("assets/images/menudocs.jpg")}
                                   alt=""
                                   title=""
                                 />
@@ -215,25 +257,25 @@ feedBack = () => {
                               {this.props.settings &&
                               this.props.settings.setting &&
                               this.props.settings.setting.mode &&
-                              this.props.settings.setting.mode === 'dark' ? (
+                              this.props.settings.setting.mode === "dark" ? (
                                 <img
-                                  src={require('assets/images/menudocs-white.jpg')}
+                                  src={require("assets/images/menudocs-white.jpg")}
                                   alt=""
                                   title=""
                                 />
                               ) : (
                                 <img
-                                  src={require('assets/images/menudocs.jpg')}
+                                  src={require("assets/images/menudocs.jpg")}
                                   alt=""
                                   title=""
                                 />
                               )}
-                              {DarkMode}{' '}
+                              {DarkMode}{" "}
                               <Mode
                                 mode={
                                   this.props.settings?.setting?.mode
                                     ? this.props.settings?.setting?.mode
-                                    : 'normal'
+                                    : "normal"
                                 }
                                 name="mode"
                                 getSetting={() => getSetting(this)}
@@ -245,15 +287,15 @@ feedBack = () => {
                               {this.props.settings &&
                               this.props.settings.setting &&
                               this.props.settings.setting.mode &&
-                              this.props.settings.setting.mode === 'dark' ? (
+                              this.props.settings.setting.mode === "dark" ? (
                                 <img
-                                  src={require('assets/images/menudocs-white.jpg')}
+                                  src={require("assets/images/menudocs-white.jpg")}
                                   alt=""
                                   title=""
                                 />
                               ) : (
                                 <img
-                                  src={require('assets/images/menudocs.jpg')}
+                                  src={require("assets/images/menudocs.jpg")}
                                   alt=""
                                   title=""
                                 />
@@ -272,7 +314,7 @@ feedBack = () => {
           <Grid item xs={6} md={6} sm={6} className="MenuMobRght">
             <a>
               <img
-                src={require('assets//images/LogoPNG.png')}
+                src={require("assets//images/LogoPNG.png")}
                 alt=""
                 title=""
               />

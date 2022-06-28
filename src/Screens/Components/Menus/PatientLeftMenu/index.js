@@ -73,13 +73,27 @@ class Index extends Component {
     this.props.history.push('/patient/request-list');
   };
 
+  //   //For Archive link
+  ArchiveLink = () => {
+    this.props.history.push('/patient/archive-request');
+}
+
   // call = () => {
   //   this.props.history.push('/video-call/:id');
   // };
 
   render() {
     let translate = getLanguage(this.props.stateLanguageType);
-    let { my_profile, profile_setting, Language, DarkMode, logout } = translate;
+    let {
+      my_profile,
+      profile_setting,
+      Language,
+      DarkMode,
+      logout,
+      request_list,
+      archived_request,
+      sick_request,
+    } = translate;
     return (
       <Grid
         item
@@ -128,7 +142,7 @@ class Index extends Component {
                     title=""
                   />
                 )}
-                <span>{'Sick Request'}</span>
+                <span>{sick_request}</span>
               </a>
             </li>
             <li
@@ -153,9 +167,39 @@ class Index extends Component {
                     title=""
                   />
                 )}
-                <span>{'Request List'}</span>
+                <span>{request_list}</span>
               </a>
             </li>
+
+
+            <li
+              className={
+                this.props.currentPage === 'archivelink' ? 'menuActv' : ''
+              }
+            >
+              <a onClick={this.ArchiveLink}>
+                {this.props.settings &&
+                this.props.settings.setting &&
+                this.props.settings.setting.mode &&
+                this.props.settings.setting.mode === "dark" ? (
+                  <img
+                    src={require("assets/images/archive2.png")}
+                    alt=""
+                    title=""
+                  />
+                ) : (
+                  <img
+                    src={require("assets/images/archive.png")}
+                    alt=""
+                    title=""
+                  />
+                )}
+                <span>{archived_request}</span>
+              </a>
+            </li>
+
+
+
             {/* <li
               className={
                 this.props.currentPage === 'feedback' ? 'menuActv' : ''
