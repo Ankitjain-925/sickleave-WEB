@@ -70,6 +70,8 @@ class Index extends Component {
     const { AllDataSec } = this.state;
     let translate = getLanguage(this.props.stateLanguageType);
     let {
+      Request_List,
+      Details,
       added_on,
       Headache,
       stomach_problems,
@@ -152,7 +154,7 @@ class Index extends Component {
       download_certificate,
       payment_due,
       join_meeting,
-      Details,
+     
       your_request_is_accepted_by_the_doctor,
       appointment_date,
       appointment_time,
@@ -184,7 +186,7 @@ class Index extends Component {
                     <Grid className="docsOpinion docsAllOption">
                       <Grid container direction="row" className="docsOpinLbl">
                         <Grid item xs={12} md={6}>
-                          <label>Request List</label>
+                          <label>{Request_List}</label>
                         </Grid>
                       </Grid>
                       <Grid className="presPkgIner2">
