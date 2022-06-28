@@ -73,9 +73,9 @@ class Index extends Component {
     this.props.history.push('/patient/request-list');
   };
 
-  call = () => {
-    this.props.history.push('/video-call/:id');
-  };
+  // call = () => {
+  //   this.props.history.push('/video-call/:id');
+  // };
 
   render() {
     let translate = getLanguage(this.props.stateLanguageType);
@@ -156,7 +156,7 @@ class Index extends Component {
                 <span>{'Request List'}</span>
               </a>
             </li>
-            <li
+            {/* <li
               className={
                 this.props.currentPage === 'feedback' ? 'menuActv' : ''
               }
@@ -180,7 +180,7 @@ class Index extends Component {
                 )}
                 <span>Video call</span>
               </a>
-            </li>
+            </li> */}
             <li
               className={this.props.currentPage === 'profile' ? 'menuActv' : ''}
             >

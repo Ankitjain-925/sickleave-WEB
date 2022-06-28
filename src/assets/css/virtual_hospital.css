@@ -10051,9 +10051,12 @@ button.crdoLghtBlu2 {
 }
 
 .payment_sec_extra_ser1 {
-  background: #fff;
+  /* background: #fff; */
   padding-bottom: 0px;
   width: 100%;
+}
+.homeBgDrk .payment_sec_extra_ser1 h2{
+  color: #fff!important;
 }
 .setPaymentBack {
   border-radius: 12px;
@@ -10063,10 +10066,10 @@ button.crdoLghtBlu2 {
   margin-top: 42px;
 }
 
-.homeBgDrk .payment_sec_extra_ser1,
+/* .homeBgDrk .payment_sec_extra_ser1,
 .homeBgDrk .setPaymentBack {
   background: #e1f7f7 !important;
-}
+} */
 @media (max-width: 959px) {
   .vh-section .prfilHghtLft p span,
   .vh-section .prfilHghtRght p span {
@@ -14589,17 +14592,124 @@ label.errMsgStyleSecPart {
 }
 
 .declineListCol {
-  background-color: #d3d3d3;
+  background-color: rgb(0 0 0 / 25%);
+  color: black !important;
 }
 
 .approvedPayment {
   color: red;
 }
-
 .Paymentpending {
   color: red;
+  background-color: #ffffff;
+  padding: 12px;
+  position: absolute;
+  right: -20px;
+  border-radius: 10px;
+  width: 135px;
+  border: 1px #cccc solid;
+  z-index: 99999999;
 }
+.assignHos.Paymentpending{
+  display: none;
+}
+.InfoOutLine:hover + .assignHos.Paymentpending{
+    display: block !important;
+}
+.homeBgDrk .Paymentpending {  background: #192020 !important; }
 .InfoOutLine {
   color: red;
   font-size: 20px !important;
+}
+
+.manageVideoCall .css-1yrthcx {
+  width: 65% !important;
+}
+.allWebVideoSec {
+  margin: 30px 30px 30px 10px;
+}
+
+.allSickVideoSec h3 {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 18px;
+  margin-bottom: 0px;
+  color: #404646;
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
+.allWebVideoSec .MuiGrid-justify-xs-center {
+  justify-content: flex-start !important;
+}
+.allHeadSection {
+  border: 1.5px solid #00abaf;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.stomachVideoSec {
+  margin-top: 30px;
+}
+
+.sickImageVideoSec {
+  border: 1px solid gray;
+  padding: 20px;
+  border-radius: 50%;
+  width: 10%;
+  height: 50px;
+  margin-bottom: 12px;
+}
+.topSickVideoSec {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.topTxtVideoSec {
+  margin-left: 30px;
+}
+
+.msgSectionCss {
+  font-weight: 600;
+  font-size: 23px;
+  text-align: center;
+  margin-top: 20%;
+  color: #696969;
+}
+
+.declineListCol .homeBgDrk .presOpinionIner td.pivoted {
+  color: #000 !important;
+}
+
+.homeBgDrk .presOpinionIner td.presEditDot img {
+  background: #192020 !important;
+}
+
+.darkTheme .stndQues {
+    color: #c9caca !important;
+}
+.stndQues {
+line-height: 27px;
+}
+.pending-msgPopup{
+  padding: 12px;
+  color: red !important;
+  font-weight: 700;
+}
+.darkTheme .pending-msgPopup {
+  color: #ff6262 !important;
+}
+@media screen and (min-width: 641px) and (max-width: 959px) {
+.presOpinionIner thead th {
+  padding: 6px !important;
+}
+.presOpinionIner td.pivoted {
+  padding: 8px 5px !important;
+}
+}
+@media screen and (min-width: 300px) and (max-width: 640px){
+.responsiveTable td .tdBefore{
+color:#00abaf;
+font-weight: 800;
+}
 }

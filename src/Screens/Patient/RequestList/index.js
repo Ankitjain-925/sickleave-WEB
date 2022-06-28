@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
-import axios from 'axios';
-import sitedata from 'sitedata';
-import { commonHeader } from 'component/CommonHeader/index';
 import { getLanguage } from 'translations/index';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -20,12 +17,18 @@ import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import Modal from '@material-ui/core/Modal';
 import { GetShowLabel1 } from 'Screens/Components/GetMetaData/index.js';
 import PainPoint from 'Screens/Components/PointPain/index';
-import { GetLanguageDropdown } from 'Screens/Components/GetMetaData/index.js';
 import { OptionList } from 'Screens/Login/metadataaction';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import { EditRequest, DownloadCert } from '../SickLeaveForm/api';
 import {
-  EditRequest
-} from "../SickLeaveForm/api";
+  PaymentDue,
+  handleOpenDetail,
+  handleCloseDetail,
+  allgetData,
+  getMetadata,
+  GetLanguageMetadata,
+} from '../SickLeaveForm/api';
+import moment from 'moment';
 
 class Index extends Component {
   constructor(props) {
@@ -33,91 +36,38 @@ class Index extends Component {
     this.state = {
       AllDataSec: [],
       openDetail: false,
-       gender: this.props.stateLoginValueAim?.user?.sex,
+      gender: this.props.stateLoginValueAim?.user?.sex,
       newTask: {},
       Allsituation: [],
       openPayment: false,
+      totalPage: 1,
+      currentPage: 1,
     };
   }
 
   componentDidMount() {
-    this.allgetData(this.props.stateLoginValueAim.user._id);
-    this.getMetadata();
+    var Id = this.props.stateLoginValueAim.user._id;
+    allgetData(Id, this);
+    getMetadata(this);
   }
   componentDidUpdate = (prevProps, prevState) => {
     if (prevProps.stateLanguageType !== this.props.stateLanguageType) {
-      this.GetLanguageMetadata();
+      GetLanguageMetadata(this);
     }
   };
 
-
-  GetLanguageMetadata = () => {
-    if (this.state.allMetadata) {
-      var Allsituation = GetLanguageDropdown(
-        this.state.allMetadata &&
-          this.state.allMetadata.situation &&
-          this.state.allMetadata.situation,
-        this.props.stateLanguageType
-      );
-      var Allsmoking_status = GetLanguageDropdown(
-        this.state.allMetadata &&
-          this.state.allMetadata.smoking_status &&
-          this.state.allMetadata.smoking_status,
-        this.props.stateLanguageType
-      );
-      this.setState({
-        Allsituation: Allsituation,
-        Allsmoking_status: Allsmoking_status,
-      });
-    }
-  };
-
-  //Get All information Related to Metadata
-  getMetadata() {
-    this.setState({ allMetadata: this.props.metadata }, () => {
-      this.GetLanguageMetadata();
-    });
-  }
-
-  allgetData = (patient_id) => {
-    this.setState({ loaderImage: true });
-    let translate = getLanguage(this.props.stateLanguageType);
-    let { Something_went_wrong } = translate;
-    axios
-      .get(
-        sitedata.data.path + '/vactive/GetAllPatientData/' + patient_id,
-        commonHeader(this.props.stateLoginValueAim.token)
-      )
-      .then((responce) => {
-        this.setState({ loaderImage: false });
-        if (responce.data.hassuccessed) {
-          let data = responce.data;
-          this.setState({ AllDataSec: data.data, loaderImage: false });
-        } else {
-          this.setState({
-            errorMsg: Something_went_wrong,
-            loaderImage: false,
-          });
-        }
-      });
-  };
-
-  handleCloseDetail = () => {
-    this.setState({ openDetail: false });
-  };
-
-  handleOpenDetail = (item) => {
-    this.setState({ openDetail: true, newTask: item });
-  };
-
-  PaymentDue = (data) => {
-    this.props.history.push({
-      pathname: '/patient/request-list/payment',
-      state: { data: data },
+  onChangePage = (pageNumber) => {
+    this.setState({
+      AllDataSec: this.state.AllDataSec1.slice(
+        (pageNumber - 1) * 20,
+        pageNumber * 20
+      ),
+      currentPage: pageNumber,
     });
   };
 
   render() {
+    const { AllDataSec } = this.state;
     let translate = getLanguage(this.props.stateLanguageType);
     let {
       Request_List,
@@ -133,9 +83,6 @@ class Index extends Component {
       cardiac_problems,
       see_details,
       edit_request,
-      cancel_request,
-      Download_Bill,
-      give_feedback,
       headache_undergoing_treatment,
       no,
       yes,
@@ -173,7 +120,6 @@ class Index extends Component {
       stomach_attack,
       stomach_failure,
       stomach_periodically,
-      // PainPoint,
       diarrhea_vomiting,
       diarrhea_body_temp,
       diarrhea_suffer_symtoms,
@@ -205,6 +151,13 @@ class Index extends Component {
       cardiac_heart_failure,
       cardiac_dizziness,
       cardiac_shoulder_pain,
+      download_certificate,
+      payment_due,
+      join_meeting,
+     
+      your_request_is_accepted_by_the_doctor,
+      appointment_date,
+      appointment_time,
     } = translate;
 
     return (
@@ -235,7 +188,7 @@ class Index extends Component {
                         </Grid>
                       </Grid>
                       <Grid className="presPkgIner2">
-                        <Grid className="presOpinionIner ">
+                        <Grid className="presOpinionIner">
                           <Table>
                             <Thead>
                               <Tr>
@@ -251,8 +204,9 @@ class Index extends Component {
                               </Tr>
                             </Thead>
                             <Tbody>
-                              {this.state.AllDataSec?.length > 0 &&
-                                this.state.AllDataSec.map((item, index) => (
+                              {AllDataSec &&
+                                AllDataSec?.length > 0 &&
+                                AllDataSec.map((item, index) => (
                                   <Tr
                                     className={
                                       item && item?.is_decline
@@ -288,60 +242,71 @@ class Index extends Component {
                                       </p>
                                     </Td>
                                     <Td>
-                                      {item.headache === 'yes' ? 'Yes' : 'No'}
-                                    </Td>
-
-                                    <Td>
-                                      {item.stomach_problems === 'yes'
+                                      {item &&
+                                      item.headache &&
+                                      item.headache === 'yes'
                                         ? 'Yes'
                                         : 'No'}
                                     </Td>
-
                                     <Td>
-                                      {item.diarrhea === 'yes' ? 'Yes' : 'No'}
-                                    </Td>
-
-                                    <Td>
-                                      {item.have_fever === 'yes' ? 'Yes' : 'No'}
-                                    </Td>
-
-                                    <Td>
-                                      {item.back_pain === 'yes' ? 'Yes' : 'No'}
-                                    </Td>
-
-                                    <Td>
-                                      {item.cough_and_snees === 'yes'
+                                      {item &&
+                                      item.stomach_problems &&
+                                      item.stomach_problems === 'yes'
                                         ? 'Yes'
                                         : 'No'}
                                     </Td>
-
                                     <Td>
-                                      {item.feel_depressed === 'yes'
+                                      {item &&
+                                      item.diarrhea &&
+                                      item.diarrhea === 'yes'
                                         ? 'Yes'
                                         : 'No'}
                                     </Td>
-
                                     <Td>
-                                      {item.cardiac_problems === 'yes'
+                                      {item &&
+                                      item.have_fever &&
+                                      item.have_fever === 'yes'
                                         ? 'Yes'
                                         : 'No'}
                                     </Td>
-
                                     <Td>
+                                      {item &&
+                                      item.back_pain &&
+                                      item.back_pain === 'yes'
+                                        ? 'Yes'
+                                        : 'No'}
+                                    </Td>
+                                    <Td>
+                                      {item &&
+                                      item.cough_and_snees &&
+                                      item.cough_and_snees === 'yes'
+                                        ? 'Yes'
+                                        : 'No'}
+                                    </Td>
+                                    <Td>
+                                      {item &&
+                                      item.feel_depressed &&
+                                      item.feel_depressed === 'yes'
+                                        ? 'Yes'
+                                        : 'No'}
+                                    </Td>
+                                    <Td>
+                                      {item &&
+                                      item.cardiac_problems &&
+                                      item.cardiac_problems === 'yes'
+                                        ? 'Yes'
+                                        : 'No'}
+                                    </Td>
+                                    <Td className="billDots">
                                       <a className="academy_ul">
                                         {item?.approved == true &&
                                           (!item.is_payment ||
                                             item.is_payment == false) && (
                                             <Grid>
                                               <InfoOutlinedIcon className="InfoOutLine" />
-                                              <ul>
-                                                <li>
-                                                  <h6 className="assignHos Paymentpending">
-                                                    Your payment process is
-                                                    pending
-                                                  </h6>
-                                                </li>
-                                              </ul>
+                                              <h6 className="assignHos Paymentpending">
+                                                Your payment process is pending
+                                              </h6>
                                             </Grid>
                                           )}
                                       </a>
@@ -358,7 +323,7 @@ class Index extends Component {
                                           <li>
                                             <a
                                               onClick={() => {
-                                                this.handleOpenDetail(item);
+                                                handleOpenDetail(item, this);
                                               }}
                                             >
                                               <img
@@ -370,16 +335,12 @@ class Index extends Component {
                                             </a>
                                           </li>
                                           {(!item?.approved ||
-                                            item?.approved !== true) && (
+                                            item?.approved != true) && (
                                             <li>
                                               <a
                                                 onClick={() => {
-                                                  EditRequest(
-                                                    this,
-                                                    item
-                                                  );
+                                                  EditRequest(this, item);
                                                 }}
-                                                
                                               >
                                                 <img
                                                   src={require('assets/virtual_images/pencil-1.svg')}
@@ -391,23 +352,69 @@ class Index extends Component {
                                             </li>
                                           )}
 
-                                          {(!item?.ispayment ||
-                                            item?.approved !== true) && (
-                                            <li>
-                                              <a
-                                                onClick={() => {
-                                                  this.PaymentDue(item);
-                                                }}
-                                              >
+                                          {item?.approved == true &&
+                                            (!item.is_payment ||
+                                              item.is_payment == false) && (
+                                              <li>
+                                                <a
+                                                  onClick={() => {
+                                                    PaymentDue(item, this);
+                                                  }}
+                                                >
+                                                  <img
+                                                    src={require('assets/virtual_images/pencil-1.svg')}
+                                                    alt=""
+                                                    title=""
+                                                  />
+                                                  {payment_due}
+                                                </a>
+                                              </li>
+                                            )}
+                                          {item && item.certificate && (
+                                            <li
+                                              onClick={() => {
+                                                DownloadCert(
+                                                  item?.certificate,
+                                                  this
+                                                );
+                                              }}
+                                            >
+                                              <a>
                                                 <img
-                                                  src={require('assets/virtual_images/pencil-1.svg')}
+                                                  src={require('assets/images/details.svg')}
                                                   alt=""
                                                   title=""
                                                 />
-                                                Payment due
+                                                <>{download_certificate}</>
                                               </a>
                                             </li>
                                           )}
+                                          {item.link?.patient_link &&
+                                            (!item?.is_decline ||
+                                              item?.is_decline === false) &&
+                                            !item.meetingjoined && (
+                                              <li
+                                                onClick={() => {
+                                                  this.props.cretficate();
+                                                }}
+                                              >
+                                                <a>
+                                                  <img
+                                                    src={require('assets/images/details.svg')}
+                                                    alt=""
+                                                    title=""
+                                                  />
+                                                  <a
+                                                    href={
+                                                      item.link?.patient_link
+                                                    }
+                                                    target="_blank"
+                                                  >
+                                                    {join_meeting}
+                                                  </a>
+                                                </a>
+                                              </li>
+                                            )}
                                         </ul>
                                       </a>
                                     </Td>
@@ -451,7 +458,7 @@ class Index extends Component {
               {/* Model setup */}
               <Modal
                 open={this.state.openDetail}
-                onClose={this.handleCloseDetail}
+                onClose={() => handleCloseDetail(this)}
                 className={
                   this.props.settings &&
                   this.props.settings.setting &&
@@ -461,15 +468,6 @@ class Index extends Component {
                     : ''
                 }
               >
-                {/* {this.state.newTask?.approved == true && (!this.state.newTask.is_payment || this.state.newTask.is_payment == false) && (
-                  <div><p>Your request is accepted by the doctor but your payment is 
-                    pending, Please do your payment otherwise the the
-                     request will cancel automatically</p></div>
-                )} */}
-                {/* {this.state.newTask?.approved?.length > 0 ? (
-                  <div><p>hello</p></div>
-                ) : null} */}
-
                 <Grid className="creatTaskModel">
                   <Grid className="creatTaskCntnt">
                     <Grid>
@@ -477,7 +475,7 @@ class Index extends Component {
                         <Grid item xs={12} md={12}>
                           <Grid className="creatLbl">
                             <Grid className="creatLblClose createLSet">
-                              <a onClick={this.handleCloseDetail}>
+                              <a onClick={() => handleCloseDetail(this)}>
                                 <img
                                   src={require('assets/images/close-search.svg')}
                                   alt=""
@@ -497,16 +495,23 @@ class Index extends Component {
                         {this.state.newTask?.approved == true &&
                           (!this.state.newTask.is_payment ||
                             this.state.newTask.is_payment == false) && (
-                            <div className="Paymentpending">
-                              <p>
-                                Your request is accepted by the doctor but your
-                                payment is pending, Please do your payment
-                                otherwise the request will cancel automatically
-                              </p>
-                            </div>
+                            <p className="pending-msgPopup">
+                              {your_request_is_accepted_by_the_doctor}
+                            </p>
                           )}
                         <Grid item xs={12} md={12} className="taskDescp">
                           <Grid className="stndQues stndQues1">
+                            <Grid>
+                              <h3>{appointment_date}</h3>
+                              {moment(this.state.newTask?.date).format(
+                                'MMM DD, YYYY'
+                              )}
+                            </Grid>
+                            <Grid>
+                              <h3>{appointment_time}</h3>
+                              {this.state.newTask?.start} -{' '}
+                              {this.state.newTask?.end}
+                            </Grid>
                             {this.state.newTask.headache === 'yes' && (
                               <Grid>
                                 <Grid className="allSickHeadSec">
@@ -516,7 +521,7 @@ class Index extends Component {
                                   <h1>{Pain_begin}</h1>
                                 </Grid>
                                 <Grid container xs={12} md={12}>
-                                  <Grid xs={3} md={3}>
+                                  <Grid item xs={3} md={3}>
                                     <label>{headache_painbegin_back}</label>
                                     {this.state.newTask &&
                                     this.state.newTask
@@ -526,7 +531,7 @@ class Index extends Component {
                                       <p>{no}</p>
                                     )}
                                   </Grid>
-                                  <Grid xs={3} md={3}>
+                                  <Grid item xs={3} md={3}>
                                     <label>{headache_painbegin_front}</label>
                                     {this.state.newTask &&
                                     this.state.newTask
@@ -536,7 +541,7 @@ class Index extends Component {
                                       <p>{no}</p>
                                     )}
                                   </Grid>
-                                  <Grid xs={3} md={3}>
+                                  <Grid item xs={3} md={3}>
                                     <label>{headache_painbegin_left}</label>
                                     {this.state.newTask &&
                                     this.state.newTask
@@ -546,7 +551,7 @@ class Index extends Component {
                                       <p>{no}</p>
                                     )}
                                   </Grid>
-                                  <Grid xs={3} md={3}>
+                                  <Grid item xs={3} md={3}>
                                     <label>{headache_painbegin_right}</label>
                                     {this.state.newTask &&
                                     this.state.newTask
@@ -556,7 +561,7 @@ class Index extends Component {
                                       <p>{no}</p>
                                     )}
                                   </Grid>
-                                  <Grid xs={3} md={3}>
+                                  <Grid item xs={3} md={3}>
                                     <label>{headache_painbegin_top}</label>
                                     {this.state.newTask &&
                                     this.state.newTask
@@ -573,7 +578,7 @@ class Index extends Component {
                                     <h1>{hurtnow}</h1>
                                   </Grid>
                                   <Grid container xs={12} md={12}>
-                                    <Grid xs={3} md={3}>
+                                    <Grid item xs={3} md={3}>
                                       <label>{headache_hurtnow_back}</label>
                                       {this.state.newTask &&
                                       this.state.newTask
@@ -583,7 +588,7 @@ class Index extends Component {
                                         <p>{no}</p>
                                       )}
                                     </Grid>
-                                    <Grid xs={3} md={3}>
+                                    <Grid item xs={3} md={3}>
                                       <label>{headache_hurtnow_front}</label>
                                       {this.state.newTask &&
                                       this.state.newTask
@@ -593,7 +598,7 @@ class Index extends Component {
                                         <p>{no}</p>
                                       )}
                                     </Grid>
-                                    <Grid xs={3} md={3}>
+                                    <Grid item xs={3} md={3}>
                                       <label>{headache_hurtnow_left}</label>
                                       {this.state.newTask &&
                                       this.state.newTask
@@ -603,7 +608,7 @@ class Index extends Component {
                                         <p>{no}</p>
                                       )}
                                     </Grid>
-                                    <Grid xs={3} md={3}>
+                                    <Grid item xs={3} md={3}>
                                       <label>{headache_hurtnow_right}</label>
                                       {this.state.newTask &&
                                       this.state.newTask
@@ -613,7 +618,7 @@ class Index extends Component {
                                         <p>{no}</p>
                                       )}
                                     </Grid>
-                                    <Grid xs={3} md={3}>
+                                    <Grid item xs={3} md={3}>
                                       <label>{headache_hurtnow_top}</label>
                                       {this.state.newTask &&
                                       this.state.newTask
@@ -631,7 +636,7 @@ class Index extends Component {
                                     <h1>{blood_pressure}</h1>
                                   </Grid>
                                   <Grid container xs={12} md={12}>
-                                    <Grid xs={6} md={6}>
+                                    <Grid item xs={6} md={6}>
                                       <label>{rr_systolic}</label>
                                       <p>
                                         {this.state.newTask &&
@@ -639,7 +644,7 @@ class Index extends Component {
                                             .headache_rr_systolic}
                                       </p>
                                     </Grid>
-                                    <Grid xs={6} md={6}>
+                                    <Grid item xs={6} md={6}>
                                       <label>{RR_diastolic}</label>
                                       <p>
                                         {this.state.newTask &&
@@ -669,7 +674,7 @@ class Index extends Component {
                                       <h1>{diabetes}</h1>
                                     </Grid>
                                     <Grid container xs={12} md={12}>
-                                      <Grid xs={4} md={4}>
+                                      <Grid item xs={4} md={4}>
                                         <label>{blood_sugar}</label>
                                         <p>
                                           {this.state.newTask &&
@@ -677,14 +682,14 @@ class Index extends Component {
                                               ?.headache_blood_sugar}
                                         </p>
                                       </Grid>
-                                      <Grid xs={4} md={4}>
+                                      <Grid item xs={4} md={4}>
                                         <label>{Hba1c}</label>
                                         <p>
                                           {this.state.newTask &&
                                             this.state.newTask?.headache_Hba1c}
                                         </p>
                                       </Grid>
-                                      <Grid xs={4} md={4}>
+                                      <Grid item xs={4} md={4}>
                                         <label>{situation}</label>
                                         <p>
                                           {this.state.newTask &&

@@ -26,7 +26,6 @@ class CometChatOutgoingDirectCall extends React.Component {
     this.state = {
       callInProgress: null,
     };
-
     this.callScreenRef = React.createRef();
 
     CometChat.getLoggedinUser()
@@ -144,10 +143,11 @@ class CometChatOutgoingDirectCall extends React.Component {
 
   render() {
     let callScreen = null;
-    console.log('this.state.callInProgress', this.state.callInProgress);
     // if (this.state.callInProgress) {
     callScreen = (
       <CometChatCallScreen
+        endCallScreen={(value) => this.props.endCallScreen(value)}
+        sessionID={this.props.sessionID}
         ref={(el) => (this.callScreenRef = el)}
         loggedInUser={this.loggedInUser}
         call={this.state.callInProgress}

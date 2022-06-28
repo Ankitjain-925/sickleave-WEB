@@ -310,8 +310,7 @@ class CometChatCallScreen extends React.PureComponent {
   };
 
   startDirectCall = (call) => {
-    const sessionId = `abcd_123`;
-    console.log('ok', sessionId);
+    const sessionId = this.props.sessionID;
     // const customCSS = this.context.UIKitSettings.customCSS;
     const showRecordingButton = true;
     // this.context.UIKitSettings.showCallRecordingOption;
@@ -329,14 +328,18 @@ class CometChatCallScreen extends React.PureComponent {
     CometChat.startCall(
       callSettings,
       el,
+
       new CometChat.OngoingCallListener({
         onCallEnded: (call) => {
+          let value = 4;
+          this.props.endCallScreen(value);
           if (this.context) {
             this.context.setCallInProgress({}, '');
           }
           Storage.removeItem(enums.CONSTANTS['ACTIVECALL']);
           this.props.actionGenerated(enums.ACTIONS['DIRECT_CALL_ENDED']);
         },
+
         onError: (error) => {
           if (this.context) {
             this.context.setCallInProgress(null, '');
@@ -435,7 +438,6 @@ class CometChatCallScreen extends React.PureComponent {
           }
         },
         onCallEnded: (endedCall) => {
-          console.log('1');
           /* Notification received here if current ongoing call is ended. */
           if (this.context) {
             this.context.setCallInProgress(null, '');
