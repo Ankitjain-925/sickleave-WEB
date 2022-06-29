@@ -22,6 +22,7 @@ import SneezSection from './SneezSection';
 import CPSection from './CPSection';
 import DepressedSection from './DepressedSection';
 import Calendar2 from 'react-calendar';
+import { getLanguage } from 'translations/index';
 import {
   GetLanguageMetadata,
   onChange,
@@ -36,8 +37,6 @@ import {
   SelectTimeSlot,
   saveOnDB,
 } from './api';
-import { getLanguage } from 'translations/index';
-import moment from 'moment';
 
 class Index extends Component {
   constructor(props) {
@@ -67,10 +66,6 @@ class Index extends Component {
   };
 
   componentDidMount = () => {
-    var date = new Date();
-    var a = moment(date).format('hh');
-    console.log('date', a);
-
     if (this.props.location.state?.updateQues) {
       this.setState({ updateQues: this.props.location.state?.updateQues });
     }
