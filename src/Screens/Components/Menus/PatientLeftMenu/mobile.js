@@ -161,7 +161,7 @@ class Index extends Component {
                           title=""
                         />
                       )}
-                      <span>{"Request List"}</span>
+                      <span>{request_list}</span>
                     </a>
                   </li>
 

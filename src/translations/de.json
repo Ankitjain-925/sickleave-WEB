@@ -244,7 +244,7 @@
     "again": "wieder",
     "modify": "Modifizieren",
     "see": "Ansehen",
-    "see_details": "Details ansehen",
+    "see_details": "Siehe Einzelheiten",
     "cancel_reqst": "Anfrage zurücknehmen",
     "cancel": "Abbrechen",
     "what_ur_profession": "Welchen Beruf üben Sie aus",
@@ -1757,7 +1757,16 @@
     "sputum_intensity": "Sputum Intensität",
     "atleast_one_problem_for": "mindestens ein Problem für",
     "data_protection_rules_and_regulations_of_aimedis.": "Datenschutzbestimmungen und -bestimmungen von Aimedis.",
-    "time_slot": "Zeitfenster"
+    "time_slot": "Zeitfenster",
+    "depressed_symptoms_begin":"Depressive Symptome beginnen",
+    "pain_level":"Schmerzniveau",
+    "depressed_do_you_sleep":"Schlafen",
+    "depressed_suicidal_thoughts":"Selbstmordgedanken",
+    "depressed_hurt_yourself":"Sich verletzen",
+    "cardiac_heart_attack":"Herzinfarkt",
+    "cardiac_heart_failure":"Herzfehler",
+    "cardiac_dizziness":"Herz Schwindel",
+    "cardiac_shoulder_pain":"Schulterschmerzen"
 
   }
 }
