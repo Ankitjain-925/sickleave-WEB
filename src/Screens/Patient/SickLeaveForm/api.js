@@ -132,7 +132,7 @@ export function getLink() {
   }
   let STRIPE_PUBLISHABLE;
   if (env === 'DEV') {
-    STRIPE_PUBLISHABLE = 'http://localhost:3000/sys-n-sick';
+    STRIPE_PUBLISHABLE = 'https://virtualhospital.aimedis.io/sys-n-sick';
   } else {
     STRIPE_PUBLISHABLE = 'https://virtualhospital.aimedis.io/sys-n-sick';
   }
