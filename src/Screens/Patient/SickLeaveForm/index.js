@@ -37,6 +37,7 @@ import {
   SelectTimeSlot,
   saveOnDB,
 } from './api';
+import { Redirect } from 'react-router-dom';
 
 class Index extends Component {
   constructor(props) {
@@ -98,6 +99,17 @@ class Index extends Component {
       rules_and_regulations_of_aimedis,
       you_have_fever,
     } = translate;
+    const { stateLoginValueAim } = this.props;
+    if (
+      stateLoginValueAim.user === 'undefined' ||
+      stateLoginValueAim.token === 450 ||
+      stateLoginValueAim.token === 'undefined' ||
+      stateLoginValueAim.user.type !== 'patient' ||
+      !this.props.verifyCode ||
+      !this.props.verifyCode.code
+    ) {
+      return <Redirect to={'/'} />;
+    }
     const {
       updateQues,
       error_section,
@@ -151,7 +163,7 @@ class Index extends Component {
                               <div className="err_message2">{errorChrMsg}</div>
                             )}
                           </Grid>
-                          {console.log("aaaaa" ,this.state.Allsituation )}
+                          {console.log('aaaaa', this.state.Allsituation)}
                           {updateQues && updateQues?.headache === 'yes' && (
                             <HeadacheSection
                               updateAllEntrySec2={(e) => {

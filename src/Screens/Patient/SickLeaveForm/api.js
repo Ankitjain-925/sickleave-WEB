@@ -56,11 +56,9 @@ export const CancelClick = (current) => {
 export const DownloadCert = (data, current) => {
   current.setState({ loaderImage: true });
   axios
-    .post(
-      sitedata.data.path + '/vactive/downloadSickleaveCertificate',
-      data,
-      { responseType: "blob" }
-    )
+    .post(sitedata.data.path + '/vactive/downloadSickleaveCertificate', data, {
+      responseType: 'blob',
+    })
     .then((responce) => {
       current.setState({ loaderImage: false });
       var data = new Blob([responce.data]);
@@ -132,7 +130,7 @@ export function getLink() {
   }
   let STRIPE_PUBLISHABLE;
   if (env === 'DEV') {
-    STRIPE_PUBLISHABLE = 'http://localhost:3000/sys-n-sick';
+    STRIPE_PUBLISHABLE = 'https://virtualhospital.aimedis.io/sys-n-sick';
   } else {
     STRIPE_PUBLISHABLE = 'https://virtualhospital.aimedis.io/sys-n-sick';
   }
