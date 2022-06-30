@@ -49,7 +49,8 @@ class Index extends Component {
 
   render() {
     let translate = getLanguage(this.props.stateLanguageType);
-    let { pay_with_stripe, payment, cancel, request_list_payment ,Payment} = translate;
+    let { pay_with_stripe, payment, cancel, request_list_payment, Payment } =
+      translate;
 
     //Success payment alert after payment is success
     const successPayment = (data) => {
@@ -146,7 +147,7 @@ class Index extends Component {
         .post(sitedata.data.path + '/lms_stripeCheckout/intent-pop', {
           source: token.id,
           currency: CURRENCY,
-          amount: fromEuroToCent(25, this),
+          amount: fromEuroToCent(this.state.amountDta, this),
         })
         .then(successPayment, this.setState({ addtocart: [] }))
         .catch(errorPayment);
