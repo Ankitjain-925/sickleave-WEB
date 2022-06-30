@@ -97,6 +97,44 @@ class Index extends Component {
       });
   };
 
+  DownloadBill = (item) => {
+    this.setState({ loaderImage: true });
+    const data = {
+      data: {
+        first_name:this.props.stateLoginValueAim.user.first_name,
+        last_name:this.props.stateLoginValueAim.user.last_name,
+        address:this.props.stateLoginValueAim.user.address,
+        country:this.props.stateLoginValueAim.user.country,
+        city: this.props.stateLoginValueAim.user.city,
+        birthday: this.props.stateLoginValueAim.user.birthday,
+      },
+      invoice_id: item?.payment_data?.id,
+      bill_date: item?.payment_data?.Date,
+      type: "sick_leave",
+      amt: item?.payment_data?.amount,
+    };
+    axios
+    .post(sitedata.data.path + "/vh/downloadPEBill", data, {
+      responseType: "blob",
+    })
+    .then((res) => {
+       this.setState({ loaderImage: false });
+      var data = new Blob([res.data]);
+      if (typeof window.navigator.msSaveBlob === 'function') {
+        // If it is IE that support download blob directly.
+        window.navigator.msSaveBlob(data, 'report.pdf');
+      } else {
+        var blob = data;
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = 'report.pdf';
+        document.body.appendChild(link);
+        link.click(); // create an <a> element and simulate the click operation.
+      }
+    });
+  };
+  
+
   render() {
     const { AllDataPart, tabvalue2 } = this.state;
     let translate = getLanguage(this.props.stateLanguageType);
@@ -449,13 +487,11 @@ class Index extends Component {
                                             item.is_payment === true && (
                                               <li>
                                                 <a
-                                                // onClick={() => {
-                                                //   DownloadBill(
-                                                //     this,
-                                                //     item?.payment_data?.id,
-                                                //     item?.created_at
-                                                //   );
-                                                // }}
+                                                  onClick={() => {
+                                                    this.DownloadBill(
+                                                      item
+                                                    );
+                                                  }}
                                                 >
                                                   <img
                                                     src={require("assets/images/download.svg")}
