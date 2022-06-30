@@ -286,10 +286,10 @@ class Index extends Component {
                                 </Grid>
                                 <Grid className="topTxtVideoSec">
                                   <p>
-                                    {allTasks?.patient.first_name}{' '}
-                                    {allTasks?.patient.last_name}
+                                    {allTasks?.patient?.first_name}{' '}
+                                    {allTasks?.patient?.last_name}
                                   </p>
-                                  <label>{allTasks?.patient.profile_id}</label>
+                                  <label>{allTasks?.patient?.profile_id}</label>
                                 </Grid>
                               </Grid>
                               {allTasks && allTasks?.headache === 'yes' && (
