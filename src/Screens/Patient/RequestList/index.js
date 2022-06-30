@@ -154,7 +154,7 @@ class Index extends Component {
       download_certificate,
       payment_due,
       join_meeting,
-     
+
       your_request_is_accepted_by_the_doctor,
       appointment_date,
       appointment_time,
@@ -315,11 +315,12 @@ class Index extends Component {
                                         <>{no}</>
                                       )}
                                     </Td>
+
                                     <Td className="billDots">
                                       <a className="academy_ul">
                                         {item?.approved == true &&
                                           (!item.is_payment ||
-                                            item.is_payment == false) && (
+                                          item.is_payment == false ? (
                                             <Grid>
                                               <InfoOutlinedIcon className="InfoOutLine" />
                                               <h6 className="assignHos Paymentpending">
@@ -328,9 +329,18 @@ class Index extends Component {
                                                 }
                                               </h6>
                                             </Grid>
-                                          )}
+                                          ) : (
+                                            <Grid>
+                                              <InfoOutlinedIcon className="InfoOutLine" />
+                                              <h6 className="assignHos Paymentpending">
+                                                {appointment_time}
+                                                {item?.start}- {item?.end}
+                                              </h6>
+                                            </Grid>
+                                          ))}
                                       </a>
                                     </Td>
+
                                     <Td className="presEditDot scndOptionIner dowloadCerSick">
                                       <a className="openScndhrf">
                                         <img

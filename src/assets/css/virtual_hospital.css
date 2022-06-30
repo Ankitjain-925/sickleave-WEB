@@ -14720,3 +14720,9 @@ label.errMsgStyleSecPart {
   font-weight: 800;
   }
   }
+
+  .profileImagePat img {
+    width: 36px;
+    border-radius: 16px;
+    margin-bottom: 9px;
+  }
