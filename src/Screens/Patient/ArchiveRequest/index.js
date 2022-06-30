@@ -108,10 +108,8 @@ class Index extends Component {
         city: this.props.stateLoginValueAim.user.city,
         birthday: this.props.stateLoginValueAim.user.birthday,
       },
-      invoice_id: item?.payment_data?.id,
-      bill_date: item?.payment_data?.Date,
+      task_id: item?._id,
       type: "sick_leave",
-      amt: item?.payment_data?.amount,
     };
     axios
     .post(sitedata.data.path + "/vh/downloadPEBill", data, {
