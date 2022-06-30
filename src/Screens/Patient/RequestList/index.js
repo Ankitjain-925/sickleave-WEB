@@ -19,7 +19,7 @@ import { GetShowLabel1 } from 'Screens/Components/GetMetaData/index.js';
 import PainPoint from 'Screens/Components/PointPain/index';
 import { OptionList } from 'Screens/Login/metadataaction';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import { EditRequest, DownloadCert } from '../SickLeaveForm/api';
+import { EditRequest, DownloadCert , DownloadBill} from '../SickLeaveForm/api';
 import {
   PaymentDue,
   handleOpenDetail,
@@ -453,13 +453,12 @@ class Index extends Component {
                                             item.meetingjoined === true && (
                                               <li>
                                                 <a
-                                                // onClick={() => {
-                                                //   DownloadBill(
-                                                //     this,
-                                                //     item?.payment_data?.id,
-                                                //     item?.created_at
-                                                //   );
-                                                // }}
+                                                onClick={() => {
+                                                  DownloadBill(
+                                                    this,
+                                                    item
+                                                  );
+                                                }}
                                                 >
                                                   <img
                                                     src={require('assets/images/download.svg')}

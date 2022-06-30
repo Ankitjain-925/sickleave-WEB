@@ -12,7 +12,7 @@ import LeftMenu from "Screens/Components/Menus/PatientLeftMenu/index";
 import LeftMenuMobile from "Screens/Components/Menus/PatientLeftMenu/mobile";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import { getLanguage } from "translations/index";
-import { handleOpenDetail } from "../SickLeaveForm/api";
+import { handleOpenDetail, DownloadBill } from "../SickLeaveForm/api";
 import sitedata from "sitedata";
 import axios from "axios";
 import { commonHeader } from "component/CommonHeader/index";
@@ -96,43 +96,7 @@ class Index extends Component {
         }
       });
   };
-
-  DownloadBill = (item) => {
-    this.setState({ loaderImage: true });
-    const data = {
-      data: {
-        first_name:this.props.stateLoginValueAim.user.first_name,
-        last_name:this.props.stateLoginValueAim.user.last_name,
-        address:this.props.stateLoginValueAim.user.address,
-        country:this.props.stateLoginValueAim.user.country,
-        city: this.props.stateLoginValueAim.user.city,
-        birthday: this.props.stateLoginValueAim.user.birthday,
-      },
-      task_id: item?._id,
-      type: "sick_leave",
-    };
-    axios
-    .post(sitedata.data.path + "/vh/downloadPEBill", data, {
-      responseType: "blob",
-    })
-    .then((res) => {
-       this.setState({ loaderImage: false });
-      var data = new Blob([res.data]);
-      if (typeof window.navigator.msSaveBlob === 'function') {
-        // If it is IE that support download blob directly.
-        window.navigator.msSaveBlob(data, 'report.pdf');
-      } else {
-        var blob = data;
-        var link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = 'report.pdf';
-        document.body.appendChild(link);
-        link.click(); // create an <a> element and simulate the click operation.
-      }
-    });
-  };
   
-
   render() {
     const { AllDataPart, tabvalue2 } = this.state;
     let translate = getLanguage(this.props.stateLanguageType);
@@ -486,7 +450,8 @@ class Index extends Component {
                                               <li>
                                                 <a
                                                   onClick={() => {
-                                                    this.DownloadBill(
+                                                  DownloadBill(
+                                                    this,
                                                       item
                                                     );
                                                   }}
