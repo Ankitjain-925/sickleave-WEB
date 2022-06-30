@@ -33,7 +33,8 @@ export const getAmountData = (current) => {
     .then((response) => {
       if (response.data.hassuccessed) {
         current.setState({
-          amountDta: response.data.sickleave_certificate_amount,
+          amountDta: response?.data?.sickleave_certificate_amount,
+
           loaderImage: false,
         });
       }
@@ -151,6 +152,7 @@ export const saveOnDB1 = (payment, task, current) => {
         sitedata.data.path + '/vh/AddTask/' + current.state.updateEvaluate._id,
         {
           payment_data: payment?.data?.paymentData,
+          amount: payment?.data?.paymentData?.amount,
           is_payment: true,
           link: {
             doctor_link:
