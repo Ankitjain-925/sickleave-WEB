@@ -189,6 +189,41 @@ export const getMetadata = (current) => {
   });
 };
 
+export const DownloadBill = (current, item) => {
+  this.setState({ loaderImage: true });
+  const data = {
+    data: {
+      first_name:current.props.stateLoginValueAim.user.first_name,
+      last_name:current.props.stateLoginValueAim.user.last_name,
+      address:current.props.stateLoginValueAim.user.address,
+      country:current.props.stateLoginValueAim.user.country,
+      city: current.props.stateLoginValueAim.user.city,
+      birthday: current.props.stateLoginValueAim.user.birthday,
+    },
+    task_id: item?._id,
+    type: "sick_leave",
+  };
+  axios
+  .post(sitedata.data.path + "/vh/downloadPEBill", data, {
+    responseType: "blob",
+  })
+  .then((res) => {
+     this.setState({ loaderImage: false });
+    var data = new Blob([res.data]);
+    if (typeof window.navigator.msSaveBlob === 'function') {
+      // If it is IE that support download blob directly.
+      window.navigator.msSaveBlob(data, 'report.pdf');
+    } else {
+      var blob = data;
+      var link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = 'report.pdf';
+      document.body.appendChild(link);
+      link.click(); // create an <a> element and simulate the click operation.
+    }
+  });
+};
+
 export const GetLanguageMetadata = (current) => {
   if (current.state.allMetadata) {
     var Allsituation = GetLanguageDropdown(

@@ -19,7 +19,7 @@ import { GetShowLabel1 } from 'Screens/Components/GetMetaData/index.js';
 import PainPoint from 'Screens/Components/PointPain/index';
 import { OptionList } from 'Screens/Login/metadataaction';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import { EditRequest, DownloadCert } from '../SickLeaveForm/api';
+import { EditRequest, DownloadCert, DownloadBill } from '../SickLeaveForm/api';
 import {
   PaymentDue,
   handleOpenDetail,
@@ -332,10 +332,13 @@ class Index extends Component {
                                           ) : (
                                             <Grid>
                                               <InfoOutlinedIcon className="InfoOutLine" />
-                                              <h6 className="assignHos Paymentpending">
-                                                {appointment_time}
-                                                {item?.start}- {item?.end}
-                                              </h6>
+                                              <div className="assignHos appointmentTime">
+                                                Meeting Time and Date :{' '}
+                                                {item?.start}- {item?.end},{' '}
+                                                {moment(item?.date).format(
+                                                  'MMM DD, YYYY'
+                                                )}
+                                              </div>
                                             </Grid>
                                           ))}
                                       </a>

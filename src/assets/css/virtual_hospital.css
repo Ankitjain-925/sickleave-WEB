@@ -14714,15 +14714,38 @@ label.errMsgStyleSecPart {
   display: flex !important;
 }
 
-@media screen and (min-width: 300px) and (max-width: 640px){
-  .responsiveTable td .tdBefore{
-  color:#00abaf;
-  font-weight: 800;
+@media screen and (min-width: 300px) and (max-width: 640px) {
+  .responsiveTable td .tdBefore {
+    color: #00abaf;
+    font-weight: 800;
   }
-  }
+}
 
-  .profileImagePat img {
-    width: 36px;
-    border-radius: 16px;
-    margin-bottom: 9px;
-  }
+.profileImagePat img {
+  width: 36px;
+  border-radius: 16px;
+  margin-bottom: 9px;
+}
+
+.appointmentTime {
+  color: red;
+  background-color: #ffffff;
+  padding: 5px;
+  position: absolute;
+  right: -20px;
+  border-radius: 10px;
+  width: 135px;
+  border: 1px #cccc solid;
+  z-index: 99999999;
+}
+
+.homeBgDrk .appointmentTime {
+  background: #192020 !important;
+}
+
+.assignHos.appointmentTime {
+  display: none;
+}
+.InfoOutLine:hover + .assignHos.appointmentTime {
+  display: block !important;
+}

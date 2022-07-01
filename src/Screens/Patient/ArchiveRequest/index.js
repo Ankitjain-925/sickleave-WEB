@@ -12,7 +12,7 @@ import LeftMenu from "Screens/Components/Menus/PatientLeftMenu/index";
 import LeftMenuMobile from "Screens/Components/Menus/PatientLeftMenu/mobile";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import { getLanguage } from "translations/index";
-import { handleOpenDetail } from "../SickLeaveForm/api";
+import { handleOpenDetail, DownloadBill } from "../SickLeaveForm/api";
 import sitedata from "sitedata";
 import axios from "axios";
 import { commonHeader } from "component/CommonHeader/index";
@@ -96,7 +96,7 @@ class Index extends Component {
         }
       });
   };
-
+  
   render() {
     const { AllDataPart, tabvalue2 } = this.state;
     let translate = getLanguage(this.props.stateLanguageType);
@@ -449,13 +449,12 @@ class Index extends Component {
                                             item.is_payment === true && (
                                               <li>
                                                 <a
-                                                // onClick={() => {
-                                                //   DownloadBill(
-                                                //     this,
-                                                //     item?.payment_data?.id,
-                                                //     item?.created_at
-                                                //   );
-                                                // }}
+                                                  onClick={() => {
+                                                  DownloadBill(
+                                                    this,
+                                                      item
+                                                    );
+                                                  }}
                                                 >
                                                   <img
                                                     src={require("assets/images/download.svg")}
