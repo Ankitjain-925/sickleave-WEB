@@ -456,13 +456,12 @@ class Index extends Component {
                                             item?.is_payment == true) && (
                                             <li>
                                               <a
-                                              // onClick={() => {
-                                              //   DownloadBill(
-                                              //     this,
-                                              //     item?.payment_data?.id,
-                                              //     item?.created_at
-                                              //   );
-                                              // }}
+                                              onClick={() => {
+                                                DownloadBill(
+                                                  this,
+                                                  item
+                                                );
+                                              }}
                                               >
                                                 <img
                                                   src={require('assets/images/download.svg')}

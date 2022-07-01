@@ -213,12 +213,12 @@ export const DownloadBill = (current, item) => {
     var data = new Blob([res.data]);
     if (typeof window.navigator.msSaveBlob === 'function') {
       // If it is IE that support download blob directly.
-      window.navigator.msSaveBlob(data, 'report.pdf');
+      window.navigator.msSaveBlob(data, 'bill.pdf');
     } else {
       var blob = data;
       var link = document.createElement('a');
       link.href = window.URL.createObjectURL(blob);
-      link.download = 'report.pdf';
+      link.download = 'bill.pdf';
       document.body.appendChild(link);
       link.click(); // create an <a> element and simulate the click operation.
     }
