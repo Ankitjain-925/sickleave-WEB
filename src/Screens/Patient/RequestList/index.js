@@ -449,27 +449,27 @@ class Index extends Component {
                                                 </a>
                                               </li>
                                             )}
-                                          {item.meetingjoined &&
-                                            item.meetingjoined === true && (
-                                              <li>
-                                                <a
-                                                // onClick={() => {
-                                                //   DownloadBill(
-                                                //     this,
-                                                //     item?.payment_data?.id,
-                                                //     item?.created_at
-                                                //   );
-                                                // }}
-                                                >
-                                                  <img
-                                                    src={require('assets/images/download.svg')}
-                                                    alt=""
-                                                    title=""
-                                                  />
-                                                  {Download_Bill}
-                                                </a>
-                                              </li>
-                                            )}
+                                          {(item?.is_payment ||
+                                            item?.is_payment == true) && (
+                                            <li>
+                                              <a
+                                              // onClick={() => {
+                                              //   DownloadBill(
+                                              //     this,
+                                              //     item?.payment_data?.id,
+                                              //     item?.created_at
+                                              //   );
+                                              // }}
+                                              >
+                                                <img
+                                                  src={require('assets/images/download.svg')}
+                                                  alt=""
+                                                  title=""
+                                                />
+                                                {Download_Bill}
+                                              </a>
+                                            </li>
+                                          )}
                                         </ul>
                                       </a>
                                     </Td>
