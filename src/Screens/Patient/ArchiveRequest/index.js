@@ -12,7 +12,7 @@ import LeftMenu from "Screens/Components/Menus/PatientLeftMenu/index";
 import LeftMenuMobile from "Screens/Components/Menus/PatientLeftMenu/mobile";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import { getLanguage } from "translations/index";
-import { handleOpenDetail } from "../SickLeaveForm/api";
+import { handleOpenDetail, DownloadBill } from "../SickLeaveForm/api";
 import sitedata from "sitedata";
 import axios from "axios";
 import { commonHeader } from "component/CommonHeader/index";
@@ -96,45 +96,7 @@ class Index extends Component {
         }
       });
   };
-
-  DownloadBill = (item) => {
-    this.setState({ loaderImage: true });
-    const data = {
-      data: {
-        first_name:this.props.stateLoginValueAim.user.first_name,
-        last_name:this.props.stateLoginValueAim.user.last_name,
-        address:this.props.stateLoginValueAim.user.address,
-        country:this.props.stateLoginValueAim.user.country,
-        city: this.props.stateLoginValueAim.user.city,
-        birthday: this.props.stateLoginValueAim.user.birthday,
-      },
-      invoice_id: item?.payment_data?.id,
-      bill_date: item?.payment_data?.Date,
-      type: "sick_leave",
-      amt: item?.payment_data?.amount,
-    };
-    axios
-    .post(sitedata.data.path + "/vh/downloadPEBill", data, {
-      responseType: "blob",
-    })
-    .then((res) => {
-       this.setState({ loaderImage: false });
-      var data = new Blob([res.data]);
-      if (typeof window.navigator.msSaveBlob === 'function') {
-        // If it is IE that support download blob directly.
-        window.navigator.msSaveBlob(data, 'report.pdf');
-      } else {
-        var blob = data;
-        var link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = 'report.pdf';
-        document.body.appendChild(link);
-        link.click(); // create an <a> element and simulate the click operation.
-      }
-    });
-  };
   
-
   render() {
     const { AllDataPart, tabvalue2 } = this.state;
     let translate = getLanguage(this.props.stateLanguageType);
@@ -246,7 +208,7 @@ class Index extends Component {
                 <Grid container direction="row">
                   <LeftMenu isNotShow={true} currentPage="archivelink" />
                   <LeftMenuMobile isNotShow={true} currentPage="archivelink" />
-                  <Grid item xs={12} md={11} lg={10}>
+                  <Grid item xs={12} md={11} lg={11} className="setleftpadding-archive">
                     <Grid className="docsOpinion docsAllOption">
                       <Grid container direction="row" className="docsOpinLbl">
                         <Grid item xs={12} md={6}>
@@ -329,8 +291,8 @@ class Index extends Component {
                         </Grid>
                       </Grid>
 
-                      <Grid className="presPkgIner2">
-                        <Grid className="presOpinionIner">
+                      <Grid className="presPkgIner2 archive-sick">
+                        <Grid className="presOpinionIner presOpinionInerSec">
                           <Table>
                             <Thead>
                               <Tr>
@@ -343,6 +305,8 @@ class Index extends Component {
                                 <Th>{cough_and_snees}</Th>
                                 <Th>{feel_depressed}</Th>
                                 <Th>{cardiac_problems}</Th>
+                                <Th>Status</Th>
+                                <Th></Th>
                               </Tr>
                             </Thead>
                             <Tbody>
@@ -455,7 +419,11 @@ class Index extends Component {
                                         <>{no}</>
                                       )}
                                     </Td>
-
+                                    <Td>
+                                    {item &&
+                                      item.is_payment && item.is_payment==true
+                                     ? 'Not attended' : 'Payment pending'}
+                                    </Td>
                                     <Td className="presEditDot scndOptionIner">
                                       <a className="openScndhrf">
                                         <img
@@ -488,7 +456,8 @@ class Index extends Component {
                                               <li>
                                                 <a
                                                   onClick={() => {
-                                                    this.DownloadBill(
+                                                  DownloadBill(
+                                                    this,
                                                       item
                                                     );
                                                   }}

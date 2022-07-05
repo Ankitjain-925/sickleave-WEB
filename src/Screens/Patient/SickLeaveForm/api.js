@@ -24,16 +24,18 @@ export function getHouseId() {
 
 export const getAmountData = (current) => {
   current.setState({ loaderImage: true });
+  var house_id = getHouseId();
   axios
     .get(
       sitedata.data.path +
-        '/vactive/GetAmount/60fabfe5b3394533f7f9a6dc-1654919887767',
+        '/vactive/GetAmount/'+house_id,
       commonHeader(current.props.stateLoginValueAim.token)
     )
     .then((response) => {
       if (response.data.hassuccessed) {
         current.setState({
-          amountDta: response.data.sickleave_certificate_amount,
+          amountDta: response?.data?.sickleave_certificate_amount,
+
           loaderImage: false,
         });
       }
@@ -56,11 +58,9 @@ export const CancelClick = (current) => {
 export const DownloadCert = (data, current) => {
   current.setState({ loaderImage: true });
   axios
-    .post(
-      sitedata.data.path + '/vactive/downloadSickleaveCertificate',
-      data,
-      { responseType: "blob" }
-    )
+    .post(sitedata.data.path + '/vactive/downloadSickleaveCertificate', data, {
+      responseType: 'blob',
+    })
     .then((responce) => {
       current.setState({ loaderImage: false });
       var data = new Blob([responce.data]);
@@ -132,7 +132,7 @@ export function getLink() {
   }
   let STRIPE_PUBLISHABLE;
   if (env === 'DEV') {
-    STRIPE_PUBLISHABLE = 'http://localhost:3000/sys-n-sick';
+    STRIPE_PUBLISHABLE = 'https://virtualhospital.aimedis.io/sys-n-sick';
   } else {
     STRIPE_PUBLISHABLE = 'https://virtualhospital.aimedis.io/sys-n-sick';
   }
@@ -153,6 +153,7 @@ export const saveOnDB1 = (payment, task, current) => {
         sitedata.data.path + '/vh/AddTask/' + current.state.updateEvaluate._id,
         {
           payment_data: payment?.data?.paymentData,
+          amount: payment?.data?.paymentData?.amount,
           is_payment: true,
           link: {
             doctor_link:
@@ -186,6 +187,41 @@ export const saveOnDB1 = (payment, task, current) => {
 export const getMetadata = (current) => {
   current.setState({ allMetadata: current.props.metadata }, () => {
     GetLanguageMetadata(current);
+  });
+};
+
+export const DownloadBill = (current, item) => {
+  current.setState({ loaderImage: true });
+  const data = {
+    data: {
+      first_name:current.props.stateLoginValueAim.user.first_name,
+      last_name:current.props.stateLoginValueAim.user.last_name,
+      address:current.props.stateLoginValueAim.user.address,
+      country:current.props.stateLoginValueAim.user.country,
+      city: current.props.stateLoginValueAim.user.city,
+      birthday: current.props.stateLoginValueAim.user.birthday,
+    },
+    task_id: item?._id,
+    type: "sick_leave",
+  };
+  axios
+  .post(sitedata.data.path + "/vh/downloadPEBill", data, {
+    responseType: "blob",
+  })
+  .then((res) => {
+     current.setState({ loaderImage: false });
+    var data = new Blob([res.data]);
+    if (typeof window.navigator.msSaveBlob === 'function') {
+      // If it is IE that support download blob directly.
+      window.navigator.msSaveBlob(data, 'bill.pdf');
+    } else {
+      var blob = data;
+      var link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = 'bill.pdf';
+      document.body.appendChild(link);
+      link.click(); // create an <a> element and simulate the click operation.
+    }
   });
 };
 
@@ -350,7 +386,7 @@ export const handleEvalSubmit = (current, value) => {
     alies_id: current.props.stateLoginValueAim?.user?.alies_id,
     profile_id: current.props.stateLoginValueAim?.user?.profile_id,
     user_id: current.props.stateLoginValueAim?.user.user?._id,
-    image: current.props.stateLoginValueAim?.user.user?.image,
+    // image: current.props.stateLoginValueAim?.user.user?.image,
   };
   data.patient = patient;
   data.patient_id = current.props.stateLoginValueAim?.user?._id;

@@ -19,7 +19,7 @@ import { GetShowLabel1 } from 'Screens/Components/GetMetaData/index.js';
 import PainPoint from 'Screens/Components/PointPain/index';
 import { OptionList } from 'Screens/Login/metadataaction';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import { EditRequest, DownloadCert } from '../SickLeaveForm/api';
+import { EditRequest, DownloadCert, DownloadBill } from '../SickLeaveForm/api';
 import {
   PaymentDue,
   handleOpenDetail,
@@ -154,7 +154,7 @@ class Index extends Component {
       download_certificate,
       payment_due,
       join_meeting,
-     
+
       your_request_is_accepted_by_the_doctor,
       appointment_date,
       appointment_time,
@@ -315,11 +315,12 @@ class Index extends Component {
                                         <>{no}</>
                                       )}
                                     </Td>
+
                                     <Td className="billDots">
                                       <a className="academy_ul">
                                         {item?.approved == true &&
                                           (!item.is_payment ||
-                                            item.is_payment == false) && (
+                                          item.is_payment == false ? (
                                             <Grid>
                                               <InfoOutlinedIcon className="InfoOutLine" />
                                               <h6 className="assignHos Paymentpending">
@@ -328,9 +329,21 @@ class Index extends Component {
                                                 }
                                               </h6>
                                             </Grid>
-                                          )}
+                                          ) : (
+                                            <Grid>
+                                              <InfoOutlinedIcon className="InfoOutLine" />
+                                              <div className="assignHos appointmentTime">
+                                                Meeting Time and Date :{' '}
+                                                {item?.start}- {item?.end},{' '}
+                                                {moment(item?.date).format(
+                                                  'MMM DD, YYYY'
+                                                )}
+                                              </div>
+                                            </Grid>
+                                          ))}
                                       </a>
                                     </Td>
+
                                     <Td className="presEditDot scndOptionIner dowloadCerSick">
                                       <a className="openScndhrf">
                                         <img
@@ -439,27 +452,26 @@ class Index extends Component {
                                                 </a>
                                               </li>
                                             )}
-                                          {item.meetingjoined &&
-                                            item.meetingjoined === true && (
-                                              <li>
-                                                <a
-                                                // onClick={() => {
-                                                //   DownloadBill(
-                                                //     this,
-                                                //     item?.payment_data?.id,
-                                                //     item?.created_at
-                                                //   );
-                                                // }}
-                                                >
-                                                  <img
-                                                    src={require('assets/images/download.svg')}
-                                                    alt=""
-                                                    title=""
-                                                  />
-                                                  {Download_Bill}
-                                                </a>
-                                              </li>
-                                            )}
+                                          {(item?.is_payment ||
+                                            item?.is_payment == true) && (
+                                            <li>
+                                              <a
+                                              onClick={() => {
+                                                DownloadBill(
+                                                  this,
+                                                  item
+                                                );
+                                              }}
+                                              >
+                                                <img
+                                                  src={require('assets/images/download.svg')}
+                                                  alt=""
+                                                  title=""
+                                                />
+                                                {Download_Bill}
+                                              </a>
+                                            </li>
+                                          )}
                                         </ul>
                                       </a>
                                     </Td>
