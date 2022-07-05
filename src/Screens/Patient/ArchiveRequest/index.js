@@ -208,7 +208,7 @@ class Index extends Component {
                 <Grid container direction="row">
                   <LeftMenu isNotShow={true} currentPage="archivelink" />
                   <LeftMenuMobile isNotShow={true} currentPage="archivelink" />
-                  <Grid item xs={12} md={11} lg={10}>
+                  <Grid item xs={12} md={11} lg={11} className="setleftpadding-archive">
                     <Grid className="docsOpinion docsAllOption">
                       <Grid container direction="row" className="docsOpinLbl">
                         <Grid item xs={12} md={6}>
@@ -291,7 +291,7 @@ class Index extends Component {
                         </Grid>
                       </Grid>
 
-                      <Grid className="presPkgIner2">
+                      <Grid className="presPkgIner2 archive-sick">
                         <Grid className="presOpinionIner">
                           <Table>
                             <Thead>
@@ -305,6 +305,8 @@ class Index extends Component {
                                 <Th>{cough_and_snees}</Th>
                                 <Th>{feel_depressed}</Th>
                                 <Th>{cardiac_problems}</Th>
+                                <Th>Status</Th>
+                                <Th></Th>
                               </Tr>
                             </Thead>
                             <Tbody>
@@ -417,7 +419,11 @@ class Index extends Component {
                                         <>{no}</>
                                       )}
                                     </Td>
-
+                                    <Td>
+                                    {item &&
+                                      item.is_payment && item.is_payment==true
+                                     ? 'Not attended' : 'Payment pending'}
+                                    </Td>
                                     <Td className="presEditDot scndOptionIner">
                                       <a className="openScndhrf">
                                         <img
