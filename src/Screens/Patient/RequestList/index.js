@@ -190,11 +190,11 @@ class Index extends Component {
                         </Grid>
                       </Grid>
                       <Grid className="presPkgIner2">
-                        <Grid className="presOpinionIner">
+                        <Grid className="presOpinionIner presOpinionInerSec">
                           <Table>
                             <Thead>
                               <Tr>
-                                <Th>{added_on}</Th>
+                                <Th className="aaa">{added_on}</Th>
                                 <Th>{Headache}</Th>
                                 <Th>{stomach_problems}</Th>
                                 <Th>{Diarrhea}</Th>
@@ -364,8 +364,8 @@ class Index extends Component {
                                                 <a
                                                   onClick={() => {
                                                     EditRequest(this, item);
-                                                  }}
-                                                >
+                                                  }}                         
+                                                >           
                                                   <img
                                                     src={require('assets/virtual_images/pencil-1.svg')}
                                                     alt=""
