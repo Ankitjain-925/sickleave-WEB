@@ -14739,7 +14739,7 @@ label.errMsgStyleSecPart {
 }
 
 .appointmentTime {
-  color: red;
+  color: #00abaf;
   background-color: #ffffff;
   padding: 5px;
   position: absolute;
@@ -14759,4 +14759,25 @@ label.errMsgStyleSecPart {
 }
 .InfoOutLine:hover + .assignHos.appointmentTime {
   display: block !important;
+}
+.InfoOutLine1 {
+  color: #00abaf;
+  font-size: 20px !important;
+}
+
+.InfoOutLine1:hover + .assignHos.appointmentTime {
+  display: block !important;
+}
+
+.inctiveStatus {
+  color: red;
+  margin-bottom: 4px;
+}
+
+.assignHos.appointmentTime h6 {
+  margin-bottom: 8px;
+}
+
+.homeBgDrk .assignHos.appointmentTime h6 {
+  color: white !important;
 }

@@ -1869,10 +1869,10 @@
     "of_body_temprature": "of body temprature",
     "request_list": "Request List",
     "sick_request": "Sick Request",
-    "archive_request":"Archived Request",
-    "Download_Bill":"Download Bill",
+    "archive_request": "Archived Request",
+    "Download_Bill": "Download Bill",
     "Alls": "All",
-    "not_attented":"Not Attented",
+    "not_attented": "Not Attented",
     "your_payment_process_is_pending": "Your payment process is pending",
     "need_to_vomit": "need to Vomit",
     "onset_of_pain": "onset of Pain",
@@ -1891,6 +1891,9 @@
     "atleast_one_problem_for": "atleast one problem for",
     "data_protection_rules_and_regulations_of_aimedis.": "Data protection rules and Regulations of Aimedis.",
     "time_slot": "Time slot",
-    "Pending_payment":"Pending payment"
+    "Pending_payment": "Pending payment",
+    "active": "Active",
+    "inactive": "Inactive",
+    "meeting": "Meeting"
   }
 }
