@@ -91,7 +91,7 @@ class Index extends Component {
       DarkMode,
       logout,
       request_list,
-      archive_request,
+      archived_request,
       sick_request,
     } = translate;
     return (
@@ -194,7 +194,7 @@ class Index extends Component {
                     title=""
                   />
                 )}
-                <span>{archive_request}</span>
+                <span>{archived_request}</span>
               </a>
             </li>
 

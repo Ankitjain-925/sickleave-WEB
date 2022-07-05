@@ -292,7 +292,7 @@ class Index extends Component {
                       </Grid>
 
                       <Grid className="presPkgIner2 archive-sick">
-                        <Grid className="presOpinionIner">
+                        <Grid className="presOpinionIner presOpinionInerSec">
                           <Table>
                             <Thead>
                               <Tr>

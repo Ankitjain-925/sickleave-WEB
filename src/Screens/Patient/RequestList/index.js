@@ -213,7 +213,7 @@ class Index extends Component {
                         </Grid>
                       </Grid>
                       <Grid className="presPkgIner2">
-                        <Grid className="presOpinionIner">
+                        <Grid className="presOpinionIner presOpinionInerSec">
                           <Table>
                             <Thead>
                               <Tr>
@@ -419,8 +419,8 @@ class Index extends Component {
                                                 <a
                                                   onClick={() => {
                                                     EditRequest(this, item);
-                                                  }}
-                                                >
+                                                  }}                         
+                                                >           
                                                   <img
                                                     src={require('assets/virtual_images/pencil-1.svg')}
                                                     alt=""
