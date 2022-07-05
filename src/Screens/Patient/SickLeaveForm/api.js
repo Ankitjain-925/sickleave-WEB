@@ -5,6 +5,7 @@ import Timezone from 'timezon.json';
 import { GetLanguageDropdown } from 'Screens/Components/GetMetaData/index.js';
 import { getLanguage } from 'translations/index';
 import { getDate } from 'Screens/Components/BasicMethod/index';
+import moment from 'moment';
 
 export function getHouseId() {
   let env = 'DEV';
@@ -27,7 +28,7 @@ export const getAmountData = (current) => {
   axios
     .get(
       sitedata.data.path +
-        '/vactive/GetAmount/60fabfe5b3394533f7f9a6dc-1654919887767',
+      '/vactive/GetAmount/60fabfe5b3394533f7f9a6dc-1654919887767',
       commonHeader(current.props.stateLoginValueAim.token)
     )
     .then((response) => {
@@ -193,49 +194,49 @@ export const DownloadBill = (current, item) => {
   this.setState({ loaderImage: true });
   const data = {
     data: {
-      first_name:current.props.stateLoginValueAim.user.first_name,
-      last_name:current.props.stateLoginValueAim.user.last_name,
-      address:current.props.stateLoginValueAim.user.address,
-      country:current.props.stateLoginValueAim.user.country,
+      first_name: current.props.stateLoginValueAim.user.first_name,
+      last_name: current.props.stateLoginValueAim.user.last_name,
+      address: current.props.stateLoginValueAim.user.address,
+      country: current.props.stateLoginValueAim.user.country,
       city: current.props.stateLoginValueAim.user.city,
       birthday: current.props.stateLoginValueAim.user.birthday,
     },
     task_id: item?._id,
-    type: "sick_leave",
+    type: 'sick_leave',
   };
   axios
-  .post(sitedata.data.path + "/vh/downloadPEBill", data, {
-    responseType: "blob",
-  })
-  .then((res) => {
-     this.setState({ loaderImage: false });
-    var data = new Blob([res.data]);
-    if (typeof window.navigator.msSaveBlob === 'function') {
-      // If it is IE that support download blob directly.
-      window.navigator.msSaveBlob(data, 'report.pdf');
-    } else {
-      var blob = data;
-      var link = document.createElement('a');
-      link.href = window.URL.createObjectURL(blob);
-      link.download = 'report.pdf';
-      document.body.appendChild(link);
-      link.click(); // create an <a> element and simulate the click operation.
-    }
-  });
+    .post(sitedata.data.path + '/vh/downloadPEBill', data, {
+      responseType: 'blob',
+    })
+    .then((res) => {
+      this.setState({ loaderImage: false });
+      var data = new Blob([res.data]);
+      if (typeof window.navigator.msSaveBlob === 'function') {
+        // If it is IE that support download blob directly.
+        window.navigator.msSaveBlob(data, 'report.pdf');
+      } else {
+        var blob = data;
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = 'report.pdf';
+        document.body.appendChild(link);
+        link.click(); // create an <a> element and simulate the click operation.
+      }
+    });
 };
 
 export const GetLanguageMetadata = (current) => {
   if (current.state.allMetadata) {
     var Allsituation = GetLanguageDropdown(
       current.state.allMetadata &&
-        current.state.allMetadata.situation &&
-        current.state.allMetadata.situation,
+      current.state.allMetadata.situation &&
+      current.state.allMetadata.situation,
       current.props.stateLanguageType
     );
     var Allsmoking_status = GetLanguageDropdown(
       current.state.allMetadata &&
-        current.state.allMetadata.smoking_status &&
-        current.state.allMetadata.smoking_status,
+      current.state.allMetadata.smoking_status &&
+      current.state.allMetadata.smoking_status,
       current.props.stateLanguageType
     );
     current.setState({
@@ -925,21 +926,21 @@ export const handleEvalSubmit = (current, value) => {
                                                                                                                                         ) {
                                                                                                                                           if (
                                                                                                                                             data.headache ===
-                                                                                                                                              'yes' ||
+                                                                                                                                            'yes' ||
                                                                                                                                             data.stomach_problems ===
-                                                                                                                                              'yes' ||
+                                                                                                                                            'yes' ||
                                                                                                                                             data.diarrhea ===
-                                                                                                                                              'yes' ||
+                                                                                                                                            'yes' ||
                                                                                                                                             data.have_fever ===
-                                                                                                                                              'yes' ||
+                                                                                                                                            'yes' ||
                                                                                                                                             data.back_pain ===
-                                                                                                                                              'yes' ||
+                                                                                                                                            'yes' ||
                                                                                                                                             data.cough_and_snees ===
-                                                                                                                                              'yes' ||
+                                                                                                                                            'yes' ||
                                                                                                                                             data.feel_depressed ===
-                                                                                                                                              'yes' ||
+                                                                                                                                            'yes' ||
                                                                                                                                             data.cardiac_problems ===
-                                                                                                                                              'yes'
+                                                                                                                                            'yes'
                                                                                                                                           ) {
                                                                                                                                             if (
                                                                                                                                               (data._id &&
@@ -949,20 +950,20 @@ export const handleEvalSubmit = (current, value) => {
                                                                                                                                                   current
                                                                                                                                                     .state
                                                                                                                                                     .DataprotectionRules ===
-                                                                                                                                                    false)) ||
+                                                                                                                                                  false)) ||
                                                                                                                                               (current
                                                                                                                                                 .state
                                                                                                                                                 .DataprotectionRules &&
                                                                                                                                                 current
                                                                                                                                                   .state
                                                                                                                                                   .DataprotectionRules ===
-                                                                                                                                                  true)
+                                                                                                                                                true)
                                                                                                                                             ) {
                                                                                                                                               if (
                                                                                                                                                 data?._id &&
                                                                                                                                                 (!data.is_decline ||
                                                                                                                                                   data.is_decline ==
-                                                                                                                                                    false)
+                                                                                                                                                  false)
                                                                                                                                               ) {
                                                                                                                                                 updateTaskApi(
                                                                                                                                                   current,
@@ -1129,8 +1130,8 @@ export const mailSendToDoc = (data, current) => {
     getDate(
       current.state.date,
       current.props.settings &&
-        current.props.settings?.setting &&
-        current.props.settings?.setting?.date_format
+      current.props.settings?.setting &&
+      current.props.settings?.setting?.date_format
     );
   axios
     .post(
@@ -1436,12 +1437,12 @@ export const validatePainHeart = (check, value, item, current) => {
       item === 'fever_symptoms_begin'
         ? 26
         : item === 'back_pain_symptoms_begin'
-        ? 31
-        : item === 'diarrhea_symptoms_begin'
-        ? 21
-        : item === 'cough_symptoms_begin'
-        ? 35
-        : 39;
+          ? 31
+          : item === 'diarrhea_symptoms_begin'
+            ? 21
+            : item === 'cough_symptoms_begin'
+              ? 35
+              : 39;
     if (!value) {
       current.setState({
         error_section: section,
@@ -1463,10 +1464,10 @@ export const validatePainHeart = (check, value, item, current) => {
       item === 'headache_rr_systolic'
         ? 3
         : item === 'stomach_rr_systolic'
-        ? 14
-        : item === 'back_pain_rr_systolic'
-        ? 33
-        : 42;
+          ? 14
+          : item === 'back_pain_rr_systolic'
+            ? 33
+            : 42;
     if (!value) {
       current.setState({
         error_section: section,
@@ -1509,10 +1510,10 @@ export const validatePainHeart = (check, value, item, current) => {
       item === 'headache_rr_diastolic'
         ? 4
         : item === 'stomach_rr_diastolic'
-        ? 15
-        : item === 'back_pain_rr_diastolic'
-        ? 34
-        : 43;
+          ? 15
+          : item === 'back_pain_rr_diastolic'
+            ? 34
+            : 43;
     if (!value) {
       current.setState({
         error_section: section,
@@ -1555,10 +1556,10 @@ export const validatePainHeart = (check, value, item, current) => {
       item === 'headache_pain_intensity'
         ? 10
         : item === 'stomach_pain_intensity'
-        ? 19
-        : item === 'fever_pain_intensity'
-        ? 29
-        : 40;
+          ? 19
+          : item === 'fever_pain_intensity'
+            ? 29
+            : 40;
     if (!value && !(value > 0)) {
       current.setState({
         error_section: section,
@@ -1581,10 +1582,10 @@ export const validatePainHeart = (check, value, item, current) => {
       item === 'headache_body_temp'
         ? 5
         : item === 'stomach_body_temp'
-        ? 17
-        : item === 'diarrhea_body_temp'
-        ? 23
-        : 36;
+          ? 17
+          : item === 'diarrhea_body_temp'
+            ? 23
+            : 36;
     if (!value) {
       current.setState({
         error_section: section,
@@ -1741,8 +1742,8 @@ export const validatePainHeart1 = (check, value, item, current) => {
       item === 'headache_need_to_vomit'
         ? need_to_vomit
         : item === 'headache_onset_of_pain'
-        ? onset_of_pain
-        : take_painkillers;
+          ? onset_of_pain
+          : take_painkillers;
 
     if (!value) {
       current.setState({
@@ -1764,8 +1765,8 @@ export const validatePainHeart1 = (check, value, item, current) => {
       item === 'stomach_behind_the_sternum'
         ? behind_the_sternum
         : item === 'stomach_heart_attack'
-        ? heart_attack
-        : heart_failure;
+          ? heart_attack
+          : heart_failure;
 
     if (!value) {
       current.setState({
@@ -1789,12 +1790,12 @@ export const validatePainHeart1 = (check, value, item, current) => {
       item === 'back_pain_been_injured'
         ? been_injured
         : item === 'back_pain_physically_strained'
-        ? strained
-        : item === 'back_pain_stress_depression'
-        ? stress_depression
-        : item === 'back_pain_heart_attack'
-        ? heart_failure
-        : heart_failure;
+          ? strained
+          : item === 'back_pain_stress_depression'
+            ? stress_depression
+            : item === 'back_pain_heart_attack'
+              ? heart_failure
+              : heart_failure;
 
     if (!value) {
       current.setState({
@@ -1816,8 +1817,8 @@ export const validatePainHeart1 = (check, value, item, current) => {
       item === 'depressed_do_you_sleep'
         ? do_you__sleep
         : item === 'depressed_suicidal_thoughts'
-        ? suicidal_thoughts
-        : hurt_yourself;
+          ? suicidal_thoughts
+          : hurt_yourself;
     if (!value) {
       current.setState({
         error_section: 41,
@@ -1839,10 +1840,10 @@ export const validatePainHeart1 = (check, value, item, current) => {
       item === 'cardiac_heart_attack'
         ? heart_attack
         : item === 'cardiac_heart_failure'
-        ? heart_failure
-        : item === 'cardiac_have_dizziness'
-        ? have_dizziness
-        : have_shoulder_pain;
+          ? heart_failure
+          : item === 'cardiac_have_dizziness'
+            ? have_dizziness
+            : have_shoulder_pain;
 
     if (!value) {
       current.setState({
@@ -1868,34 +1869,34 @@ export const validatePainHeart1 = (check, value, item, current) => {
       item === 'headache'
         ? Headache
         : item === 'stomach_problems'
-        ? stomach_problems
-        : item === 'diarrhea'
-        ? Diarrhea
-        : item === 'have_fever'
-        ? Fever
-        : item === 'back_pain'
-        ? back_pain
-        : item === 'feel_depressed'
-        ? feel_depressed
-        : item === 'cough_and_snees'
-        ? cough_and_snees
-        : cardiac_problems;
+          ? stomach_problems
+          : item === 'diarrhea'
+            ? Diarrhea
+            : item === 'have_fever'
+              ? Fever
+              : item === 'back_pain'
+                ? back_pain
+                : item === 'feel_depressed'
+                  ? feel_depressed
+                  : item === 'cough_and_snees'
+                    ? cough_and_snees
+                    : cardiac_problems;
     var section =
       item === 'headache'
         ? 48
         : item === 'stomach_problems'
-        ? 49
-        : item === 'diarrhea'
-        ? 50
-        : item === 'have_fever'
-        ? 51
-        : item === 'back_pain'
-        ? 52
-        : item === 'cough_and_snees'
-        ? 53
-        : item === 'feel_depressed'
-        ? 54
-        : 55;
+          ? 49
+          : item === 'diarrhea'
+            ? 50
+            : item === 'have_fever'
+              ? 51
+              : item === 'back_pain'
+                ? 52
+                : item === 'cough_and_snees'
+                  ? 53
+                  : item === 'feel_depressed'
+                    ? 54
+                    : 55;
     if (!check) {
       current.setState({
         error_section: section,
@@ -1912,6 +1913,20 @@ export const validatePainHeart1 = (check, value, item, current) => {
 };
 
 export const onChange = (date, current) => {
+  var localDateTime = moment(date).format('YYYY-MM-DDTHH:mm:ssZ');
+  console.log('localDateTime', localDateTime);
+  axios
+    .post(
+      sitedata.data.path + '/vactive/SelectDocforSickleave2',
+      { date: localDateTime },
+      commonHeader(current.props.stateLoginValueAim?.token)
+    )
+    .then((responce) => {
+      console.log('response', responce);
+    })
+    .catch(function (error) {
+      console.log('error');
+    });
   current.setState({ date: date });
   var day_num;
   var Month, date1;
@@ -2064,6 +2079,7 @@ export const getCalendarData = (current) => {
 };
 
 export const SelectTimeSlot = (AppointDay, Ai, current) => {
+  console.log('AppointDay', AppointDay, 'Ai', Ai);
   current.setState({ currentSelected: Ai });
 };
 

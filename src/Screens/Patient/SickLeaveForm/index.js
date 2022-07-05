@@ -163,7 +163,6 @@ class Index extends Component {
                               <div className="err_message2">{errorChrMsg}</div>
                             )}
                           </Grid>
-                          {console.log('aaaaa', this.state.Allsituation)}
                           {updateQues && updateQues?.headache === 'yes' && (
                             <HeadacheSection
                               updateAllEntrySec2={(e) => {
