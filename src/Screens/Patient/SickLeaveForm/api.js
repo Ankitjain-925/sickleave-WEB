@@ -25,10 +25,11 @@ export function getHouseId() {
 
 export const getAmountData = (current) => {
   current.setState({ loaderImage: true });
+  var house_id = getHouseId();
   axios
     .get(
       sitedata.data.path +
-      '/vactive/GetAmount/60fabfe5b3394533f7f9a6dc-1654919887767',
+      '/vactive/GetAmount/' + house_id,
       commonHeader(current.props.stateLoginValueAim.token)
     )
     .then((response) => {
@@ -191,7 +192,7 @@ export const getMetadata = (current) => {
 };
 
 export const DownloadBill = (current, item) => {
-  this.setState({ loaderImage: true });
+  current.setState({ loaderImage: true });
   const data = {
     data: {
       first_name: current.props.stateLoginValueAim.user.first_name,
@@ -205,20 +206,20 @@ export const DownloadBill = (current, item) => {
     type: 'sick_leave',
   };
   axios
-    .post(sitedata.data.path + '/vh/downloadPEBill', data, {
-      responseType: 'blob',
+    .post(sitedata.data.path + "/vh/downloadPEBill", data, {
+      responseType: "blob",
     })
     .then((res) => {
-      this.setState({ loaderImage: false });
+      current.setState({ loaderImage: false });
       var data = new Blob([res.data]);
       if (typeof window.navigator.msSaveBlob === 'function') {
         // If it is IE that support download blob directly.
-        window.navigator.msSaveBlob(data, 'report.pdf');
+        window.navigator.msSaveBlob(data, 'bill.pdf');
       } else {
         var blob = data;
         var link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
-        link.download = 'report.pdf';
+        link.download = 'bill.pdf';
         document.body.appendChild(link);
         link.click(); // create an <a> element and simulate the click operation.
       }

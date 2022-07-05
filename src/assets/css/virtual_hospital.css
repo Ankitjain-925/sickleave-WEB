@@ -10006,6 +10006,17 @@ button.crdoLghtBlu2 {
   border-bottom: none;
 }
 /* Added by Ankita */
+@media screen and (min-width: 640px) and (max-width: 1024) {
+.archive-sick .presOpinionIner td.pivoted {
+    padding: 8px 5px !important;
+}
+}
+@media (min-width: 1280px) {
+  .setleftpadding-archive{
+    padding-right: 60px;
+  }
+}
+
 .err_message2 {
   color: red !important;
   font-weight: 600;
@@ -14701,7 +14712,7 @@ label.errMsgStyleSecPart {
 .darkTheme .pending-msgPopup {
   color: #ff6262 !important;
 }
-@media screen and (min-width: 640px) and (max-width: 959px) {
+@media screen and (min-width: 641px) and (max-width: 959px) {
   .presOpinionIner thead th {
     padding: 6px !important;
   }
