@@ -194,7 +194,7 @@ class Index extends Component {
                           <Table>
                             <Thead>
                               <Tr>
-                                <Th className="aaa">{added_on}</Th>
+                                <Th>{added_on}</Th>
                                 <Th>{Headache}</Th>
                                 <Th>{stomach_problems}</Th>
                                 <Th>{Diarrhea}</Th>
