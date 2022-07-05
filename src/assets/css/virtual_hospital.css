@@ -14712,7 +14712,7 @@ label.errMsgStyleSecPart {
 .darkTheme .pending-msgPopup {
   color: #ff6262 !important;
 }
-@media screen and (min-width: 640px) and (max-width: 959px) {
+@media screen and (min-width: 641px) and (max-width: 959px) {
   .presOpinionIner thead th {
     padding: 6px !important;
   }
@@ -14733,7 +14733,17 @@ label.errMsgStyleSecPart {
 }
 
 
-
+.appointmentTime {
+  color: #00abaf;
+  background-color: #ffffff;
+  padding: 5px;
+  position: absolute;
+  right: -20px;
+  border-radius: 10px;
+  width: 135px;
+  border: 1px #cccc solid;
+  z-index: 99999999;
+}
 
 
 @media screen and (min-width:641px) and (max-width:865px){
@@ -14754,5 +14764,24 @@ label.errMsgStyleSecPart {
   }
 }
 
+.InfoOutLine1 {
+  color: #00abaf;
+  font-size: 20px !important;
+}
 
+.InfoOutLine1:hover + .assignHos.appointmentTime {
+  display: block !important;
+}
 
+.inctiveStatus {
+  color: red;
+  margin-bottom: 4px;
+}
+
+.assignHos.appointmentTime h6 {
+  margin-bottom: 8px;
+}
+
+.homeBgDrk .assignHos.appointmentTime h6 {
+  color: white !important;
+}
