@@ -190,7 +190,7 @@ class Index extends Component {
                         </Grid>
                       </Grid>
                       <Grid className="presPkgIner2">
-                        <Grid className="presOpinionIner">
+                        <Grid className="presOpinionIner hhh">
                           <Table>
                             <Thead>
                               <Tr>
