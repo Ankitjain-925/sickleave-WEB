@@ -1771,6 +1771,7 @@
     "inactive": "Inaktiv",
     "meeting": "Treffen",
     "this_time_slot_is_already_booked":"Dieses Zeitfenster ist bereits gebucht,",
-    "another_one":"noch einer!"
+    "another_one":"noch einer!",
+    "try_after_some_time":"Es ist noch kein Arzt verfügbar, bitte versuchen Sie es nach einiger Zeit!"
   }
 }

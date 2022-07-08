@@ -2058,6 +2058,9 @@ export const Availabledays = (date, days_upto) => {
 };
 
 export const getCalendarData = (current) => {
+  let translate = getLanguage(current.props.stateLanguageType);
+
+  let { try_after_some_time } = translate;
   var user_token = current.props.stateLoginValueAim?.token;
   axios
     .get(
@@ -2082,8 +2085,7 @@ export const getCalendarData = (current) => {
           });
         } else {
           current.setState({
-            errorChrMsg1:
-              'There is no doctor availiable yet please try after some time!',
+            errorChrMsg1: try_after_some_time,
           });
         }
         current.setState({
