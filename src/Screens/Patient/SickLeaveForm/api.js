@@ -133,9 +133,9 @@ export function getLink() {
   }
   let STRIPE_PUBLISHABLE;
   if (env === 'DEV') {
-    STRIPE_PUBLISHABLE = 'https://virtualhospital.aimedis.io/sys-n-sick';
+    STRIPE_PUBLISHABLE = 'https://virtualhospital.aidoc.io/sys-n-sick';
   } else {
-    STRIPE_PUBLISHABLE = 'https://virtualhospital.aimedis.io/sys-n-sick';
+    STRIPE_PUBLISHABLE = 'https://virtualhospital.aidoc.io/sys-n-sick';
   }
   return STRIPE_PUBLISHABLE;
 }
