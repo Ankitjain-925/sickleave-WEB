@@ -61,7 +61,7 @@ class Index extends Component {
         break;
       case 2:
         let pending = filterAllData.filter((item) => {
-          return item.is_payment == false;
+          return !item.is_payment;
         });
         this.setState({ AllDataPart: pending });
         break;
