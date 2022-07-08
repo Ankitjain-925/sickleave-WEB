@@ -14679,7 +14679,7 @@ label.errMsgStyleSecPart {
   justify-content: flex-start;
 }
 .topTxtVideoSec {
-  margin-left: 30px;
+  margin-left: 18px;
 }
 
 .msgSectionCss {
@@ -14784,4 +14784,18 @@ label.errMsgStyleSecPart {
 
 .homeBgDrk .assignHos.appointmentTime h6 {
   color: white !important;
+}
+
+.assignHos.appointmentTime {
+  display: none;
+}
+
+.homeBgDrk .appointmentTime {
+  background: #192020 !important;
+}
+
+.bookedSlotCss a{
+  border-style: solid;
+  border-color: red;
+   color :red
 }

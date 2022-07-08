@@ -983,7 +983,7 @@ export const handleEvalSubmit = (current, value) => {
                                                                                                                                                   error_section: 45,
                                                                                                                                                   errorChrMsg:
                                                                                                                                                     please_select +
-                                                                                                                                                    '' +
+                                                                                                                                                    ' ' +
                                                                                                                                                     data_protection_rules_and_regulations_of_aimedis,
                                                                                                                                                 }
                                                                                                                                               );
@@ -1079,8 +1079,8 @@ export const handleEvalSubmit = (current, value) => {
       data.date = current.state.date;
     }
     if (
-      (current.state.currentSelected && current.state.currentSelected > -1) ||
-      current.state.currentSelected === 0
+      (current.state.currentSelected && current.state.currentSelected > -1 || current.state.currentSelected === 0)
+      && !current.state.bookedError && current.state.bookedError === ''
     ) {
       current.setState({
         loaderImage: true,
@@ -1914,20 +1914,6 @@ export const validatePainHeart1 = (check, value, item, current) => {
 };
 
 export const onChange = (date, current) => {
-  var localDateTime = moment(date).format('YYYY-MM-DDTHH:mm:ssZ');
-  console.log('localDateTime', localDateTime);
-  axios
-    .post(
-      sitedata.data.path + '/vactive/SelectDocforSickleave2',
-      { date: localDateTime },
-      commonHeader(current.props.stateLoginValueAim?.token)
-    )
-    .then((responce) => {
-      console.log('response', responce);
-    })
-    .catch(function (error) {
-      console.log('error');
-    });
   current.setState({ date: date });
   var day_num;
   var Month, date1;
@@ -1972,11 +1958,52 @@ export const onChange = (date, current) => {
       if (key == days) {
         appointDate = value;
         current.setState({ appointDate: appointDate });
+        let DoctorSlot = [];
+        appointDate.map((item, i) => {
+          if (i < appointDate?.length - 1) {
+            DoctorSlot.push(appointDate[i] + "-" + appointDate[i + 1])
+          }
+        })
+        var localDateTime = moment(date).format('YYYY-MM-DDTHH:mm:ssZ');
+        axios
+          .post(
+            sitedata.data.path + '/vactive/SelectDocforSickleave2',
+            { date: localDateTime },
+            commonHeader(current.props.stateLoginValueAim?.token)
+          )
+          .then((responce) => {
+            if (responce.data.hassuccessed) {
+              let bookedSlot = [];
+              responce && responce.data && responce.data.data && responce.data.data.map((item) => {
+                bookedSlot.push(item?.start + "-" + item?.end)
+              })
+              calBookedSlot(DoctorSlot, bookedSlot, current)
+            }
+          })
+          .catch(function (error) {
+            console.log('error', error);
+          });
       }
     });
   }
   current.setState({ apointDay: days, selectedDate: date1 });
 };
+
+export const calBookedSlot = (ts, booked, current) => {
+  var slot
+  var isBooked
+  var allSlotes = []
+  ts.map(item => {
+    const [start, end] = item.split('-')
+    isBooked = !booked
+      .map(item => item.split('-'))
+      .every(([bookedStart, bookedEnd]) =>
+        bookedStart >= end || bookedEnd <= start)
+    slot = `${start}-${end}`
+    allSlotes.push({ slot: slot, isBooked: isBooked })
+  })
+  current.setState({ allSlotes: allSlotes })
+}
 
 export const ExitinHoliday = (date, h_start, h_end) => {
   if (h_start && h_end && date) {
@@ -2079,9 +2106,15 @@ export const getCalendarData = (current) => {
     });
 };
 
-export const SelectTimeSlot = (AppointDay, Ai, current) => {
-  console.log('AppointDay', AppointDay, 'Ai', Ai);
-  current.setState({ currentSelected: Ai });
+export const SelectTimeSlot = (AppointDay, Ai, isBooked, current) => {
+  current.setState({ bookedError: '' });
+  let translate = getLanguage(current.props.stateLanguageType);
+  let { this_time_slot_is_already_booked, please_select, another_one } = translate;
+  if (isBooked) {
+    current.setState({ currentSelected: Ai, bookedError: this_time_slot_is_already_booked + ' ' + please_select + ' ' + another_one });
+  } else {
+    current.setState({ bookedError: '', currentSelected: Ai });
+  }
 };
 
 // export const DownloadBill = (current, id, bill_date) => {
