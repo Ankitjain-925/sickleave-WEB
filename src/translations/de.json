@@ -1756,7 +1756,7 @@
     "have_shoulder_pain": "Schulterschmerzen haben",
     "sputum_intensity": "Sputum Intensität",
     "atleast_one_problem_for": "mindestens ein Problem für",
-    "data_protection_rules_and_regulations_of_aimedis.": "Datenschutzbestimmungen und -bestimmungen von Aimedis.",
+    "data_protection_rules_and_regulations_of_aimedis": "Datenschutzbestimmungen und -bestimmungen von Aimedis.",
     "time_slot": "Zeitfenster",
     "depressed_symptoms_begin": "Depressive Symptome beginnen",
     "pain_level": "Schmerzniveau",
@@ -1769,6 +1769,8 @@
     "cardiac_shoulder_pain": "Schulterschmerzen",
     "active": "Aktiv",
     "inactive": "Inaktiv",
-    "meeting": "Treffen"
+    "meeting": "Treffen",
+    "this_time_slot_is_already_booked":"Dieses Zeitfenster ist bereits gebucht,",
+    "another_one":"noch einer!"
   }
 }
