@@ -419,8 +419,8 @@ class Index extends Component {
                                                 <a
                                                   onClick={() => {
                                                     EditRequest(this, item);
-                                                  }}                         
-                                                >           
+                                                  }}
+                                                >
                                                   <img
                                                     src={require('assets/virtual_images/pencil-1.svg')}
                                                     alt=""

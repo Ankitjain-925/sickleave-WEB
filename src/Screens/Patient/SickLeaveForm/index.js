@@ -57,6 +57,7 @@ class Index extends Component {
       assinged_to: [{}],
       currentSelected: -1,
       errorChrMsg1: '',
+      bookedError: ''
     };
   }
 
@@ -122,9 +123,9 @@ class Index extends Component {
       <Grid
         className={
           this.props.settings &&
-          this.props.settings.setting &&
-          this.props.settings.setting.mode &&
-          this.props.settings.setting.mode === 'dark'
+            this.props.settings.setting &&
+            this.props.settings.setting.mode &&
+            this.props.settings.setting.mode === 'dark'
             ? 'homeBg darkTheme homeBgDrk'
             : 'homeBg'
         }
@@ -432,7 +433,7 @@ class Index extends Component {
                                         name="DataprotectionRules"
                                         value={
                                           DataprotectionRules &&
-                                          DataprotectionRules == true
+                                            DataprotectionRules == true
                                             ? false
                                             : true
                                         }
@@ -486,7 +487,7 @@ class Index extends Component {
                               <Grid className="selTimeAM">
                                 {' '}
                                 {this.state.appointDate &&
-                                this.state.appointDate.length > 0 ? (
+                                  this.state.appointDate.length > 0 ? (
                                   Availabledays(
                                     this.state.selectedDate,
                                     this.state.appointmentData.appointment_days
@@ -495,15 +496,15 @@ class Index extends Component {
                                       <span>{NotAvailable}</span>
                                     </Grid>
                                   ) : ExitinHoliday(
-                                      this.state.selectedDate,
-                                      this.state.appointmentData.holidays_start,
-                                      this.state.appointmentData.holidays_end
-                                    ) ? (
+                                    this.state.selectedDate,
+                                    this.state.appointmentData.holidays_start,
+                                    this.state.appointmentData.holidays_end
+                                  ) ? (
                                     <Grid>
                                       <span>{holiday}</span>
                                     </Grid>
                                   ) : (
-                                    this.state.appointDate.map((data, iA) => {
+                                    this.state.allSlotes && this.state.allSlotes.map((data, iA) => {
                                       if (
                                         Isintime(
                                           this.state.appointDate[iA],
@@ -522,52 +523,56 @@ class Index extends Component {
                                       return (
                                         <Grid>
                                           {this.state.appointDate[iA + 1] &&
-                                          this.state.appointDate[iA + 1] !==
-                                            'undefined' &&
-                                          iA === 0 ? (
-                                            <a
-                                              className={
-                                                this.state.currentSelected ===
-                                                  0 && 'current_selected'
-                                              }
-                                              onClick={() => {
-                                                SelectTimeSlot(
-                                                  this.state.apointDay,
-                                                  iA,
-                                                  this
-                                                );
-                                              }}
-                                            >
-                                              {this.state.appointDate[iA] +
-                                                ' - ' +
-                                                this.state.appointDate[iA + 1]}
-                                            </a>
-                                          ) : (
-                                            this.state.appointDate[iA + 1] &&
                                             this.state.appointDate[iA + 1] !==
-                                              'undefined' && (
+                                            'undefined' &&
+                                            iA === 0 ? (
+                                            <Grid className={
+                                              data?.isBooked && "bookedSlotCss"
+                                            }>
                                               <a
                                                 className={
-                                                  this.state.currentSelected &&
                                                   this.state.currentSelected ===
-                                                    iA
-                                                    ? 'current_selected'
-                                                    : ''
+                                                  0 && 'current_selected'
                                                 }
                                                 onClick={() => {
                                                   SelectTimeSlot(
                                                     this.state.apointDay,
                                                     iA,
+                                                    data?.isBooked,
                                                     this
                                                   );
                                                 }}
                                               >
-                                                {this.state.appointDate[iA] +
-                                                  ' - ' +
-                                                  this.state.appointDate[
-                                                    iA + 1
-                                                  ]}
+                                                {data.slot}
                                               </a>
+                                            </Grid>
+                                          ) : (
+                                            this.state.appointDate[iA + 1] &&
+                                            this.state.appointDate[iA + 1] !==
+                                            'undefined' && (
+                                              <Grid className={
+                                                data?.isBooked && "bookedSlotCss"
+                                              }>
+                                                <a
+                                                  className={
+                                                    this.state.currentSelected &&
+                                                      this.state.currentSelected ===
+                                                      iA
+                                                      ? 'current_selected'
+                                                      : ''
+                                                  }
+                                                  onClick={() => {
+                                                    SelectTimeSlot(
+                                                      this.state.apointDay,
+                                                      iA,
+                                                      data?.isBooked,
+                                                      this
+                                                    );
+                                                  }}
+                                                >
+                                                  {data?.slot}
+                                                </a>
+                                              </Grid >
                                             )
                                           )}
                                         </Grid>
@@ -585,10 +590,14 @@ class Index extends Component {
                                 )}
                               </Grid>
                             </Grid>
+                            {/* <Grid>{this.state.allSlotes?.slot}</Grid> */}
                           </Grid>
                           {/* {error_section == 70 && ( */}
                           <div className="err_message2 err_message3">
                             {this.state.errorChrMsg1}
+                          </div>
+                          <div className="err_message2 err_message3">
+                            {this.state.bookedError}
                           </div>
                           {/* )} */}
                           <Grid className="infoShwSave3">

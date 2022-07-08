@@ -76,7 +76,7 @@ class Index extends Component {
   //   //For Archive link
   ArchiveLink = () => {
     this.props.history.push('/patient/archive-request');
-}
+  }
 
   // call = () => {
   //   this.props.history.push('/video-call/:id');
@@ -91,7 +91,7 @@ class Index extends Component {
       DarkMode,
       logout,
       request_list,
-      archived_request,
+      archive_request,
       sick_request,
     } = translate;
     return (
@@ -101,15 +101,15 @@ class Index extends Component {
         md={1}
         className={
           this.props.settings &&
-          this.props.settings.setting &&
-          this.props.settings.setting.mode &&
-          this.props.settings.setting.mode === 'dark'
+            this.props.settings.setting &&
+            this.props.settings.setting.mode &&
+            this.props.settings.setting.mode === 'dark'
             ? this.props.comes === 'emergency'
               ? 'emergency_accessmenu MenuLeftUpr MenuLeftDrkUpr'
               : 'MenuLeftUpr MenuLeftDrkUpr'
             : this.props.comes === 'emergency'
-            ? 'emergency_accessmenu MenuLeftUpr'
-            : 'MenuLeftUpr'
+              ? 'emergency_accessmenu MenuLeftUpr'
+              : 'MenuLeftUpr'
         }
       >
         {this.state.loaderImage && <Loader />}
@@ -127,9 +127,9 @@ class Index extends Component {
             >
               <a onClick={this.PictureEval}>
                 {this.props.settings &&
-                this.props.settings.setting &&
-                this.props.settings.setting.mode &&
-                this.props.settings.setting.mode === 'dark' ? (
+                  this.props.settings.setting &&
+                  this.props.settings.setting.mode &&
+                  this.props.settings.setting.mode === 'dark' ? (
                   <img
                     src={require('assets/images/nav-journal-white.svg')}
                     alt=""
@@ -152,9 +152,9 @@ class Index extends Component {
             >
               <a onClick={this.feedBack}>
                 {this.props.settings &&
-                this.props.settings.setting &&
-                this.props.settings.setting.mode &&
-                this.props.settings.setting.mode === 'dark' ? (
+                  this.props.settings.setting &&
+                  this.props.settings.setting.mode &&
+                  this.props.settings.setting.mode === 'dark' ? (
                   <img
                     src={require('assets/images/nav-journal-white.svg')}
                     alt=""
@@ -179,9 +179,9 @@ class Index extends Component {
             >
               <a onClick={this.ArchiveLink}>
                 {this.props.settings &&
-                this.props.settings.setting &&
-                this.props.settings.setting.mode &&
-                this.props.settings.setting.mode === "dark" ? (
+                  this.props.settings.setting &&
+                  this.props.settings.setting.mode &&
+                  this.props.settings.setting.mode === "dark" ? (
                   <img
                     src={require("assets/images/archive2.png")}
                     alt=""
@@ -194,7 +194,7 @@ class Index extends Component {
                     title=""
                   />
                 )}
-                <span>{archived_request}</span>
+                <span>{archive_request}</span>
               </a>
             </li>
 
@@ -241,9 +241,9 @@ class Index extends Component {
                     <li>
                       <a onClick={this.ProfileLink}>
                         {this.props.settings &&
-                        this.props.settings.setting &&
-                        this.props.settings.setting.mode &&
-                        this.props.settings.setting.mode === 'dark' ? (
+                          this.props.settings.setting &&
+                          this.props.settings.setting.mode &&
+                          this.props.settings.setting.mode === 'dark' ? (
                           <img
                             src={require('assets/images/menudocs-white.jpg')}
                             alt=""
@@ -266,9 +266,9 @@ class Index extends Component {
                         }}
                       >
                         {this.props.settings &&
-                        this.props.settings.setting &&
-                        this.props.settings.setting.mode &&
-                        this.props.settings.setting.mode === 'dark' ? (
+                          this.props.settings.setting &&
+                          this.props.settings.setting.mode &&
+                          this.props.settings.setting.mode === 'dark' ? (
                           <img
                             src={require('assets/images/menudocs-white.jpg')}
                             alt=""
@@ -287,9 +287,9 @@ class Index extends Component {
                     <li>
                       <a>
                         {this.props.settings &&
-                        this.props.settings.setting &&
-                        this.props.settings.setting.mode &&
-                        this.props.settings.setting.mode === 'dark' ? (
+                          this.props.settings.setting &&
+                          this.props.settings.setting.mode &&
+                          this.props.settings.setting.mode === 'dark' ? (
                           <img
                             src={require('assets/images/menudocs-white.jpg')}
                             alt=""
@@ -317,9 +317,9 @@ class Index extends Component {
                     <li onClick={this.logOutClick}>
                       <a>
                         {this.props.settings &&
-                        this.props.settings.setting &&
-                        this.props.settings.setting.mode &&
-                        this.props.settings.setting.mode === 'dark' ? (
+                          this.props.settings.setting &&
+                          this.props.settings.setting.mode &&
+                          this.props.settings.setting.mode === 'dark' ? (
                           <img
                             src={require('assets/images/menudocs-white.jpg')}
                             alt=""
