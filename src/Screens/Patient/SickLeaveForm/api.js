@@ -293,11 +293,34 @@ export const allgetData = (patient_id, current) => {
 };
 
 export const PaymentDue = (data, current) => {
-  current.props.history.push({
-    pathname: '/patient/request-list/payment',
-    state: { data: data },
-  });
+  let translate = getLanguage(current.props.stateLanguageType);
+  let {
+    payment_process_must_be_within_15_min
+  } = translate;
+  let approvedDate = moment(data?.approved_date).format("DD-MM-YYYY");
+  var currentDate = moment().format("DD-MM-YYYY");
+  let approvedTimes = moment(data?.approved_date);
+  let currentTime = moment();
+  if (moment(currentDate).isSame(approvedDate)) {
+    let approvedTime = currentTime.diff(approvedTimes, 'minutes');
+    if (approvedTime >= 15) {
+      current.setState({ error_section: 90, errorChrMsg: payment_process_must_be_within_15_min });
+      setTimeout(() => { current.setState({ errorChrMsg: '' }) }, 5000);
+      MoveTop(0);
+    } else {
+      current.props.history.push({
+        pathname: '/patient/request-list/payment',
+        state: { data: data },
+      });
+    }
+  } else {
+    current.setState({ error_section: 90, errorChrMsg: "The payment process must be within 15 min, and time is exceeded now. Please create a new request again, this request will go to the archive automatically after some time" });
+    setTimeout(() => { current.setState({ errorChrMsg: '' }) }, 8000);
+    MoveTop(0);
+  }
 };
+
+
 
 export const handleCloseDetail = (current) => {
   current.setState({ openDetail: false });
@@ -1990,15 +2013,17 @@ export const onChange = (date, current) => {
 };
 
 export const calBookedSlot = (ts, booked, current) => {
-  var slot
-  var isBooked
-  var allSlotes = []
+  var slot;
+  var isBooked;
+  var allSlotes = [];
+  var curTime = moment().add(30, 'minutes').format("HH:mm");
   ts.map(item => {
     const [start, end] = item.split('-')
-    isBooked = !booked
+    isBooked = !(curTime <= start) || !booked
       .map(item => item.split('-'))
       .every(([bookedStart, bookedEnd]) =>
-        bookedStart >= end || bookedEnd <= start)
+        (bookedStart >= end || bookedEnd <= start)
+      )
     slot = `${start}-${end}`
     allSlotes.push({ slot: slot, isBooked: isBooked })
   })
@@ -2102,7 +2127,6 @@ export const getCalendarData = (current) => {
             },
           ],
         });
-
         setTimeout(() => onChange(new Date(), current), 200);
       }
     });

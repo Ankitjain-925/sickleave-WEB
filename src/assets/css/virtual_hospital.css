@@ -14799,3 +14799,8 @@ label.errMsgStyleSecPart {
   border-color: red;
    color :red
 }
+
+.err_message4{
+  text-align: center;
+  margin: 8px;
+}
