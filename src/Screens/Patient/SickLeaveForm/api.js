@@ -1987,11 +1987,16 @@ export const onChange = (date, current) => {
             DoctorSlot.push(appointDate[i] + "-" + appointDate[i + 1])
           }
         })
+
         var localDateTime = moment(date).format('YYYY-MM-DDTHH:mm:ssZ');
+        var id = current.state.doctorData?._id;
         axios
           .post(
             sitedata.data.path + '/vactive/SelectDocforSickleave2',
-            { date: localDateTime },
+            {
+              date: localDateTime,
+              doctor_id: id
+            },
             commonHeader(current.props.stateLoginValueAim?.token)
           )
           .then((responce) => {
@@ -2114,6 +2119,7 @@ export const getCalendarData = (current) => {
           });
         }
         current.setState({
+          doctorData: data1,
           appointmentData: data,
           assinged_to: [
             {
