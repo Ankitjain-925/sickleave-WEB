@@ -2023,14 +2023,21 @@ export const onChange = (date, current) => {
 };
 
 export const calBookedSlot = (ts, booked, current) => {
+  console.log("current.state.date", current.state.date)
   var slot;
   var isBooked;
   let isAlreadyExist;
   var allSlotes = [];
   var curTime = moment().add(30, 'minutes').format("HH:mm");
+  var curDate = moment();
   ts.map(item => {
     const [start, end] = item.split('-')
-    isAlreadyExist = !(curTime <= start)
+    if (moment(current.state.date).isSame(curDate, 'date', 'month', 'year')) {
+      isAlreadyExist = !(curTime <= start) ? true : false;
+    } else {
+      isAlreadyExist = false;
+    }
+    // isAlreadyExist = !(curTime <= start)
     isBooked = !booked
       .map(item => item.split('-'))
       .every(([bookedStart, bookedEnd]) =>
