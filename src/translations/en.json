@@ -1898,6 +1898,7 @@
     "this_time_slot_is_already_booked":"This time slot is already booked,",
     "another_one":"another one!",
     "try_after_some_time":"There is no doctor availiable yet please try after some time!",
-    "payment_process_must_be_within_15_min":"The payment process must be within 15 min, and time is exceeded now. Please create a new request again, this request will go to the archive automatically after some time"
+    "payment_process_must_be_within_15_min":"The payment process must be within 15 min, and time is exceeded now. Please create a new request again, this request will go to the archive automatically after some time!",
+    "upcoming_slots":"upcoming time slots"
   }
 }

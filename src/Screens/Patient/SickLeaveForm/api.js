@@ -110,7 +110,7 @@ export const sendLinkDocPat = (payValue, taskValue, current) => {
   current.setState({ loaderImage: true });
   axios
     .post(
-      sitedata.data.path + '/vactive/AddMeeting',
+      sitedata.data.path + '/vactive/AddMeeting/' + taskValue?.start + '/' + taskValue?.end,
       data,
       commonHeader(current.props.stateLoginValueAim.token)
     )
@@ -195,12 +195,12 @@ export const DownloadBill = (current, item) => {
   current.setState({ loaderImage: true });
   const data = {
     data: {
-      first_name: current.props.stateLoginValueAim.user.first_name,
-      last_name: current.props.stateLoginValueAim.user.last_name,
-      address: current.props.stateLoginValueAim.user.address,
-      country: current.props.stateLoginValueAim.user.country,
-      city: current.props.stateLoginValueAim.user.city,
-      birthday: current.props.stateLoginValueAim.user.birthday,
+      first_name: current.props.stateLoginValueAim?.user?.first_name,
+      last_name: current.props.stateLoginValueAim?.user?.last_name,
+      address: current.props.stateLoginValueAim?.user?.address,
+      country: current.props.stateLoginValueAim?.user?.country,
+      city: current.props.stateLoginValueAim?.user?.city,
+      birthday: current.props.stateLoginValueAim?.user?.birthday,
     },
     task_id: item?._id,
     type: 'sick_leave',
@@ -1017,9 +1017,9 @@ export const handleEvalSubmit = (current, value) => {
                                                                                                                                                 error_section: 73,
                                                                                                                                                 errorChrMsg:
                                                                                                                                                   please_select +
-                                                                                                                                                  '' +
+                                                                                                                                                  ' ' +
                                                                                                                                                   atleast_one_problem_for +
-                                                                                                                                                  '' +
+                                                                                                                                                  ' ' +
                                                                                                                                                   sick_leave_certificate,
                                                                                                                                               }
                                                                                                                                             );
@@ -1099,7 +1099,7 @@ export const handleEvalSubmit = (current, value) => {
     if (current.state.appointDate && current.state.appointDate.length > 0) {
       data.start = current.state.appointDate[slot];
       data.end = current.state.appointDate[slot + 1];
-      data.date = current.state.date;
+      data.date = new Date(current.state.date);
     }
     if (
       (current.state.currentSelected && current.state.currentSelected > -1 || current.state.currentSelected === 0)
@@ -1937,7 +1937,7 @@ export const validatePainHeart1 = (check, value, item, current) => {
 };
 
 export const onChange = (date, current) => {
-  current.setState({ date: date });
+  current.setState({ date: date, bookedError: '', currentSelected: -1 });
   var day_num;
   var Month, date1;
   if (date !== undefined && date) {
@@ -1987,8 +1987,10 @@ export const onChange = (date, current) => {
             DoctorSlot.push(appointDate[i] + "-" + appointDate[i + 1])
           }
         })
-
-        var localDateTime = moment(date).format('YYYY-MM-DDTHH:mm:ssZ');
+        if (current.state.openCalendar) {
+          current.setState({ loaderImage: true })
+        }
+        var localDateTime = moment(date).format('MM-DD-YYYY');
         var id = current.state.doctorData?._id;
         axios
           .post(
@@ -2006,10 +2008,13 @@ export const onChange = (date, current) => {
                 bookedSlot.push(item?.start + "-" + item?.end)
               })
               calBookedSlot(DoctorSlot, bookedSlot, current)
+              current.setState({ loaderImage: false })
             }
+            current.setState({ loaderImage: false })
           })
           .catch(function (error) {
             console.log('error', error);
+            current.setState({ loaderImage: false })
           });
       }
     });
@@ -2018,19 +2023,28 @@ export const onChange = (date, current) => {
 };
 
 export const calBookedSlot = (ts, booked, current) => {
+  console.log("current.state.date", current.state.date)
   var slot;
   var isBooked;
+  let isAlreadyExist;
   var allSlotes = [];
   var curTime = moment().add(30, 'minutes').format("HH:mm");
+  var curDate = moment();
   ts.map(item => {
     const [start, end] = item.split('-')
-    isBooked = !(curTime <= start) || !booked
+    if (moment(current.state.date).isSame(curDate, 'date', 'month', 'year')) {
+      isAlreadyExist = !(curTime <= start) ? true : false;
+    } else {
+      isAlreadyExist = false;
+    }
+    // isAlreadyExist = !(curTime <= start)
+    isBooked = !booked
       .map(item => item.split('-'))
       .every(([bookedStart, bookedEnd]) =>
         (bookedStart >= end || bookedEnd <= start)
       )
     slot = `${start}-${end}`
-    allSlotes.push({ slot: slot, isBooked: isBooked })
+    allSlotes.push({ slot: slot, isBooked: isBooked, isAlreadyExist: isAlreadyExist })
   })
   current.setState({ allSlotes: allSlotes })
 }
@@ -2102,7 +2116,7 @@ export const getCalendarData = (current) => {
         var data1 = response?.data?.data[0]?.data;
         var data = response?.data?.data[0]?.sickleave[0];
         if (
-          response.data.data[0].sickleave.length > 0 &&
+          response?.data?.data[0]?.sickleave?.length > 0 &&
           (data?.monday?.length > 0 ||
             data?.tuesday?.length > 0 ||
             data?.wednesday?.length > 0 ||
@@ -2138,12 +2152,14 @@ export const getCalendarData = (current) => {
     });
 };
 
-export const SelectTimeSlot = (AppointDay, Ai, isBooked, current) => {
+export const SelectTimeSlot = (AppointDay, Ai, data, current) => {
   current.setState({ bookedError: '' });
   let translate = getLanguage(current.props.stateLanguageType);
-  let { this_time_slot_is_already_booked, please_select, another_one } = translate;
-  if (isBooked) {
+  let { this_time_slot_is_already_booked, please_select, another_one, upcoming_slots } = translate;
+  if (data && data.isBooked) {
     current.setState({ currentSelected: Ai, bookedError: this_time_slot_is_already_booked + ' ' + please_select + ' ' + another_one });
+  } else if (data && data.isAlreadyExist) {
+    current.setState({ currentSelected: Ai, bookedError: please_select + ' ' + upcoming_slots });
   } else {
     current.setState({ bookedError: '', currentSelected: Ai });
   }
