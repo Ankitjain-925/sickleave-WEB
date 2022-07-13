@@ -81,6 +81,7 @@ export const DownloadCert = (data, current) => {
 
 // For send meeting link patient as well as doctor
 export const sendLinkDocPat = (payValue, taskValue, current) => {
+  console.log("taskValue?.date", taskValue?.date)
   var data = {};
   let patientEmail = current?.props?.stateLoginValueAim?.user?.email;
   data.task_id = taskValue?._id;
@@ -298,14 +299,16 @@ export const PaymentDue = (data, current) => {
     payment_process_must_be_within_15_min
   } = translate;
   let approvedDate = moment(data?.approved_date).format("DD-MM-YYYY");
-  var currentDate = moment().format("DD-MM-YYYY");
+  var currentDate = moment(new Date()).format("DD-MM-YYYY");
   let approvedTimes = moment(data?.approved_date);
   let currentTime = moment();
-  if (moment(currentDate).isSame(approvedDate)) {
+  // if (moment(currentDate).isSame(approvedDate)) {
+
+  if (currentDate === approvedDate) {
     let approvedTime = currentTime.diff(approvedTimes, 'minutes');
     if (approvedTime >= 15) {
       current.setState({ error_section: 90, errorChrMsg: payment_process_must_be_within_15_min });
-      setTimeout(() => { current.setState({ errorChrMsg: '' }) }, 5000);
+      setTimeout(() => { current.setState({ errorChrMsg: '' }) }, 10000);
       MoveTop(0);
     } else {
       current.props.history.push({
@@ -314,8 +317,8 @@ export const PaymentDue = (data, current) => {
       });
     }
   } else {
-    current.setState({ error_section: 90, errorChrMsg: "The payment process must be within 15 min, and time is exceeded now. Please create a new request again, this request will go to the archive automatically after some time" });
-    setTimeout(() => { current.setState({ errorChrMsg: '' }) }, 8000);
+    current.setState({ error_section: 90, errorChrMsg: payment_process_must_be_within_15_min });
+    setTimeout(() => { current.setState({ errorChrMsg: '' }) }, 10000);
     MoveTop(0);
   }
 };
@@ -1990,7 +1993,7 @@ export const onChange = (date, current) => {
         if (current.state.openCalendar) {
           current.setState({ loaderImage: true })
         }
-        var localDateTime = moment(date).format('MM-DD-YYYY');
+        var localDateTime = new Date(date);
         var id = current.state.doctorData?._id;
         axios
           .post(
