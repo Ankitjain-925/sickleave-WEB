@@ -224,6 +224,7 @@ class Index extends Component {
     let translate = getLanguage(this.props.stateLanguageType);
     let {
       Log_into,
+      sick_leave_certificate,
       Register_email,
       login_Password,
       login_Forgotpassword,
@@ -399,7 +400,7 @@ class Index extends Component {
             >
               <Grid item xs={11} sm={7} md={7}>
                 <Grid className="logData">
-                  <h1>{Log_into} AIS</h1>
+                  <h1>{sick_leave_certificate}</h1>
                 </Grid>
                 <Grid className="logFormMain">
                   <Grid className="logForm">

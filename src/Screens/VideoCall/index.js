@@ -79,10 +79,10 @@ class Index extends Component {
           .post(sitedata.data.path + '/cometUserList', {
             profile_id: AllIds?.profile_id,
           })
-          .then((response) => {})
-          .catch((err) => {});
+          .then((response) => { })
+          .catch((err) => { });
       })
-      .catch((err) => {});
+      .catch((err) => { });
     this.getSessionId();
     getMetadata(this);
   };
@@ -106,7 +106,9 @@ class Index extends Component {
               allTasks: response.data.data.Task,
               loaderImage: false,
             });
+            console.log("response.data.data.Task", response.data.data.Task)
           }
+
         } else {
           if (
             response.data.message === 'Link will active soon' ||
@@ -151,6 +153,32 @@ class Index extends Component {
         .filter((value, index, self) => self.indexOf(value) === index);
     this.setState({ uniqueUser: unique });
   };
+
+
+  setTimer = (data) => {
+    let [t0, t1] = data?.end.split(':');
+    let date = new Date().setHours(t0, t1)
+    var countDownDate = new Date(date).getTime();
+
+    var x = setInterval(function () {
+      var now = new Date().getTime();
+      var distance = countDownDate - now;
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+
+      console.log("hours", hours, "minutes", minutes, "seconds", seconds)
+
+
+      if (distance < 0) {
+        clearInterval(x);
+        console.log("expired")
+      }
+    }, 1000);
+  }
+
 
   render() {
     const { allTasks } = this.state;
@@ -241,9 +269,9 @@ class Index extends Component {
       <Grid
         className={
           this.props.settings &&
-          this.props.settings.setting &&
-          this.props.settings.setting.mode &&
-          this.props.settings.setting.mode === 'dark'
+            this.props.settings.setting &&
+            this.props.settings.setting.mode &&
+            this.props.settings.setting.mode === 'dark'
             ? 'homeBg darkTheme homeBgDrk'
             : 'homeBg'
         }
@@ -292,6 +320,7 @@ class Index extends Component {
                                   <label>{allTasks?.patient?.profile_id}</label>
                                 </Grid>
                               </Grid>
+                              <Grid><label>Left time:{this.setTimer(allTasks)}</label></Grid>
                               {allTasks && allTasks?.headache === 'yes' && (
                                 <Grid>
                                   <Grid>
@@ -318,7 +347,7 @@ class Index extends Component {
                                                 {headache_painbegin_back}
                                               </label>
                                               {allTasks &&
-                                              allTasks?.headache_painbegin_back ===
+                                                allTasks?.headache_painbegin_back ===
                                                 true ? (
                                                 <p>{yes}</p>
                                               ) : (
@@ -330,7 +359,7 @@ class Index extends Component {
                                                 {headache_painbegin_front}
                                               </label>
                                               {allTasks &&
-                                              allTasks?.headache_painbegin_front ===
+                                                allTasks?.headache_painbegin_front ===
                                                 true ? (
                                                 <p>{yes}</p>
                                               ) : (
@@ -342,7 +371,7 @@ class Index extends Component {
                                                 {headache_painbegin_left}
                                               </label>
                                               {allTasks &&
-                                              allTasks?.headache_painbegin_left ===
+                                                allTasks?.headache_painbegin_left ===
                                                 true ? (
                                                 <p>{yes}</p>
                                               ) : (
@@ -354,7 +383,7 @@ class Index extends Component {
                                                 {headache_painbegin_right}
                                               </label>
                                               {allTasks &&
-                                              allTasks?.headache_painbegin_right ===
+                                                allTasks?.headache_painbegin_right ===
                                                 true ? (
                                                 <p>{yes}</p>
                                               ) : (
@@ -366,7 +395,7 @@ class Index extends Component {
                                                 {headache_painbegin_top}
                                               </label>
                                               {allTasks &&
-                                              allTasks?.headache_painbegin_top ===
+                                                allTasks?.headache_painbegin_top ===
                                                 true ? (
                                                 <p>{yes}</p>
                                               ) : (
@@ -398,7 +427,7 @@ class Index extends Component {
                                                   {headache_hurtnow_back}
                                                 </label>
                                                 {allTasks &&
-                                                allTasks?.headache_hurtnow_back ===
+                                                  allTasks?.headache_hurtnow_back ===
                                                   true ? (
                                                   <p>{yes}</p>
                                                 ) : (
@@ -410,7 +439,7 @@ class Index extends Component {
                                                   {headache_hurtnow_front}
                                                 </label>
                                                 {allTasks &&
-                                                allTasks?.headache_hurtnow_front ===
+                                                  allTasks?.headache_hurtnow_front ===
                                                   true ? (
                                                   <p>{yes}</p>
                                                 ) : (
@@ -422,7 +451,7 @@ class Index extends Component {
                                                   {headache_hurtnow_left}
                                                 </label>
                                                 {allTasks &&
-                                                allTasks?.headache_hurtnow_left ===
+                                                  allTasks?.headache_hurtnow_left ===
                                                   true ? (
                                                   <p>{yes}</p>
                                                 ) : (
@@ -434,7 +463,7 @@ class Index extends Component {
                                                   {headache_hurtnow_right}
                                                 </label>
                                                 {allTasks &&
-                                                allTasks?.headache_hurtnow_right ===
+                                                  allTasks?.headache_hurtnow_right ===
                                                   true ? (
                                                   <p>{yes}</p>
                                                 ) : (
@@ -446,7 +475,7 @@ class Index extends Component {
                                                   {headache_hurtnow_top}
                                                 </label>
                                                 {allTasks &&
-                                                allTasks?.headache_hurtnow_top ===
+                                                  allTasks?.headache_hurtnow_top ===
                                                   true ? (
                                                   <p>{yes}</p>
                                                 ) : (
@@ -542,7 +571,7 @@ class Index extends Component {
                                       <Grid>
                                         <h3>{headache_need_to_vomit}</h3>
                                         {allTasks &&
-                                        allTasks?.headache_need_to_vomit ===
+                                          allTasks?.headache_need_to_vomit ===
                                           'yes' ? (
                                           <p>{yes}</p>
                                         ) : (
@@ -552,7 +581,7 @@ class Index extends Component {
                                       <Grid>
                                         <h3>{headache_onset_of_pain}</h3>
                                         {allTasks &&
-                                        allTasks?.headache_onset_of_pain ===
+                                          allTasks?.headache_onset_of_pain ===
                                           'yes' ? (
                                           <p>{yes}</p>
                                         ) : (
@@ -562,7 +591,7 @@ class Index extends Component {
                                       <Grid>
                                         <h3>{headache_take_painkillers}</h3>
                                         {allTasks &&
-                                        allTasks?.take_painkillers === 'yes' ? (
+                                          allTasks?.take_painkillers === 'yes' ? (
                                           <p>{yes}</p>
                                         ) : (
                                           <p>{no}</p>
@@ -571,7 +600,7 @@ class Index extends Component {
                                       <Grid>
                                         <h3>{headache_undergoing_treatment}</h3>
                                         {allTasks &&
-                                        allTasks?.undergoing_treatment ===
+                                          allTasks?.undergoing_treatment ===
                                           'yes' ? (
                                           <p>{yes}</p>
                                         ) : (
@@ -625,7 +654,7 @@ class Index extends Component {
                                         <Grid xs={4} md={4}>
                                           <label>{stomach_sternum}</label>
                                           {allTasks &&
-                                          allTasks?.stomach_behind_the_sternum ===
+                                            allTasks?.stomach_behind_the_sternum ===
                                             'yes' ? (
                                             <p>{yes}</p>
                                           ) : (
@@ -635,7 +664,7 @@ class Index extends Component {
                                         <Grid xs={4} md={4}>
                                           <label>{stomach_attack}</label>
                                           {allTasks &&
-                                          allTasks?.stomach_heart_attack ===
+                                            allTasks?.stomach_heart_attack ===
                                             'yes' ? (
                                             <p>{yes}</p>
                                           ) : (
@@ -645,7 +674,7 @@ class Index extends Component {
                                         <Grid xs={4} md={4}>
                                           <label>{stomach_failure}</label>
                                           {allTasks &&
-                                          allTasks?.stomach_heart_failure ===
+                                            allTasks?.stomach_heart_failure ===
                                             'yes' ? (
                                             <p>{yes}</p>
                                           ) : (
@@ -677,7 +706,7 @@ class Index extends Component {
                                       </Grid>
                                       {allTasks &&
                                         allTasks?.stomach_have_diabetes ===
-                                          'yes' && (
+                                        'yes' && (
                                           <Grid>
                                             <Grid>
                                               <h3>{diabetes}</h3>
@@ -707,9 +736,9 @@ class Index extends Component {
                                                     GetShowLabel1(
                                                       this.state.Allsituation,
                                                       allTasks &&
-                                                        allTasks
-                                                          ?.stomach_situation
-                                                          ?.value,
+                                                      allTasks
+                                                        ?.stomach_situation
+                                                        ?.value,
                                                       this.props
                                                         .stateLanguageType,
                                                       true,
@@ -724,7 +753,7 @@ class Index extends Component {
                                         <Grid className="sickAllMngSec">
                                           <label>{stomach_periodically}</label>
                                           {allTasks &&
-                                          allTasks?.stomach_continuously_or_periodically ===
+                                            allTasks?.stomach_continuously_or_periodically ===
                                             'yes' ? (
                                             <p>{yes}</p>
                                           ) : (
@@ -748,7 +777,7 @@ class Index extends Component {
                                             </label>
                                           </Grid>
                                           {allTasks &&
-                                          allTasks?.stomach_take_painkillers ===
+                                            allTasks?.stomach_take_painkillers ===
                                             'yes' ? (
                                             <p>{yes}</p>
                                           ) : (
@@ -769,7 +798,7 @@ class Index extends Component {
                                             </label>
                                           </Grid>
                                           {allTasks &&
-                                          allTasks?.stomach_undergoing_treatment ===
+                                            allTasks?.stomach_undergoing_treatment ===
                                             'yes' ? (
                                             <p>{yes}</p>
                                           ) : (
@@ -793,11 +822,11 @@ class Index extends Component {
                                       <p>
                                         {getDate(
                                           allTasks &&
-                                            allTasks?.diarrhea_symptoms_begin,
+                                          allTasks?.diarrhea_symptoms_begin,
                                           this.props.settings &&
-                                            this.props.settings?.setting &&
-                                            this.props.settings?.setting
-                                              ?.date_format
+                                          this.props.settings?.setting &&
+                                          this.props.settings?.setting
+                                            ?.date_format
                                         )}
                                       </p>
                                     </Grid>
@@ -805,7 +834,7 @@ class Index extends Component {
                                       <label>{diarrhea_vomiting}</label>
 
                                       {allTasks &&
-                                      allTasks?.diarrhea_suffer_from_vomiting ===
+                                        allTasks?.diarrhea_suffer_from_vomiting ===
                                         'yes' ? (
                                         <p>{yes}</p>
                                       ) : (
@@ -827,7 +856,7 @@ class Index extends Component {
                                         <label>{diarrhea_suffer_symtoms}</label>
 
                                         {allTasks &&
-                                        allTasks?.diarrhea_envi_suffer_symtoms ===
+                                          allTasks?.diarrhea_envi_suffer_symtoms ===
                                           'yes' ? (
                                           <p>{yes}</p>
                                         ) : (
@@ -838,7 +867,7 @@ class Index extends Component {
                                         <label>{diarrhea_liquids}</label>
 
                                         {allTasks &&
-                                        allTasks?.diarrhea_liquids_with_you ===
+                                          allTasks?.diarrhea_liquids_with_you ===
                                           'yes' ? (
                                           <p>{yes}</p>
                                         ) : (
@@ -862,11 +891,11 @@ class Index extends Component {
                                       <p>
                                         {getDate(
                                           allTasks &&
-                                            allTasks?.fever_symptoms_begin,
+                                          allTasks?.fever_symptoms_begin,
                                           this.props.settings &&
-                                            this.props.settings?.setting &&
-                                            this.props.settings?.setting
-                                              ?.date_format
+                                          this.props.settings?.setting &&
+                                          this.props.settings?.setting
+                                            ?.date_format
                                         )}
                                       </p>
                                     </Grid>
@@ -901,7 +930,7 @@ class Index extends Component {
                                     </Grid>
                                     {allTasks &&
                                       allTasks?.fever_have_a_cough ===
-                                        'yes' && (
+                                      'yes' && (
                                         <Grid>
                                           <Grid>
                                             <h3>{cough}</h3>
@@ -911,7 +940,7 @@ class Index extends Component {
                                             <Grid xs={6} md={6}>
                                               <label>{fever_cold}</label>
                                               {allTasks &&
-                                              allTasks?.fever_cold === true ? (
+                                                allTasks?.fever_cold === true ? (
                                                 <p>{yes}</p>
                                               ) : (
                                                 <p>{no}</p>
@@ -921,7 +950,7 @@ class Index extends Component {
                                               <label>{fever_hoarseness}</label>
 
                                               {allTasks &&
-                                              allTasks?.fever_hoarseness ===
+                                                allTasks?.fever_hoarseness ===
                                                 true ? (
                                                 <p>{yes}</p>
                                               ) : (
@@ -958,11 +987,11 @@ class Index extends Component {
                                       <p>
                                         {getDate(
                                           allTasks &&
-                                            allTasks?.back_pain_symptoms_begin,
+                                          allTasks?.back_pain_symptoms_begin,
                                           this.props.settings &&
-                                            this.props.settings?.setting &&
-                                            this.props.settings?.setting
-                                              ?.date_format
+                                          this.props.settings?.setting &&
+                                          this.props.settings?.setting
+                                            ?.date_format
                                         )}
                                       </p>
                                     </Grid>
@@ -971,7 +1000,7 @@ class Index extends Component {
                                         <label>{back_injured}</label>
                                       </Grid>
                                       {allTasks &&
-                                      allTasks?.back_pain_been_injured ===
+                                        allTasks?.back_pain_been_injured ===
                                         'yes' ? (
                                         <p>{yes}</p>
                                       ) : (
@@ -982,7 +1011,7 @@ class Index extends Component {
                                       <label>{back_strained}</label>
 
                                       {allTasks &&
-                                      allTasks?.back_pain_physically_strained ===
+                                        allTasks?.back_pain_physically_strained ===
                                         'yes' ? (
                                         <p>{yes}</p>
                                       ) : (
@@ -993,7 +1022,7 @@ class Index extends Component {
                                       <label>{back_depression}</label>
 
                                       {allTasks &&
-                                      allTasks?.back_pain_stress_depression ===
+                                        allTasks?.back_pain_stress_depression ===
                                         'yes' ? (
                                         <p>{yes}</p>
                                       ) : (
@@ -1002,7 +1031,7 @@ class Index extends Component {
                                     </Grid>
                                     {allTasks &&
                                       allTasks?.back_pain_have_diabetes ===
-                                        'yes' && (
+                                      'yes' && (
                                         <Grid>
                                           <Grid>
                                             <h3>{diabetes} </h3>
@@ -1034,9 +1063,9 @@ class Index extends Component {
                                                   GetShowLabel1(
                                                     this.state.Allsituation,
                                                     allTasks &&
-                                                      allTasks
-                                                        ?.back_pain_situation
-                                                        ?.value,
+                                                    allTasks
+                                                      ?.back_pain_situation
+                                                      ?.value,
                                                     this.props
                                                       .stateLanguageType,
                                                     true,
@@ -1048,7 +1077,7 @@ class Index extends Component {
                                           <Grid className="sickAllMngSec">
                                             <label>{back_attack}</label>
                                             {allTasks &&
-                                            allTasks?.back_pain_heart_attack ===
+                                              allTasks?.back_pain_heart_attack ===
                                               'yes' ? (
                                               <p>{yes}</p>
                                             ) : (
@@ -1058,7 +1087,7 @@ class Index extends Component {
                                           <Grid className="sickAllMngSec">
                                             <label>{back_failure}</label>
                                             {allTasks &&
-                                            allTasks?.back_pain_heart_failure ===
+                                              allTasks?.back_pain_heart_failure ===
                                               'yes' ? (
                                               <p>{yes}</p>
                                             ) : (
@@ -1104,11 +1133,11 @@ class Index extends Component {
                                       <p>
                                         {getDate(
                                           allTasks &&
-                                            allTasks?.cough_symptoms_begin,
+                                          allTasks?.cough_symptoms_begin,
                                           this.props.settings &&
-                                            this.props.settings?.setting &&
-                                            this.props.settings?.setting
-                                              ?.date_format
+                                          this.props.settings?.setting &&
+                                          this.props.settings?.setting
+                                            ?.date_format
                                         )}
                                       </p>
                                     </Grid>
@@ -1128,7 +1157,7 @@ class Index extends Component {
                                         <label>{cough_suffer_symtoms}</label>
                                       </Grid>
                                       {allTasks &&
-                                      allTasks?.cough_envi_suffer_symtoms ===
+                                        allTasks?.cough_envi_suffer_symtoms ===
                                         'yes' ? (
                                         <p>{yes}</p>
                                       ) : (
@@ -1165,11 +1194,11 @@ class Index extends Component {
                                       <p>
                                         {getDate(
                                           allTasks &&
-                                            allTasks?.depressed_symptoms_begin,
+                                          allTasks?.depressed_symptoms_begin,
                                           this.props.settings &&
-                                            this.props.settings?.setting &&
-                                            this.props.settings?.setting
-                                              ?.date_format
+                                          this.props.settings?.setting &&
+                                          this.props.settings?.setting
+                                            ?.date_format
                                         )}
                                       </p>
                                     </Grid>
@@ -1191,7 +1220,7 @@ class Index extends Component {
                                         <label>{depressed_do_you_sleep}</label>
 
                                         {allTasks &&
-                                        allTasks?.depressed_do_you_sleep ===
+                                          allTasks?.depressed_do_you_sleep ===
                                           'yes' ? (
                                           <p>{yes}</p>
                                         ) : (
@@ -1208,7 +1237,7 @@ class Index extends Component {
                                         </label>
 
                                         {allTasks &&
-                                        allTasks?.depressed_suicidal_thoughts ===
+                                          allTasks?.depressed_suicidal_thoughts ===
                                           'yes' ? (
                                           <p>{yes}</p>
                                         ) : (
@@ -1223,7 +1252,7 @@ class Index extends Component {
                                         <label>{depressed_hurt_yourself}</label>
 
                                         {allTasks &&
-                                        allTasks?.depressed_hurt_yourself ===
+                                          allTasks?.depressed_hurt_yourself ===
                                           'yes' ? (
                                           <p>{yes}</p>
                                         ) : (
@@ -1270,7 +1299,7 @@ class Index extends Component {
                                           <label>{cardiac_heart_attack}</label>
 
                                           {allTasks &&
-                                          allTasks?.cardiac_heart_attack ===
+                                            allTasks?.cardiac_heart_attack ===
                                             'yes' ? (
                                             <p>{yes}</p>
                                           ) : (
@@ -1285,7 +1314,7 @@ class Index extends Component {
                                           <label>{cardiac_heart_failure}</label>
 
                                           {allTasks &&
-                                          allTasks?.cardiac_heart_failure ===
+                                            allTasks?.cardiac_heart_failure ===
                                             'yes' ? (
                                             <p>{yes}</p>
                                           ) : (
@@ -1299,7 +1328,7 @@ class Index extends Component {
                                         >
                                           <label>{cardiac_dizziness}</label>
                                           {allTasks &&
-                                          allTasks?.cardiac_have_dizziness ===
+                                            allTasks?.cardiac_have_dizziness ===
                                             'yes' ? (
                                             <p>{yes}</p>
                                           ) : (
@@ -1314,7 +1343,7 @@ class Index extends Component {
                                           <label>{cardiac_shoulder_pain}</label>
 
                                           {allTasks &&
-                                          allTasks?.cardiac_have_shoulder_pain ===
+                                            allTasks?.cardiac_have_shoulder_pain ===
                                             'yes' ? (
                                             <p>{yes}</p>
                                           ) : (

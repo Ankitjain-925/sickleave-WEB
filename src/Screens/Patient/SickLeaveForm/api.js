@@ -57,6 +57,7 @@ export const CancelClick = (current) => {
 
 //for downoading the pdf
 export const DownloadCert = (data, current) => {
+  console.log("data", data, "current", current)
   current.setState({ loaderImage: true });
   axios
     .post(sitedata.data.path + '/vactive/downloadSickleaveCertificate', data, {
@@ -1102,7 +1103,8 @@ export const handleEvalSubmit = (current, value) => {
     if (current.state.appointDate && current.state.appointDate.length > 0) {
       data.start = current.state.appointDate[slot];
       data.end = current.state.appointDate[slot + 1];
-      data.date = new Date(current.state.date);
+      // data.date = new Date(current.state.date);
+      data.date = new Date(new Date().setDate(new Date(current.state.date).getDate()))
     }
     if (
       (current.state.currentSelected && current.state.currentSelected > -1 || current.state.currentSelected === 0)
@@ -1993,7 +1995,8 @@ export const onChange = (date, current) => {
         if (current.state.openCalendar) {
           current.setState({ loaderImage: true })
         }
-        var localDateTime = new Date(date);
+        // nextDay.setDate(day.getDate()+1);
+        var localDateTime = new Date(new Date().setDate(new Date(date).getDate()));
         var id = current.state.doctorData?._id;
         axios
           .post(

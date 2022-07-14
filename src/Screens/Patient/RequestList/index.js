@@ -77,7 +77,7 @@ class Index extends Component {
     var start = data?.start;
     var end = data?.end;
     if (Date1 === Date2) {
-      if (compareTime > start && compareTime < end) {
+      if (compareTime >= start && compareTime <= end) {
         return active;
       } else {
         return inactive;
