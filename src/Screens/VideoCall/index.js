@@ -300,6 +300,9 @@ class Index extends Component {
                     <Grid container direction="row">
                       <Grid item xs={8} md={8} lg={8}>
                         <Grid className="manageVideoCall">
+                          <Grid className="timerandLabel">
+                            <TimerIcon className="timerIcon" />
+                            <label> {this.state.time.h}h : {this.state.time.m}m</label></Grid>
                           <CometChatOutgoingDirectCall
                             open
                             userListCall={(userList) =>
@@ -334,9 +337,7 @@ class Index extends Component {
                                   <label>{allTasks?.patient?.profile_id}</label>
                                 </Grid>
                               </Grid>
-                              <Grid className="timerandLabel">
-                                <TimerIcon className="timerIcon" />
-                                <label> {this.state.time.h}h : {this.state.time.m}m</label></Grid>
+
                               {allTasks && allTasks?.headache === 'yes' && (
                                 <Grid>
                                   <Grid>

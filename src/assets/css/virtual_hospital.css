@@ -14543,6 +14543,10 @@ label.newrole {
 .sickCheckSec .MuiCheckbox-root {
   color: #00abaf !important;
 }
+.sickCheckSec {
+  margin-top: 14px
+}
+  
 
 .fatiqueQues p {
   color: #7f8383 !important;
@@ -14818,15 +14822,18 @@ label.errMsgStyleSecPart {
   }
 
   .timerandLabel{
-   width: 101px;
-    border: 1.5px solid red;
-    border-radius: 10px;
+    position: absolute;
+    top: 12px;
+    /* right: 0; */
+    left: 19px;
+    z-index: 9999999999;
   }
 
   .timerandLabel label{ 
     margin-top: 5px;
     font-weight: bold;
     font-size: 20px;
-    padding:0px ;
-  color:red
+    padding:5px ;
+    color:red;
+    margin: 0px
 }
