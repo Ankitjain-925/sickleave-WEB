@@ -1778,6 +1778,8 @@
     "another_one":"noch einer!",
     "try_after_some_time":"Es ist noch kein Arzt verfügbar, bitte versuchen Sie es nach einiger Zeit!",
     "payment_process_must_be_within_15_min":"Der Zahlungsvorgang muss innerhalb von 15 min erfolgen, und die Zeit ist jetzt überschritten. Bitte erstellen Sie erneut eine neue Anfrage, diese Anfrage wandert nach einiger Zeit automatisch ins Archiv!",
-    "upcoming_slots":"kommende Zeitfenster"
+    "upcoming_slots":"kommende Zeitfenster",
+    "check_your_meeting_key_or_link_again":"Besprechung nicht verfügbar, bitte überprüfen Sie Ihren Besprechungsschlüssel oder -link erneut",
+    "meeting_time_out":"Meeting-Auszeit"
   }
 }

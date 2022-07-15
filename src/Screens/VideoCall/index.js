@@ -25,6 +25,8 @@ import {
   getTime,
 } from 'Screens/Components/BasicMethod/index';
 import { S3Image } from 'Screens/Components/GetS3Images/index';
+import moment from "moment"
+import TimerIcon from '@material-ui/icons/Timer';
 var situations = [
   {
     label: 'POSTPRANDIAL ',
@@ -67,20 +69,22 @@ class Index extends Component {
       gender: this.props.stateLoginValueAim?.user?.sex,
       AllIds: this.props.match.params,
       uniqueUser: {},
+      time: {}
     };
   }
 
   componentDidMount = () => {
     const { AllIds } = this.state;
     let callType = 'DIRECT';
+    this.setState({ loaderImage: true });
     CometChat.login(AllIds?.profile_id, COMETCHAT_CONSTANTS.AUTH_KEY)
       .then((resp) => {
         axios
           .post(sitedata.data.path + '/cometUserList', {
             profile_id: AllIds?.profile_id,
           })
-          .then((response) => { })
-          .catch((err) => { });
+          .then((response) => { this.setState({ loaderImage: false }); })
+          .catch((err) => { this.setState({ loaderImage: false }); });
       })
       .catch((err) => { });
     this.getSessionId();
@@ -106,7 +110,7 @@ class Index extends Component {
               allTasks: response.data.data.Task,
               loaderImage: false,
             });
-            console.log("response.data.data.Task", response.data.data.Task)
+            this.startTimer(response.data.data.Task)
           }
 
         } else {
@@ -154,36 +158,46 @@ class Index extends Component {
     this.setState({ uniqueUser: unique });
   };
 
-
-  setTimer = (data) => {
-    let [t0, t1] = data?.end.split(':');
-    let date = new Date().setHours(t0, t1)
-    var countDownDate = new Date(date).getTime();
-
-    var x = setInterval(function () {
-      var now = new Date().getTime();
-      var distance = countDownDate - now;
-      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-
-      console.log("hours", hours, "minutes", minutes, "seconds", seconds)
-
-
-      if (distance < 0) {
-        clearInterval(x);
-        console.log("expired")
-      }
-    }, 1000);
+  secondsToTime(distance) {
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    let obj = {
+      "h": hours,
+      "m": minutes,
+    };
+    return obj;
   }
 
+  startTimer = (data) => {
+    this.timer = this.countDown(data);
+  }
+  countDown(data) {
+
+    setInterval(() => {
+      let [t0, t1] = data?.end.split(':');
+      let date = new Date().setHours(t0, t1)
+      var countDownDate = new Date(date).getTime();
+      var now = new Date().getTime();
+      var distance = countDownDate - now;
+      let distance1 = distance - 1;
+      this.setState({
+        time: this.secondsToTime(distance1),
+        distance1: distance1,
+      }, () => {
+        if (distance1 < 0) {
+          this.setState({ sectionValue: 6 });
+          clearInterval(this.timer);
+        }
+      });
+    }, 1000)
+  }
 
   render() {
     const { allTasks } = this.state;
     let translate = getLanguage(this.props.stateLanguageType);
     let {
+      check_your_meeting_key_or_link_again,
+      meeting_time_out,
       Headache,
       stomach_problems,
       diarrhea,
@@ -286,6 +300,9 @@ class Index extends Component {
                     <Grid container direction="row">
                       <Grid item xs={12} md={8} lg={8}>
                         <Grid className="manageVideoCall">
+                          <Grid className="timerandLabel">
+                            <TimerIcon className="timerIcon" />
+                            <label> {this.state.time.h}h : {this.state.time.m}m</label></Grid>
                           <CometChatOutgoingDirectCall
                             open
                             userListCall={(userList) =>
@@ -320,7 +337,7 @@ class Index extends Component {
                                   <label>{allTasks?.patient?.profile_id}</label>
                                 </Grid>
                               </Grid>
-                              <Grid><label>Left time:{this.setTimer(allTasks)}</label></Grid>
+
                               {allTasks && allTasks?.headache === 'yes' && (
                                 <Grid>
                                   <Grid>
@@ -1387,8 +1404,15 @@ class Index extends Component {
                 <Grid className="msgSectionCss">
                   <label>{Oops}</label>
                   <p>
-                    Meeting not available please check your meeting key or link
-                    again
+                    {check_your_meeting_key_or_link_again}
+                  </p>
+                </Grid>
+              )}
+              {this.state.sectionValue == 6 && (
+                <Grid className="msgSectionCss">
+                  <label>{Oops}</label>
+                  <p>
+                    {meeting_time_out}
                   </p>
                 </Grid>
               )}
