@@ -57,6 +57,7 @@ export const CancelClick = (current) => {
 
 //for downoading the pdf
 export const DownloadCert = (data, current) => {
+  console.log("data", data, "current", current)
   current.setState({ loaderImage: true });
   axios
     .post(sitedata.data.path + '/vactive/downloadSickleaveCertificate', data, {
@@ -81,6 +82,7 @@ export const DownloadCert = (data, current) => {
 
 // For send meeting link patient as well as doctor
 export const sendLinkDocPat = (payValue, taskValue, current) => {
+  console.log("taskValue?.date", taskValue?.date)
   var data = {};
   let patientEmail = current?.props?.stateLoginValueAim?.user?.email;
   data.task_id = taskValue?._id;
@@ -110,7 +112,7 @@ export const sendLinkDocPat = (payValue, taskValue, current) => {
   current.setState({ loaderImage: true });
   axios
     .post(
-      sitedata.data.path + '/vactive/AddMeeting',
+      sitedata.data.path + '/vactive/AddMeeting/' + taskValue?.start + '/' + taskValue?.end,
       data,
       commonHeader(current.props.stateLoginValueAim.token)
     )
@@ -133,9 +135,9 @@ export function getLink() {
   }
   let STRIPE_PUBLISHABLE;
   if (env === 'DEV') {
-    STRIPE_PUBLISHABLE = 'https://virtualhospital.aimedis.io/sys-n-sick';
+    STRIPE_PUBLISHABLE = 'https://virtualhospital.aidoc.io/sys-n-sick';
   } else {
-    STRIPE_PUBLISHABLE = 'https://virtualhospital.aimedis.io/sys-n-sick';
+    STRIPE_PUBLISHABLE = 'https://virtualhospital.aidoc.io/sys-n-sick';
   }
   return STRIPE_PUBLISHABLE;
 }
@@ -195,12 +197,12 @@ export const DownloadBill = (current, item) => {
   current.setState({ loaderImage: true });
   const data = {
     data: {
-      first_name: current.props.stateLoginValueAim.user.first_name,
-      last_name: current.props.stateLoginValueAim.user.last_name,
-      address: current.props.stateLoginValueAim.user.address,
-      country: current.props.stateLoginValueAim.user.country,
-      city: current.props.stateLoginValueAim.user.city,
-      birthday: current.props.stateLoginValueAim.user.birthday,
+      first_name: current.props.stateLoginValueAim?.user?.first_name,
+      last_name: current.props.stateLoginValueAim?.user?.last_name,
+      address: current.props.stateLoginValueAim?.user?.address,
+      country: current.props.stateLoginValueAim?.user?.country,
+      city: current.props.stateLoginValueAim?.user?.city,
+      birthday: current.props.stateLoginValueAim?.user?.birthday,
     },
     task_id: item?._id,
     type: 'sick_leave',
@@ -293,11 +295,36 @@ export const allgetData = (patient_id, current) => {
 };
 
 export const PaymentDue = (data, current) => {
-  current.props.history.push({
-    pathname: '/patient/request-list/payment',
-    state: { data: data },
-  });
+  let translate = getLanguage(current.props.stateLanguageType);
+  let {
+    payment_process_must_be_within_15_min
+  } = translate;
+  let approvedDate = moment(data?.approved_date).format("DD-MM-YYYY");
+  var currentDate = moment(new Date()).format("DD-MM-YYYY");
+  let approvedTimes = moment(data?.approved_date);
+  let currentTime = moment();
+  // if (moment(currentDate).isSame(approvedDate)) {
+
+  if (currentDate === approvedDate) {
+    let approvedTime = currentTime.diff(approvedTimes, 'minutes');
+    if (approvedTime >= 15) {
+      current.setState({ error_section: 90, errorChrMsg: payment_process_must_be_within_15_min });
+      setTimeout(() => { current.setState({ errorChrMsg: '' }) }, 10000);
+      MoveTop(0);
+    } else {
+      current.props.history.push({
+        pathname: '/patient/request-list/payment',
+        state: { data: data },
+      });
+    }
+  } else {
+    current.setState({ error_section: 90, errorChrMsg: payment_process_must_be_within_15_min });
+    setTimeout(() => { current.setState({ errorChrMsg: '' }) }, 10000);
+    MoveTop(0);
+  }
 };
+
+
 
 export const handleCloseDetail = (current) => {
   current.setState({ openDetail: false });
@@ -983,7 +1010,7 @@ export const handleEvalSubmit = (current, value) => {
                                                                                                                                                   error_section: 45,
                                                                                                                                                   errorChrMsg:
                                                                                                                                                     please_select +
-                                                                                                                                                    '' +
+                                                                                                                                                    ' ' +
                                                                                                                                                     data_protection_rules_and_regulations_of_aimedis,
                                                                                                                                                 }
                                                                                                                                               );
@@ -994,9 +1021,9 @@ export const handleEvalSubmit = (current, value) => {
                                                                                                                                                 error_section: 73,
                                                                                                                                                 errorChrMsg:
                                                                                                                                                   please_select +
-                                                                                                                                                  '' +
+                                                                                                                                                  ' ' +
                                                                                                                                                   atleast_one_problem_for +
-                                                                                                                                                  '' +
+                                                                                                                                                  ' ' +
                                                                                                                                                   sick_leave_certificate,
                                                                                                                                               }
                                                                                                                                             );
@@ -1076,11 +1103,12 @@ export const handleEvalSubmit = (current, value) => {
     if (current.state.appointDate && current.state.appointDate.length > 0) {
       data.start = current.state.appointDate[slot];
       data.end = current.state.appointDate[slot + 1];
-      data.date = current.state.date;
+      // data.date = new Date(current.state.date);
+      data.date = new Date(new Date().setDate(new Date(current.state.date).getDate()))
     }
     if (
-      (current.state.currentSelected && current.state.currentSelected > -1) ||
-      current.state.currentSelected === 0
+      (current.state.currentSelected && current.state.currentSelected > -1 || current.state.currentSelected === 0)
+      && !current.state.bookedError && current.state.bookedError === ''
     ) {
       current.setState({
         loaderImage: true,
@@ -1914,21 +1942,7 @@ export const validatePainHeart1 = (check, value, item, current) => {
 };
 
 export const onChange = (date, current) => {
-  var localDateTime = moment(date).format('YYYY-MM-DDTHH:mm:ssZ');
-  console.log('localDateTime', localDateTime);
-  axios
-    .post(
-      sitedata.data.path + '/vactive/SelectDocforSickleave2',
-      { date: localDateTime },
-      commonHeader(current.props.stateLoginValueAim?.token)
-    )
-    .then((responce) => {
-      console.log('response', responce);
-    })
-    .catch(function (error) {
-      console.log('error');
-    });
-  current.setState({ date: date });
+  current.setState({ date: date, bookedError: '', currentSelected: -1 });
   var day_num;
   var Month, date1;
   if (date !== undefined && date) {
@@ -1972,11 +1986,74 @@ export const onChange = (date, current) => {
       if (key == days) {
         appointDate = value;
         current.setState({ appointDate: appointDate });
+        let DoctorSlot = [];
+        appointDate.map((item, i) => {
+          if (i < appointDate?.length - 1) {
+            DoctorSlot.push(appointDate[i] + "-" + appointDate[i + 1])
+          }
+        })
+        if (current.state.openCalendar) {
+          current.setState({ loaderImage: true })
+        }
+        // nextDay.setDate(day.getDate()+1);
+        var localDateTime = new Date(new Date().setDate(new Date(date).getDate()));
+        var id = current.state.doctorData?._id;
+        axios
+          .post(
+            sitedata.data.path + '/vactive/SelectDocforSickleave2',
+            {
+              date: localDateTime,
+              doctor_id: id
+            },
+            commonHeader(current.props.stateLoginValueAim?.token)
+          )
+          .then((responce) => {
+            if (responce.data.hassuccessed) {
+              let bookedSlot = [];
+              responce && responce.data && responce.data.data && responce.data.data.map((item) => {
+                bookedSlot.push(item?.start + "-" + item?.end)
+              })
+              calBookedSlot(DoctorSlot, bookedSlot, current)
+              current.setState({ loaderImage: false })
+            }
+            current.setState({ loaderImage: false })
+          })
+          .catch(function (error) {
+            console.log('error', error);
+            current.setState({ loaderImage: false })
+          });
       }
     });
   }
   current.setState({ apointDay: days, selectedDate: date1 });
 };
+
+export const calBookedSlot = (ts, booked, current) => {
+  console.log("current.state.date", current.state.date)
+  var slot;
+  var isBooked;
+  let isAlreadyExist;
+  var allSlotes = [];
+  var curTime = moment().add(30, 'minutes').format("HH:mm");
+  var curDate = moment();
+  ts.map(item => {
+    const [start, end] = item.split('-')
+    if (moment(current.state.date).isSame(curDate, 'date', 'month', 'year')) {
+      isAlreadyExist = !(curTime <= start) ? true : false;
+    } else {
+      isAlreadyExist = false;
+    }
+    // isAlreadyExist = !(curTime <= start)
+    isBooked = !booked
+      .map(item => item.split('-'))
+      .every(([bookedStart, bookedEnd]) =>
+        (bookedStart >= end || bookedEnd <= start)
+      )
+    slot = `${start}-${end}`
+    allSlotes.push({ slot: slot, isBooked: isBooked, isAlreadyExist: isAlreadyExist })
+  })
+  current.setState({ allSlotes: allSlotes })
+}
 
 export const ExitinHoliday = (date, h_start, h_end) => {
   if (h_start && h_end && date) {
@@ -2031,6 +2108,9 @@ export const Availabledays = (date, days_upto) => {
 };
 
 export const getCalendarData = (current) => {
+  let translate = getLanguage(current.props.stateLanguageType);
+
+  let { try_after_some_time } = translate;
   var user_token = current.props.stateLoginValueAim?.token;
   axios
     .get(
@@ -2042,7 +2122,7 @@ export const getCalendarData = (current) => {
         var data1 = response?.data?.data[0]?.data;
         var data = response?.data?.data[0]?.sickleave[0];
         if (
-          response.data.data[0].sickleave.length > 0 &&
+          response?.data?.data[0]?.sickleave?.length > 0 &&
           (data?.monday?.length > 0 ||
             data?.tuesday?.length > 0 ||
             data?.wednesday?.length > 0 ||
@@ -2055,11 +2135,11 @@ export const getCalendarData = (current) => {
           });
         } else {
           current.setState({
-            errorChrMsg1:
-              'There is no doctor availiable yet please try after some time!',
+            errorChrMsg1: try_after_some_time,
           });
         }
         current.setState({
+          doctorData: data1,
           appointmentData: data,
           assinged_to: [
             {
@@ -2073,15 +2153,22 @@ export const getCalendarData = (current) => {
             },
           ],
         });
-
         setTimeout(() => onChange(new Date(), current), 200);
       }
     });
 };
 
-export const SelectTimeSlot = (AppointDay, Ai, current) => {
-  console.log('AppointDay', AppointDay, 'Ai', Ai);
-  current.setState({ currentSelected: Ai });
+export const SelectTimeSlot = (AppointDay, Ai, data, current) => {
+  current.setState({ bookedError: '' });
+  let translate = getLanguage(current.props.stateLanguageType);
+  let { this_time_slot_is_already_booked, please_select, another_one, upcoming_slots } = translate;
+  if (data && data.isBooked) {
+    current.setState({ currentSelected: Ai, bookedError: this_time_slot_is_already_booked + ' ' + please_select + ' ' + another_one });
+  } else if (data && data.isAlreadyExist) {
+    current.setState({ currentSelected: Ai, bookedError: please_select + ' ' + upcoming_slots });
+  } else {
+    current.setState({ bookedError: '', currentSelected: Ai });
+  }
 };
 
 // export const DownloadBill = (current, id, bill_date) => {

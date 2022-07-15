@@ -341,7 +341,6 @@ class CometChatCallScreen extends React.PureComponent {
         },
         onUserListUpdated: (userList) => {
           this.props.userListCall(userList);
-          console.log('user list:', userList);
         },
         // onUserJoined: (user) => {
         //   console.log('user', user);

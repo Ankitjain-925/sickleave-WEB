@@ -42,6 +42,8 @@ class Index extends Component {
       openPayment: false,
       totalPage: 1,
       currentPage: 1,
+      error_section: 0,
+      errorChrMsg: '',
     };
   }
 
@@ -69,13 +71,13 @@ class Index extends Component {
   checkStatusMet = (data) => {
     let translate = getLanguage(this.props.stateLanguageType);
     let { active, inactive } = translate;
-    var Date1 = moment(data?.created_at).format('DD-MM-YYYY');
+    var Date1 = moment().format('DD-MM-YYYY');
     var Date2 = moment(data?.date).format('DD-MM-YYYY');
-    var compareTime = moment(data?.created_at).format('HH:mm');
+    var compareTime = moment().format('HH:mm');
     var start = data?.start;
     var end = data?.end;
     if (Date1 === Date2) {
-      if (compareTime > start && compareTime < end) {
+      if (compareTime >= start && compareTime <= end) {
         return active;
       } else {
         return inactive;
@@ -213,6 +215,9 @@ class Index extends Component {
                         </Grid>
                       </Grid>
                       <Grid className="presPkgIner2">
+                        {this.state.error_section == 90 && (
+                          <div className="err_message2 err_message4">{this.state.errorChrMsg}</div>
+                        )}
                         <Grid className="presOpinionIner presOpinionInerSec">
                           <Table>
                             <Thead>
@@ -419,8 +424,8 @@ class Index extends Component {
                                                 <a
                                                   onClick={() => {
                                                     EditRequest(this, item);
-                                                  }}                         
-                                                >           
+                                                  }}
+                                                >
                                                   <img
                                                     src={require('assets/virtual_images/pencil-1.svg')}
                                                     alt=""
