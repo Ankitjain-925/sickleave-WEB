@@ -14804,10 +14804,26 @@ label.errMsgStyleSecPart {
   text-align: center;
   margin: 8px;
 }
-
 .profileImagePat img{
   border-radius: 50%;
   width: 40px;
   height: 40px;
   margin-bottom: 8px;
 }
+
+
+
+
+@media (max-width:959px){
+  .manageVideoCall .css-1yrthcx{
+    width:100%!important;
+    position: unset!important;
+    height: 100vh!important;
+  }
+  .allWebVideoSec {
+    margin: 30px 15px 30px 15px;
+}
+}
+
+
+
