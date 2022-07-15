@@ -6,7 +6,7 @@
     "login_an_account": "noch kein Account?",
     "login_Registerhere": "Hier registrieren",
     "reg_content": "reg_content",
-    "Register_for_Aimedis": "Bei AIS registrieren",
+    "Register_for_Aimedis": "Bei Aimedis elements AU registrieren",
     "Register_Name": "Name",
     "Register_email": "E-Mail Adresse",
     "Register_Password": "Passwort",
@@ -1774,6 +1774,12 @@
     "another_one":"noch einer!",
     "try_after_some_time":"Es ist noch kein Arzt verfügbar, bitte versuchen Sie es nach einiger Zeit!",
     "payment_process_must_be_within_15_min":"Der Zahlungsvorgang muss innerhalb von 15 min erfolgen, und die Zeit ist jetzt überschritten. Bitte erstellen Sie erneut eine neue Anfrage, diese Anfrage wandert nach einiger Zeit automatisch ins Archiv!",
-    "upcoming_slots":"kommende Zeitfenster"
+    "upcoming_slots":"kommende Zeitfenster",
+    "aimedis_elements_au" : "Aimedis elements AU",
+    "systolic_value_between":"Bitte wählen Sie einen systolischen bp-Wert zwischen 120-140",
+    "diastolic_value_between":"Bitte wählen Sie einen diastolischen bp-Wert zwischen 80-90",
+    "enter_blood_sugar":"Bitte Blutzucker eingeben",
+    "enter_hba1c":"Bistte geben Sie Hba1c ein",
+    "valid_body_temp":"Bitte gültige Körpertemperatur eingeben"
   }
 }

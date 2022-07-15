@@ -5,7 +5,7 @@
     "login_LOGIN_btn": "LOG IN",
     "login_an_account": "don't have an account?",
     "login_Registerhere": "Register here",
-    "Register_for_Aimedis": "Register for AIS",
+    "Register_for_Aimedis": "Register for Aimedis elements AU",
     "Register_Name": "Name",
     "Register_email": "E-mail address",
     "Register_Password": "Password",
@@ -1899,6 +1899,7 @@
     "another_one":"another one!",
     "try_after_some_time":"There is no doctor availiable yet please try after some time!",
     "payment_process_must_be_within_15_min":"The payment process must be within 15 min, and time is exceeded now. Please create a new request again, this request will go to the archive automatically after some time!",
-    "upcoming_slots":"upcoming time slots"
+    "upcoming_slots":"upcoming time slots",
+    "aimedis_elements_au" : "Aimedis elements AU"
   }
 }
