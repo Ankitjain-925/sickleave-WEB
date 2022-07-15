@@ -57,7 +57,6 @@ export const CancelClick = (current) => {
 
 //for downoading the pdf
 export const DownloadCert = (data, current) => {
-  console.log("data", data, "current", current)
   current.setState({ loaderImage: true });
   axios
     .post(sitedata.data.path + '/vactive/downloadSickleaveCertificate', data, {
@@ -82,7 +81,6 @@ export const DownloadCert = (data, current) => {
 
 // For send meeting link patient as well as doctor
 export const sendLinkDocPat = (payValue, taskValue, current) => {
-  console.log("taskValue?.date", taskValue?.date)
   var data = {};
   let patientEmail = current?.props?.stateLoginValueAim?.user?.email;
   data.task_id = taskValue?._id;
@@ -2029,7 +2027,6 @@ export const onChange = (date, current) => {
 };
 
 export const calBookedSlot = (ts, booked, current) => {
-  console.log("current.state.date", current.state.date)
   var slot;
   var isBooked;
   let isAlreadyExist;

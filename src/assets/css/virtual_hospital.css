@@ -14543,6 +14543,10 @@ label.newrole {
 .sickCheckSec .MuiCheckbox-root {
   color: #00abaf !important;
 }
+.sickCheckSec {
+  margin-top: 14px
+}
+  
 
 .fatiqueQues p {
   color: #7f8383 !important;
@@ -14662,7 +14666,7 @@ label.errMsgStyleSecPart {
 }
 
 .stomachVideoSec {
-  margin-top: 30px;
+  margin-top: 15px;
 }
 
 .sickImageVideoSec {
@@ -14804,10 +14808,43 @@ label.errMsgStyleSecPart {
   text-align: center;
   margin: 8px;
 }
-
 .profileImagePat img{
   border-radius: 50%;
   width: 40px;
   height: 40px;
   margin-bottom: 8px;
+}
+
+.timerIcon
+{
+  color: red;
+  margin-bottom: 11px;
+  }
+
+  .timerandLabel{
+    position: absolute;
+    top: 12px;
+    /* right: 0; */
+    left: 19px;
+    z-index: 9999999999;
+  }
+
+  .timerandLabel label{ 
+    margin-top: 5px;
+    font-weight: bold;
+    font-size: 20px;
+    padding:5px ;
+    color:red;
+    margin: 0px
+}
+
+@media (max-width:959px){
+  .manageVideoCall .css-1yrthcx{
+    width:100%!important;
+    position: unset!important;
+    height: 100vh!important;
+  }
+  .allWebVideoSec {
+    margin: 30px 15px 30px 15px;
+}
 }
