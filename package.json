@@ -114,5 +114,5 @@
     "@typescript-eslint/parser": "^5.11.0",
     "eslint-plugin-react": "^7.28.0"
   },
-  "homepage": "https://virtualhospital.aimedis.io/sys-n-sick"
+  "homepage": "https://virtualhospital.aidoc.io/sys-n-sick"
 }

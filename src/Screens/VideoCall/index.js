@@ -298,7 +298,7 @@ class Index extends Component {
                 <Grid container direction="row">
                   <Grid item xs={12} md={12} lg={12}>
                     <Grid container direction="row">
-                      <Grid item xs={8} md={8} lg={8}>
+                      <Grid item xs={12} md={8} lg={8}>
                         <Grid className="manageVideoCall">
                           <Grid className="timerandLabel">
                             <TimerIcon className="timerIcon" />
@@ -321,7 +321,7 @@ class Index extends Component {
                           />
                         </Grid>
                       </Grid>
-                      <Grid item xs={4} md={4} lg={4}>
+                      <Grid item xs={12} md={4} lg={4}>
                         <Grid>
                           <Grid className="allWebVideoSec ">
                             <Grid className="allSickVideoSec">
@@ -1309,8 +1309,9 @@ class Index extends Component {
 
                                       <Grid container xs={12} md={12}>
                                         <Grid
-                                          xs={3}
-                                          md={3}
+                                          xs={4}
+                                          sm={3}
+                                          md={4}
                                           className="sickAllMngSec"
                                         >
                                           <label>{cardiac_heart_attack}</label>
@@ -1324,8 +1325,9 @@ class Index extends Component {
                                           )}
                                         </Grid>
                                         <Grid
-                                          xs={3}
-                                          md={3}
+                                          xs={4}
+                                          sm={3}
+                                          md={4}
                                           className="sickAllMngSec"
                                         >
                                           <label>{cardiac_heart_failure}</label>
@@ -1339,8 +1341,9 @@ class Index extends Component {
                                           )}
                                         </Grid>
                                         <Grid
-                                          xs={3}
-                                          md={3}
+                                          xs={4}
+                                          sm={3}
+                                          md={4}
                                           className="sickAllMngSec"
                                         >
                                           <label>{cardiac_dizziness}</label>
@@ -1353,8 +1356,9 @@ class Index extends Component {
                                           )}
                                         </Grid>
                                         <Grid
-                                          xs={3}
-                                          md={3}
+                                          xs={4}
+                                          sm={3}
+                                          md={4}
                                           className="sickAllMngSec"
                                         >
                                           <label>{cardiac_shoulder_pain}</label>
