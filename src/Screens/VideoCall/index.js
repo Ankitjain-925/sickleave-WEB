@@ -359,7 +359,7 @@ class Index extends Component {
                                             direction="row"
                                             justify="center"
                                           >
-                                            <Grid item xs={3} md={3} lg={3}>
+                                            <Grid item xs={4} sm={3} md={4} lg={3}>
                                               <label>
                                                 {headache_painbegin_back}
                                               </label>
@@ -371,7 +371,7 @@ class Index extends Component {
                                                 <p>{no}</p>
                                               )}
                                             </Grid>
-                                            <Grid item xs={3} md={3} lg={3}>
+                                            <Grid item xs={4} sm={3} md={4} lg={3}>
                                               <label>
                                                 {headache_painbegin_front}
                                               </label>
@@ -383,7 +383,7 @@ class Index extends Component {
                                                 <p>{no}</p>
                                               )}
                                             </Grid>
-                                            <Grid item xs={3} md={3} lg={3}>
+                                            <Grid item xs={4} sm={3} md={4} lg={3}>
                                               <label>
                                                 {headache_painbegin_left}
                                               </label>
@@ -395,7 +395,7 @@ class Index extends Component {
                                                 <p>{no}</p>
                                               )}
                                             </Grid>
-                                            <Grid item xs={3} md={3} lg={3}>
+                                            <Grid item xs={4} sm={3} md={4} lg={3}>
                                               <label>
                                                 {headache_painbegin_right}
                                               </label>
@@ -407,7 +407,7 @@ class Index extends Component {
                                                 <p>{no}</p>
                                               )}
                                             </Grid>
-                                            <Grid item xs={3} md={3} lg={3}>
+                                            <Grid item xs={4} sm={3} md={4} lg={3}>
                                               <label>
                                                 {headache_painbegin_top}
                                               </label>
@@ -439,7 +439,7 @@ class Index extends Component {
                                               direction="row"
                                               justify="center"
                                             >
-                                              <Grid item xs={3} md={3} lg={3}>
+                                              <Grid item xs={4} sm={3} md={4} lg={3}>
                                                 <label>
                                                   {headache_hurtnow_back}
                                                 </label>
@@ -451,7 +451,7 @@ class Index extends Component {
                                                   <p>{no}</p>
                                                 )}
                                               </Grid>
-                                              <Grid item xs={3} md={3} lg={3}>
+                                              <Grid item xs={4} sm={3} md={4} lg={3}>
                                                 <label>
                                                   {headache_hurtnow_front}
                                                 </label>
@@ -463,7 +463,7 @@ class Index extends Component {
                                                   <p>{no}</p>
                                                 )}
                                               </Grid>
-                                              <Grid item xs={3} md={3} lg={3}>
+                                              <Grid item xs={4} sm={3} md={4} lg={3}>
                                                 <label>
                                                   {headache_hurtnow_left}
                                                 </label>
@@ -475,7 +475,7 @@ class Index extends Component {
                                                   <p>{no}</p>
                                                 )}
                                               </Grid>
-                                              <Grid item xs={3} md={3} lg={3}>
+                                              <Grid item xs={4} sm={3} md={4} lg={3}>
                                                 <label>
                                                   {headache_hurtnow_right}
                                                 </label>
@@ -487,7 +487,7 @@ class Index extends Component {
                                                   <p>{no}</p>
                                                 )}
                                               </Grid>
-                                              <Grid item xs={3} md={3} lg={3}>
+                                              <Grid item xs={4} sm={3} md={4} lg={3}>
                                                 <label>
                                                   {headache_hurtnow_top}
                                                 </label>
@@ -543,21 +543,21 @@ class Index extends Component {
                                         <h3>{diabetes}</h3>
                                       </Grid>
                                       <Grid container xs={12} md={12}>
-                                        <Grid xs={4} md={4}>
+                                        <Grid xs={6} sm={4} md={4} lg={4}>
                                           <label>{blood_sugar}</label>
                                           <p>
                                             {allTasks &&
                                               allTasks?.headache_blood_sugar}
                                           </p>
                                         </Grid>
-                                        <Grid xs={4} md={4}>
+                                        <Grid xs={6} sm={4} md={3} lg={4}>
                                           <label>{Hba1c}</label>
                                           <p>
                                             {allTasks &&
                                               allTasks?.headache_Hba1c}
                                           </p>
                                         </Grid>
-                                        <Grid xs={4} md={4}>
+                                        <Grid xs={6} sm={4} md={5} lg={4}>
                                           <label>{situation}</label>
                                           <p>
                                             {allTasks &&
@@ -729,21 +729,21 @@ class Index extends Component {
                                               <h3>{diabetes}</h3>
                                             </Grid>
                                             <Grid container xs={12} md={12}>
-                                              <Grid xs={4} md={4}>
+                                              <Grid xs={6} sm={4} md={4} lg={4}>
                                                 <label>{blood_sugar}</label>
                                                 <p>
                                                   {allTasks &&
                                                     allTasks?.stomach_blood_sugar}
                                                 </p>
                                               </Grid>
-                                              <Grid xs={4} md={4}>
+                                              <Grid xs={6} sm={4} md={3} lg={4}>
                                                 <label>{Hba1c}</label>
                                                 <p>
                                                   {allTasks &&
                                                     allTasks?.stomach_Hba1c}
                                                 </p>
                                               </Grid>
-                                              <Grid xs={4} md={4}>
+                                              <Grid xs={6} sm={4} md={5} lg={4}>
                                                 <label>{situation}</label>
                                                 <p>
                                                   {allTasks &&
@@ -1054,14 +1054,14 @@ class Index extends Component {
                                             <h3>{diabetes} </h3>
                                           </Grid>
                                           <Grid container xs={12} md={12}>
-                                            <Grid xs={4} md={4}>
+                                            <Grid xs={6} sm={4} md={4} lg={4}>
                                               <label>{blood_sugar}</label>
                                               <p>
                                                 {allTasks &&
                                                   allTasks?.back_pain_blood_sugar}
                                               </p>
                                             </Grid>
-                                            <Grid xs={4} md={4}>
+                                            <Grid xs={6} sm={4} md={3} lg={4}>
                                               <label>{Hba1c}</label>
                                               <p>
                                                 {allTasks &&
@@ -1069,7 +1069,7 @@ class Index extends Component {
                                               </p>
                                             </Grid>
 
-                                            <Grid xs={4} md={4}>
+                                            <Grid xs={6} sm={4} md={5} lg={4}>
                                               <label>{situation}</label>
                                               <p>
                                                 {allTasks &&
@@ -1230,8 +1230,10 @@ class Index extends Component {
                                     </Grid>
                                     <Grid container xs={12} md={12}>
                                       <Grid
-                                        xs={4}
-                                        md={4}
+                                        xs={6}
+                                        sm={4}
+                                        md={6}
+                                        lg={3}
                                         className="sickAllMngSec"
                                       >
                                         <label>{depressed_do_you_sleep}</label>
@@ -1245,8 +1247,10 @@ class Index extends Component {
                                         )}
                                       </Grid>
                                       <Grid
-                                        xs={4}
-                                        md={4}
+                                        xs={6}
+                                        sm={4}
+                                        md={6}
+                                        lg={5}
                                         className="sickAllMngSec"
                                       >
                                         <label>
@@ -1262,8 +1266,10 @@ class Index extends Component {
                                         )}
                                       </Grid>
                                       <Grid
-                                        xs={4}
-                                        md={4}
+                                        xs={6}
+                                        sm={4}
+                                        md={6}
+                                        lg={4}
                                         className="sickAllMngSec"
                                       >
                                         <label>{depressed_hurt_yourself}</label>
