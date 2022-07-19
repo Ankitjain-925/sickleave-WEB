@@ -468,17 +468,17 @@ class CometChatCallScreen extends React.PureComponent {
 
     return (
       <React.Fragment>
-        <div
+      <div
           css={callScreenBackgroundStyle(this.state)}
           ref={this.callScreenBackgroundEl}
         ></div>
-        <div
+          <div
           ref={this.callScreenEl}
           className="callscreen__container"
           css={callScreenContainerStyle(this.props)}
           style={{ top: this.state.y + 'px', left: this.state.x + 'px' }}
         >
-          <div
+           <div
             css={callScreenInnerBackgroundStyle()}
             ref={this.callScreenInnerBackgroundEl}
           ></div>
@@ -511,7 +511,7 @@ class CometChatCallScreen extends React.PureComponent {
             className="callscreen__resizer-both"
             onMouseDown={this.initResize}
           ></div>
-        </div>
+        </div> 
       </React.Fragment>
     );
   }
