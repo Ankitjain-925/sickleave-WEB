@@ -10007,12 +10007,12 @@ button.crdoLghtBlu2 {
 }
 /* Added by Ankita */
 @media screen and (min-width: 640px) and (max-width: 1024) {
-.archive-sick .presOpinionIner td.pivoted {
+  .archive-sick .presOpinionIner td.pivoted {
     padding: 8px 5px !important;
-}
+  }
 }
 @media (min-width: 1280px) {
-  .setleftpadding-archive{
+  .setleftpadding-archive {
     padding-right: 60px;
   }
 }
@@ -14544,9 +14544,8 @@ label.newrole {
   color: #00abaf !important;
 }
 .sickCheckSec {
-  margin-top: 14px
+  margin-top: 14px;
 }
-  
 
 .fatiqueQues p {
   color: #7f8383 !important;
@@ -14736,7 +14735,6 @@ label.errMsgStyleSecPart {
   }
 }
 
-
 .appointmentTime {
   color: #00abaf;
   background-color: #ffffff;
@@ -14749,21 +14747,20 @@ label.errMsgStyleSecPart {
   z-index: 99999999;
 }
 
-
-@media screen and (min-width:641px) and (max-width:865px){
-  .presOpinionInerSec thead th{
+@media screen and (min-width: 641px) and (max-width: 865px) {
+  .presOpinionInerSec thead th {
     line-break: anywhere;
   }
 }
 
-@media screen and (min-width:960px) and (max-width:1400px){
-  .presOpinionInerSec thead th{
-    padding:6px!important;
+@media screen and (min-width: 960px) and (max-width: 1400px) {
+  .presOpinionInerSec thead th {
+    padding: 6px !important;
   }
 }
 
-@media screen and (min-width:960px) and (max-width:1060px){
-  .presOpinionInerSec thead th{
+@media screen and (min-width: 960px) and (max-width: 1060px) {
+  .presOpinionInerSec thead th {
     line-break: anywhere;
   }
 }
@@ -14798,53 +14795,56 @@ label.errMsgStyleSecPart {
   background: #192020 !important;
 }
 
-.bookedSlotCss a{
+.bookedSlotCss a {
   border-style: solid;
   border-color: red;
-   color :red
+  color: red;
 }
 
-.err_message4{
+.err_message4 {
   text-align: center;
   margin: 8px;
 }
-.profileImagePat img{
+.profileImagePat img {
   border-radius: 50%;
   width: 40px;
   height: 40px;
   margin-bottom: 8px;
 }
 
-.timerIcon
-{
+.timerIcon {
   color: red;
   margin-bottom: 11px;
-  }
-
-  .timerandLabel{
-    position: absolute;
-    top: 12px;
-    /* right: 0; */
-    left: 19px;
-    z-index: 9999999999;
-  }
-
-  .timerandLabel label{ 
-    margin-top: 5px;
-    font-weight: bold;
-    font-size: 20px;
-    padding:5px ;
-    color:red;
-    margin: 0px
 }
 
-@media (max-width:959px){
-  .manageVideoCall .css-1yrthcx{
-    width:100%!important;
-    position: unset!important;
-    height: 100vh!important;
+.timerandLabel {
+  position: fixed;
+  top: 12px;
+  /* right: 0; */
+  left: 19px;
+  z-index: 9999999999;
+}
+
+.timerandLabel label {
+  margin-top: 5px;
+  font-weight: bold;
+  font-size: 20px;
+  /* padding: 5px; */
+  color: red;
+  margin: 0px;
+  margin-left:5px;
+}
+
+@media (max-width: 959px) {
+  .manageVideoCall .css-1yrthcx {
+    width: 100% !important;
+    position: unset !important;
+    height: 100vh !important;
   }
   .allWebVideoSec {
     margin: 30px 15px 30px 15px;
-}
+  }
+  .timerandLabel{
+    position: absolute;
+  }
 }
