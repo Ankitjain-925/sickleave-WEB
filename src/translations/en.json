@@ -5,7 +5,7 @@
     "login_LOGIN_btn": "LOG IN",
     "login_an_account": "don't have an account?",
     "login_Registerhere": "Register here",
-    "Register_for_Aimedis": "Register for AIS",
+    "Register_for_Aimedis": "Register for Aimedis elements AU",
     "Register_Name": "Name",
     "Register_email": "E-mail address",
     "Register_Password": "Password",
@@ -1837,7 +1837,7 @@
     "you_have_cough_and_snees": "You have Cough and Snees?",
     "you_feel_depressed": "You feel Depressed?",
     "you_have_cardiac_problems": "you have Cardiac Problems?",
-    "rules_and_regulations_of_aimedis": "I have react and understood the Data protection rules and Regulations of Aimedis.",
+    "rules_and_regulations_of_aimedis": "I have read and understood the Data protection rules and Regulations of Aimedis.",
     "request_list_payment": "Request list payment",
     "activate_very_soon": "The link will be activate very soon",
     "link_has_been_expired": "Link has been expired, Please book time slot again",
@@ -1898,6 +1898,10 @@
     "this_time_slot_is_already_booked":"This time slot is already booked,",
     "another_one":"another one!",
     "try_after_some_time":"There is no doctor availiable yet please try after some time!",
-    "payment_process_must_be_within_15_min":"The payment process must be within 15 min, and time is exceeded now. Please create a new request again, this request will go to the archive automatically after some time"
+    "payment_process_must_be_within_15_min":"The payment process must be within 15 min, and time is exceeded now. Please create a new request again, this request will go to the archive automatically after some time!",
+    "upcoming_slots":"upcoming time slots",
+    "aimedis_elements_au" : "Aimedis elements AU",
+    "check_your_meeting_key_or_link_again":"Meeting not available please check your meeting key or link again",
+    "meeting_time_out":"Meeting time out"
   }
 }

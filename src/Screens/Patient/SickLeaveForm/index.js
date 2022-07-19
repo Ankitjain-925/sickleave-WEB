@@ -527,7 +527,7 @@ class Index extends Component {
                                             'undefined' &&
                                             iA === 0 ? (
                                             <Grid className={
-                                              data?.isBooked && "bookedSlotCss"
+                                              (data?.isBooked || data?.isAlreadyExist) && "bookedSlotCss"
                                             }>
                                               <a
                                                 className={
@@ -538,7 +538,7 @@ class Index extends Component {
                                                   SelectTimeSlot(
                                                     this.state.apointDay,
                                                     iA,
-                                                    data?.isBooked,
+                                                    data,
                                                     this
                                                   );
                                                 }}
@@ -551,7 +551,7 @@ class Index extends Component {
                                             this.state.appointDate[iA + 1] !==
                                             'undefined' && (
                                               <Grid className={
-                                                data?.isBooked && "bookedSlotCss"
+                                                (data?.isBooked || data?.isAlreadyExist) && "bookedSlotCss"
                                               }>
                                                 <a
                                                   className={
@@ -565,7 +565,7 @@ class Index extends Component {
                                                     SelectTimeSlot(
                                                       this.state.apointDay,
                                                       iA,
-                                                      data?.isBooked,
+                                                      data,
                                                       this
                                                     );
                                                   }}

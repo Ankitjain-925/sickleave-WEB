@@ -47,8 +47,8 @@ class Index extends Component {
       loginError9: false,
       mode:
         this.props.settings &&
-        this.props.settings.setting &&
-        this.props.settings.setting.mode
+          this.props.settings.setting &&
+          this.props.settings.setting.mode
           ? this.props.settings.setting.mode
           : 'normal',
     };
@@ -224,6 +224,7 @@ class Index extends Component {
     let translate = getLanguage(this.props.stateLanguageType);
     let {
       Log_into,
+      aimedis_elements_au,
       Register_email,
       login_Password,
       login_Forgotpassword,
@@ -254,9 +255,9 @@ class Index extends Component {
         <Grid
           className={
             this.props.settings &&
-            this.props.settings.setting &&
-            this.props.settings.setting.mode &&
-            this.props.settings.setting.mode === 'dark'
+              this.props.settings.setting &&
+              this.props.settings.setting.mode &&
+              this.props.settings.setting.mode === 'dark'
               ? 'loginSiteUpr homeBgDrk'
               : 'loginSiteUpr'
           }
@@ -399,7 +400,7 @@ class Index extends Component {
             >
               <Grid item xs={11} sm={7} md={7}>
                 <Grid className="logData">
-                  <h1>{Log_into} AIS</h1>
+                  <h1>{Log_into} {aimedis_elements_au}</h1>
                 </Grid>
                 <Grid className="logFormMain">
                   <Grid className="logForm">
@@ -407,28 +408,28 @@ class Index extends Component {
                       {this.state.loginError1
                         ? code_not_verified
                         : this.state.loginError2
-                        ? email_not_valid
-                        : this.state.loginError9
-                        ? password_cant_empty
-                        : stateLoginValueAim.isVerified == false
-                        ? verifyAccount
-                        : stateLoginValueAim.permission == false
-                        ? 'User is not able to login from here, Only patient have right to login'
-                        : stateLoginValueAim.isBlocked == true
-                        ? stateLoginValueAim.type === 'patient'
-                          ? user_is_blocked
-                          : needUnblock
-                        : this.state.loginError === false &&
-                          stateLoginValueAim.token === 450 &&
-                          myLogin &&
-                          stateLoginValueAim.message
-                        ? stateLoginValueAim.message === 'User does not exist'
-                          ? user_not_exist
-                          : stateLoginValueAim.message === 'Wrong password'
-                          ? wrong_password
-                          : false
-                        : false}
-                      {}
+                          ? email_not_valid
+                          : this.state.loginError9
+                            ? password_cant_empty
+                            : stateLoginValueAim.isVerified == false
+                              ? verifyAccount
+                              : stateLoginValueAim.permission == false
+                                ? 'User is not able to login from here, Only patient have right to login'
+                                : stateLoginValueAim.isBlocked == true
+                                  ? stateLoginValueAim.type === 'patient'
+                                    ? user_is_blocked
+                                    : needUnblock
+                                  : this.state.loginError === false &&
+                                    stateLoginValueAim.token === 450 &&
+                                    myLogin &&
+                                    stateLoginValueAim.message
+                                    ? stateLoginValueAim.message === 'User does not exist'
+                                      ? user_not_exist
+                                      : stateLoginValueAim.message === 'Wrong password'
+                                        ? wrong_password
+                                        : false
+                                    : false}
+                      { }
                     </div>
                     <Grid className="logRow">
                       <Grid>
@@ -494,7 +495,7 @@ class Index extends Component {
                         )}
                       </Grid>
                     </Grid>
-                    {/* {this.state.thisverify && (
+                    {this.state.thisverify && (
                       <Grid className="logRow">
                         <Grid>
                           <label>{two_fac_auth}</label>
@@ -510,26 +511,26 @@ class Index extends Component {
                           />
                         </Grid>
                       </Grid>
-                    )} */}
+                    )}
 
                     <Grid className="logRow">
-                      {/* {!this.state.thisverify ? ( */}
-                      <Grid className="regCrtAc">
-                        <input
-                          type="submit"
-                          value={login_LOGIN_btn}
-                          onClick={this.BtnSubmit.bind(this)}
-                        />
-                      </Grid>
-                      {/* ) : (
-                      <Grid className="regCrtAc">
-                        <input
-                          type="submit"
-                          value="VERIFY"
-                          onClick={this.Verifycode.bind(this)}
-                        />
-                      </Grid>
-                      )} */}
+                      {!this.state.thisverify ? (
+                        <Grid className="regCrtAc">
+                          <input
+                            type="submit"
+                            value={login_LOGIN_btn}
+                            onClick={this.BtnSubmit.bind(this)}
+                          />
+                        </Grid>
+                      ) : (
+                        <Grid className="regCrtAc">
+                          <input
+                            type="submit"
+                            value="VERIFY"
+                            onClick={this.Verifycode.bind(this)}
+                          />
+                        </Grid>
+                      )}
                     </Grid>
                     <p className="regOnlog">
                       {login_an_account}{' '}
