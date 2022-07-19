@@ -1869,10 +1869,10 @@
     "of_body_temprature": "of body temprature",
     "request_list": "Request List",
     "sick_request": "Sick Request",
-    "archive_request":"Archived Request",
-    "Download_Bill":"Download Bill",
+    "archive_request": "Archived Request",
+    "Download_Bill": "Download Bill",
     "Alls": "All",
-    "not_attented":"Not Attented",
+    "not_attented": "Not Attented",
     "your_payment_process_is_pending": "Your payment process is pending",
     "need_to_vomit": "need to Vomit",
     "onset_of_pain": "onset of Pain",
@@ -1889,8 +1889,15 @@
     "have_shoulder_pain": "have shoulder pain",
     "sputum_intensity": "sputum intensity",
     "atleast_one_problem_for": "atleast one problem for",
-    "data_protection_rules_and_regulations_of_aimedis.": "Data protection rules and Regulations of Aimedis.",
+    "data_protection_rules_and_regulations_of_aimedis": "Data protection rules and Regulations of Aimedis.",
     "time_slot": "Time slot",
-    "Pending_payment":"Pending payment"
+    "Pending_payment": "Pending payment",
+    "active": "Active",
+    "inactive": "Inactive",
+    "meeting": "Meeting",
+    "this_time_slot_is_already_booked":"This time slot is already booked,",
+    "another_one":"another one!",
+    "try_after_some_time":"There is no doctor availiable yet please try after some time!",
+    "payment_process_must_be_within_15_min":"The payment process must be within 15 min, and time is exceeded now. Please create a new request again, this request will go to the archive automatically after some time"
   }
 }

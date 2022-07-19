@@ -61,7 +61,7 @@ class Index extends Component {
         break;
       case 2:
         let pending = filterAllData.filter((item) => {
-          return item.is_payment == false;
+          return !item.is_payment;
         });
         this.setState({ AllDataPart: pending });
         break;
@@ -292,7 +292,7 @@ class Index extends Component {
                       </Grid>
 
                       <Grid className="presPkgIner2 archive-sick">
-                        <Grid className="presOpinionIner">
+                        <Grid className="presOpinionIner presOpinionInerSec">
                           <Table>
                             <Thead>
                               <Tr>
