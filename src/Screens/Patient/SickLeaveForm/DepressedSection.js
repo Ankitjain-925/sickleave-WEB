@@ -44,6 +44,7 @@ function Index(props) {
           {props.error_section == 39 && (
             <div className="err_message2">{props.errorChrMsg}</div>
           )}
+
         </Grid>
       </Grid>
 
