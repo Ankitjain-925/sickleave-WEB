@@ -14749,7 +14749,6 @@ label.errMsgStyleSecPart {
   z-index: 99999999;
 }
 
-
 @media screen and (min-width:641px) and (max-width:865px){
   .presOpinionInerSec thead th{
     line-break: anywhere;
