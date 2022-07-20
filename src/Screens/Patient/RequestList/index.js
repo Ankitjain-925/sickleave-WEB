@@ -185,6 +185,7 @@ class Index extends Component {
       appointment_time,
       your_payment_process_is_pending,
       Download_Bill,
+      inactive
     } = translate;
 
     return (
@@ -376,7 +377,7 @@ class Index extends Component {
                                                     className={
                                                       this.checkStatusMet(
                                                         item
-                                                      ) === 'Inactive' &&
+                                                      ) === inactive &&
                                                       'inctiveStatus'
                                                     }
                                                   >
