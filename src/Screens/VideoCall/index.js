@@ -302,7 +302,7 @@ class Index extends Component {
                         <Grid className="manageVideoCall">
                           <Grid className="timerandLabel">
                             <TimerIcon className="timerIcon" />
-                            <label> {this.state.time.h}h : {this.state.time.m}m</label></Grid>
+                            <label className="formviewhead"> {this.state.time.h}h : {this.state.time.m}m</label></Grid>
                           <CometChatOutgoingDirectCall
                             open
                             userListCall={(userList) =>
@@ -334,7 +334,7 @@ class Index extends Component {
                                     {allTasks?.patient?.first_name}{' '}
                                     {allTasks?.patient?.last_name}
                                   </p>
-                                  <label>{allTasks?.patient?.profile_id}</label>
+                                  <label className="formviewhead">{allTasks?.patient?.profile_id}</label>
                                 </Grid>
                               </Grid>
 
@@ -360,7 +360,7 @@ class Index extends Component {
                                             justify="center"
                                           >
                                             <Grid item xs={4} sm={3} md={4} lg={3}>
-                                              <label>
+                                              <label className="formviewhead">
                                                 {headache_painbegin_back}
                                               </label>
                                               {allTasks &&
@@ -372,7 +372,7 @@ class Index extends Component {
                                               )}
                                             </Grid>
                                             <Grid item xs={4} sm={3} md={4} lg={3}>
-                                              <label>
+                                              <label className="formviewhead">
                                                 {headache_painbegin_front}
                                               </label>
                                               {allTasks &&
@@ -384,7 +384,7 @@ class Index extends Component {
                                               )}
                                             </Grid>
                                             <Grid item xs={4} sm={3} md={4} lg={3}>
-                                              <label>
+                                              <label className="formviewhead">
                                                 {headache_painbegin_left}
                                               </label>
                                               {allTasks &&
@@ -396,7 +396,7 @@ class Index extends Component {
                                               )}
                                             </Grid>
                                             <Grid item xs={4} sm={3} md={4} lg={3}>
-                                              <label>
+                                              <label className="formviewhead">
                                                 {headache_painbegin_right}
                                               </label>
                                               {allTasks &&
@@ -408,7 +408,7 @@ class Index extends Component {
                                               )}
                                             </Grid>
                                             <Grid item xs={4} sm={3} md={4} lg={3}>
-                                              <label>
+                                              <label className="formviewhead">
                                                 {headache_painbegin_top}
                                               </label>
                                               {allTasks &&
@@ -440,7 +440,7 @@ class Index extends Component {
                                               justify="center"
                                             >
                                               <Grid item xs={4} sm={3} md={4} lg={3}>
-                                                <label>
+                                                <label className="formviewhead">
                                                   {headache_hurtnow_back}
                                                 </label>
                                                 {allTasks &&
@@ -452,7 +452,7 @@ class Index extends Component {
                                                 )}
                                               </Grid>
                                               <Grid item xs={4} sm={3} md={4} lg={3}>
-                                                <label>
+                                                <label className="formviewhead">
                                                   {headache_hurtnow_front}
                                                 </label>
                                                 {allTasks &&
@@ -464,7 +464,7 @@ class Index extends Component {
                                                 )}
                                               </Grid>
                                               <Grid item xs={4} sm={3} md={4} lg={3}>
-                                                <label>
+                                                <label className="formviewhead">
                                                   {headache_hurtnow_left}
                                                 </label>
                                                 {allTasks &&
@@ -476,7 +476,7 @@ class Index extends Component {
                                                 )}
                                               </Grid>
                                               <Grid item xs={4} sm={3} md={4} lg={3}>
-                                                <label>
+                                                <label className="formviewhead">
                                                   {headache_hurtnow_right}
                                                 </label>
                                                 {allTasks &&
@@ -488,7 +488,7 @@ class Index extends Component {
                                                 )}
                                               </Grid>
                                               <Grid item xs={4} sm={3} md={4} lg={3}>
-                                                <label>
+                                                <label className="formviewhead">
                                                   {headache_hurtnow_top}
                                                 </label>
                                                 {allTasks &&
@@ -510,14 +510,14 @@ class Index extends Component {
                                       </Grid>
                                       <Grid container xs={12} md={12}>
                                         <Grid xs={6} md={6}>
-                                          <label>{rr_systolic}</label>
+                                          <label className="formviewhead">{rr_systolic}</label>
                                           <p>
                                             {allTasks &&
                                               allTasks?.headache_rr_systolic}
                                           </p>
                                         </Grid>
                                         <Grid xs={6} md={6}>
-                                          <label>{RR_diastolic}</label>
+                                          <label className="formviewhead">{RR_diastolic}</label>
                                           <p>
                                             {allTasks &&
                                               allTasks?.headache_rr_diastolic}
@@ -544,21 +544,21 @@ class Index extends Component {
                                       </Grid>
                                       <Grid container xs={12} md={12}>
                                         <Grid xs={6} sm={4} md={4} lg={4}>
-                                          <label>{blood_sugar}</label>
+                                          <label className="formviewhead">{blood_sugar}</label>
                                           <p>
                                             {allTasks &&
                                               allTasks?.headache_blood_sugar}
                                           </p>
                                         </Grid>
                                         <Grid xs={6} sm={4} md={3} lg={4}>
-                                          <label>{Hba1c}</label>
+                                          <label className="formviewhead">{Hba1c}</label>
                                           <p>
                                             {allTasks &&
                                               allTasks?.headache_Hba1c}
                                           </p>
                                         </Grid>
                                         <Grid xs={6} sm={4} md={5} lg={4}>
-                                          <label>{situation}</label>
+                                          <label className="formviewhead">{situation}</label>
                                           <p>
                                             {allTasks &&
                                               allTasks?.headache_situation &&
@@ -669,7 +669,7 @@ class Index extends Component {
 
                                       <Grid container xs={12} md={12}>
                                         <Grid xs={4} md={4}>
-                                          <label>{stomach_sternum}</label>
+                                          <label className="formviewhead">{stomach_sternum}</label>
                                           {allTasks &&
                                             allTasks?.stomach_behind_the_sternum ===
                                             'yes' ? (
@@ -679,7 +679,7 @@ class Index extends Component {
                                           )}
                                         </Grid>
                                         <Grid xs={4} md={4}>
-                                          <label>{stomach_attack}</label>
+                                          <label className="formviewhead">{stomach_attack}</label>
                                           {allTasks &&
                                             allTasks?.stomach_heart_attack ===
                                             'yes' ? (
@@ -689,7 +689,7 @@ class Index extends Component {
                                           )}
                                         </Grid>
                                         <Grid xs={4} md={4}>
-                                          <label>{stomach_failure}</label>
+                                          <label className="formviewhead">{stomach_failure}</label>
                                           {allTasks &&
                                             allTasks?.stomach_heart_failure ===
                                             'yes' ? (
@@ -706,14 +706,14 @@ class Index extends Component {
                                         </Grid>
                                         <Grid container xs={12} md={12}>
                                           <Grid xs={6} md={6}>
-                                            <label>{rr_systolic}</label>
+                                            <label className="formviewhead">{rr_systolic}</label>
                                             <p>
                                               {allTasks &&
                                                 allTasks?.stomach_rr_systolic}
                                             </p>
                                           </Grid>
                                           <Grid xs={6} md={6}>
-                                            <label>{RR_diastolic}</label>
+                                            <label className="formviewhead">{RR_diastolic}</label>
                                             <p>
                                               {allTasks &&
                                                 allTasks?.stomach_rr_diastolic}
@@ -730,21 +730,21 @@ class Index extends Component {
                                             </Grid>
                                             <Grid container xs={12} md={12}>
                                               <Grid xs={6} sm={4} md={4} lg={4}>
-                                                <label>{blood_sugar}</label>
+                                                <label className="formviewhead">{blood_sugar}</label>
                                                 <p>
                                                   {allTasks &&
                                                     allTasks?.stomach_blood_sugar}
                                                 </p>
                                               </Grid>
                                               <Grid xs={6} sm={4} md={3} lg={4}>
-                                                <label>{Hba1c}</label>
+                                                <label className="formviewhead">{Hba1c}</label>
                                                 <p>
                                                   {allTasks &&
                                                     allTasks?.stomach_Hba1c}
                                                 </p>
                                               </Grid>
                                               <Grid xs={6} sm={4} md={5} lg={4}>
-                                                <label>{situation}</label>
+                                                <label className="formviewhead">{situation}</label>
                                                 <p>
                                                   {allTasks &&
                                                     allTasks?.stomach_situation &&
@@ -768,7 +768,7 @@ class Index extends Component {
                                         )}
                                       <Grid>
                                         <Grid className="sickAllMngSec">
-                                          <label>{stomach_periodically}</label>
+                                          <label className="formviewhead">{stomach_periodically}</label>
                                           {allTasks &&
                                             allTasks?.stomach_continuously_or_periodically ===
                                             'yes' ? (
@@ -781,7 +781,7 @@ class Index extends Component {
                                           <h3>{body_temp}</h3>
                                         </Grid>
                                         <Grid>
-                                          <label>{stomach_temp}</label>
+                                          <label className="formviewhead">{stomach_temp}</label>
                                         </Grid>
                                         <p>
                                           {allTasks &&
@@ -789,7 +789,7 @@ class Index extends Component {
                                         </p>
                                         <Grid>
                                           <Grid className="sickAllMngSec">
-                                            <label>
+                                            <label className="formviewhead">
                                               {stomach_take_painkillers}
                                             </label>
                                           </Grid>
@@ -802,7 +802,7 @@ class Index extends Component {
                                           )}
                                         </Grid>
                                         <Grid className="sickAllMngSec">
-                                          <label>{stomach_intensity}</label>
+                                          <label className="formviewhead">{stomach_intensity}</label>
                                           <p>
                                             {allTasks &&
                                               allTasks?.stomach_pain_intensity}
@@ -810,7 +810,7 @@ class Index extends Component {
                                         </Grid>
                                         <Grid>
                                           <Grid className="sickAllMngSec">
-                                            <label>
+                                            <label className="formviewhead">
                                               {stomach_undergoing_treatment}
                                             </label>
                                           </Grid>
@@ -834,7 +834,7 @@ class Index extends Component {
                                   <Grid className="allHeadSection">
                                     <Grid>
                                       <Grid className="sickAllMngSec">
-                                        <label>{diarrhea_symptoms_begin}</label>
+                                        <label className="formviewhead">{diarrhea_symptoms_begin}</label>
                                       </Grid>
                                       <p>
                                         {getDate(
@@ -848,7 +848,7 @@ class Index extends Component {
                                       </p>
                                     </Grid>
                                     <Grid className="sickAllMngSec">
-                                      <label>{diarrhea_vomiting}</label>
+                                      <label className="formviewhead">{diarrhea_vomiting}</label>
 
                                       {allTasks &&
                                         allTasks?.diarrhea_suffer_from_vomiting ===
@@ -863,14 +863,14 @@ class Index extends Component {
                                         <h3>{body_temp}</h3>
                                       </Grid>
                                       <Grid>
-                                        <label>{diarrhea_body_temp}</label>
+                                        <label className="formviewhead">{diarrhea_body_temp}</label>
                                       </Grid>
                                       <p>
                                         {allTasks &&
                                           allTasks?.diarrhea_body_temp}
                                       </p>
                                       <Grid className="sickAllMngSec">
-                                        <label>{diarrhea_suffer_symtoms}</label>
+                                        <label className="formviewHead">{diarrhea_suffer_symtoms}</label>
 
                                         {allTasks &&
                                           allTasks?.diarrhea_envi_suffer_symtoms ===
@@ -881,7 +881,7 @@ class Index extends Component {
                                         )}
                                       </Grid>
                                       <Grid className="sickAllMngSec">
-                                        <label>{diarrhea_liquids}</label>
+                                        <label className="formviewhead">{diarrhea_liquids}</label>
 
                                         {allTasks &&
                                           allTasks?.diarrhea_liquids_with_you ===
@@ -903,7 +903,7 @@ class Index extends Component {
                                   <Grid className="allHeadSection">
                                     <Grid>
                                       <Grid className="sickAllMngSec">
-                                        <label>{fever_symptoms_begin}</label>
+                                        <label className="formviewhead">{fever_symptoms_begin}</label>
                                       </Grid>
                                       <p>
                                         {getDate(
@@ -921,14 +921,14 @@ class Index extends Component {
                                     </Grid>
                                     <Grid container xs={12} md={12}>
                                       <Grid xs={6} md={6}>
-                                        <label>{fever_top_body_temp}</label>
+                                        <label className="formviewhead">{fever_top_body_temp}</label>
                                         <p>
                                           {allTasks &&
                                             allTasks?.fever_top_body_temp}
                                         </p>
                                       </Grid>
                                       <Grid xs={6} md={6}>
-                                        <label>{fever_low_body_temp}</label>
+                                        <label className="formviewhead">{fever_low_body_temp}</label>
                                         <p>
                                           {allTasks &&
                                             allTasks?.fever_low_body_temp}
@@ -938,7 +938,7 @@ class Index extends Component {
 
                                     <Grid>
                                       <Grid className="sickAllMngSec">
-                                        <label>{fever_pain_intensity}</label>
+                                        <label className="formviewhead">{fever_pain_intensity}</label>
                                       </Grid>
                                       <p>
                                         {allTasks &&
@@ -955,7 +955,7 @@ class Index extends Component {
 
                                           <Grid container xs={12} md={12}>
                                             <Grid xs={6} md={6}>
-                                              <label>{fever_cold}</label>
+                                              <label className="formviewhead">{fever_cold}</label>
                                               {allTasks &&
                                                 allTasks?.fever_cold === true ? (
                                                 <p>{yes}</p>
@@ -964,7 +964,7 @@ class Index extends Component {
                                               )}
                                             </Grid>
                                             <Grid xs={6} md={6}>
-                                              <label>{fever_hoarseness}</label>
+                                              <label className="formviewhead">{fever_hoarseness}</label>
 
                                               {allTasks &&
                                                 allTasks?.fever_hoarseness ===
@@ -979,7 +979,7 @@ class Index extends Component {
                                       )}
                                     <Grid>
                                       <Grid className="sickAllMngSec">
-                                        <label>{fever_sputum}</label>
+                                        <label className="formviewhead">{fever_sputum}</label>
                                       </Grid>
                                       <p
                                         dangerouslySetInnerHTML={{
@@ -999,7 +999,7 @@ class Index extends Component {
                                   <Grid className="allHeadSection">
                                     <Grid>
                                       <Grid className="sickAllMngSec">
-                                        <label>{back_symptoms_begin}</label>
+                                        <label className="formviewhead">{back_symptoms_begin}</label>
                                       </Grid>
                                       <p>
                                         {getDate(
@@ -1014,7 +1014,7 @@ class Index extends Component {
                                     </Grid>
                                     <Grid>
                                       <Grid className="sickAllMngSec">
-                                        <label>{back_injured}</label>
+                                        <label className="formviewhead">{back_injured}</label>
                                       </Grid>
                                       {allTasks &&
                                         allTasks?.back_pain_been_injured ===
@@ -1025,7 +1025,7 @@ class Index extends Component {
                                       )}
                                     </Grid>
                                     <Grid className="sickAllMngSec">
-                                      <label>{back_strained}</label>
+                                      <label className="formviewhead">{back_strained}</label>
 
                                       {allTasks &&
                                         allTasks?.back_pain_physically_strained ===
@@ -1036,7 +1036,7 @@ class Index extends Component {
                                       )}
                                     </Grid>
                                     <Grid className="sickAllMngSec">
-                                      <label>{back_depression}</label>
+                                      <label className="formviewhead">{back_depression}</label>
 
                                       {allTasks &&
                                         allTasks?.back_pain_stress_depression ===
@@ -1055,14 +1055,14 @@ class Index extends Component {
                                           </Grid>
                                           <Grid container xs={12} md={12}>
                                             <Grid xs={6} sm={4} md={4} lg={4}>
-                                              <label>{blood_sugar}</label>
+                                              <label className="formviewhead">{blood_sugar}</label>
                                               <p>
                                                 {allTasks &&
                                                   allTasks?.back_pain_blood_sugar}
                                               </p>
                                             </Grid>
                                             <Grid xs={6} sm={4} md={3} lg={4}>
-                                              <label>{Hba1c}</label>
+                                              <label className="formviewhead">{Hba1c}</label>
                                               <p>
                                                 {allTasks &&
                                                   allTasks?.back_pain_Hba1c}
@@ -1070,7 +1070,7 @@ class Index extends Component {
                                             </Grid>
 
                                             <Grid xs={6} sm={4} md={5} lg={4}>
-                                              <label>{situation}</label>
+                                              <label className="formviewhead">{situation}</label>
                                               <p>
                                                 {allTasks &&
                                                   allTasks?.back_pain_situation &&
@@ -1092,7 +1092,7 @@ class Index extends Component {
                                             </Grid>
                                           </Grid>
                                           <Grid className="sickAllMngSec">
-                                            <label>{back_attack}</label>
+                                            <label className="formviewhead">{back_attack}</label>
                                             {allTasks &&
                                               allTasks?.back_pain_heart_attack ===
                                               'yes' ? (
@@ -1102,7 +1102,7 @@ class Index extends Component {
                                             )}
                                           </Grid>
                                           <Grid className="sickAllMngSec">
-                                            <label>{back_failure}</label>
+                                            <label className="formviewhead">{back_failure}</label>
                                             {allTasks &&
                                               allTasks?.back_pain_heart_failure ===
                                               'yes' ? (
@@ -1117,14 +1117,14 @@ class Index extends Component {
                                             </Grid>
                                             <Grid container xs={12} md={12}>
                                               <Grid xs={6} md={6}>
-                                                <label>{rr_systolic}</label>
+                                                <label className="formviewhead">{rr_systolic}</label>
                                                 <p>
                                                   {allTasks &&
                                                     allTasks?.back_pain_rr_systolic}
                                                 </p>
                                               </Grid>
                                               <Grid xs={6} md={6}>
-                                                <label>{RR_diastolic}</label>
+                                                <label className="formviewhead">{RR_diastolic}</label>
                                                 <p>
                                                   {allTasks &&
                                                     allTasks?.back_pain_rr_diastolic}
@@ -1145,7 +1145,7 @@ class Index extends Component {
                                   <Grid className="allHeadSection">
                                     <Grid>
                                       <Grid className="sickAllMngSec">
-                                        <label>{cough_symptoms_begin}</label>
+                                        <label className="formviewhead">{cough_symptoms_begin}</label>
                                       </Grid>
                                       <p>
                                         {getDate(
@@ -1163,7 +1163,7 @@ class Index extends Component {
                                     </Grid>
                                     <Grid>
                                       {/* <Grid>
-                                        <label>{body_temp}</label>
+                                        <label className="formviewhead">{body_temp}</label>
                                       </Grid> */}
                                       <p>
                                         {allTasks && allTasks?.cough_body_temp}
@@ -1171,7 +1171,7 @@ class Index extends Component {
                                     </Grid>
                                     <Grid>
                                       <Grid className="sickAllMngSec">
-                                        <label>{cough_suffer_symtoms}</label>
+                                        <label className="formviewhead">{cough_suffer_symtoms}</label>
                                       </Grid>
                                       {allTasks &&
                                         allTasks?.cough_envi_suffer_symtoms ===
@@ -1183,7 +1183,7 @@ class Index extends Component {
                                     </Grid>
                                     <Grid>
                                       <Grid className="sickAllMngSec">
-                                        <label>{cough_allergies}</label>
+                                        <label className="formviewhead">{cough_allergies}</label>
                                       </Grid>
                                       <p
                                         dangerouslySetInnerHTML={{
@@ -1204,7 +1204,7 @@ class Index extends Component {
                                   <Grid className="allHeadSection">
                                     <Grid>
                                       <Grid className="sickAllMngSec">
-                                        <label>
+                                        <label className="formviewhead">
                                           {depressed_symptoms_begin}
                                         </label>
                                       </Grid>
@@ -1221,7 +1221,7 @@ class Index extends Component {
                                     </Grid>
                                     <Grid>
                                       <Grid className="sickAllMngSec">
-                                        <label>{pain_level}</label>
+                                        <label className="formviewhead">{pain_level}</label>
                                       </Grid>
                                       <p>
                                         {allTasks &&
@@ -1236,7 +1236,7 @@ class Index extends Component {
                                         lg={3}
                                         className="sickAllMngSec"
                                       >
-                                        <label>{depressed_do_you_sleep}</label>
+                                        <label className="formviewhead">{depressed_do_you_sleep}</label>
 
                                         {allTasks &&
                                           allTasks?.depressed_do_you_sleep ===
@@ -1253,7 +1253,7 @@ class Index extends Component {
                                         lg={5}
                                         className="sickAllMngSec"
                                       >
-                                        <label>
+                                        <label className="formviewhead">
                                           {depressed_suicidal_thoughts}
                                         </label>
 
@@ -1272,7 +1272,7 @@ class Index extends Component {
                                         lg={4}
                                         className="sickAllMngSec"
                                       >
-                                        <label>{depressed_hurt_yourself}</label>
+                                        <label className="formviewhead">{depressed_hurt_yourself}</label>
 
                                         {allTasks &&
                                           allTasks?.depressed_hurt_yourself ===
@@ -1298,14 +1298,14 @@ class Index extends Component {
                                       </Grid>
                                       <Grid container xs={12} md={12}>
                                         <Grid xs={6} md={6}>
-                                          <label>{rr_systolic}</label>
+                                          <label className="formviewhead">{rr_systolic}</label>
                                           <p>
                                             {allTasks &&
                                               allTasks?.cardiac_rr_systolic}
                                           </p>
                                         </Grid>
                                         <Grid xs={6} md={6}>
-                                          <label>{RR_diastolic}</label>
+                                          <label className="formviewhead">{RR_diastolic}</label>
                                           <p>
                                             {allTasks &&
                                               allTasks?.cardiac_rr_diastolic}
@@ -1320,7 +1320,7 @@ class Index extends Component {
                                           md={4}
                                           className="sickAllMngSec"
                                         >
-                                          <label>{cardiac_heart_attack}</label>
+                                          <label className="formviewhead">{cardiac_heart_attack}</label>
 
                                           {allTasks &&
                                             allTasks?.cardiac_heart_attack ===
@@ -1336,7 +1336,7 @@ class Index extends Component {
                                           md={4}
                                           className="sickAllMngSec"
                                         >
-                                          <label>{cardiac_heart_failure}</label>
+                                          <label className="formviewhead">{cardiac_heart_failure}</label>
 
                                           {allTasks &&
                                             allTasks?.cardiac_heart_failure ===
@@ -1352,7 +1352,7 @@ class Index extends Component {
                                           md={4}
                                           className="sickAllMngSec"
                                         >
-                                          <label>{cardiac_dizziness}</label>
+                                          <label className="formviewhead">{cardiac_dizziness}</label>
                                           {allTasks &&
                                             allTasks?.cardiac_have_dizziness ===
                                             'yes' ? (
@@ -1367,7 +1367,7 @@ class Index extends Component {
                                           md={4}
                                           className="sickAllMngSec"
                                         >
-                                          <label>{cardiac_shoulder_pain}</label>
+                                          <label className="formviewhead">{cardiac_shoulder_pain}</label>
 
                                           {allTasks &&
                                             allTasks?.cardiac_have_shoulder_pain ===
@@ -1391,13 +1391,13 @@ class Index extends Component {
               )}
               {this.state.sectionValue == 2 && (
                 <Grid className="msgSectionCss">
-                  <label>{welcome}</label>
+                  <label className="formviewhead">{welcome}</label>
                   <p>{activate_very_soon}</p>
                 </Grid>
               )}
               {this.state.sectionValue == 3 && (
                 <Grid className="msgSectionCss">
-                  <label>{Oops}</label>
+                  <label className="formviewhead">{Oops}</label>
                   <p>{link_has_been_expired}</p>
                 </Grid>
               )}
@@ -1408,7 +1408,7 @@ class Index extends Component {
               )}
               {this.state.sectionValue == 5 && (
                 <Grid className="msgSectionCss">
-                  <label>{Oops}</label>
+                  <label className="formviewhead">{Oops}</label>
                   <p>
                     {check_your_meeting_key_or_link_again}
                   </p>
@@ -1416,7 +1416,7 @@ class Index extends Component {
               )}
               {this.state.sectionValue == 6 && (
                 <Grid className="msgSectionCss">
-                  <label>{Oops}</label>
+                  <label className="formviewhead">{Oops}</label>
                   <p>
                     {meeting_time_out}
                   </p>

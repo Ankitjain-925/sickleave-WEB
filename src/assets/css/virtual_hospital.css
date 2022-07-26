@@ -10006,6 +10006,9 @@ button.crdoLghtBlu2 {
   border-bottom: none;
 }
 /* Added by Ankita */
+label.formviewhead{
+  font-weight: 700 !important;
+}
 @media screen and (min-width: 640px) and (max-width: 1024) {
   .archive-sick .presOpinionIner td.pivoted {
     padding: 8px 5px !important;
