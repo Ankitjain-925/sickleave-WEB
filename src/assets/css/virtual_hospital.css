@@ -14851,3 +14851,12 @@ label.errMsgStyleSecPart {
     position: absolute;
   }
 }
+.allSickVideoSec label {
+  font-weight: 700;
+  color: #404646;
+  margin-bottom: 0px;
+}
+
+.darkTheme .allSickVideoSec label, .darkTheme .allSickVideoSec h3{
+  color:#00abaf!important;
+}
