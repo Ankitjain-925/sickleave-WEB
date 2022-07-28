@@ -411,7 +411,7 @@ export const handleEvalSubmit = (current, value) => {
     last_name: current.props.stateLoginValueAim?.user?.last_name,
     alies_id: current.props.stateLoginValueAim?.user?.alies_id,
     profile_id: current.props.stateLoginValueAim?.user?.profile_id,
-    user_id: current.props.stateLoginValueAim?.user.user?._id,
+    user_id: current.props.stateLoginValueAim?.user?._id,
     // image: current.props.stateLoginValueAim?.user.user?.image,
   };
   data.patient = patient;
