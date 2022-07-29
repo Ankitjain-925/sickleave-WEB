@@ -12,6 +12,8 @@ import * as PhillipinesC from 'Screens/Components/insuranceCompanies/phillippine
 import * as SwitzerlandC from 'Screens/Components/insuranceCompanies/switzerland.json';
 import * as AmericaC from 'Screens/Components/insuranceCompanies/us.json';
 import * as ThailandC from 'Screens/Components/insuranceCompanies/thailand.json';
+import contry from "Screens/Components/countryBucket/countries.json";
+
 var datas = [];
   // fOR update the flag of mobile
 export const updateFLAG = (str) => {
@@ -107,7 +109,8 @@ export const Upsaterhesus = (current, rhesusfromD) => {
                   insuranceDetails: { insurance: '', insurance_number: '', insurance_type: '' }
               })
               datas = current.state.UpDataDetails.insurance;
-
+              var forUpdate = {value: true, token: user_token, user: response.data.data}
+              current.props.LoginReducerAim(response.data.data?.email, '', user_token, () => {}, forUpdate);
               current.setState({ loaderImage: false });
           }).catch((error) => {
               current.setState({ loaderImage: false });
@@ -324,6 +327,10 @@ export const saveUserData = (current) => {
     current.setState({ insuranceDetails: { insurance: '', insurance_number: '', insurance_country: '' } })
     var parent_id = current.state.UpDataDetails.parent_id ? current.state.UpDataDetails.parent_id : '0';
 
+    var tocheckWith = (current.state.UpDataDetails?.citizen_country && current.state.UpDataDetails?.citizen_country !=='') ? current.state.UpDataDetails?.citizen_country  :  current?.state?.flag_mobile;
+   console.log('tocheckWith', tocheckWith)
+    var getBucket = contry && contry.length > 0 && contry.filter((value, key) =>  value.code === tocheckWith?.value ?  tocheckWith?.value : tocheckWith);
+
     axios.put(sitedata.data.path + '/UserProfile/Users/update', {
         type: 'patient',
         pin: current.state.UpDataDetails.pin,
@@ -358,6 +365,8 @@ export const saveUserData = (current) => {
         pastal_code: current.state.UpDataDetails.pastal_code,
         blood_group: current.state.UpDataDetails.blood_group,
         rhesus: current.state.UpDataDetails.rhesus,
+        bucket: getBucket[0].bucket,
+        country_code:current.state.UpDataDetails?.citizen_country?.value || current?.state?.flag_mobile
     }, commonHeader(user_token)).then((responce) => {
         if (responce.data.hassuccessed) {
             current.setState({ editInsuranceOpen: false, addInsuranceOpen: false, succUpdate: true, insuranceDetails: { insurance: '', insurance_number: '', insurance_country: '' } })

@@ -2,14 +2,15 @@ import {
   GET_LOGIN_REQUEST,
   GET_LOGIN_SUCCESS,
   GET_LOGIN_ERROR,
-} from 'actiontypes';
-import sitedata from 'sitedata.js';
-import axios from 'axios';
-import { CometChat } from '@cometchat-pro/chat';
-import { COMETCHAT_CONSTANTS } from '../Components//CometChat/consts';
-import * as Docarray from './doctorarray';
-import { commonNoTokentHeader } from 'component/CommonHeader/index';
-const path = sitedata.data.path + '/UserProfile';
+} from "actiontypes";
+import sitedata from "sitedata.js";
+import axios from "axios";
+import { CometChat } from "@cometchat-pro/chat";
+import { COMETCHAT_CONSTANTS } from "../Components//CometChat/consts";
+import * as Docarray from "./doctorarray";
+import { commonNoTokentHeader } from "component/CommonHeader/index";
+const path = sitedata.data.path + "/UserProfile";
+const path1 = sitedata.data.path + "/User";
 
 export const createUser = ({ uid, name }) => {
   let user = new CometChat.User(uid);
@@ -20,35 +21,38 @@ export const createUser = ({ uid, name }) => {
 export const cometLogin = async (uid) => {
   return CometChat.login(uid, COMETCHAT_CONSTANTS.AUTH_KEY);
 };
-export const updateCometUser = async (data) => {
+export const updateCometUser = async (data)=>{
   axios
-    .post(sitedata.data.path + '/cometUserList', {
-      uid: data.uid,
-      name: data.name,
-      avatar: data.avatar,
-      status: data.status,
-      role: data.role,
-      lastActiveAt: data.lastActiveAt,
-      conversationId: data.conversationId,
-    })
-    .then((response) => {})
-    .catch((err) => {});
-};
+  .post(sitedata.data.path + "/cometUserList",
+  {
+    "uid": data.uid,
+    "name": data.name,
+    "avatar": data.avatar,
+    "status": data.status,
+    "role": data.role,
+    "lastActiveAt": data.lastActiveAt,
+    "conversationId": data.conversationId
+   })
+  .then((response) => {})
+  .catch((err)=>{})
+}
 
-export const LoginReducerAim = (
-  email,
-  password,
-  logintoken,
-  SendCallback = () => {}
-) => {
-  console.log('1');
+export const LoginReducerAim = (email, password, logintoken, SendCallback = () => {}, forUpdate) => {
+  
   return (dispatch) => {
+    if(forUpdate?.value){
+      let tmp = {
+        token: forUpdate.token,
+        user: forUpdate.user,
+      };
+      dispatch({ type: GET_LOGIN_SUCCESS, payload: tmp });
+      SendCallback();
+    }
+    else{
     dispatch({ type: GET_LOGIN_REQUEST });
     axios
-      .post(
-        path + '/UserLogin',
-        { email, password, logintoken },
-        commonNoTokentHeader()
+      .post(path + "/UserLogin", { email, password, logintoken },
+      commonNoTokentHeader()
       )
       .then((response) => {
         let tmp;
@@ -63,17 +67,9 @@ export const LoginReducerAim = (
           dispatch({ type: GET_LOGIN_SUCCESS, payload: tmp });
           SendCallback();
         } else if (response.data.status === 450) {
-          console.log('resp 450', response.data);
           tmp = {
             token: response.data.status,
-            user_type: '',
-          };
-          dispatch({ type: GET_LOGIN_SUCCESS, payload: tmp });
-          SendCallback();
-        } else if (response.data?.user?.type !== 'patient') {
-          let tmp = {
-            token: response.data.token,
-            permission: false,
+            user_type: "",
           };
           dispatch({ type: GET_LOGIN_SUCCESS, payload: tmp });
           SendCallback();
@@ -89,9 +85,6 @@ export const LoginReducerAim = (
               response.data.token
             )
           );
-          // dispatch({ type: GET_LOGIN_SUCCESS, payload: tmp });
-          // SendCallback();
-          console.log('CometChat.login');
           CometChat.login(
             response.data.user.profile_id,
             COMETCHAT_CONSTANTS.AUTH_KEY
@@ -103,7 +96,7 @@ export const LoginReducerAim = (
                 SendCallback();
               },
               (error) => {
-                if (error && error.code === 'ERR_UID_NOT_FOUND') {
+                if (error && error.code == "ERR_UID_NOT_FOUND") {
                   createUser({
                     uid: response.data.user.profile_id,
                     name: `${response.data.user.first_name} ${response.data.user.last_name}`,
@@ -119,36 +112,37 @@ export const LoginReducerAim = (
                           SendCallback();
                         },
                         (error) => {
-                          let tmp = 'error';
+                          let tmp = "error";
                           dispatch({ type: GET_LOGIN_ERROR, payload: tmp });
                           SendCallback();
                         }
                       );
                     },
                     (error) => {
-                      let tmp = 'error';
+                      let tmp = "error";
                       dispatch({ type: GET_LOGIN_ERROR, payload: tmp });
                       SendCallback();
                     }
                   );
                 } else {
-                  let tmp = 'error';
+                  let tmp = "error";
                   dispatch({ type: GET_LOGIN_ERROR, payload: tmp });
                   SendCallback();
                 }
               }
             )
             .catch((error) => {
-              let tmp = 'error';
+              let tmp = "error";
               dispatch({ type: GET_LOGIN_ERROR, payload: tmp });
               SendCallback();
             });
         }
       })
       .catch((error) => {
-        let tmp = 'error';
+        let tmp = "error";
         dispatch({ type: GET_LOGIN_ERROR, payload: tmp });
         SendCallback();
       });
+    }
   };
 };
