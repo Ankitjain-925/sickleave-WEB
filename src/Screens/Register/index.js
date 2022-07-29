@@ -1,63 +1,59 @@
-import React, { Component } from "react";
-import Grid from "@material-ui/core/Grid";
-import { LanguageFetchReducer } from "Screens/actions";
-import { Redirect, Route } from "react-router-dom";
-import axios from "axios";
-import { connect } from "react-redux";
-import { LoginReducerAim } from "Screens/Login/actions";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import sitedata from "sitedata";
-import ReactFlagsSelect from "react-flags-select";
-import "react-flags-select/css/react-flags-select.css";
-import "react-flags-select/scss/react-flags-select.scss";
-import Loader from "Screens/Components/Loader/index";
-import { Settings } from "Screens/Login/setting";
-import Toggle from "react-toggle";
-import "assets/css/style_log.css";
+import React, { Component } from 'react';
+import Grid from '@material-ui/core/Grid';
+import { LanguageFetchReducer } from 'Screens/actions';
+import { Redirect } from 'react-router-dom';
+import axios from 'axios';
+import { connect } from 'react-redux';
+import { LoginReducerAim } from 'Screens/Login/actions';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import sitedata from 'sitedata';
+import ReactFlagsSelect from 'react-flags-select';
+import 'react-flags-select/css/react-flags-select.css';
+import 'react-flags-select/scss/react-flags-select.scss';
+import Loader from 'Screens/Components/Loader/index';
+import { Settings } from 'Screens/Login/setting';
+import Toggle from 'react-toggle';
+import 'assets/css/style_log.css';
 import {
   NavLink,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-} from "reactstrap";
-import ReCAPTCHA from "react-google-recaptcha";
-import {
-  getLanguage
-} from "translations/index"
-import contry from "Screens/Components/countryBucket/countries.json";
-import {updateCometUser} from "Screens/Components/CommonApi/index";
-import {commonCometHeader,} from "component/CommonHeader/index"
+} from 'reactstrap';
+import ReCAPTCHA from 'react-google-recaptcha';
+import { getLanguage } from 'translations/index';
+import contry from 'Screens/Components/countryBucket/countries.json';
+import { updateCometUser } from 'Screens/Components/CommonApi/index';
+import { commonCometHeader } from 'component/CommonHeader/index';
 //Values for the validate Password
 var letter = /([a-zA-Z])+([ -~])*/,
   number = /\d+/,
   specialchar = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-  
 class Index extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       hidden: true,
-      password: "",
-      dropDownValue: "Select",
-      inputEmail: "",
-      inputPass: "",
-      selectedOption: "",
+      password: '',
+      dropDownValue: 'Select',
+      dropDownValue1: 'Professional',
+      inputEmail: '',
+      inputPass: '',
+      selectedOption: '',
       userDetails: {},
       successfull: false,
       loaderImage: false,
-      current_select: "",
-      regisError1: "",
-      regisError2: "",
-      regisError3: "",
-      regisError: "",
-      regisError0: "",
-      registerMessage: "",
-      error_msg: "",
+      current_select: '',
+      regisError1: '',
+      regisError2: '',
+      regisError3: '',
+      regisError: '',
+      regisError0: '',
+      registerMessage: '',
+      error_msg: '',
       uploadLicence: {},
-      hidden: true,
       hidden_confirm: true,
       fileupods: false,
       FilesUp: [],
@@ -68,51 +64,68 @@ class Index extends Component {
         this.props.settings.setting &&
         this.props.settings.setting.mode
           ? this.props.settings.setting.mode
-          : "normal",
+          : 'normal',
+    };
+  }
+
+    // for activate marketing user
+    activatenewsLetter = (response) => {
+      var data = {
+        first_name: response.data.data.first_name,
+        last_name: response.data.data.last_name,
+        email: response.data.data.email,
+      };
+      axios
+        .post(
+          sitedata.data.path + '/UserProfile/marketing_user',
+          data,
+          commonHeader(response.data.data.usertoken)
+        )
+        .then((responce) => {})
+        .catch(() => {});
     };
 
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.toggleShow = this.toggleShow.bind(this);
-    this.changeValue = this.changeValue.bind(this);
-  }
-
-  handlePasswordChange(e) {
+  //On change password
+  handlePasswordChange = (e) => {
     this.setState({ password: e.target.value });
-  }
-
+  };
   //For validate the email is correct or not
   validateEmail = (elementValue) => {
     var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     return emailPattern.test(elementValue);
   };
-
   //For login link
   login = () => {
-    this.props.history.push("/");
+    this.props.history.push('/');
   };
-
-  onChangeRec= (value) =>{
-    this.setState({recaptcha: value})
-  }
-
+  //on recaptcha click
+  onChangeRec = (value) => {
+    this.setState({ recaptcha: value });
+  };
   //For save data of user
   saveUserData() {
-    
+    let translate = getLanguage(this.props.stateLanguageType);
+    let {
+      plz_accept_term_condition,
+      fillreptcha,
+      plz_fill_mob_number,
+      email_not_valid,
+      pswd_not_valid,
+      plz_fill_fullname_user,
+    } = translate;
     this.setState({
-      regisError: "",
-      regisError1: "",
-      regisError2: "",
-      regisError3: "",
-      regisError0: "",
-      error_msg: "",
+      regisError: '',
+      regisError1: '',
+      regisError2: '',
+      regisError3: '',
+      regisError0: '',
+      error_msg: '',
     });
-    if(this.state.recaptcha)
-    {
     if (
       this.state.userDetails.first_name &&
       this.state.userDetails.last_name &&
-      this.state.userDetails.first_name !== "" &&
-      this.state.userDetails.last_name !== ""
+      this.state.userDetails.first_name !== '' &&
+      this.state.userDetails.last_name !== ''
     ) {
       if (this.validateEmail(this.state.userDetails.email)) {
         if (
@@ -124,180 +137,98 @@ class Index extends Component {
         ) {
           if (
             this.state.userDetails.mobile &&
-            this.state.userDetails.mobile !== ""
+            this.state.userDetails.mobile !== ''
           ) {
-            if (this.state.selectedOption !== "") {
-              if (this.state.userDetails.terms_and_conditions) {
-                if (this.state.selectedOption == "patient") {
-                  this.setState({ loaderImage: true });
-                  if (this.state.userDetails.country_code) {
-                    var country_code = this.state.userDetails.country_code;
-                  } else {
-                    var country_code = "de";
-                  }
-                  var getBucket =
-                    contry &&
-                    contry.length > 0 &&
-                    contry.filter(
-                      (value, key) => value.code === country_code.toUpperCase()
-                    );
-                  axios
-                    .post(sitedata.data.path + "/UserProfile/AddUser/", {
-                      type: this.state.selectedOption,
-                      email: this.state.userDetails.email,
-                      password: this.state.userDetails.password,
-                      country_code: country_code,
-                      mobile: this.state.userDetails.mobile,
-                      is2fa: this.state.userDetails.is2fa,
-                      lan: this.props.stateLanguageType,
-                      first_name: this.state.userDetails.first_name,
-                      last_name: this.state.userDetails.last_name,
-                      bucket: getBucket[0].bucket,
-                      token: this.state.recaptcha,
-                      Aimedis_health_newletter:
+            if (this.state.userDetails.terms_and_conditions) {
+              if (this.state.recaptcha) {
+                this.setState({ loaderImage: true });
+                if (this.state.userDetails.country_code) {
+                  var country_code = this.state.userDetails.country_code;
+                } else {
+                  var country_code = 'de';
+                }
+
+                var getBucket =
+                  contry &&
+                  contry.length > 0 &&
+                  contry.filter(
+                    (value, key) => value.code === country_code.toUpperCase()
+                  );
+                axios
+                  .post(sitedata.data.path + '/UserProfile/AddUser/', {
+                    type: 'patient',
+                    email: this.state.userDetails.email,
+                    password: this.state.userDetails.password,
+                    country_code: country_code,
+                    mobile: this.state.userDetails.mobile,
+                    is2fa: this.state.userDetails.is2fa,
+                    lan: this.props.stateLanguageType,
+                    first_name: this.state.userDetails.first_name,
+                    last_name: this.state.userDetails.last_name,
+                    bucket: getBucket[0].bucket,
+                    token: this.state.recaptcha,
+                    Aimedis_health_newletter:
                       this.state.userDetails.Aimedis_health_newletter,
                     newsletter_last_update_date:
                       this.state.userDetails.newsletter_last_update_date,
-                    })
-                    .then((responce) => {
-                      this.setState({ loaderImage: false });
-                      if (responce.data.hassuccessed === true) {
-                        axios
-                          .post(
-                            "https://api-eu.cometchat.io/v2.0/users",
-                            {
-                              uid: responce.data.data.profile_id,
-                              name:
-                                responce.data.data.first_name +
-                                " " +
-                                responce.data.data.last_name,
-                            },
-                            commonCometHeader()
-                          )
-                          .then((res) => {
-                            updateCometUser({
-                              uid: responce.data.data.profile_id.toLowerCase(),
-                              name:
-                                responce.data.data.first_name +
-                                " " +
-                                responce.data.data.last_name,
-                                role: "default"
-                            })
-                          });
-
-                        this.setState({ successfull: true });
-                        this.setState({
-                          registerMessage:
-                            "You are registered successfully, Please check your email for verification.",
-                        });
-                      } else {
-                        this.setState({ successfull: false });
-                        this.setState({ error_msg: responce.data.message });
+                  })
+                  .then((responce) => {
+                    this.setState({ loaderImage: false });
+                    if (responce.data.hassuccessed === true) {
+                      if (responce.data?.data?.Aimedis_health_newletter) {
+                        this.activatenewsLetter(responce);
                       }
-                    })
-                    .catch((err) => {});
-                }
-                if (
-                  this.state.selectedOption == "pharmacy" ||
-                  this.state.selectedOption == "nurse" ||
-                  this.state.selectedOption == "doctor"
-                ) {
-                  this.setState({ loaderImage: true });
-                  if (this.state.userDetails.country_code) {
-                    var country_code = this.state.userDetails.country_code;
-                  } else {
-                    var country_code = "de";
-                  }
-                  var getBucket =
-                    contry &&
-                    contry.length > 0 &&
-                    contry.filter(
-                      (value, key) => value.code === country_code.toUpperCase()
-                    );
-                  if (this.state.selectedOption == "doctor" || this.state.selectedOption == "nurse" || this.state.selectedOption == "pharmacy") {
-                    this.saveDoctor(country_code);
-                  } else {
-                    axios
-                      .post(sitedata.data.path + "/UserProfile/AddUser/", {
-                        type: this.state.selectedOption,
-                        email: this.state.userDetails.email,
-                        password: this.state.userDetails.password,
-                        country_code: country_code,
-                        mobile: this.state.userDetails.mobile,
-                        is2fa: this.state.userDetails.is2fa,
-                        lan: this.props.stateLanguageType,
-                        first_name: this.state.userDetails.first_name,
-                        last_name: this.state.userDetails.last_name,
-                        bucket: getBucket[0].bucket,
-                        token: this.state.recaptcha,
-                        Aimedis_health_newletter:
-                      this.state.userDetails.Aimedis_health_newletter,
-                    newsletter_last_update_date:
-                      this.state.userDetails.newsletter_last_update_date,
-                      })
-                      .then((responce) => {
-                        this.setState({ loaderImage: false });
-                        if (responce.data.hassuccessed === true) {
-                          if (this.state.selectedOption == "nurse") {
-                            axios
-                              .post(
-                                "https://api-eu.cometchat.io/v2.0/users",
-                                {
-                                  uid: responce.data.data.profile_id,
-                                  name:
-                                    responce.data.data.first_name +
-                                    " " +
-                                    responce.data.data.last_name,
-                                },
-                                commonCometHeader()
-                              )
-                              .then((res) => {
-                                updateCometUser({
-                                  uid: responce.data.data.profile_id.toLowerCase(),
-                                  name:
-                                    responce.data.data.first_name +
-                                    " " +
-                                    responce.data.data.last_name,
-                                    role: "default"
-                                })
-                              });
-                          }
-
-                          this.setState({ successfull: true });
-                          this.setState({
-                            registerMessage:
-                              "You are registered successfully, Please check your email for verification.",
+                      axios
+                        .post(
+                          'https://api-eu.cometchat.io/v2.0/users',
+                          {
+                            uid: responce.data.data.profile_id,
+                            name:
+                              responce.data.data.first_name +
+                              ' ' +
+                              responce.data.data.last_name,
+                          },
+                          commonCometHeader()
+                        )
+                        .then((res) => {
+                          updateCometUser({
+                            uid: responce.data.data.profile_id.toLowerCase(),
+                            name:
+                              responce.data.data.first_name +
+                              ' ' +
+                              responce.data.data.last_name,
+                            role: 'default',
                           });
-                        } else {
-                          this.setState({ successfull: false });
-                          this.setState({ error_msg: responce.data.message });
-                        }
+                        });
+
+                      this.setState({ successfull: true });
+                      this.setState({
+                        registerMessage:
+                          'You are registered successfully, Please check your email for verification.',
                       });
-                  }
-                }
+                    } else {
+                      this.setState({ successfull: false });
+                      this.setState({ error_msg: responce.data.message });
+                    }
+                  })
+                  .catch((err) => {});
               } else {
-                this.setState({
-                  regisError0: "Please agree to our terms and conditions",
-                });
+                this.setState({ regisError0: fillreptcha });
               }
             } else {
-              this.setState({ regisError0: "Please select user type" });
+              this.setState({ regisError0: plz_accept_term_condition });
             }
           } else {
-            this.setState({ regisError0: "Please fill mobile number" });
+            this.setState({ regisError0: plz_fill_mob_number });
           }
         } else {
-          this.setState({ regisError0: "Password is not valid" });
+          this.setState({ regisError0: pswd_not_valid });
         }
       } else {
-        this.setState({ regisError0: "E-mail is not valid" });
+        this.setState({ regisError0: email_not_valid });
       }
     } else {
-      this.setState({ regisError0: "Please fill the full name of user" });
-    }
-    }
-    else{
-      this.setState({ regisError0: "Please fill the RECAPTCHA" });
+      this.setState({ regisError0: plz_fill_fullname_user });
     }
   }
 
@@ -313,9 +244,9 @@ class Index extends Component {
     } else if (e.target.name === 'Aimedis_health_newletter') {
       state[e.target.name] = e.target.checked === true ? true : false;
       if (e.target.checked === true) {
-        state['newsletter_last_update_date'] = new Date();
+        this.state.userDetails.newsletter_last_update_date = new Date();
       } else {
-        state['newsletter_last_update_date'] = '';
+        this.state.userDetails.newsletter_last_update_date = '';
       }
     } else {
       state[e.target.name] = e.target.value;
@@ -331,33 +262,33 @@ class Index extends Component {
     }, 3000);
     var Preview = [];
     for (var i = 0; i < e.target.files.length; i++) {
-      if (e.target.files[i].name.split(".").pop() === "mp4") {
-        Preview.push(require("assets/images/videoIcon.png"));
+      if (e.target.files[i].name.split('.').pop() === 'mp4') {
+        Preview.push(require('assets/images/videoIcon.png'));
       }
-      if (e.target.files[i].name.split(".").pop() === "pdf") {
-        Preview.push(require("assets/images/pdfimg.png"));
+      if (e.target.files[i].name.split('.').pop() === 'pdf') {
+        Preview.push(require('assets/images/pdfimg.png'));
       } else if (
-        e.target.files[i].name.split(".").pop() === "doc" ||
-        e.target.files[i].name.split(".").pop() === "docx" ||
-        e.target.files[i].name.split(".").pop() === "xml" ||
-        e.target.files[i].name.split(".").pop() === "txt"
+        e.target.files[i].name.split('.').pop() === 'doc' ||
+        e.target.files[i].name.split('.').pop() === 'docx' ||
+        e.target.files[i].name.split('.').pop() === 'xml' ||
+        e.target.files[i].name.split('.').pop() === 'txt'
       ) {
-        Preview.push(require("assets/images/txt1.png"));
+        Preview.push(require('assets/images/txt1.png'));
       } else if (
-        e.target.files[i].name.split(".").pop() === "xls" ||
-        e.target.files[i].name.split(".").pop() === "xlsx" ||
-        e.target.files[i].name.split(".").pop() === "xml"
+        e.target.files[i].name.split('.').pop() === 'xls' ||
+        e.target.files[i].name.split('.').pop() === 'xlsx' ||
+        e.target.files[i].name.split('.').pop() === 'xml'
       ) {
-        Preview.push(require("assets/images/xls1.svg"));
-      } else if (e.target.files[i].name.split(".").pop() === "csv") {
-        Preview.push(require("assets/images/csv1.png"));
+        Preview.push(require('assets/images/xls1.svg'));
+      } else if (e.target.files[i].name.split('.').pop() === 'csv') {
+        Preview.push(require('assets/images/csv1.png'));
       } else if (
-        e.target.files[i].name.split(".").pop() === "dcm" ||
-        e.target.files[i].name.split(".").pop() === "DCM" ||
-        e.target.files[i].name.split(".").pop() === "DICOM" ||
-        e.target.files[i].name.split(".").pop() === "dicom"
+        e.target.files[i].name.split('.').pop() === 'dcm' ||
+        e.target.files[i].name.split('.').pop() === 'DCM' ||
+        e.target.files[i].name.split('.').pop() === 'DICOM' ||
+        e.target.files[i].name.split('.').pop() === 'dicom'
       ) {
-        Preview.push(require("assets/images/dcm1.png"));
+        Preview.push(require('assets/images/dcm1.png'));
       } else {
         Preview.push(URL.createObjectURL(e.target.files[i]));
       }
@@ -375,14 +306,14 @@ class Index extends Component {
     if (this.state.FilesUp && this.state.FilesUp.length > 0) {
       for (var i = 0; i < this.state.FilesUp.length; i++) {
         var file = this.state.FilesUp[i];
-        let fileParts = this.state.FilesUp[i].name.split(".");
+        let fileParts = this.state.FilesUp[i].name.split('.');
         let fileName = fileParts[0];
         let fileType = fileParts[1];
         axios
-          .post(sitedata.data.path + "/aws/sign_s3", {
+          .post(sitedata.data.path + '/aws/sign_s3', {
             fileName: fileName,
             fileType: fileType,
-            folders: "registration/",
+            folders: 'registration/',
             bucket: getBucket[0].bucket,
           })
           .then((response) => {
@@ -391,7 +322,7 @@ class Index extends Component {
                 uploadLicence: {
                   url:
                     response.data.data.returnData.url +
-                    "&bucket=" +
+                    '&bucket=' +
                     getBucket[0].bucket,
                 },
               },
@@ -402,12 +333,12 @@ class Index extends Component {
 
             var returnData = response.data.data.returnData;
             var signedRequest = returnData.signedRequest;
-            var url = returnData.url;
-            if (fileType === "pdf") {
-              fileType = "application/pdf";
+            // var url = returnData.url;
+            if (fileType === 'pdf') {
+              fileType = 'application/pdf';
             }
             // Put the fileType in the headers for the upload
-            var options = { headers: { "Content-Type": fileType } };
+            var options = { headers: { 'Content-Type': fileType } };
             axios
               .put(signedRequest, file, options)
               .then((result) => {
@@ -422,9 +353,10 @@ class Index extends Component {
     }
   };
 
+  //final add the user
   getUpdate = (country_code, getBucket) => {
     axios
-      .post(sitedata.data.path + "/UserProfile/AddUser/", {
+      .post(sitedata.data.path + '/UserProfile/AddUser/', {
         type: this.state.selectedOption,
         email: this.state.userDetails.email,
         password: this.state.userDetails.password,
@@ -438,22 +370,18 @@ class Index extends Component {
         last_name: this.state.userDetails.last_name,
         bucket: getBucket[0].bucket,
         token: this.state.recaptcha,
-        Aimedis_health_newletter:
-          this.state.userDetails.Aimedis_health_newletter,
-        newsletter_last_update_date:
-          this.state.userDetails.newsletter_last_update_date,
       })
       .then((responce) => {
         this.setState({ loaderImage: false, FilesUp: [] });
         if (responce.data.hassuccessed) {
           axios
             .post(
-              "https://api-eu.cometchat.io/v2.0/users",
+              'https://api-eu.cometchat.io/v2.0/users',
               {
                 uid: responce.data.data.profile_id,
                 name:
                   responce.data.data.first_name +
-                  " " +
+                  ' ' +
                   responce.data.data.last_name,
               },
               commonCometHeader()
@@ -463,15 +391,15 @@ class Index extends Component {
                 uid: responce.data.data.profile_id.toLowerCase(),
                 name:
                   responce.data.data.first_name +
-                  " " +
+                  ' ' +
                   responce.data.data.last_name,
-                role: "default"
-              })
+                role: 'default',
+              });
             });
           this.setState({ successfull: true });
           this.setState({
             registerMessage:
-              "You are registered successfully, Please check your email for verification.",
+              'You are registered successfully, Please check your email for verification.',
           });
         } else {
           this.setState({ successfull: false });
@@ -482,35 +410,36 @@ class Index extends Component {
   //For select the country code Flag
   onSelectFlag = (countryCode) => {
     const state = this.state.userDetails;
-    state["country_code"] = countryCode.toLowerCase();
+    state['country_code'] = countryCode.toLowerCase();
     this.setState({ userDetails: state });
   };
 
   //For show or hide the Password
-  toggleShow() {
+  toggleShow = () => {
     this.setState({ hidden: !this.state.hidden });
-  }
+  };
 
-  changeValue(languageType, language) {
+  //On changing the Professional
+  changeValue1 = (value) => {
+    this.setState({ selectedOption: value, dropDownValue1: value });
+  };
+  //On changing the languages
+  changeValue = (languageType, language) => {
     this.setState({ dropDownValue: language });
     this.props.LanguageFetchReducer(languageType);
-  }
-
-  componentDidMount() {}
+  };
   //For set the language
   SetMode = () => {
-    var mode = this.state.mode === "normal" ? "dark" : "normal";
+    var mode = this.state.mode === 'normal' ? 'dark' : 'normal';
     this.setState({ mode: mode }, () => {
-      this.props.Settings("loggedOut", mode);
+      this.props.Settings('loggedOut', mode);
     });
   };
 
   render() {
-    let translate = getLanguage(this.props.stateLanguageType)
-
+    let translate = getLanguage(this.props.stateLanguageType);
     let {
       Register_for_Aimedis,
-      Register_Name,
       Register_email,
       login_Password,
       recEmp_FirstName,
@@ -539,9 +468,8 @@ class Index extends Component {
       Register_special,
       country_code,
     } = translate;
-
     if (this.state.successfull) {
-      return <Redirect to={"/register-successfull"} />;
+      return <Redirect to={'/register-successfull'} />;
     }
     return (
       <Grid
@@ -549,9 +477,9 @@ class Index extends Component {
           this.props.settings &&
           this.props.settings.setting &&
           this.props.settings.setting.mode &&
-          this.props.settings.setting.mode === "dark"
-            ? "loginSiteUpr homeBgDrk"
-            : "loginSiteUpr"
+          this.props.settings.setting.mode === 'dark'
+            ? 'loginSiteUpr homeBgDrk'
+            : 'loginSiteUpr'
         }
       >
         <Grid className="loginSite">
@@ -563,7 +491,7 @@ class Index extends Component {
                   <Grid item xs={6} sm={6} className="LogoForms">
                     <a href={sitedata.data.live_site}>
                       <img
-                        src={require("assets/images/LogoPNG.png")}
+                        src={require('assets/images/LogoPNG.png')}
                         alt=""
                         title=""
                       />
@@ -577,7 +505,7 @@ class Index extends Component {
                           <span className="ThemeModeSet">
                             <Toggle
                               icons={false}
-                              checked={this.state.mode === "dark"}
+                              checked={this.state.mode === 'dark'}
                               name="mode"
                               onClick={(e) => this.SetMode(e)}
                             />
@@ -588,66 +516,80 @@ class Index extends Component {
                             {this.state.dropDownValue}
                           </DropdownToggle>
                           {/* 
-                                                    en => English
-                                                    de => German  
+                                                en => English
+                                                de => German  
 
-                                                */}
+                                            */}
                           <DropdownMenu className="langInerFooter">
                             <DropdownItem
                               onClick={() => {
-                                this.changeValue("en", "English");
+                                this.changeValue('en', 'English');
                               }}
                             >
                               <NavLink>English</NavLink>
                             </DropdownItem>
                             <DropdownItem
                               onClick={() => {
-                                this.changeValue("de", "German");
+                                this.changeValue('de', 'German');
                               }}
                             >
                               <NavLink>German</NavLink>
                             </DropdownItem>
                             <DropdownItem
                               onClick={() => {
-                                this.changeValue("ch", "Chinese");
+                                this.changeValue('ch', 'Chinese');
                               }}
                             >
                               <NavLink>Chinese</NavLink>
                             </DropdownItem>
                             <DropdownItem
                               onClick={() => {
-                                this.changeValue("pt", "Portuguese");
+                                this.changeValue('pt', 'Portuguese');
                               }}
                             >
                               <NavLink>Portuguese</NavLink>
                             </DropdownItem>
                             <DropdownItem
                               onClick={() => {
-                                this.changeValue("sp", "Spanish");
+                                this.changeValue('sp', 'Spanish');
                               }}
                             >
                               <NavLink>Spanish</NavLink>
                             </DropdownItem>
                             <DropdownItem
                               onClick={() => {
-                                this.changeValue("rs", "Russian");
+                                this.changeValue('rs', 'Russian');
                               }}
                             >
                               <NavLink>Russian</NavLink>
                             </DropdownItem>
                             <DropdownItem
                               onClick={() => {
-                                this.changeValue("sw", "Swahili");
+                                this.changeValue('sw', 'Swahili');
                               }}
                             >
                               <NavLink>Swahili</NavLink>
                             </DropdownItem>
                             <DropdownItem
                               onClick={() => {
-                                this.changeValue("nl", "Dutch");
+                                this.changeValue('fr', 'French');
                               }}
                             >
-                              <NavLink>Dutch</NavLink>
+                              <NavLink>French</NavLink>
+                            </DropdownItem>
+                            <DropdownItem
+                              onClick={() => {
+                                this.changeValue('ar', 'Arabic');
+                              }}
+                            >
+                              <NavLink>Arabic</NavLink>
+                            </DropdownItem>
+                            <DropdownItem
+                              onClick={() => {
+                                this.changeValue('tr', 'Turkish');
+                              }}
+                            >
+                              <NavLink>Turkish</NavLink>
                             </DropdownItem>
                           </DropdownMenu>
                         </UncontrolledDropdown>
@@ -663,7 +605,6 @@ class Index extends Component {
               <Grid className="regData">
                 <h1>{Register_for_Aimedis}</h1>
               </Grid>
-
               <Grid className="registerFormMain">
                 <Grid className="registerForm">
                   <div className="err_message">
@@ -673,11 +614,7 @@ class Index extends Component {
                     {this.state.regisError3}
                     {this.state.regisError0}
                     {this.state.error_msg}
-                    {this.state.namevald}
                   </div>
-                  {/* <div className="success_message">
-                                    {this.state.registerMessage}
-                                </div> */}
                   {this.state.fileupods && (
                     <div className="success_message">{file_uploaded}</div>
                   )}
@@ -693,7 +630,6 @@ class Index extends Component {
                       />
                     </Grid>
                   </Grid>
-
                   <Grid className="registerRow">
                     <Grid>
                       <label>{recEmp_LastName}</label>
@@ -706,7 +642,6 @@ class Index extends Component {
                       />
                     </Grid>
                   </Grid>
-
                   <Grid className="registerRow">
                     <Grid>
                       <label>{Register_email}</label>
@@ -719,21 +654,20 @@ class Index extends Component {
                       />
                     </Grid>
                   </Grid>
-
                   <Grid className="registerRow passInstMain">
                     <Grid>
                       <label>{login_Password}</label>
                     </Grid>
                     <Grid className="registerPass">
                       <input
-                        type={this.state.hidden ? "password" : "text"}
+                        type={this.state.hidden ? 'password' : 'text'}
                         name="password"
                         onChange={this.handleChange}
                       />
                       {this.state.hidden && (
                         <a onClick={this.toggleShow}>
                           <img
-                            src={require("assets/images/showeye.svg")}
+                            src={require('assets/images/showeye.svg')}
                             alt=""
                             title=""
                           />
@@ -742,7 +676,7 @@ class Index extends Component {
                       {!this.state.hidden && (
                         <a onClick={this.toggleShow}>
                           <img
-                            src={require("assets/images/hide.svg")}
+                            src={require('assets/images/hide.svg')}
                             alt=""
                             title=""
                           />
@@ -755,7 +689,7 @@ class Index extends Component {
                         <div className="passInstIner">
                           <p>{Register_Passwordshould}</p>
                           <img
-                            src={require("assets/images/passArrow.png")}
+                            src={require('assets/images/passArrow.png')}
                             alt=""
                             title=""
                             className="passArow"
@@ -767,7 +701,7 @@ class Index extends Component {
                                 this.state.userDetails.password.length > 8 && (
                                   <a>
                                     <img
-                                      src={require("assets/images/CheckCircle.svg")}
+                                      src={require('assets/images/CheckCircle.svg')}
                                       alt=""
                                       title=""
                                     />
@@ -779,7 +713,7 @@ class Index extends Component {
                                 this.state.userDetails.password.length <= 8 && (
                                   <a>
                                     <img
-                                      src={require("assets/images/CloseCircle.svg")}
+                                      src={require('assets/images/CloseCircle.svg')}
                                       alt=""
                                       title=""
                                     />
@@ -795,7 +729,7 @@ class Index extends Component {
                                 ) && (
                                   <a>
                                     <img
-                                      src={require("assets/images/CloseCircle.svg")}
+                                      src={require('assets/images/CloseCircle.svg')}
                                       alt=""
                                       title=""
                                     />
@@ -809,7 +743,7 @@ class Index extends Component {
                                 ) && (
                                   <a>
                                     <img
-                                      src={require("assets/images/CheckCircle.svg")}
+                                      src={require('assets/images/CheckCircle.svg')}
                                       alt=""
                                       title=""
                                     />
@@ -825,7 +759,7 @@ class Index extends Component {
                                 ) && (
                                   <a>
                                     <img
-                                      src={require("assets/images/CloseCircle.svg")}
+                                      src={require('assets/images/CloseCircle.svg')}
                                       alt=""
                                       title=""
                                     />
@@ -839,7 +773,7 @@ class Index extends Component {
                                 ) && (
                                   <a>
                                     <img
-                                      src={require("assets/images/CheckCircle.svg")}
+                                      src={require('assets/images/CheckCircle.svg')}
                                       alt=""
                                       title=""
                                     />
@@ -855,7 +789,7 @@ class Index extends Component {
                                 ) && (
                                   <a>
                                     <img
-                                      src={require("assets/images/CloseCircle.svg")}
+                                      src={require('assets/images/CloseCircle.svg')}
                                       alt=""
                                       title=""
                                     />
@@ -869,7 +803,7 @@ class Index extends Component {
                                 ) && (
                                   <a>
                                     <img
-                                      src={require("assets/images/CheckCircle.svg")}
+                                      src={require('assets/images/CheckCircle.svg')}
                                       alt=""
                                       title=""
                                     />
@@ -885,7 +819,7 @@ class Index extends Component {
                         <div className="passInstIner">
                           <p>{Register_Passwordshould}</p>
                           <img
-                            src={require("assets/images/passArrow.png")}
+                            src={require('assets/images/passArrow.png')}
                             alt=""
                             title=""
                             className="passArow"
@@ -894,7 +828,7 @@ class Index extends Component {
                             <li>
                               <a>
                                 <img
-                                  src={require("assets/images/CloseCircle.svg")}
+                                  src={require('assets/images/CloseCircle.svg')}
                                   alt=""
                                   title=""
                                 />
@@ -904,7 +838,7 @@ class Index extends Component {
                             <li>
                               <a>
                                 <img
-                                  src={require("assets/images/CloseCircle.svg")}
+                                  src={require('assets/images/CloseCircle.svg')}
                                   alt=""
                                   title=""
                                 />
@@ -914,7 +848,7 @@ class Index extends Component {
                             <li>
                               <a>
                                 <img
-                                  src={require("assets/images/CloseCircle.svg")}
+                                  src={require('assets/images/CloseCircle.svg')}
                                   alt=""
                                   title=""
                                 />
@@ -924,7 +858,7 @@ class Index extends Component {
                             <li>
                               <a>
                                 <img
-                                  src={require("assets/images/CloseCircle.svg")}
+                                  src={require('assets/images/CloseCircle.svg')}
                                   alt=""
                                   title=""
                                 />
@@ -936,21 +870,13 @@ class Index extends Component {
                       </div>
                     )}
                   </Grid>
-
                   <Grid className="registerRow regMobNum">
                     <Grid>
                       <label>{Register_Mobilenumber}</label>
                     </Grid>
                     <Grid>
-                      {/* <PhoneInput
-                                        enableAreaCodes={true}
-                                        country={'us'}
-                                        value={this.state.phone}
-                                        onChange={phone => this.setState({ phone })}
-                                    //enableSearch={true}
-                                    /> */}
                       <ReactFlagsSelect
-                      searchable={true}
+                        searchable={true}
                         placeholder={country_code}
                         name="country_code"
                         onSelect={this.onSelectFlag}
@@ -960,6 +886,7 @@ class Index extends Component {
                       <input
                         type="text"
                         className="mobileReg"
+                        name="mobile"
                         onChange={this.handleChange}
                       />
                     </Grid>
@@ -975,13 +902,15 @@ class Index extends Component {
                       label={Register_activate_auth}
                     />
                   </Grid>
-                  {(this.state.selectedOption == "doctor" || this.state.selectedOption == "nurse" || this.state.selectedOption == "pharmacy") && (
+                  {(this.state.selectedOption == 'doctor' ||
+                    this.state.selectedOption == 'nurse' ||
+                    this.state.selectedOption == 'pharmacy') && (
                     <Grid item xs={12} sm={12} className="common_name_v2_reg">
                       <label htmlFor="UploadDocument">
-                        {" "}
-                        {click_here_uplod_license}{" "}
+                        {' '}
+                        {click_here_uplod_license}{' '}
                         <img
-                          src={require("assets/images/links.png")}
+                          src={require('assets/images/links.png')}
                           alt=""
                           title=""
                           className="link_docs"
@@ -989,7 +918,7 @@ class Index extends Component {
                       </label>
                       <input
                         type="file"
-                        style={{ display: "none" }}
+                        style={{ display: 'none' }}
                         id="UploadDocument"
                         name="UploadDocument"
                         onChange={(e) => this.UploadFile(e)}
@@ -1006,92 +935,6 @@ class Index extends Component {
                       </div>
                     </Grid>
                   )}
-                  <Grid className="registerRow accountTyp">
-                    <Grid>
-                      <label>{Register_Accounttype}</label>
-                    </Grid>
-                    <Grid className="acPatient">
-                      <Grid
-                        container
-                        direction="row"
-                        justify="center"
-                        alignItems="center"
-                      >
-                        <Grid item xs={11} sm={6} md={6}>
-                          <Grid
-                            className={
-                              this.state.selectedOption === "patient"
-                                ? "acPatientIner"
-                                : "acPatientIner onProfessional"
-                            }
-                          >
-                            <a
-                              onClick={() => {
-                                this.setState({ selectedOption: "patient" });
-                              }}
-                            >
-                              {capab_Patients}
-                            </a>
-                          </Grid>
-                        </Grid>
-                        <Grid item xs={11} sm={6} md={6}>
-                          <Grid
-                            className={
-                              this.state.selectedOption === "patient"
-                                ? "acType"
-                                : "acType ProfSelect"
-                            }
-                          >
-                            <UncontrolledDropdown nav inNavbar>
-                              <DropdownToggle nav caret>
-                                <a>
-                                  {this.state.selectedOption === "" ||
-                                  this.state.selectedOption === "patient"
-                                    ? Professional
-                                    : this.state.selectedOption
-                                        .charAt(0)
-                                        .toUpperCase() +
-                                      this.state.selectedOption.slice(1)}
-                                </a>
-                              </DropdownToggle>
-                              <DropdownMenu>
-                                <DropdownItem
-                                  onClick={() => {
-                                    this.setState({ selectedOption: "" });
-                                  }}
-                                >
-                                  <NavLink>{Professional}</NavLink>
-                                </DropdownItem>
-                                <DropdownItem
-                                  onClick={() => {
-                                    this.setState({ selectedOption: "doctor" });
-                                  }}
-                                >
-                                  <NavLink>{capab_Doctors}</NavLink>
-                                </DropdownItem>
-                                <DropdownItem
-                                  onClick={() => {
-                                    this.setState({ selectedOption: "nurse" });
-                                  }}
-                                >
-                                  <NavLink>{Nurse}</NavLink>
-                                </DropdownItem>
-                                <DropdownItem
-                                  onClick={() => {
-                                    this.setState({
-                                      selectedOption: "pharmacy",
-                                    });
-                                  }}
-                                >
-                                  <NavLink>{Pharmacist}</NavLink>
-                                </DropdownItem>
-                              </DropdownMenu>
-                            </UncontrolledDropdown>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Grid>
 
                   <Grid className="registerRow">
                     <FormControlLabel
@@ -1116,7 +959,6 @@ class Index extends Component {
                       label={Register_want_register}
                     />
                   </Grid>
-
                   <Grid className="registerRow">
                     <FormControlLabel
                       className="regMob"
@@ -1130,26 +972,11 @@ class Index extends Component {
                       label={Register_Clicking_box}
                     />
                   </Grid>
-                  {this.state.selectedOption !== "patient" && (
-                    <Grid className="registerRow">
-                      <FormControlLabel
-                        className="regMob"
-                        control={
-                          <Checkbox
-                            value="checkedA"
-                            onChange={this.handleChange}
-                            name="license_of_practice"
-                          />
-                        }
-                        label={Register_clickingbox}
-                      />
-                    </Grid>
-                  )}
-                   <ReCAPTCHA
-                      sitekey={"6Lfgib4cAAAAAKWDXLFxlUQ8o4zb529nqkP0k1b3"}
-                      onChange={this.onChangeRec}
-                    />
 
+                  <ReCAPTCHA
+                    sitekey={'6Lfgib4cAAAAAKWDXLFxlUQ8o4zb529nqkP0k1b3'}
+                    onChange={this.onChangeRec}
+                  />
                   <Grid className="registerRow">
                     <Grid className="regCrtAc">
                       <input
@@ -1159,10 +986,9 @@ class Index extends Component {
                       />
                     </Grid>
                   </Grid>
-
                   <Grid className="havAC">
                     <p>
-                      {Register_havAC}{" "}
+                      {Register_havAC}{' '}
                       <a onClick={this.login}>{Register_lohinher}</a>
                     </p>
                   </Grid>
@@ -1170,17 +996,14 @@ class Index extends Component {
               </Grid>
             </Grid>
           </Grid>
-          {/* <Grid className="regFooter"><Footer /></Grid>   */}
         </Grid>
       </Grid>
     );
   }
 }
 const mapStateToProps = (state) => {
-  const {
-    stateLoginValueAim,
-    loadingaIndicatoranswerdetail,
-  } = state.LoginReducerAim;
+  const { stateLoginValueAim, loadingaIndicatoranswerdetail } =
+    state.LoginReducerAim;
   const { stateLanguageType } = state.LanguageReducer;
   const { settings } = state.Settings;
   return {
