@@ -66,7 +66,7 @@ class Index extends Component {
       loaderImage: false,
       sectionValue: 0,
       Allsituation: situations,
-      gender: this.props.stateLoginValueAim?.user?.sex,
+      gender: false,
       AllIds: this.props.match.params,
       uniqueUser: {},
       time: {}
@@ -108,6 +108,7 @@ class Index extends Component {
             this.setState({
               sectionValue: 1,
               allTasks: response.data.data.Task,
+              gender: response.data.data.gender,
               loaderImage: false,
             });
             this.startTimer(response.data.data.Task)
