@@ -1998,7 +1998,7 @@ export const onChange = (date, current) => {
         var id = current.state.doctorData?._id;
         axios
           .post(
-            sitedata.data.path + '/vactive/SelectDocforSickleave2',
+            sitedata.data.path + '/vchat/getSlotTime',
             {
               date: localDateTime,
               doctor_id: id
@@ -2009,7 +2009,7 @@ export const onChange = (date, current) => {
             if (responce.data.hassuccessed) {
               let bookedSlot = [];
               responce && responce.data && responce.data.data && responce.data.data.map((item) => {
-                bookedSlot.push(item?.start + "-" + item?.end)
+                bookedSlot.push(item?.starttime + "-" + item?.endtime)
               })
               calBookedSlot(DoctorSlot, bookedSlot, current)
               current.setState({ loaderImage: false })
